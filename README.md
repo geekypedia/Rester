@@ -62,8 +62,11 @@ To put this into practice below are some example of how you would use the Rester
 	# Get 50 rows from the "customers" table
 	GET http://api.example.com/customers/?limit=50
 
+	# Get 50 rows from the "customers" table and skip first 50 rows
+	GET http://api.example.com/customers/?limit=50&offset=50
+
 	# Get 50 rows from the "customers" table ordered by the "date" field
-	GET http://api.example.com/customers/?limit=50&by=date&order=desc
+	GET http://api.example.com/customers/?limit=50&order=date&orderType=desc
 	
 	# Get all the customers named LIKE Tom; (Tom, Tomato, Tommy...)
 	GET http://api.example.com/customers/?name[in]=Tom
