@@ -83,8 +83,8 @@ To put this into practice below are some example of how you would use the Rester
 
 Please note that `GET` calls accept the following query string variables:
 
-- `by` (column to order by)
-  - `order` (order direction: `ASC` or `DESC`)
+- `order` (column to order by)
+  - `orderType` (order direction: `ASC` or `DESC`)
 - `limit` (`LIMIT x` SQL clause)
   - `offset` (`OFFSET x` SQL clause)
 - `parameter[in]` (LIKE search)
