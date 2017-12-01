@@ -395,7 +395,7 @@ class DBController
 		
 			if (isset($filters['offset']) === true)
 			{
-				$query[] .= sprintf(' OFFSET %u', $filters['offset']);
+				$query .= sprintf(' OFFSET %u', $filters['offset']);
 			}
 		} else { //Default limit
 			$query .= " LIMIT 1000";
@@ -471,7 +471,7 @@ class DBController
 	}
 	
 	function getReservedFields() {
-		return array("order", "limit", "orderType");
+		return array("order", "limit", "orderType", "offset");
 	}
 	
 	function cleanReservedFields($fieldsMap) {
