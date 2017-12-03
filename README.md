@@ -92,6 +92,8 @@ Please note that `GET` calls accept the following query string variables:
 - `parameter[lt]` (less than search)
 - `parameter[ge]` (greater or equals search)
 - `parameter[le]` (less or equals search)
+- `orFilter` (or contition for the multiple parameters)
+
 
 ##Changelog
 
