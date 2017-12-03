@@ -333,6 +333,9 @@ class DBController
 					}
 					
 					$q.= ")";
+						
+					array_push($queryFields, $q);
+					
 					}
 		
 				} else {
@@ -348,11 +351,9 @@ class DBController
 					}
 					
 					$q.= ")";
-				}
-		
 
-		
-				$queryFields[] = $q;
+					$queryFields[] = $q;
+				}
 			    
 			}
 		}
@@ -384,7 +385,12 @@ class DBController
 		
 		
 		if(count($queryFields) > 0) {
-			$query.= implode(" AND ", $queryFields);
+			if($orFilter){
+				$query.= implode(" OR ", $queryFields);
+			}
+			else{
+				$query.= implode(" AND ", $queryFields);
+			}
 		}
 		
 		if (isset($order['by']) === true)
