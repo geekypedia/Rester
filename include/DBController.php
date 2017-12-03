@@ -253,6 +253,13 @@ class DBController
 			unset($filters['orderType']);
 		}
 		
+		//or Filter
+		if(isset($filters['orFilter'])) {
+			$orFilter=$filters['orFilter'];
+			unset($filters['orFilter']);
+		}
+
+		
 		//Add the main route fields
 		$selectFields = array_merge($selectFields, $route->getFieldNames(FALSE, TRUE));
 		//Process relations
@@ -485,7 +492,7 @@ class DBController
 	}
 	
 	function getReservedFields() {
-		return array("order", "limit", "orderType", "offset");
+		return array("order", "limit", "orderType", "offset", "orFilter");
 	}
 	
 	function cleanReservedFields($fieldsMap) {
