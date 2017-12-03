@@ -294,10 +294,10 @@ class DBController
 		//filterfields
 		if(count($fieldFilters) > 0) {
 			foreach($fieldFilters as $filterField => $filterValue) {
-			    foreach(array_keys($filterValue) as $queryType) {
-				$q = " (".$route->routeName.".".$filterField." ";
-		
 				if(is_array($filterValue)) {
+					foreach(array_keys($filterValue) as $queryType) {
+
+					$q = " (".$route->routeName.".".$filterField." ";
 					//$queryType = array_keys($filterValue)[0];
 					$queryValue = $filterValue[$queryType];
 		
@@ -331,8 +331,12 @@ class DBController
 							$q.="= '".$queryValue."'";
 							break;
 					}
+					
+					$q.= ")";
+					}
 		
 				} else {
+					$q = " (".$route->routeName.".".$filterField." ";
 		
 					$val = explode(",", $filterValue);
 		
@@ -342,12 +346,14 @@ class DBController
 					for($i = 1; $i<count($val); $i++) {
 						$q.=" OR ".$route->routeName.".".$filterField." = '".$val[$i]."'";
 					}
+					
+					$q.= ")";
 				}
 		
-				$q.= ")";
+
 		
 				$queryFields[] = $q;
-			    }
+			    
 			}
 		}
 		
