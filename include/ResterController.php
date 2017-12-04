@@ -328,6 +328,11 @@ class ResterController {
 	 */
 	function checkRouteExists($routeName) {
 		if(!isset($this->getAvailableRoutes()[$routeName])) {
+				//Check for Custom Routes
+				if($this->customRoutes["GET"][$routeName] || $this->customRoutes["POST"][$routeName]){
+					return true;
+				}
+
 				$this->showError(404);
 				return false;
 		}
