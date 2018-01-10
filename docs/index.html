@@ -36,6 +36,8 @@
     	var myAPIURL = location.replace("/docs/","");
     	//var myAPIURL = "http://"+window.location.hostname+window.location.pathname.replace("/doc/", "");
 
+      //correct url on logo
+      $('#logo').attr('href', location);
     
       window.swaggerUi = new SwaggerUi({
       url: (myAPIURL != null) ? myAPIURL : apiURL,
