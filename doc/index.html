@@ -21,10 +21,12 @@
     
 
     	
-    	var apiURL = "http://localhost/"
+    	var apiURL = "http://localhost:8080/"
     	
-    	var myAPIURL = "http://"+window.location.hostname+window.location.pathname.replace("/doc/", "");
-   
+      var location = "" + window.location;
+    	var myAPIURL = location.replace("/docs/","");
+    	//var myAPIURL = "http://"+window.location.hostname+window.location.pathname.replace("/doc/", "");
+
     
       window.swaggerUi = new SwaggerUi({
       url: (myAPIURL != null) ? myAPIURL : apiURL,
