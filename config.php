@@ -22,6 +22,9 @@ define('CACHE_ENABLED', true);
 //Enable OAuth 1.0 Authentication
 define('ENABLE_OAUTH', false);
 
+//Enable simple login API
+define('DEFAULT_LOGIN_API', false);
+
 //Disable PHP Errors
 error_reporting(0);
 
