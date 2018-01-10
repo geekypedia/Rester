@@ -24,7 +24,11 @@ $resterController->addRouteCommand($loginCommand);
 $resterController->addPublicMethod("POST", "users/login");
 
 //Add file processor. parameter db_name, db_field. will update the db field based on relative path
-$resterController->addFileProcessor("files", "file");
+//$resterController->addFileProcessor("files", "file");
+if(DEFAULT_FILE_API == true){
+	$resterController->addFileProcessor("files", "file");
+}
+
 
 //Custom API
 $helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
