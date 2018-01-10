@@ -71,7 +71,11 @@ $loginFunction = function($params = NULL) {
 $loginCommand = new RouteCommand("POST", "users", "login", $loginFunction, array("email", "password"), "Method to login users");
 
 //Add the command to controller
-$resterController->addRouteCommand($loginCommand);
+//$resterController->addRouteCommand($loginCommand);
+if(DEFAULT_LOGIN_API == true){
+	$resterController->addRouteCommand($loginCommand);
+}
+
 
 //Test Login using GET
 //$loginGetCommand = new RouteCommand("GET", "users", "login", $loginFunction, array("email", "password"), "Method to login users");
