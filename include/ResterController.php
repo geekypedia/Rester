@@ -850,6 +850,12 @@ class ResterController {
 		exit($this->doResponse($result));
 	}
 	
+	function showErrorWithMessage($errorNumber, $message) {
+		$result = ApiResponse::errorResponseWithMessage($errorNumber, $message);
+		exit($this->doResponse($result));
+	}
+
+	
 	function showResult($result, $forceArray = false) {
 	
 		ResterUtils::Log("*** DISPLAY RESULT TO API ***");
