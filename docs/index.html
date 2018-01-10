@@ -21,7 +21,7 @@
     window.onload = function(){
             var location = "" + window.location;
           	if(location.charAt(location.length-1) !== '/'){
-          	  var docsLocation = location.replace("/docs", "/docs/");
+          	  var docsLocation = location + "/";
           	  window.location = docsLocation;
           	}
     }
