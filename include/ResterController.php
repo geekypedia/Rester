@@ -293,10 +293,11 @@ class ResterController {
 					header('HTTP/1.1 401 Unauthorized');
 					header('WWW-Authenticate: OAuth realm=""');
 					header('Content-Type: text/plain; charset=utf8');
-					echo "Authentication error";
+					//echo "Authentication error";
+
 					ResterUtils::Log(">> OAUTH ERROR >> Request not signed");
 					ResterUtils::Log("*** AUTH ERROR *** ===>");
-					
+					$this->showErrorWithMessage(401, 'Unauthorized');					
 					exit();
 				}
 			//$this->showError(401);
