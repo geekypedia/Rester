@@ -1,8 +1,6 @@
-#Rester
+#RESTer
 
-Rester is a fork of ArrestDB as codebase with many improvements and new features.
-	
-	ArrestDB: https://github.com/alixaxel/ArrestDB
+RESTer is a fork of moddity/Rester
 	
 ##Requeriments
 
@@ -12,7 +10,8 @@ Rester is a fork of ArrestDB as codebase with many improvements and new features
 ##Features
 
 - Create an API in 5 minutes
-- Auto-generation of swagger-ui documentation on http://api.example.com/doc/
+- Auto-generation of swagger-ui documentation on http://api.example.com/docs/
+- MySQL Adminer bundled at http://api.example.com/admin/
 - MySQL Relation support
 - File upload support
 - Custom API functions
@@ -97,12 +96,13 @@ Please note that `GET` calls accept the following query string variables:
 
 ##Changelog
 
-- **beta** ~~Reaching beta stage~~
+- **beta** 
 
 ##Credits
+RESTer adds enhancements over moddity/Rester (https://github.com/moddity/Rester)
 Rester is a nearly complete rewrite of [ArrestDB](ArrestDB: https://github.com/alixaxel/ArrestDB) with many additional features.
 ArrestDB is a complete rewrite of [Arrest-MySQL](https://github.com/gilbitron/Arrest-MySQL) with several optimizations and additional features.
 
 ##License (MIT)
 
-Copyright (c) 2014 mOddity Mobile S.L. (http://www.moddity.net)
+Copyright (c) 2017 Geekypedia (http://www.geekypedia.net)
