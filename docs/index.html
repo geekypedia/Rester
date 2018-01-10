@@ -33,7 +33,8 @@
     	var apiURL = "http://localhost:8080/"
     	
       var location = "" + window.location;
-    	var myAPIURL = location.replace("/docs/","");
+      var apiLocation = location.substr(0, location.indexOf("/docs/"));
+    	var myAPIURL = apiLocation;
     	//var myAPIURL = "http://"+window.location.hostname+window.location.pathname.replace("/doc/", "");
 
       //correct url on logo
