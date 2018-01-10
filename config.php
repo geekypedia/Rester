@@ -14,6 +14,7 @@ define('DBPASSWORD', 'dbpassword');
 
 //The path where the uploads are saved. Must be writtable by the webserver
 define('FILE_UPLOAD_PATH', 'uploads');
+define('DEFAULT_FILE_API', false);
 
 //Enables API Cache. For now only APC is implemented
 define('CACHE_ENABLED', true);
