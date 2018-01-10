@@ -278,6 +278,8 @@ class ResterController {
 				header('WWW-Authenticate: OAuth realm=""');
 				header('Content-Type: text/plain; charset=utf8');
 				ResterUtils::Log(">> OAUTH ERROR >> ".$e->getMessage());
+				
+				$this->showErrorWithMessage(401, 'Unauthorized. Signed but Failed Verification');
 				exit();
 			}	
 		} else {
@@ -297,7 +299,8 @@ class ResterController {
 
 					ResterUtils::Log(">> OAUTH ERROR >> Request not signed");
 					ResterUtils::Log("*** AUTH ERROR *** ===>");
-					$this->showErrorWithMessage(401, 'Unauthorized');					
+					
+					$this->showErrorWithMessage(401, 'Unauthorized. Request not signed. Please provide oauth_signature');					
 					exit();
 				}
 			//$this->showError(401);
