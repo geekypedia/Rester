@@ -9,9 +9,11 @@ RESTer is a fork of moddity/Rester
 
 ##Features
 
-- Create an API in 5 minutes
-- Auto-generation of swagger-ui documentation on http://api.example.com/docs/
-- MySQL Adminer bundled at http://api.example.com/admin/
+- Create an API in 5 minutes. Just go to config.php and provide correct database credentials.
+- You can run the system simply using plain old PHP server (php -S 0.0.0.0:8080) and browse http://localhost:8080 using your browser.
+- MySQL Adminer bundled at http://localhost:8080/admin/ Log on using correct database credentials and manage your database directly from within your browser.
+- Auto-generation of swagger-ui documentation on http://localhost:8080/docs/ 
+- Codeiad IDE bundled at http://localhost:8080/ide/ . Change your code on the fly from within your browser. See the output directly at http://localhost:8080/ide/workspace/your-project-folder
 - MySQL Relation support
 - File upload support
 - Custom API functions
