@@ -14,6 +14,7 @@ RESTer is a fork of moddity/Rester
 - MySQL Adminer bundled at http://localhost:8080/admin/ Log on using correct database credentials and manage your database directly from within your browser.
 - Auto-generation of swagger-ui documentation on http://localhost:8080/docs/ 
 - Codeiad IDE bundled at http://localhost:8080/ide/ . Change your code on the fly from within your browser. See the output directly at http://localhost:8080/ide/workspace/your-project-folder
+- Two projects are already created in the IDE. 'web' and 'api'. Any APIs defined in api/index.php will be automatically loaded.
 - MySQL Relation support
 - File upload support
 - Custom API functions
