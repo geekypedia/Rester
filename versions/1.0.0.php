@@ -99,4 +99,8 @@ $helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null
 }, array(), "Hello World Api");
 $resterController->addRouteCommand($helloWorldApi);
 
+//Include APIs created using IDE
+if(file_exists(__DIR__."/../ide/workspace/api/index.php")){
+        include(__DIR__."/../ide/workspace/api/index.php");
+}
 ?>
