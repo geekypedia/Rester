@@ -74,6 +74,16 @@ if(isset($_SESSION['theme'])) {
 </head>
 
 <body>
+    <script type="text/javascript">
+    //append / at the end to load IDE properly
+    window.onload = function(){
+            var location = "" + window.location;
+                if(location.charAt(location.length-1) !== '/'){
+                  var docsLocation = location + "/";
+                  window.location = docsLocation;
+                }
+    }
+    </script>
     <script>
     var i18n = (function(lang) {
         return function(word,args) {
