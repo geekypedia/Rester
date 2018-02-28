@@ -253,7 +253,7 @@ if ($newrelic) {
             if (num === 0) {
                 return "GMT";
             } else {
-                var hours = Math.floor(num / 60);
+                var hours = Math.floor(Math.abs(num) / 60);
                 var minutes = Math.floor((num - (hours * 60)));
 
                 if (hours < 10) hours = "0" + Math.abs(hours);
