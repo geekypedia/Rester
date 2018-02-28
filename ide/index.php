@@ -129,7 +129,7 @@ if(isset($_SESSION['theme'])) {
         if(!$users && !$projects && !$active){
             // Installer
             require_once('components/install/view.php');
-        }elseif(!file_exists($path . "/config.php"){
+        }elseif(!file_exists($path . "/config.php")){
              require_once('components/install-config/view.php');
         }else{
             // Login form
