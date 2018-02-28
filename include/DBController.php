@@ -34,8 +34,12 @@ class DBController
 							\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8" COLLATE "utf8_general_ci", time_zone = "+00:00";',
 							\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
 						);
-	
-		$this::$db = new \PDO(sprintf('%s:host=%s;port=%s;dbname=%s', "mysql", DBHOST, 3306, DBNAME), DBUSER, DBPASSWORD, $options);
+		try{
+			$this::$db = new \PDO(sprintf('%s:host=%s;port=%s;dbname=%s', "mysql", DBHOST, 3306, DBNAME), DBUSER, DBPASSWORD, $options);
+		}
+		catch(Exception $e)
+		{
+		}
 	}
 
 	public function Query($query = null)
