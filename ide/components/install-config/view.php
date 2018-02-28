@@ -31,7 +31,14 @@ if (ini_get('newrelic.enabled') == 1) {
     $newrelic = false;
 }
 
-$query = $_SERVER['QUERY_STRING'];
+// Query arguments
+if(isset($_SERVER['QUERY_STRING']))
+{
+        parse_str($_SERVER['QUERY_STRING'], $query);
+} else {
+       $query = array();
+}
+//$query = $_SERVER['QUERY_STRING'];
 
 $autocomplete = array(
   'username' => '',
