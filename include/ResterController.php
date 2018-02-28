@@ -466,6 +466,10 @@ class ResterController {
 	
 	//TODO
 	function checkConnectionStatus() {
+		if(is_null(DBController::$db))
+                {
+                        $this->showErrorWithMessage(503, "Could not connect to the database. Please check your configurations!");
+                }
 		/*if ($this->dbController->Query(DSN) === false) {
 			exit($this->dbController->Reply(ApiResponse::errorResponseWithMessage(503, "Error connecting to SQL")));	
 		}*/
