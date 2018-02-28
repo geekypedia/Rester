@@ -92,12 +92,12 @@ if(DEFAULT_FILE_API == true){
 
 
 //Custom API
-$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
-	$api = new ResterController();
-	$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
-	$api->showResult($value);
-}, array(), "Hello World Api");
-$resterController->addRouteCommand($helloWorldApi);
+//$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
+//	$api = new ResterController();
+//	$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+//	$api->showResult($value);
+//}, array(), "Hello World Api");
+//$resterController->addRouteCommand($helloWorldApi);
 
 //Include APIs created using IDE
 if(file_exists(__DIR__."/../ide/workspace/api/index.php")){
