@@ -104,22 +104,7 @@ if ($newrelic) {
 
     <input type="hidden" name="path" value="<?php echo($path); ?>">
 
-            <label><?php i18n("New Username"); ?></label>
-    <input type="text" name="username" autofocus="autofocus"  value="<?php echo($autocomplete['username']); ?>">
-
-    <div style="float:left; width: 48%; margin-right: 4%;">
-
-        <label><?php i18n("Password"); ?></label>
-        <input type="password" name="password" value="<?php echo($autocomplete['password']); ?>">
-
-    </div>
-
-    <div style="float:left; width: 48%;">
-
-        <label><?php i18n("Confirm Password"); ?></label>
-        <input type="password" name="password_confirm" value="<?php echo($autocomplete['password_confirm']); ?>">
-
-    </div>
+          
 
     <div style="clear:both;"></div>
 
