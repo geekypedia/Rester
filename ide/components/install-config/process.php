@@ -75,8 +75,8 @@ if (!file_exists($config)){
     // Get POST responses
     //////////////////////////////////////////////////////////////////
 
-    $username = cleanUsername($_POST['username']);
-    $password = encryptPassword($_POST['password']);
+    //$username = cleanUsername($_POST['username']);
+    //$password = encryptPassword($_POST['password']);
     $timezone = $_POST['timezone'];
 
     //////////////////////////////////////////////////////////////////
