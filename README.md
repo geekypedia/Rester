@@ -18,6 +18,10 @@ RESTer is a fork of moddity/Rester
 - Default credentials for IDE are as below:
 	username: admin
 	password: admin
+- Integrated terminal at http://localhost:8080/terminal. You can run terminal commands directly from browser. Credits to [web-console](https://github.com/nickola/web-console)
+- Default credentials for terminal are as below:
+	username: admin
+	password: admin
 - MySQL Relation support
 - File upload support
 - Custom API functions
