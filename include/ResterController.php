@@ -190,8 +190,9 @@ class ResterController {
 			} else { //id from URL
 		
 				//parse_str($input, $putData);
-				$putData = json_decode($input, true);
+				//$putData = json_decode($input, true);
 				
+				parse_str($input, $putData);
 			
 			
 					ResterUtils::Log("IS INDEXED");
