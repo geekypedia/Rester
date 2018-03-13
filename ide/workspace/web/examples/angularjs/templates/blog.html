@@ -1,0 +1,82 @@
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-md-12">
+			<table class='table'>
+				<tr>
+					<td class="col-md-12"><h4>Microblog</h4></td>
+					<!--<td class="col-md-2"><strong>Actions</strong></td>-->
+				</tr>
+				<tr ng-repeat='x in data.list'>
+					<td class="col-md-12">
+						<div ng-if="mode==MODES.view || (mode==MODES.edit && editing!==x.id)">
+							<h5 class='underlined'>{{x.title}}</h5>
+							<p>{{x.description}}</p>
+							<div>
+								<a class="smaller" href="" ng-click="edit(x)">Edit</a>&nbsp;
+								<a class="smaller" href="" ng-click="deleteObject(x)">Delete</a>
+							</div>
+						</div>
+						<div ng-if="mode==MODES.edit && editing==x.id">
+							<div class="form-group">
+							  <label for="titleTextArea">Title:</label>
+							  <input class='form-control' type='text' ng-model='x.title' id='titleTextArea'>
+							</div>
+							<div class="form-group">
+							  <label for="descriptionTextArea">Description:</label>
+							  <textarea class="form-control" rows="5" id="descriptionTextArea" ng-model='x.description'></textarea>
+							</div>
+							<div>
+								<a class="smaller" href="" ng-click="saveObject(x)">Save</a>&nbsp;
+								<a class="smaller" href="" ng-click="cancel(x)">Cancel</a>
+							</div>
+						</div>
+					</td>
+					<!--<td class="col-md-2">-->
+					<!--	<a href="" ng-click="edit()">Edit</a>&nbsp;-->
+					<!--	<a href="" ng-click="delete(x, refreshData)">Delete</a>-->
+					<!--</td>-->
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class='floating-button bgreddish' ng-if='mode==MODES.view'>
+		<a class="floating-button-text"><span class="fa fa-lg fa-plus white" data-toggle="modal" data-target="#addPostModal"></span></a>
+	</div>
+	
+	<div class="modal fade" id="addPostModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Post a new article!</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<div class="form-group">
+			  <label for="addTitleTextBox">Title:</label>
+			  <input type="text" class="form-control" id="addTitleTextBox" ng-model='data.single.title'>
+			</div>
+			<div class="form-group">
+			  <label for="addDescriptionTextArea">Description:</label>
+			  <textarea class="form-control" rows="5" id="addDescriptionTextArea" ng-model='data.single.description'></textarea>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveSingle()">Save</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="row" ng-if='errors.length > 0' >
+		<div class="col-md-10">
+			<span class='red smaller' ng-repeat='e in errors'>{{e.message}}</span>
+		</div>
+		<div class="col-md-1">
+			<a class='smaller' href="" ng-click='clearErrors()'>Clear</a>
+		</div>
+	</div>
+</div>
