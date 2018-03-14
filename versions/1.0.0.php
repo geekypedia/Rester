@@ -100,7 +100,41 @@ if(DEFAULT_FILE_API == true){
 //$resterController->addRouteCommand($helloWorldApi);
 
 //Include APIs created using IDE
-if(file_exists(__DIR__."/../ide/workspace/api/index.php")){
-        include(__DIR__."/../ide/workspace/api/index.php");
+//if(file_exists(__DIR__."/../ide/workspace/api/index.php")){
+//        include(__DIR__."/../ide/workspace/api/index.php");
+//}
+
+//Include All APIs created using IDE (Including those in sub-folders)
+function getAllSubDirectories( $directory, $directory_seperator )
+{
+	$dirs = array_map( function($item)use($directory_seperator){ return $item . $directory_seperator;}, array_filter( glob( $directory . '*' ), 'is_dir') );
+
+	foreach( $dirs AS $dir )
+	{
+		$dirs = array_merge( $dirs, getAllSubDirectories( $dir, $directory_seperator ) );
+	}
+
+	return $dirs;
 }
+
+$apiDirectory = __DIR__.'/../ide/workspace/api/';
+
+$subDirectories = getAllSubDirectories($apiDirectory,'/');
+
+array_push($subDirectories, $apiDirectory);
+
+foreach($subDirectories as &$subDir){
+	$path = $subDir;
+	
+	$files = array_diff(scandir($path), array('.', '..'));
+	foreach ($files as &$file) {
+		$filePath = $path.$file;
+		if(substr($filePath, -4) == ".php"){
+			if(file_exists($filePath)){
+			        include($filePath);
+			}
+		}
+	}
+}
+
 ?>
