@@ -25,6 +25,9 @@ define('ENABLE_OAUTH', false);
 //Enable simple login API
 define('DEFAULT_LOGIN_API', false);
 
+//Enable deep nested queries
+define('ENABLE_DEEP_QUERY', true);
+
 //Disable PHP Errors
 error_reporting(0);
 
