@@ -775,8 +775,13 @@ class ResterController {
 						}
 						
 						$relationObject = $destinationRoute->mapObjectTypes($relationObject);
+
+						$relationFieldName = str_replace("_id","",$rf->relation->field);
+						$relationFieldName = str_replace("id","",$relationFieldName);
+						$mainObject[$relationFieldName]=$relationObject;
 						
-						$mainObject[$rf->relation->destinationRoute]=$relationObject;
+						//$mainObject[$rf->relation->destinationRoute]=$relationObject;
+
 					}
 				}
 			}
