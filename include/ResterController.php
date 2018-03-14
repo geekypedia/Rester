@@ -781,10 +781,19 @@ class ResterController {
 						$mainObject[$relationFieldName]=$relationObject;
 						
 						if(ENABLE_DEEP_QUERY == true){
-							if(count($destinationRoute->getRelationFields()) > 0){
-								$subFilter = array($destinationRoute->primaryKey->fieldName => $relationObject[$destinationRoute->primaryKey->fieldName]);
-								$rawObj = $this->getObjectsFromRoute($destinationRoute, $subFilter);
-								$relationObject=$rawObj[0];
+							$destinationRelationFields = $destinationRoute->getRelationFields();
+							if(count($destinationRelationFields) > 0){
+								$proceed = true;
+								foreach($destinationRelationFields as &$drf){
+									if($drf->fieldType == $route->routeName){
+										$proceed = false;
+									}
+								}
+								if($proceed == true){
+									$subFilter = array($destinationRoute->primaryKey->fieldName => $relationObject[$destinationRoute->primaryKey->fieldName]);
+									$rawObj = $this->getObjectsFromRoute($destinationRoute, $subFilter);
+									$relationObject=$rawObj[0];
+								}
 							}
 						}
 
