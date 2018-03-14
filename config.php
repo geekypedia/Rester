@@ -27,6 +27,7 @@ define('DEFAULT_LOGIN_API', false);
 
 //Enable deep nested queries
 define('ENABLE_DEEP_QUERY', true);
+define('MAX_NESTING_LEVEL', 5);
 
 //Disable PHP Errors
 error_reporting(0);
