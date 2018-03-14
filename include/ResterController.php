@@ -18,6 +18,8 @@ class ResterController {
 	
 	var $requestProcessors = array();
 	
+	var $NESTED_COUNTER = 1;
+	
 	/**
 	* Indexed array containing the methods don't checked by OAuth
 	*/
@@ -577,7 +579,7 @@ class ResterController {
 	}
 	
 	function getObjectsFromRoute($route, $filters = NULL, $orFilter = false) {
-	
+		$this->NESTED_COUNTER++;
 		
 		
 		$result = $this->dbController->getObjectsFromDB($route, $filters, $this->getAvailableRoutes(), $orFilter);
@@ -784,6 +786,7 @@ class ResterController {
 							$destinationRelationFields = $destinationRoute->getRelationFields();
 							if(count($destinationRelationFields) > 0){
 								$proceed = true;
+								if($this->NESTED_COUNTER > MAX_NESTING_LEVEL){ $proceed = false; }
 								foreach($destinationRelationFields as &$drf){
 									if($drf->fieldType == $route->routeName){
 										$proceed = false;
