@@ -28,7 +28,7 @@
 
 <div class="container">
   <h2>MySQL Database Setup</h2>
-  <form id='configForm' action="generate-config.php" method="post">
+  <form id='configForm' action="configure/generate-config.php" method="post">
     <div class="form-group">
       <label for="host">Host:</label>
       <input type="text" class="form-control" id="host" placeholder="Enter hostname" name="host">
