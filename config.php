@@ -3,11 +3,23 @@
 //The api version, must have a php file on versions folder to include
 define('API_VERSION', "1.0.0");
 
+//Initialize Configuration
+$configPath = __DIR__.'/config.json';
+if(file_exists($configPath)){
+    $configContents = file_get_contents($configPath);
+    $configJson = ($configContents);
+    $config = json_decode($configJson);
+}
+else{
+    include('configsetup.php');
+    exit();
+}
+
 //Database credentials
-define('DBHOST', 'localhost');
-define('DBNAME', 'mydb');
-define('DBUSER', 'dbuser');
-define('DBPASSWORD', 'dbpassword');
+define('DBHOST', $config->host);
+define('DBNAME', $config->database);
+define('DBUSER', $config->user);
+define('DBPASSWORD', $config->password);
 
 //If enabled, verbose log written on error.log
 //define('LOG_VERBOSE', true);
