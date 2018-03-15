@@ -11,7 +11,7 @@ if(file_exists($configPath)){
     $config = json_decode($configJson);
 }
 else{
-    include('configsetup.php');
+    include('configure/index.php');
     exit();
 }
 
