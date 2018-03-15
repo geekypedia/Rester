@@ -1,26 +1,69 @@
 <html>
 	<head>
-		<!--Append / at the end of URL to load everything properly -->
-		<script>
-		window.onload = function(){
-			var location = "" + window.location;
-			if(location.charAt(location.length-1) !== '/'){
-				var newLocation = location + "/";
-				window.location = newLocation;
-			}
-		}
-		</script>
 		
 		<!-- SCRIPTS -->
+		
+		<!--Append / at the end of URL to load everything properly -->
+		<script>
+			window.onload = function(){
+				var location = "" + window.location;
+				if(location.charAt(location.length-1) !== '/'){
+					var newLocation = location + "/";
+					window.location = newLocation;
+				}
+			}
+		</script>
+
 
 		<!-- STYLESHEETS -->
+
+		<style>
+			.square {
+			    float:left;
+			    position: relative;
+			    width: 30%;
+			    padding-bottom: 30%; /* = width for a 1:1 aspect ratio */
+			    margin:1.66%;
+			    overflow:hidden;
+			}
+			
+			.content {
+			    position:absolute;
+			    height:80%; /* = 100% - 2*10% padding */
+			    width:90%; /* = 100% - 2*5% padding */
+			    padding: 10% 5%;
+			}	
+			
+			.table{
+			    display:table;
+			    height:100%;
+			    width:100%;
+			}
+			
+			.table-cell{
+			    display:table-cell;
+			    vertical-align:middle;
+			    height:100%;
+			    width:100%;
+			}			
+		</style>
 		
-		<title>Your Application</title>
+		<title>Examples</title>
 	</head>
 	<body>
 		<div>
-			<p>Hello World!</p>
+			<h2>RESTer Front-End Examples</h2>
+			<hr>
+			<div class="square">
+			    <div class="content">
+			        <div class="table">
+			            <div class="table-cell">
+							<a href="angularjs"><img src="images/angular.png"/></a>
+							<h3>AngularJS</h3>
+			            </div>
+			        </div>
+			    </div>
+			</div>			
 		</div>
 	</body>
 </html>
-
