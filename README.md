@@ -1,20 +1,21 @@
 #RESTer
 
-RESTer is a fork of moddity/Rester
-	
-##Requeriments
+RESTer started as a fork of moddity/Rester. It has reached a long way now after fixing existing bugs and adding more features in the original engine. Now it also bundles some more tool to get you productive quickly.
+
+##Requirements
 
 - PHP 5.4+ & PDO
 - MySQL
 
 ##Features
 
-- Create an API in 5 minutes. Just go to config.php and provide correct database credentials.
+- Create an API in 5 minutes. Now you don't even need to go to config.php and provide correct database credentials. When you load the application for the first time, it will ask you to connect to your database. You can change your credentials anytime by going to http://localhost:8080/configure/ 
 - You can run the system simply using plain old PHP server (php -S 0.0.0.0:8080) and browse http://localhost:8080 using your browser.
 - MySQL Adminer bundled at http://localhost:8080/admin/ Log on using correct database credentials and manage your database directly from within your browser.
 - Auto-generation of swagger-ui documentation on http://localhost:8080/docs/ 
 - Codeiad IDE bundled at http://localhost:8080/ide/ . Change your code on the fly from within your browser. See the output directly at http://localhost:8080/ide/workspace/your-project-folder
-- Two projects are already created in the IDE. 'web' and 'api'. Any APIs defined in api/index.php will be automatically loaded.
+- Two projects are already created in the IDE. 'web' and 'api'. Any APIs defined in api folder will be automatically loaded. There are some examples in the web folder. You may explore them from http://localhost:8080/ide/workspace/web/examples/
+AngularJS Example - http://localhost:8080/ide/workspace/web/examples/angularjs
 - Default credentials for IDE are as below:
 	username: admin
 	password: admin
