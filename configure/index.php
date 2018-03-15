@@ -12,6 +12,11 @@
 				var newLocation = location + "/";
 				window.location = newLocation;
 			}
+			if(("" + window.location).endsWith('configure/')){
+			  	var configForm = document.getElementById('configForm');
+        			configForm.action = configForm.action.replace("configure/","");
+			}
+
 		}
 		</script>
 
@@ -23,7 +28,7 @@
 
 <div class="container">
   <h2>MySQL Database Setup</h2>
-  <form action="generate-config.php" method="post">
+  <form id='configForm' action="generate-config.php" method="post">
     <div class="form-group">
       <label for="host">Host:</label>
       <input type="text" class="form-control" id="host" placeholder="Enter hostname" name="host">
