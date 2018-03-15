@@ -1,8 +1,25 @@
 <html>
 	<head>
+		<!--Append / at the end of URL to load everything properly -->
+		<script>
+		window.onload = function(){
+			var location = "" + window.location;
+			if(location.charAt(location.length-1) !== '/'){
+				var newLocation = location + "/";
+				window.location = newLocation;
+			}
+		}
+		</script>
+		
+		<!-- SCRIPTS -->
+
+		<!-- STYLESHEETS -->
+		
+		<title>Your Application</title>
 	</head>
 	<body>
 		<div>
+			<p>Hello World!</p>
 		</div>
 	</body>
 </html>
