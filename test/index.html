@@ -7,6 +7,18 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
+<!--Append / at the end of URL to load everything properly -->
+<script>
+window.onload = function(){
+	var location = "" + window.location;
+	if(location.charAt(location.length-1) !== '/' && !location.endsWith('.html')){
+		var newLocation = location + "/";
+		window.location = newLocation;
+	}
+}
+</script>
+
+	
 <!-- Le styles -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -92,11 +104,11 @@
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="#">REST test test...</a>
 				<div class="nav-collapse">
-					<ul class="nav">
+<!-- 					<ul class="nav">
 						<li><a target="_blank" href="https://github.com/jeroenooms/resttesttest">Source Code</a></li>
 						<li><a target="_blank" href="https://github.com/jeroenooms/resttesttest/issues/new">Submit Bug</a></li>
 						<li><a target="_blank" href="http://jeroenooms.github.io">Author</a></li>
-					</ul>
+					</ul> -->
 				</div>
 				<!--/.nav-collapse -->
 			</div>
