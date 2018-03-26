@@ -13,6 +13,7 @@ RESTer started as a fork of moddity/Rester. It has reached a long way now after 
 - You can run the system simply using plain old PHP server (php -S 0.0.0.0:8080) and browse http://localhost:8080 using your browser.
 - MySQL Adminer bundled at http://localhost:8080/admin/ Log on using correct database credentials and manage your database directly from within your browser.
 - Auto-generation of swagger-ui documentation on http://localhost:8080/docs/ 
+- [REST Test Test](https://resttesttest.com/) included at http://localhost:8080/test
 - Codeiad IDE bundled at http://localhost:8080/ide/ . Change your code on the fly from within your browser. See the output directly at http://localhost:8080/ide/workspace/your-project-folder
 - Two projects are already created in the IDE. 'web' and 'api'. Any APIs defined in api folder will be automatically loaded. There are some examples in the web folder. You may explore them from http://localhost:8080/ide/workspace/web/examples/
 AngularJS Example - http://localhost:8080/ide/workspace/web/examples/angularjs
