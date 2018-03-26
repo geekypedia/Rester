@@ -792,6 +792,7 @@ class ResterController {
 								if($proceed == true){
 									$subFilter = array($destinationRoute->primaryKey->fieldName => $relationObject[$destinationRoute->primaryKey->fieldName]);
 									$rawObj = $this->getObjectsFromRoute($destinationRoute, $subFilter);
+									$this->NESTED_COUNTER--;
 									$relationObject=$rawObj[0];
 								}
 							}
