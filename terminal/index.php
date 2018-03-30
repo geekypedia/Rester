@@ -662,7 +662,10 @@ class WebConsoleRPCServer extends BaseJsonRpcServer {
         else if (is_string($user) && !is_empty_string($user) && isset($HOME_DIRECTORY[$user]) && !is_empty_string($HOME_DIRECTORY[$user]))
             return $HOME_DIRECTORY[$user];
 
-        return getcwd();
+		$dir = getcwd() . '/../ide/workspace/';
+
+        return $dir;
+
     }
 
     // Environment
