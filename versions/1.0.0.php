@@ -128,14 +128,13 @@ $loginFunction = function($params = NULL) {
 		$update_id = $result[0]['id'];
 		$update_query = "update users set token = '$new_token' where id = '$update_id' and datediff(now(), lease) > 0";
 		$updated = $api->query($update_query);
-		if($updated){
-			$result = $api->getObjectsFromRouteName("users", $filter);
-			foreach ($result as &$r) {
-				$r['password'] = 'Not visible for security reasons';
-			}
-			
-			$api->showResult($result);
+		
+		$result = $api->getObjectsFromRouteName("users", $filter);
+		foreach ($result as &$r) {
+			$r['password'] = 'Not visible for security reasons';
 		}
+
+		$api->showResult($result);
 	}
 
 };
