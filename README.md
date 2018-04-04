@@ -24,13 +24,30 @@ AngularJS Example - http://localhost:8080/ide/workspace/web/examples/angularjs
 - Default credentials for terminal are as below:
 	username: admin
 	password: admin
+- Credentials for terminal and IDE are same and can be controlled from IDE.
 - MySQL Relation support
 - File upload support
 - Custom API functions
 - Filters
 
 
+
 ##Installation
+
+##New Way
+Just hit http://localhost:8080 and confiuration will begin.
+
+Files API and Simple Auth can be enabled just by going to api project from the IDE. Just add any php file and write the following commands
+
+//Enable simple auth and exclude specific APIs
+$exclude = array("METHOD route/path","METHOD route2/path2");
+enable_simple_auth($exclude);
+
+//Enable files api
+enable_files_api();
+
+
+##Old Way
 
 Edit `config.php`, here are some examples:
 
