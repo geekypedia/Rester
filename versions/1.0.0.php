@@ -45,9 +45,9 @@ function check_simple_auth($exclude)
 		//if(!$resterController) $resterController = new ResterController();
 		global $resterController;
 		$headers = getallheaders();
-		$auth_header = $headers['api_token'];
+		$auth_header = $headers['api_key'];
 		if($auth_header){
-			$value = $resterController->query("select * from users where token='$auth_header'");
+			$value = $resterController->query("select * from users where token='$auth_header' and datediff(now(), lease) = 0");
 			if($value){
 				return $value;
 			}
