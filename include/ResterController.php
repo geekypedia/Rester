@@ -581,6 +581,7 @@ class ResterController {
 	function getObjectsFromRoute($route, $filters = NULL, $orFilter = false) {
 		$this->NESTED_COUNTER++;
 		
+		if(isset($filters['api_key'])) unset($filters['api_key']);
 		
 		$result = $this->dbController->getObjectsFromDB($route, $filters, $this->getAvailableRoutes(), $orFilter);
 		
