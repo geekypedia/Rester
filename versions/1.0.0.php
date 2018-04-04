@@ -150,7 +150,7 @@ if(DEFAULT_LOGIN_API == true){
 
 function enable_simple_auth($exclude){
 	if(!DEFAULT_LOGIN_API){
-		global $resterController;
+		global $resterController, $loginCommand;
 		$resterController->addRouteCommand($loginCommand);
 		check_simple_auth(array_merge(array("POST users/login", "GET hello/world"), $exclude));
 	}
