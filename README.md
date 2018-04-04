@@ -39,13 +39,14 @@ Just hit http://localhost:8080 and confiuration will begin.
 
 Files API and Simple Auth can be enabled just by going to api project from the IDE. Just add any php file and write the following commands
 
+```php
 //Enable simple auth and exclude specific APIs
 $exclude = array("METHOD route/path","METHOD route2/path2");
 enable_simple_auth($exclude);
 
 //Enable files api
 enable_files_api();
-
+```
 
 ##Old Way
 
