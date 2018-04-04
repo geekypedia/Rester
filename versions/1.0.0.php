@@ -114,8 +114,24 @@ function uuid() {
     );
 }
 
-function check_simple_auth()
+function get_current_api_path(){
+	if(!$resterController) $resterController = new ResterController();
+	$currentMethod = $_SERVER['REQUEST_METHOD'];
+	$currentRoute = $resterController->getCurrentRoute();
+	$currentPath = $resterController->getCurrentPath()[0];
+	$currentApi = $currentMethod . ' ' . $currentRoute;
+	if($currentPath) $currentApi = $currentApi . '/' . $currentPath;
+	return $currentApi;
+}
+
+//$exclude = array("GET hello/world", "POST hello/world");
+function check_simple_auth($exclude)
 {
+		if($exclude){
+			if(in_array(get_current_api_path(), $exclude)){
+				return true;
+			}
+		}
 		if(!$resterController) $resterController = new ResterController();
 		$headers = getallheaders();
 		$auth_header = $headers['Authorization'];
