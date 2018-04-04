@@ -111,9 +111,10 @@ $loginFunction = function($params = NULL) {
 			email (string): email field string,
 			username (string): username field string,
 			password (string): password field string,
-			token (string): token field string
+			token (string): token field string,
+			lease (string): lease field string(timestamp)
 		}
-		where email and username should be marked as UNIQUE index and id as PRIMARY index
+		where email and username should be marked as UNIQUE index and id as PRIMARY index. lease should be CURRENT_TIMESTAMP and should change on update
 	*/
 	$result = $api->getObjectsFromRouteName("users", $filter);
 	
@@ -125,7 +126,7 @@ $loginFunction = function($params = NULL) {
 	else{
 		$new_token = uuid();
 		$update_id = $result[0]['id'];
-		$update_query = "update users set token = '$new_token' where id = '$update_id'";
+		$update_query = "update users set token = '$new_token' where id = '$update_id' and datediff(now(), lease) > 0";
 		$updated = $api->query($update_query);
 		if($updated){
 			$result = $api->getObjectsFromRouteName("users", $filter);
