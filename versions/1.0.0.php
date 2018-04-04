@@ -115,6 +115,19 @@ $loginFunction = function($params = NULL) {
 			lease (string): lease field string(timestamp)
 		}
 		where email and username should be marked as UNIQUE index and id as PRIMARY index. lease should be CURRENT_TIMESTAMP and should change on update
+		
+		DROP TABLE IF EXISTS `users`;
+		CREATE TABLE `users` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `email` varchar(100) NOT NULL,
+		  `username` varchar(50) NOT NULL,
+		  `password` varchar(100) NOT NULL,
+		  `token` varchar(50) NOT NULL,
+		  `lease` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		  PRIMARY KEY (`id`),
+		  UNIQUE KEY `email` (`email`)
+		);
+
 	*/
 	$result = $api->getObjectsFromRouteName("users", $filter);
 	
@@ -169,6 +182,13 @@ $resterController->addPublicMethod("POST", "users/login");
 //$resterController->addFileProcessor("files", "file");
 if(DEFAULT_FILE_API == true){
 	$resterController->addFileProcessor("files", "file");
+}
+
+function enable_files_api(){
+	if(!DEFAULT_FILE_API){
+		global $resterController;
+		$resterController->addFileProcessor("files", "file");
+	}
 }
 
 //Custom API
