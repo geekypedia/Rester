@@ -24,7 +24,8 @@ function uuid() {
 }
 
 function get_current_api_path(){
-	if(!$resterController) $resterController = new ResterController();
+	//if(!$resterController) $resterController = new ResterController();
+	global $resterController;
 	$currentMethod = $_SERVER['REQUEST_METHOD'];
 	$currentRoute = $resterController->getCurrentRoute();
 	$currentPath = $resterController->getCurrentPath()[0];
@@ -41,7 +42,8 @@ function check_simple_auth($exclude)
 				return true;
 			}
 		}
-		if(!$resterController) $resterController = new ResterController();
+		//if(!$resterController) $resterController = new ResterController();
+		global $resterController;
 		$headers = getallheaders();
 		$auth_header = $headers['api_token'];
 		if($auth_header){
