@@ -113,6 +113,26 @@ function uuid() {
     );
 }
 
+function check_simple_auth()
+{
+		if(!$resterController) $resterController = new ResterController();
+		$headers = getallheaders();
+		$auth_header = $headers['Authorization'];
+		if($auth_header){
+			$value = $resterController->query("select * from users where token='$auth_header'");
+			if($value){
+				return $value;
+			}
+			else
+			{
+				$resterController->showErrorWithMessage(401,"Unauthorized");
+			}
+		}
+		else{
+			$resterController->showErrorWithMessage(401,"Unauthorized");
+		}
+}
+
 
 //Custom API
 //$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
