@@ -43,7 +43,7 @@ function check_simple_auth($exclude)
 		}
 		if(!$resterController) $resterController = new ResterController();
 		$headers = getallheaders();
-		$auth_header = $headers['Authorization'];
+		$auth_header = $headers['api_token'];
 		if($auth_header){
 			$value = $resterController->query("select * from users where token='$auth_header'");
 			if($value){
