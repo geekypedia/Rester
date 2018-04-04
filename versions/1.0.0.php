@@ -47,7 +47,8 @@ $loginFunction = function($params = NULL) {
 			id (integer): id field integer,
 			email (string): email field string,
 			username (string): username field string,
-			password (string): password field string
+			password (string): password field string,
+			token (string): token field string
 		}
 		where email and username should be marked as UNIQUE index and id as PRIMARY index
 	*/
