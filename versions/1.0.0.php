@@ -1,5 +1,66 @@
 <?php
 
+//Custom Functions
+function uuid() {
+    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        // 32 bits for "time_low"
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+
+        // 16 bits for "time_mid"
+        mt_rand( 0, 0xffff ),
+
+        // 16 bits for "time_hi_and_version",
+        // four most significant bits holds version number 4
+        mt_rand( 0, 0x0fff ) | 0x4000,
+
+        // 16 bits, 8 bits for "clk_seq_hi_res",
+        // 8 bits for "clk_seq_low",
+        // two most significant bits holds zero and one for variant DCE1.1
+        mt_rand( 0, 0x3fff ) | 0x8000,
+
+        // 48 bits for "node"
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+    );
+}
+
+function get_current_api_path(){
+	if(!$resterController) $resterController = new ResterController();
+	$currentMethod = $_SERVER['REQUEST_METHOD'];
+	$currentRoute = $resterController->getCurrentRoute();
+	$currentPath = $resterController->getCurrentPath()[0];
+	$currentApi = $currentMethod . ' ' . $currentRoute;
+	if($currentPath) $currentApi = $currentApi . '/' . $currentPath;
+	return $currentApi;
+}
+
+//$exclude = array("GET hello/world", "POST hello/world");
+function check_simple_auth($exclude)
+{
+		if($exclude){
+			if(in_array(get_current_api_path(), $exclude)){
+				return true;
+			}
+		}
+		if(!$resterController) $resterController = new ResterController();
+		$headers = getallheaders();
+		$auth_header = $headers['Authorization'];
+		if($auth_header){
+			$value = $resterController->query("select * from users where token='$auth_header'");
+			if($value){
+				return $value;
+			}
+			else
+			{
+				$resterController->showErrorWithMessage(401,"Unauthorized");
+			}
+		}
+		else{
+			$resterController->showErrorWithMessage(401,"Unauthorized");
+		}
+}
+
+
+
 /**
 * Sample custom login command
 */
@@ -60,11 +121,18 @@ $loginFunction = function($params = NULL) {
 		$api->showResult($errorResult);
 	}
 	else{
-		foreach ($result as &$r) {
-			$r['password'] = 'Not visible for security reasons';
+		$new_token = uuid();
+		$update_id = $result[0]['id'];
+		$update_query = "update users set token = '$new_token' where id = '$update_id'";
+		$updated = $api->query($update_query);
+		if($updated){
+			$result = $api->getObjectsFromRouteName("users", $filter);
+			foreach ($result as &$r) {
+				$r['password'] = 'Not visible for security reasons';
+			}
+			
+			$api->showResult($result);
 		}
-		
-		$api->showResult($result);
 	}
 
 };
@@ -75,6 +143,7 @@ $loginCommand = new RouteCommand("POST", "users", "login", $loginFunction, array
 //$resterController->addRouteCommand($loginCommand);
 if(DEFAULT_LOGIN_API == true){
 	$resterController->addRouteCommand($loginCommand);
+	check_simple_auth(array("POST users/login"));
 }
 
 
@@ -90,66 +159,6 @@ $resterController->addPublicMethod("POST", "users/login");
 if(DEFAULT_FILE_API == true){
 	$resterController->addFileProcessor("files", "file");
 }
-
-//Custom Functions
-function uuid() {
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        // 32 bits for "time_low"
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-
-        // 16 bits for "time_mid"
-        mt_rand( 0, 0xffff ),
-
-        // 16 bits for "time_hi_and_version",
-        // four most significant bits holds version number 4
-        mt_rand( 0, 0x0fff ) | 0x4000,
-
-        // 16 bits, 8 bits for "clk_seq_hi_res",
-        // 8 bits for "clk_seq_low",
-        // two most significant bits holds zero and one for variant DCE1.1
-        mt_rand( 0, 0x3fff ) | 0x8000,
-
-        // 48 bits for "node"
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-    );
-}
-
-function get_current_api_path(){
-	if(!$resterController) $resterController = new ResterController();
-	$currentMethod = $_SERVER['REQUEST_METHOD'];
-	$currentRoute = $resterController->getCurrentRoute();
-	$currentPath = $resterController->getCurrentPath()[0];
-	$currentApi = $currentMethod . ' ' . $currentRoute;
-	if($currentPath) $currentApi = $currentApi . '/' . $currentPath;
-	return $currentApi;
-}
-
-//$exclude = array("GET hello/world", "POST hello/world");
-function check_simple_auth($exclude)
-{
-		if($exclude){
-			if(in_array(get_current_api_path(), $exclude)){
-				return true;
-			}
-		}
-		if(!$resterController) $resterController = new ResterController();
-		$headers = getallheaders();
-		$auth_header = $headers['Authorization'];
-		if($auth_header){
-			$value = $resterController->query("select * from users where token='$auth_header'");
-			if($value){
-				return $value;
-			}
-			else
-			{
-				$resterController->showErrorWithMessage(401,"Unauthorized");
-			}
-		}
-		else{
-			$resterController->showErrorWithMessage(401,"Unauthorized");
-		}
-}
-
 
 //Custom API
 //$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
