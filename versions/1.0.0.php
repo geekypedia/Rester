@@ -143,8 +143,17 @@ $loginCommand = new RouteCommand("POST", "users", "login", $loginFunction, array
 //$resterController->addRouteCommand($loginCommand);
 if(DEFAULT_LOGIN_API == true){
 	$resterController->addRouteCommand($loginCommand);
-	check_simple_auth(array("POST users/login"));
+	check_simple_auth(array("POST users/login", "GET hello/world"));
 }
+
+function enable_simple_auth($exclude){
+	if(!DEFAULT_LOGIN_API){
+		global $resterController;
+		$resterController->addRouteCommand($loginCommand);
+		check_simple_auth(array_merge(array("POST users/login", "GET hello/world"), $exclude));
+	}
+}
+
 
 
 //Test Login using GET
