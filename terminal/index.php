@@ -14,6 +14,21 @@ $NO_LOGIN = false;
 $USER = 'admin';
 $PASSWORD = 'admin';
 
+//GET PASSWORD FROM Codiad Settings
+$users_file = '../ide/data/users.php';
+function get_password($users_file){
+	$data = file_get_contents($users_file);
+	$startpos = strpos($data, "[");
+	$endpos = strrpos($data, "]");
+	$len = $endpos - $startpos + 1;
+	$realdata = substr($data, $startpos, $len);
+	$obj = (array) json_decode($realdata, true);
+	$password = $obj[0]['password'];
+	return $password;	
+}
+$PASSWORD = get_password($users_file);
+
+
 // Multi-user credentials
 // Example: $ACCOUNTS = array('user1' => 'password1', 'user2' => 'password2');
 $ACCOUNTS = array();
@@ -21,7 +36,10 @@ $ACCOUNTS = array();
 // Password hash algorithm (password must be hashed)
 // Example: $PASSWORD_HASH_ALGORITHM = 'md5';
 //          $PASSWORD_HASH_ALGORITHM = 'sha256';
-$PASSWORD_HASH_ALGORITHM = '';
+$PASSWORD_HASH_ALGORITHM = 'md5';
+
+// Password hash algorithm to run second time
+$PASSWORD_HASH_ALGORITHM_DOUBLE = 'sha1';
 
 // Home directory (multi-user mode supported)
 // Example: $HOME_DIRECTORY = '/tmp';
@@ -537,6 +555,7 @@ if (!isset($NO_LOGIN)) $NO_LOGIN = false;
 if (!isset($ACCOUNTS)) $ACCOUNTS = array();
 if (isset($USER) && isset($PASSWORD) && $USER && $PASSWORD) $ACCOUNTS[$USER] = $PASSWORD;
 if (!isset($PASSWORD_HASH_ALGORITHM)) $PASSWORD_HASH_ALGORITHM = '';
+if (!isset($PASSWORD_HASH_ALGORITHM_DOUBLE)) $PASSWORD_HASH_ALGORITHM_DOUBLE = '';
 if (!isset($HOME_DIRECTORY)) $HOME_DIRECTORY = '';
 $IS_CONFIGURED = ($NO_LOGIN || count($ACCOUNTS) >= 1) ? true : false;
 
@@ -616,10 +635,12 @@ class WebConsoleRPCServer extends BaseJsonRpcServer {
         $password = trim((string) $password);
 
         if ($user && $password) {
-            global $ACCOUNTS, $PASSWORD_HASH_ALGORITHM;
+            global $ACCOUNTS, $PASSWORD_HASH_ALGORITHM, $PASSWORD_HASH_ALGORITHM_DOUBLE;
 
             if (isset($ACCOUNTS[$user]) && !is_empty_string($ACCOUNTS[$user])) {
                 if ($PASSWORD_HASH_ALGORITHM) $password = get_hash($PASSWORD_HASH_ALGORITHM, $password);
+		    
+		if ($PASSWORD_HASH_ALGORITHM_DOUBLE) $password = get_hash($PASSWORD_HASH_ALGORITHM_DOUBLE, $password);
 
                 if (is_equal_strings($password, $ACCOUNTS[$user]))
                     return $user . ':' . get_hash('sha256', $password);
