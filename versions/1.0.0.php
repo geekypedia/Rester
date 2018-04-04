@@ -179,6 +179,14 @@ function enable_simple_auth($exclude){
 $resterController->addPublicMethod("POST", "users/login");
 
 //Add file processor. parameter db_name, db_field. will update the db field based on relative path
+/*
+	DROP TABLE IF EXISTS `files`;
+	CREATE TABLE `files` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `file` varchar(512) NOT NULL,
+	  PRIMARY KEY (`id`)
+	);
+*/
 //$resterController->addFileProcessor("files", "file");
 if(DEFAULT_FILE_API == true){
 	$resterController->addFileProcessor("files", "file");
