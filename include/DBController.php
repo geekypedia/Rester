@@ -381,7 +381,7 @@ class DBController
 		
 		//COUNT ONLY
 		if($countOnly){
-			$query .= "COUNT(*)";
+			$query .= "COUNT(*) as count";
 		}
 		else{
 			$query .= implode(",", $selectFields);
@@ -440,7 +440,9 @@ class DBController
 				$query .= sprintf(' OFFSET %u', $filters['offset']);
 			}
 		} else { //Default limit
-			$query .= " LIMIT 1000";
+			if(!$countOnly){
+				$query .= " LIMIT 1000";
+			}
 		}
 		
 		
