@@ -100,6 +100,9 @@ To put this into practice below are some example of how you would use the Rester
 	# Get all the customers named LIKE Tom; (Tom, Tomato, Tommy...)
 	GET http://api.example.com/customers/?name[in]=Tom
 
+	# Get count of the customers
+	GET http://api.example.com/customers/?count=true
+
 	# Create a new row in the "customers" table where the POST data corresponds to the database fields
 	POST http://api.example.com/customers
 
