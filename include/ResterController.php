@@ -738,7 +738,17 @@ class ResterController {
 		
 		$result = $this->dbController->Query($query);*/
 		
-		$response = $this->processRawObjects($route, $result);
+		//Process Raw Objects
+		//$response = $this->processRawObjects($route, $result);
+		
+		//Don't process Raw object for count only queries, otherwise process
+		if($filters['count']) {
+			$response = $result;
+		} else
+		{
+			$response = $this->processRawObjects($route, $result);
+		}
+
 		
 		if(!isset($response)) {
 			return NULL;
