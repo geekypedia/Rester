@@ -246,6 +246,12 @@ class DBController
 		$joins = array();
 		$queryFields = array();
 		
+		//Order Stuff
+		if(isset($filters['count'])) {
+			$countOnly=$filters['count'];
+			unset($filters['count']);
+		}
+		
 		
 		//Order Stuff
 		if(isset($filters['order'])) {
@@ -372,7 +378,18 @@ class DBController
 		// Construct the query
 		
 		$query = "SELECT ";
-		$query .= implode(",", $selectFields);
+		
+		//COUNT ONLY
+		if($countOnly){
+			$query .= "COUNT(*)";
+		}
+		else{
+			$query .= implode(",", $selectFields);
+		}
+		
+		//OLDER WAY WITHOUT COUNT
+		//$query .= implode(",", $selectFields);
+		
 		$query .= " FROM ";
 		foreach($selectTables as $t => $ta) {
 			$tablesFormatted[] = $t." as ".$ta;
