@@ -140,7 +140,7 @@ $loginFunction = function($params = NULL) {
 	else{
 		$new_token = uuid();
 		$update_id = $result[0]['id'];
-		$update_query = "update users set token = '$new_token' where id = '$update_id' and datediff(now(), lease) > 0";
+		$update_query = "update users set token = '$new_token', lease=now() where id = '$update_id' and datediff(now(), lease) > 0";
 		$updated = $api->query($update_query);
 		
 		$result = $api->getObjectsFromRouteName("users", $filter);
