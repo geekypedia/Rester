@@ -1,7 +1,7 @@
-#RESTer#
------
+RESTer
+=====
 
-##Introduction
+Introduction
 -----
 
 RESTer started as a fork of moddity/Rester. It has reached a long way now after fixing existing bugs and adding more features in the original engine. Now it also bundles some more tool to get you productive quickly.
