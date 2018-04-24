@@ -4,10 +4,11 @@
 define('API_VERSION', "1.0.0");
 
 //Initialize Configuration
-$configPath = __DIR__.'/config.json';
+$configPath = __DIR__.'/rester.config';
 if(file_exists($configPath)){
     $configContents = file_get_contents($configPath);
-    $configJson = ($configContents);
+    $configDecoded = base64_decode($configContents);
+    $configJson = ($configDecoded);
     $config = json_decode($configJson);
 }
 else{
