@@ -12,7 +12,9 @@ Installation
 It is extremely easy get quickly up and running using RESTer!
 
 `git clone https://github.com/geekypedia/rester`
+
 `cd rester`
+
 `php -S 0.0.0.0:8080`
 
 Now just open the following link:
