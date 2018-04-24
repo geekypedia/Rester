@@ -1,13 +1,44 @@
 #RESTer
+-----
+
+##Introduction
+-----
 
 RESTer started as a fork of moddity/Rester. It has reached a long way now after fixing existing bugs and adding more features in the original engine. Now it also bundles some more tool to get you productive quickly.
 
-##Requirements
+##Installation
+-----
 
-- PHP 5.4+ & PDO
-- MySQL
+It is extremely easy get quickly up and running using RESTer!
+
+`
+git clone https://github.com/geekypedia/rester
+cd rester
+php -S 0.0.0.0:8080
+`
+
+Now just open the following link:
+
+<a href="http://localhost:8080/" target="_blank">http://localhost:8080</a>
+
+
+##Prerequisites
+-----
+
+You need PHP 5.4+ to run the application. You will also need the have the access to a MySQL server database. You can run the following commands to make sure all php dependencies are taken care of.
+
+`
+sudo apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-zip
+`
+
+If you wish to deploy it to Apache server, then you need to make sure that you run the follwing commands.
+
+`
+sudo apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-zip
+`
 
 ##Features
+-----
 
 - Create an API in 5 minutes. Now you don't even need to go to config.php and provide correct database credentials. When you load the application for the first time, it will ask you to connect to your database. You can change your credentials anytime by going to http://localhost:8080/configure/ 
 - You can run the system simply using plain old PHP server (php -S 0.0.0.0:8080) and browse http://localhost:8080 using your browser.
@@ -30,47 +61,8 @@ AngularJS Example - http://localhost:8080/ide/workspace/web/examples/angularjs
 - Custom API functions
 - Filters
 
-
-
-##Installation
-
-##New Way
-Just hit http://localhost:8080 and confiuration will begin.
-
-Files API and Simple Auth can be enabled just by going to api project from the IDE. Just add any php file and write the following commands
-
-```php
-//Enable simple auth and exclude specific APIs
-$exclude = array("METHOD route/path","METHOD route2/path2");
-enable_simple_auth($exclude);
-
-//Enable files api
-enable_files_api();
-```
-
-##Old Way
-
-Edit `config.php`, here are some examples:
-
-```php
-/** The API Version */
-define('API_VERSION', "1.0.0");
-
-/** Database credentials */
-define('DBHOST', 'localhost');
-define('DBNAME', 'mydb');
-define('DBUSER', 'dbuser');
-define('DBPASSWORD', 'dbpassword');
-
-/** Enable logging on error.log */
-//define('LOG_VERBOSE', true);
-
-/** Path where uploads */
-define('FILE_UPLOAD_PATH', 'uploads');
-
-```
-
 ##API Design
+-----
 
 The actual API design is very straightforward and follows the design patterns of the majority of APIs.
 
@@ -128,14 +120,18 @@ Please note that `GET` calls accept the following query string variables:
 
 
 ##Changelog
+-----
 
 - **beta** 
 
 ##Credits
+-----
+
 RESTer adds enhancements over moddity/Rester (https://github.com/moddity/Rester)
 Rester is a nearly complete rewrite of [ArrestDB](ArrestDB: https://github.com/alixaxel/ArrestDB) with many additional features.
 ArrestDB is a complete rewrite of [Arrest-MySQL](https://github.com/gilbitron/Arrest-MySQL) with several optimizations and additional features.
 
 ##License (MIT)
+-----
 
 Copyright (c) 2017 Geekypedia (http://www.geekypedia.net)
