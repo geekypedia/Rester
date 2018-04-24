@@ -1,5 +1,7 @@
 <?php
 
+require_once('configure/lib.php');
+
 //The api version, must have a php file on versions folder to include
 define('API_VERSION', "1.0.0");
 
@@ -7,7 +9,7 @@ define('API_VERSION', "1.0.0");
 $configPath = __DIR__.'/rester.config';
 if(file_exists($configPath)){
     $configContents = file_get_contents($configPath);
-    $configDecoded = base64_decode($configContents);
+    $configDecoded = $encode_decode_simple->decode($configContents);
     $configJson = ($configDecoded);
     $config = json_decode($configJson);
 }
