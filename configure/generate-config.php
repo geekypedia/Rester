@@ -1,7 +1,8 @@
 <?php
-$configFile = "../config.json";
+$configFile = "../rester.config";
 $config = json_encode($_POST);
-file_put_contents($configFile,$config);
+$config_encoded = base64_encode($config);
+file_put_contents($configFile,$config_encoded);
 
 header("Location: ../");
 ?>
