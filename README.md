@@ -6,7 +6,7 @@ Introduction
 
 RESTer started as a fork of moddity/Rester. It has reached a long way now after fixing existing bugs and adding more features in the original engine. Now it also bundles some more tool to get you productive quickly.
 
-##Installation
+Installation
 -----
 
 It is extremely easy get quickly up and running using RESTer!
@@ -20,7 +20,7 @@ Now just open the following link:
 <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a>
 
 
-##Prerequisites
+Prerequisites
 -----
 
 You need PHP 5.4+ to run the application. You will also need the have the access to a MySQL server database. You can run the following commands to make sure all php dependencies are taken care of. The following commands use PHP 7.0. You can modify them to match your version.
@@ -31,7 +31,7 @@ If you wish to deploy it to Apache server, then you need to make sure that you r
 
 `sudo apt-get install -y libapache2-mod-php7.0 `
 
-##Features
+Features
 -----
 
 - Create an API in 5 minutes. Now you don't even need to go to config.php and provide correct database credentials. When you load the application for the first time, it will ask you to connect to your database. You can change your credentials anytime by going to http://localhost:8080/configure/ 
@@ -55,7 +55,7 @@ AngularJS Example - http://localhost:8080/ide/workspace/web/examples/angularjs
 - Custom API functions
 - Filters
 
-##API Design
+API Design
 -----
 
 The actual API design is very straightforward and follows the design patterns of the majority of APIs.
@@ -112,20 +112,14 @@ Please note that `GET` calls accept the following query string variables:
 - `parameter[le]` (less or equals search)
 - `orFilter` (or contition for the multiple parameters)
 
-
-##Changelog
------
-
-- **beta** 
-
-##Credits
+Credits
 -----
 
 RESTer adds enhancements over moddity/Rester (https://github.com/moddity/Rester)
 Rester is a nearly complete rewrite of [ArrestDB](ArrestDB: https://github.com/alixaxel/ArrestDB) with many additional features.
 ArrestDB is a complete rewrite of [Arrest-MySQL](https://github.com/gilbitron/Arrest-MySQL) with several optimizations and additional features.
 
-##License (MIT)
+License (MIT)
 -----
 
 Copyright (c) 2017 Geekypedia (http://www.geekypedia.net)
