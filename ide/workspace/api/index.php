@@ -34,7 +34,7 @@
 		DROP TABLE IF EXISTS `files`;
 		CREATE TABLE `files` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `file` varchar(512) NOT NULL,
+		  `file` varchar(512) DEFAULT NULL,
 		  PRIMARY KEY (`id`)
 		);
 	*/
