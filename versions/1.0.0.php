@@ -140,7 +140,7 @@ $loginFunction = function($params = NULL) {
 	else{
 		$new_token = uuid();
 		$update_id = $result[0]['id'];
-		$update_query = "update users set token = '$new_token', lease=now() where id = '$update_id' and datediff(now(), lease) > 0";
+		$update_query = "update users set token = '$new_token', lease=now() where id = '$update_id' and datediff(now(), ifnull(lease, subdate(now(), 2))) > 0";
 		$updated = $api->query($update_query);
 		
 		$result = $api->getObjectsFromRouteName("users", $filter);
@@ -184,7 +184,7 @@ $resterController->addPublicMethod("POST", "users/login");
 	DROP TABLE IF EXISTS `files`;
 	CREATE TABLE `files` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
-	  `file` varchar(512) NOT NULL,
+	  `file` varchar(512) DEFAULT NULL,
 	  PRIMARY KEY (`id`)
 	);
 */
