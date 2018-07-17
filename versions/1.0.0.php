@@ -1,5 +1,18 @@
 <?php
 
+//If getallheaders doesn't exist
+if (!function_exists('getallheaders')) {
+    function getallheaders() {
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        return $headers;
+    }
+}
+
 //Custom Functions
 function uuid() {
     return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
@@ -47,6 +60,11 @@ function check_simple_auth($exclude)
 		$headers = getallheaders();
 		$auth_header = $headers['api_key'];
 		if(!$auth_header) $auth_header = $_REQUEST['api_key'];
+		if(!$auth_header){
+			foreach($headers as $key=>$val){
+				if($key == 'api_key') $auth_header = $val;
+			}
+		}
 		if($auth_header){
 			$value = $resterController->query("select * from users where token='$auth_header' and datediff(now(), lease) = 0");
 			if($value){
