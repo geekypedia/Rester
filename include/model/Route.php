@@ -97,11 +97,12 @@ class Route {
 
 			if($rf->fieldType == "boolean") {
 				$jsonValue = json_encode($object[$rf->fieldName]);
+				$lowerValue = strtolower($object[$rf->fieldName]);
 				$bitZero = "\"\\u0000\"";
 				$bitOne = "\"\\u0001\"";
-				if($jsonValue == $bitOne){
+				if($jsonValue == $bitOne || $lowerValue == "true"){
 					$object[$rf->fieldName] = true;
-				} else if ($jsonValue == $bitZero){
+				} else if ($jsonValue == $bitZero ||  $lowerValue == "false"){
 					$object[$rf->fieldName] = false;
 				} else {
 					$object[$rf->fieldName]= (bool) $object[$rf->fieldName];
