@@ -988,6 +988,14 @@ class ResterController {
 	
 	public function getRoot() {
 		$root = preg_replace('~/++~', '/', substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME'])) . '/');
+		
+		//In case PHP_SELF does not work
+		//$apiPrefix = "";
+		//$root = $_SERVER['REQUEST_URI'];
+		//$root = substr($root, strlen($apiPrefix));
+		//$pos = strpos($root, '?');
+		//if($pos > -1) $root = substr($root,0, $pos);		
+		
 		return $root;
 	}
 	
