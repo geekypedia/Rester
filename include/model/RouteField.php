@@ -19,9 +19,14 @@ class RouteField {
 			$type = "integer";
 		}
 		
+		if(strpos($mysqlType, "float") !== false || strpos($mysqlType, "double") !== false) {
+			$type = "float";
+		}
+
 		if(strtolower($mysqlType) == "enum('false','true')" 
 				|| strtolower($mysqlType) == "enum('true','false')" 
-				|| strpos($mysqlType, "bool") !== false) {
+				|| strpos($mysqlType, "bool") !== false
+				|| strpos($mysqlType, "bit") !== false) {
 			$type = "boolean";
 		}
 		
