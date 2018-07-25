@@ -909,10 +909,10 @@ class ResterController {
 	
 		ResterUtils::Log("*** DISPLAY RESULT TO API ***");
 	
-		if ($result === false || count($result) == 0) {
+		if (empty($result) === true) {
+			$this->showErrorWithMessage(204, "No content");
+		} else if ($result === false || count($result) == 0) {
 			$this->showError(404);
-		} else if (empty($result) === true) {
-			$this->showError(204);
 		} else if($result === true || (is_int($result) && $result >= 1) ) {
 			$this->doResponse(ApiResponse::successResponse());
 		} else {
