@@ -90,8 +90,22 @@ class Route {
 					$object[$rf->fieldName]=intval($object[$rf->fieldName]);
 			}
 			
+			if($rf->fieldType == "float") {
+				if(isset($object[$rf->fieldName]))
+					$object[$rf->fieldName]=floatval($object[$rf->fieldName]);
+			}
+
 			if($rf->fieldType == "boolean") {
-				$object[$rf->fieldName]= (bool)$object[$rf->fieldName];
+				$jsonValue = json_encode($object[$rf->fieldName]);
+				$bitZero = "\"\\u0000\"";
+				$bitOne = "\"\\u0001\"";
+				if($jsonValue == $bitOne){
+					$object[$rf->fieldName] = true;
+				} else if ($jsonValue == $bitZero){
+					$object[$rf->fieldName] = false;
+				} else {
+					$object[$rf->fieldName]= (bool) $object[$rf->fieldName];
+				}
 			}
 			
 			if($rf->fieldType == "json") {
