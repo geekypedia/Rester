@@ -142,7 +142,7 @@ $loginFunction = function($params = NULL) {
 		  `username` varchar(50) NOT NULL,
 		  `password` varchar(100) NOT NULL,
 		  `token` varchar(50) NOT NULL,
-		  `lease` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		  `lease` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `email` (`email`)
 		);
@@ -158,7 +158,7 @@ $loginFunction = function($params = NULL) {
 	else{
 		$new_token = uuid();
 		$update_id = $result[0]['id'];
-		$update_query = "update users set token = '$new_token', lease=now() where id = '$update_id' and datediff(now(), ifnull(lease, subdate(now(), 2))) > 0";
+		$update_query = "update users set token = '$new_token', lease=now() where id = '$update_id' and ifnull(datediff(now(), lease), 1) > 0";
 		$updated = $api->query($update_query);
 		
 		$result = $api->getObjectsFromRouteName("users", $filter);
