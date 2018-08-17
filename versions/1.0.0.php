@@ -54,7 +54,7 @@ function send_email_sparkpost($from, $to, $subject, $body, $api_key){
 	for ($i=0; $i < count($to); $i++) { 
 		array_push($recipients, array("address" => $to[$i]));
 	}
-	$payload =json_encode(array("content" => array("from"=>$from,"subject"=>$subject, "text"=>$body),"recipients"=>$recipients));
+	$payload =json_encode(array("content" => array("from"=>$from,"subject"=>$subject, "html"=>$body),"recipients"=>$recipients));
 	$headers = [
 		//'Content-Type: application/json',
 		'Authorization: ' . $api_key
