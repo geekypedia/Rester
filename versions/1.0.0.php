@@ -14,6 +14,65 @@ if (!function_exists('getallheaders')) {
 }
 
 //Custom Functions
+function url_get($url, $params = null, $headers = null){
+	$ch = curl_init();
+
+	curl_setopt($ch, CURLOPT_URL,$url);
+	if($params != null) curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($params));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+	$server_output = curl_exec ($ch);
+
+	curl_close ($ch);
+
+	return $server_output;
+}
+
+
+function url_post($url, $payload = null, $headers = null){
+
+	$ch = curl_init();
+
+	curl_setopt($ch, CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	if($payload != null) curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+	$server_output = curl_exec ($ch);
+
+	curl_close ($ch);
+
+	return $server_output;
+
+}
+
+function send_email_sparkpost($from, $to, $subject, $body, $api_key){
+	$url = "https://api.sparkpost.com/api/v1/transmissions";
+	$recipients = array();
+	for ($i=0; $i < count($to); $i++) { 
+		array_push($recipients, array("address" => $to[$i]));
+	}
+	$payload =json_encode(array("content" => array("from"=>$from,"subject"=>$subject, "text"=>$body),"recipients"=>$recipients));
+	$headers = [
+		//'Content-Type: application/json',
+		'Authorization: ' . $api_key
+	];
+	echo $payload;
+
+	return url_post($url, $payload, $headers);
+}
+
+
+//Usage
+//$from = "youremail@yourdomain.com";
+//$to = ["recepientsemail@theirdomain.com"];
+//$api_key = "YOUR_SPARKPOST_API_KEY";
+//$subject = "SUBJECT HERE";
+//$body = "TEXT HERE";
+//echo send_email_sparkpost($from, $to, $subject, $body, $api_key);
+
 function uuid() {
     return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
         // 32 bits for "time_low"
