@@ -17,9 +17,13 @@ It is extremely easy get quickly up and running using RESTer!
 
 `php -S 0.0.0.0:8080`
 
-Now just open the following link:
+Now just open the following link to open sample webapp:
 
-<a href="http://localhost:8080/" target="_blank">http://localhost:8080</a>
+<a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> 
+
+Use the follwoing link to configure the API
+
+<a href="http://localhost:8080/configure" target="_blank">http://localhost:8080/configure</a> 
 
 
 Prerequisites
