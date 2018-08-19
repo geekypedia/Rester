@@ -987,15 +987,20 @@ class ResterController {
 	/*************************************/
 	
 	public function getRoot() {
+		//Original Code
 		$root = preg_replace('~/++~', '/', substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME'])) . '/');
-		
+
 		//In case PHP_SELF does not work
-		//$apiPrefix = "";
-		//$root = $_SERVER['REQUEST_URI'];
-		//$root = substr($root, strlen($apiPrefix));
-		//$pos = strpos($root, '?');
-		//if($pos > -1) $root = substr($root,0, $pos);		
-		
+		$script_path = $_SERVER['PHP_SELF'];
+		$script_name = "/index.php";
+		$script_pos = strpos($script_path, $script_name);
+		$apiPrefix = substr($script_path, 0, $script_pos);
+		$root = $_SERVER['REQUEST_URI'];
+		$root = substr($root, strlen($apiPrefix));
+		$pos = strpos($root, '?');
+		if($pos > -1) $root = substr($root,0, $pos);
+		if($root[strlen($root) - 1] != '/') $root = $root . '/';
+
 		return $root;
 	}
 	
