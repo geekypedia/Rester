@@ -81,7 +81,13 @@ OR
 
 `./serve.sh`
 
-If you have an existing database that you want to use, just go to the following URL. <a href="http://localhost:8080/api" target="_blank">http://localhost:8080/api</a>. When you are running this application for the first time, you will see prompt to provide your database credentials. Don't worry if you make a mistake here. You can always re-configure it by hitting the following URL again. <a href="http://localhost:8080/api/configure" target="_blank">http://localhost:8080/api/configure</a>.
+If you have an existing database that you want to use, just go to the following URL. 
+
+`<a href="http://localhost:8080/api" target="_blank">http://localhost:8080/api</a>` 
+
+When you are running this application for the first time, you will see prompt to provide your database credentials. Don't worry if you make a mistake here. You can always re-configure it by hitting the following URL again. 
+
+`<a href="http://localhost:8080/api/configure" target="_blank">http://localhost:8080/api/configure</a>`
 
 #### Check the generated API docs and testing tool
 
