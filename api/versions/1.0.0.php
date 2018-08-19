@@ -303,7 +303,7 @@ function getAllSubDirectories( $directory, $directory_seperator )
 	return $dirs;
 }
 
-$apiDirectory = __DIR__.'/../ide/workspace/api/';
+$apiDirectory = __DIR__.'/../../ide/workspace/api/';
 
 $subDirectories = getAllSubDirectories($apiDirectory,'/');
 
