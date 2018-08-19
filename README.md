@@ -17,6 +17,7 @@ Features
 
 + Automatically and dynamically converts MySQL tables to RESTful APIs without writing a single line of code.
 + All relations within tables are maintained in APIs.
++ Strong query engine. Query your APIs as you would do in SQL.
 + Changes in the database are immediately reflected in APIs, without having to restart the process.
 + Changes in the APIs are immediately reflected in API documentation without having to regenerate anything.
 + Test your APIs without having to install any plug-ins in your browser.
@@ -44,13 +45,15 @@ Now just open the following link to configure the engine with the database: <a h
 
 You can use the following endpoints to use the system.
 
-|Web						| <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> |
-|API						| <a href="http://localhost:8080/api/" target="_blank">http://localhost:8080/api</a> |
-|API Documentation			| <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> |
-|API Testing Tool			| <a href="http://localhost:8080/api/test/" target="_blank">http://localhost:8080/api/test</a> |
-|Database Administration	| <a href="http://localhost:8080/db/" target="_blank">http://localhost:8080/db</a> |
-|Code Editor				| <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> |
-|Terminal					| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
+|Component						| URL									|
+|-------------------------------|---------------------------------------|
+|Web							| <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> |
+|API							| <a href="http://localhost:8080/api/" target="_blank">http://localhost:8080/api</a> |
+|API Documentation				| <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> |
+|API Testing Tool				| <a href="http://localhost:8080/api/test/" target="_blank">http://localhost:8080/api/test</a> |
+|Database Administration		| <a href="http://localhost:8080/db/" target="_blank">http://localhost:8080/db</a> |
+|Code Editor					| <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> |
+|Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
 
 Prerequisites
 -----
@@ -101,7 +104,11 @@ Readymade APIs are good but what if you want to create your own customized API? 
 
 Inside the 'web' project, you would find some examples that you can use to learn how you can utilize existing frameworks such as angularjs to call the restful APIs and all.
 
-By default, <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> will redirct you to <a href="http://localhost:8080/ide/workspace/web" target="_blank">http://localhost:8080/ide/workspace/web</a>. So whatever you create/modify inside the 'web' project can directly be tested in browser. If you deploy this toolset without any modification, you can actually make changes in live application code without any downtime. However, this scenario is most likely useful in development and beta phase only. When you are ready for production, you can simple copy the content inside your 'web' project to the root folder.
+By default, <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> will redirct you to <a href="http://localhost:8080/ide/workspace/web" target="_blank">http://localhost:8080/ide/workspace/web</a>. 
+
+So whatever you create/modify inside the 'web' project can directly be tested in browser. If you deploy this toolset without any modification, you can actually make changes in live application code without any downtime. However, this scenario is most likely useful in development and beta phase only. When you are ready for production, you can simple copy the content inside your 'web' project to the root folder.
+
+There are some samples in the 'examples' folder under 'web' project. You may explore them at: http://localhost:8080/ide/workspace/web/examples/
 
 ##### You can do more
 
@@ -205,31 +212,12 @@ You don't need to. There is a built in API for the same.
 6. You can use the API Docs to see the new Files API and you can test it out from there: <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> 
 
 
-Features
+What are the default credentials for IDE and Terminal?
 -----
+Username: admin
+Password: admin
 
-- Create an API in 5 minutes. Now you don't even need to go to config.php and provide correct database credentials. When you load the application for the first time, it will ask you to connect to your database. You can change your credentials anytime by going to http://localhost:8080/configure/ 
-- You can run the system simply using plain old PHP server (php -S 0.0.0.0:8080) and browse http://localhost:8080/api using your browser.
-- MySQL Adminer bundled at http://localhost:8080/db/ Log on using correct database credentials and manage your database directly from within your browser.
-- Auto-generation of swagger-ui documentation on http://localhost:8080/api/docs/ 
-- [REST Test Test](https://resttesttest.com/) included at http://localhost:8080/api/test
-- Codeiad IDE bundled at http://localhost:8080/ide/ . Change your code on the fly from within your browser. See the output directly at http://localhost:8080/ide/workspace/your-project-folder
-- Two projects are already created in the IDE. 'web' and 'api'. Any APIs defined in api folder will be automatically loaded. There are some examples in the web folder. You may explore them from http://localhost:8080/ide/workspace/web/examples/
-AngularJS Example - http://localhost:8080/ide/workspace/web/examples/angularjs
-- Default credentials for IDE are as below:
-	username: admin
-	password: admin
-- Integrated terminal at http://localhost:8080/terminal. You can run terminal commands directly from browser. Credits to [web-console](https://github.com/nickola/web-console)
-- Default credentials for terminal are as below:
-	username: admin
-	password: admin
-- Credentials for terminal and IDE are same and can be controlled from IDE.
-- MySQL Relation support
-- File upload support
-- Custom API functions
-- Filters
-
-
+Both of them use the same set of credentials. You can change the credentials by logging into the IDE.
 
 Credits
 -----
@@ -237,7 +225,7 @@ RESTer started as a fork of moddity/Rester. moddity/Rester was a nearly complete
 
 It has reached a long way now after fixing existing bugs and adding more features in the original engine. Now it also bundles some more tool to get you productive quickly.
 
-Along with the original fork, I have also bundled some open-source productivity tools - a browser based code editor (Codiad), database administration tool (Adminer) and a REST API testing tool (Rest Test Test).
+Along with the original fork, I have also bundled some open-source productivity tools - a browser based code editor (Codiad), database administration tool (Adminer), a REST API testing tool [REST Test Test](https://resttesttest.com/), and a web-based terminal [web-console](https://github.com/nickola/web-console).
 
 I am thankful to all those people whose worked ultimately landed here and made this Frankenstein possible.
 
