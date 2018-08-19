@@ -66,7 +66,7 @@ If you wish to deploy it to Apache server, then you need to make sure that you r
 How do I use RESTer?
 -----
 
-##### Introduction
+#### Run the application and configure it with DB
 
 RESTer Api Engine basically converts all of your MySQL database tables with relations into RESTful APIs. It is dynamic. It is a runtime. So once your API Engine is connected to the DB, any changes in the DB directly reflects in APIs.
 
@@ -80,20 +80,34 @@ OR
 
 If you have an existing database that you want to use, just go to the following URL. <a href="http://localhost:8080/api" target="_blank">http://localhost:8080/api</a>. When you are running this application for the first time, you will see prompt to provide your database credentials. Don't worry if you make a mistake here. You can always re-configure it by hitting the following URL again. <a href="http://localhost:8080/api/configure" target="_blank">http://localhost:8080/api/configure</a>.
 
+#### Check the generated API docs and testing tool
+
 Once you have provided the connection string, you can see your tables turned into API with full documentation at the following location: <a href="http://localhost:8080/api/docs" target="_blank">http://localhost:8080/api/docs</a>.
 The documentation is based on Swagger and you can use the same documentation tool to test out your APIs. But along with that, if you want a fully customizable tool, just hit this url: <a href="http://localhost:8080/api/test" target="_blank">http://localhost:8080/api/test</a>.
 
+#### Manage and modify your database
+
 If you don't have an existing database, and you just installed mysql and you are looking for a quick light-weight tool to manage your MySQL, you are in luck. RESTer bundles an awsome open-source tool (Courtesy of Adminer) that you can use to create and manage your MySQL. Just hit this link: <a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a>.
+
+#### Online code editor
 
 Now that you can manipulate your DB directly from browser, and see its results reflected immediately on documentation, you would want to start coding your web application. For that, you would need an IDE. You don't need to download anything, just go here: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a>. Put the default username ('admin') and password ('admin'). This is a fully featured IDE directly in your browser. We have created 2 projects for you already. One is 'web' and the other is 'api'.
 
+##### Customize APIs
+
 Readymade APIs are good but what if you want to create your own customized API? May be you want to call a stored procedure in your DB, or you just want to write an API that is not doing your regular CRUD. Just load the API project. There is a sample API written there. Create a copy of that API and modify whatever you want. By default, RESTer will load anything that is written in the API project. If doesn't matter how many PHP file you create inside that project, it will load them all, so no need for you to do any kind of book keeping.
+
+##### Start writing your Application
 
 Inside the 'web' project, you would find some examples that you can use to learn how you can utilize existing frameworks such as angularjs to call the restful APIs and all.
 
 By default, <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> will redirct you to <a href="http://localhost:8080/ide/workspace/web" target="_blank">http://localhost:8080/ide/workspace/web</a>. So whatever you create/modify inside the 'web' project can directly be tested in browser. If you deploy this toolset without any modification, you can actually make changes in live application code without any downtime. However, this scenario is most likely useful in development and beta phase only. When you are ready for production, you can simple copy the content inside your 'web' project to the root folder.
 
+##### You can do more
+
 This does not restrict you to 2 projects only. You can create as many as you want, and you can even preview your application by rightclicking any file and folder from editor and launching preview.
+
+#### Online terminal
 
 Last but not least, if you want to run linux terminal commands within your application directory, you can do so from the browser. Just go here: <a href="http://localhost:8080/terminal" target="_blank">http://localhost:8080/terminal</a>. The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase. The credentials to use terminal are same as that of IDE.
 
