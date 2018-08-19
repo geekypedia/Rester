@@ -44,13 +44,13 @@ Now just open the following link to configure the engine with the database: <a h
 
 You can use the following endpoints to use the system.
 
-Web: <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> 
-API: <a href="http://localhost:8080/api/" target="_blank">http://localhost:8080/api</a>
-API Documentation: <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> 
-API Testing Tool: <a href="http://localhost:8080/api/test/" target="_blank">http://localhost:8080/api/test</a> 
-Database Administration: <a href="http://localhost:8080/db/" target="_blank">http://localhost:8080/db</a> 
-Code Editor: <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> 
-Terminal: <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> 
+|Web						| <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> |
+|API						| <a href="http://localhost:8080/api/" target="_blank">http://localhost:8080/api</a> |
+|API Documentation			| <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> |
+|API Testing Tool			| <a href="http://localhost:8080/api/test/" target="_blank">http://localhost:8080/api/test</a> |
+|Database Administration	| <a href="http://localhost:8080/db/" target="_blank">http://localhost:8080/db</a> |
+|Code Editor				| <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> |
+|Terminal					| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
 
 Prerequisites
 -----
@@ -65,7 +65,10 @@ If you wish to deploy it to Apache server, then you need to make sure that you r
 
 How do I use RESTer?
 -----
-RESTer Api Engine is basically converts all of your MySQL database tables with relations into RESTful APIs. It is dynamic. It is a runtime. So once your API Engine is connected to the DB, any changes in the DB directly reflects in APIs.
+
+##### Introduction
+
+RESTer Api Engine basically converts all of your MySQL database tables with relations into RESTful APIs. It is dynamic. It is a runtime. So once your API Engine is connected to the DB, any changes in the DB directly reflects in APIs.
 
 So the first step is to provide a connection string to the API Engine. It requires username, password and database name. Rather than modifying any config file, you can directly do that from the application itself. You can one of the following command to run the application.
 
@@ -92,7 +95,7 @@ By default, <a href="http://localhost:8080/" target="_blank">http://localhost:80
 
 This does not restrict you to 2 projects only. You can create as many as you want, and you can even preview your application by rightclicking any file and folder from editor and launching preview.
 
-Last and not least, if you want to run linux terminal commands within your application directory, you can do so from the browser. Just go here: <a href="http://localhost:8080/terminal" target="_blank">http://localhost:8080/terminal</a>. The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase.
+Last but not least, if you want to run linux terminal commands within your application directory, you can do so from the browser. Just go here: <a href="http://localhost:8080/terminal" target="_blank">http://localhost:8080/terminal</a>. The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase. The credentials to use terminal are same as that of IDE.
 
 How do I query APIs?
 -----
@@ -158,7 +161,7 @@ How do I enable authentication?
 2. Load 'api' project
 3. Open 'index.php'
 4. Uncomment the call to 'enable_simple_auth(array());' function.
-5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_auth(array("GET your/api"));' will exclude GET your/api from authentication. Any other API will require you to pass auth token as api_key in header or query string.
+5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_auth(array("GET your/api"));' will exclude GET your/api from authentication. Any other API will require you to pass auth token as api_key in header or query string. By default, the sample API 'GET hello/world' is always bypassed.
 6. In order for the auth APIs to work, you need to have a 'users' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 7. Once you uncomment the enable_simple_auth call, all APIs and even Documentation will be protected. You will need to call 'POST users/login' to authenticate and generate a token.
    For first time, just create a record in 'users' table and write any random string as token. Use this token to access to access protected areas, or generate an actual token.
