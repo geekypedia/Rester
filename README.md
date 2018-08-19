@@ -87,20 +87,38 @@ If you have an existing database that you want to use, just go to the following 
 
 When you are running this application for the first time, you will see prompt to provide your database credentials. Don't worry if you make a mistake here. You can always re-configure it by hitting the following URL again. 
 
-`<a href="http://localhost:8080/api/configure" target="_blank">http://localhost:8080/api/configure</a>`
+<a href="http://localhost:8080/api/configure" target="_blank">`http://localhost:8080/api/configure`</a>
 
 #### Check the generated API docs and testing tool
 
-Once you have provided the connection string, you can see your tables turned into API with full documentation at the following location: <a href="http://localhost:8080/api/docs" target="_blank">http://localhost:8080/api/docs</a>.
-The documentation is based on Swagger and you can use the same documentation tool to test out your APIs. But along with that, if you want a fully customizable tool, just hit this url: <a href="http://localhost:8080/api/test" target="_blank">http://localhost:8080/api/test</a>.
+Once you have provided the connection string, you can see your tables turned into API with full documentation at the following location: 
+
+<a href="http://localhost:8080/api/docs" target="_blank">`http://localhost:8080/api/docs`</a>.
+
+The documentation is based on Swagger and you can use the same documentation tool to test out your APIs. But along with that, if you want a fully customizable tool, just hit this url.
+
+<a href="http://localhost:8080/api/test" target="_blank">`http://localhost:8080/api/test`</a>.
 
 #### Manage and modify your database
 
-If you don't have an existing database, and you just installed mysql and you are looking for a quick light-weight tool to manage your MySQL, you are in luck. RESTer bundles an awsome open-source tool (Courtesy of Adminer) that you can use to create and manage your MySQL. Just hit this link: <a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a>.
+If you don't have an existing database, and you just installed mysql and you are looking for a quick light-weight tool to manage your MySQL, you are in luck. RESTer bundles an awsome open-source tool (Courtesy of Adminer) that you can use to create and manage your MySQL. Just hit this link. 
+
+<a href="http://localhost:8080/db" target="_blank">`http://localhost:8080/db`</a>.
 
 #### Online code editor
 
-Now that you can manipulate your DB directly from browser, and see its results reflected immediately on documentation, you would want to start coding your web application. For that, you would need an IDE. You don't need to download anything, just go here: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a>. Put the default username ('admin') and password ('admin'). This is a fully featured IDE directly in your browser. We have created 2 projects for you already. One is 'web' and the other is 'api'.
+Now that you can manipulate your DB directly from browser, and see its results reflected immediately on documentation, you would want to start coding your web application. For that, you would need an IDE. You don't need to download anything, just go here. 
+
+<a href="http://localhost:8080/ide" target="_blank">`http://localhost:8080/ide`</a>
+
+Put the default credentials
+
+`username: admin
+password: admin`
+
+This is a fully featured IDE directly in your browser. 
+
+We have created 2 projects for you already. One is 'web' and the other is 'api'.
 
 ##### Customize APIs
 
@@ -110,7 +128,7 @@ Readymade APIs are good but what if you want to create your own customized API? 
 
 Inside the 'web' project, you would find some examples that you can use to learn how you can utilize existing frameworks such as angularjs to call the restful APIs and all.
 
-By default, <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> will redirct you to <a href="http://localhost:8080/ide/workspace/web" target="_blank">http://localhost:8080/ide/workspace/web</a>. 
+By default, <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> will redirct you to <a href="http://localhost:8080/ide/workspace/web/" target="_blank">http://localhost:8080/ide/workspace/web</a>. 
 
 So whatever you create/modify inside the 'web' project can directly be tested in browser. If you deploy this toolset without any modification, you can actually make changes in live application code without any downtime. However, this scenario is most likely useful in development and beta phase only. When you are ready for production, you can simple copy the content inside your 'web' project to the root folder.
 
@@ -122,7 +140,13 @@ This does not restrict you to 2 projects only. You can create as many as you wan
 
 #### Online terminal
 
-Last but not least, if you want to run linux terminal commands within your application directory, you can do so from the browser. Just go here: <a href="http://localhost:8080/terminal" target="_blank">http://localhost:8080/terminal</a>. The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase. The credentials to use terminal are same as that of IDE.
+Last but not least, if you want to run linux terminal commands within your application directory, you can do so from the browser. Just go here. 
+
+<a href="http://localhost:8080/terminal" target="_blank">`http://localhost:8080/terminal`</a>. 
+
+The credentials to use terminal are same as that of IDE.
+
+The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase. 
 
 How do I query APIs?
 -----
