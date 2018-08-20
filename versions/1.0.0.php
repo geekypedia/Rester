@@ -59,7 +59,7 @@ function send_email_sparkpost($from, $to, $subject, $body, $api_key){
 		//'Content-Type: application/json',
 		'Authorization: ' . $api_key
 	];
-	echo $payload;
+	//echo $payload;
 
 	return url_post($url, $payload, $headers);
 }
