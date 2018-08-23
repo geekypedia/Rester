@@ -162,35 +162,35 @@ The actual API design is very straightforward and follows the design patterns of
 To put this into practice below are some example of how you would use the Rester API:
 
 	# Get all rows from the "customers" table
-	GET http://api.example.com/customers/
+	GET http://localhost:8080/customers/
 
 	# Get a single row from the "customers" table (where "123" is the ID)
-	GET http://api.example.com/customers/123
+	GET http://localhost:8080/customers/123
 
 	# Get 50 rows from the "customers" table
-	GET http://api.example.com/customers/?limit=50
+	GET http://localhost:8080/customers/?limit=50
 
 	# Get 50 rows from the "customers" table and skip first 50 rows
-	GET http://api.example.com/customers/?limit=50&offset=50
+	GET http://localhost:8080/customers/?limit=50&offset=50
 
 	# Get 50 rows from the "customers" table ordered by the "date" field
-	GET http://api.example.com/customers/?limit=50&order=date&orderType=desc
+	GET http://localhost:8080/customers/?limit=50&order=date&orderType=desc
 	
 	# Get all the customers named LIKE Tom; (Tom, Tomato, Tommy...)
-	GET http://api.example.com/customers/?name[in]=Tom
+	GET http://localhost:8080/customers/?name[in]=Tom
 
 	# Get count of the customers
-	GET http://api.example.com/customers/?count=true
+	GET http://localhost:8080/customers/?count=true
 
 	# Create a new row in the "customers" table where the POST data corresponds to the database fields
-	POST http://api.example.com/customers
+	POST http://localhost:8080/customers
 
 	# Update customer "123" in the "customers" table where the PUT data corresponds to the database fields
-	PUT http://api.example.com/customers/123
-	POST http://api.example.com/customers/123
+	PUT http://localhost:8080/customers/123
+	POST http://localhost:8080/customers/123
 
 	# Delete customer "123" from the "customers" table
-	DELETE http://api.example.com/customers/123
+	DELETE http://localhost:8080/customers/123
 
 Please note that `GET` calls accept the following query string variables:
 
