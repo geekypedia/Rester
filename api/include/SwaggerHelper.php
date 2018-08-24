@@ -169,14 +169,23 @@ class SwaggerHelper {
 	
 		switch($method) {
 			case "GET":
-				$notes = "Retrieve ".$route->routeName." objects<br /><br /><b>List of filters:</b><br /><br />";
+				$notes = "Retrieve ".$route->routeName." objects<br /><br />";
+				
+				$notes.="Get all records<br/>" . '/' . $route->routeName ."<br /><br />" ;
+				$notes.="Get a single record matching id XXXXX<br/>" . '/' . $route->routeName ."/XXXXX<br /><br />" ;
+				$notes.="Get only XXXXX records<br/>" . '/' . $route->routeName ."/?limit=XXXXX<br /><br />" ;
+				$notes.="Skip YYYYY records and get next XXXXX records<br/>" . '/' . $route->routeName ."/?limit=XXXXX&offset=YYYYY<br /><br />" ;
+				$notes.="Get XXXXX records and sort by YYYYY field in descending order<br/>" . '/' . $route->routeName ."/?limit=XXXXX&order=YYYYY&orderType=desc<br /><br />" ;
+				$notes.="Get all records count<br/>" . '/' . $route->routeName ."/?count=true<br /><br />" ;
+				
+				$notes.="<b>List of filters:</b><br /><br />";
 				foreach($parameters as $p) {
 				
-					$notes.=$route->routeName."/?".$p["name"]."[in]=XXXXX => Search XXXXX in field ".$p["name"]."<br />";
-					$notes.=$route->routeName."/?".$p["name"]."[gt]=XXXXX => Compare if ".$p["name"]." is greater than XXXXX<br />";
-					$notes.=$route->routeName."/?".$p["name"]."[ge]=XXXXX => Compare if ".$p["name"]." is greater or equal than XXXXX<br />";
-					$notes.=$route->routeName."/?".$p["name"]."[lt]=XXXXX => Compare if ".$p["name"]." is less than XXXXX<br />";
-					$notes.=$route->routeName."/?".$p["name"]."[le]=XXXXX => Compare if ".$p["name"]." is less or equal than XXXXX<br />";	
+					$notes.='/' . $route->routeName."/?".$p["name"]."[in]=XXXXX => Search XXXXX in field ".$p["name"]."<br />";
+					$notes.='/' . $route->routeName."/?".$p["name"]."[gt]=XXXXX => Compare if ".$p["name"]." is greater than XXXXX<br />";
+					$notes.='/' . $route->routeName."/?".$p["name"]."[ge]=XXXXX => Compare if ".$p["name"]." is greater or equal than XXXXX<br />";
+					$notes.='/' . $route->routeName."/?".$p["name"]."[lt]=XXXXX => Compare if ".$p["name"]." is less than XXXXX<br />";
+					$notes.='/' . $route->routeName."/?".$p["name"]."[le]=XXXXX => Compare if ".$p["name"]." is less or equal than XXXXX<br />";	
 					$notes.="<br />";
 					
 				}
