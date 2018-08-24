@@ -994,7 +994,7 @@ class ResterController {
 		$script_path = $_SERVER['PHP_SELF'];
 		$script_name = "/index.php";
 		$script_pos = strpos($script_path, $script_name);
-		$apiPrefix = substr($script_path, 0, $script_pos);
+		$apiPrefix = substr($script_path, 0, $script_pos + strlen($script_name));
 		$root = $_SERVER['REQUEST_URI'];
 		$root = substr($root, strlen($apiPrefix));
 		$pos = strpos($root, '?');
