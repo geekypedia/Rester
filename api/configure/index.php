@@ -1,7 +1,7 @@
 
 
 <head>
-  <title>Geekypedia RESTer Setup</title>
+  <title>pRESTige Setup</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   		<!--Append / at the end of URL to load everything properly -->
