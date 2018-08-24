@@ -991,12 +991,18 @@ class ResterController {
 		$root = preg_replace('~/++~', '/', substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME'])) . '/');
 
 		//In case PHP_SELF does not work
+		$request_uri = $_SERVER['REQUEST_URI'];
 		$script_path = $_SERVER['PHP_SELF'];
+
+		//$apiPrefix = string_intersect($script_path, $request_uri);
+
 		$script_name = "/index.php";
 		$script_pos = strpos($script_path, $script_name);
-		$apiPrefix = substr($script_path, 0, $script_pos + strlen($script_name));
-		$root = $_SERVER['REQUEST_URI'];
-		$root = substr($root, strlen($apiPrefix));
+		$apiPrefix = substr($script_path, 0, $script_pos);
+		$apiPrefix = string_intersect($apiPrefix, $request_uri);
+
+		$root = substr($request_uri, strlen($apiPrefix));
+
 		$pos = strpos($root, '?');
 		if($pos > -1) $root = substr($root,0, $pos);
 		if($root[strlen($root) - 1] != '/') $root = $root . '/';
