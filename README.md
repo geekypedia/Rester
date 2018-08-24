@@ -93,17 +93,17 @@ When you are running this application for the first time, you will see prompt to
 
 Once you have provided the connection string, you can see your tables turned into API with full documentation at the following location: 
 
-<a href="http://localhost:8080/api/docs" target="_blank">`http://localhost:8080/api/docs`</a>.
+<a href="http://localhost:8080/api/docs" target="_blank">`http://localhost:8080/api/docs`</a>
 
 The documentation is based on Swagger and you can use the same documentation tool to test out your APIs. But along with that, if you want a fully customizable tool, just hit this url.
 
-<a href="http://localhost:8080/api/test" target="_blank">`http://localhost:8080/api/test`</a>.
+<a href="http://localhost:8080/api/test" target="_blank">`http://localhost:8080/api/test`</a>
 
 #### Manage and modify your database
 
 If you don't have an existing database, and you just installed mysql and you are looking for a quick light-weight tool to manage your MySQL, you are in luck. pRESTige bundles an awsome open-source tool (Courtesy of Adminer) that you can use to create and manage your MySQL. Just hit this link. 
 
-<a href="http://localhost:8080/db" target="_blank">`http://localhost:8080/db`</a>.
+<a href="http://localhost:8080/db" target="_blank">`http://localhost:8080/db`</a>
 
 #### Online code editor
 
@@ -142,7 +142,7 @@ This does not restrict you to 2 projects only. You can create as many as you wan
 
 Last but not least, if you want to run linux terminal commands within your application directory, you can do so from the browser. Just go here. 
 
-<a href="http://localhost:8080/terminal" target="_blank">`http://localhost:8080/terminal`</a>. 
+<a href="http://localhost:8080/terminal" target="_blank">`http://localhost:8080/terminal`</a>
 
 The credentials to use terminal are same as that of IDE.
 
