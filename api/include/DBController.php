@@ -491,7 +491,8 @@ class DBController
 		if ($result === false) {
 			exit(ApiResponse::errorResponse(404));
 		} else if (empty($result) === true) {
-			exit(ApiResponse::errorResponse(204));
+			return array();
+			//exit(ApiResponse::errorResponse(204));
 		} else {
 			foreach($result as $k => $v) {
 				$route = reset($v);
