@@ -1,10 +1,10 @@
-RESTer
+pRESTige
 =====
 
 Introduction
 -----
 
-RESTer is basically a RAD (Rapid Application Development) toolset that allows application development completely from within your web browser.
+pRESTige is basically a RAD (Rapid Application Development) toolset that allows application development completely from within your web browser.
 
 It mainly comprises of an API engine that projects your MySQL database as a fully working collection of RESTful APIs which are compliant with OpenAPI Specifications (Swagger). You can just plug-in your existing database by providing a connection string, and immediately you will get fully featured RESTful APIs, along with documentation generated in Swagger. It supports OpenAuth and also provides a token based mechanism for securing your APIs. It also provides built-in login APIs to authenticate and generate token. It provides built-in file upload APIs. It provides embedded IDE, DB Management Tool and terminal and you can run all of these from browser. 
 
@@ -33,11 +33,11 @@ Features
 Installation
 -----
 
-It is extremely easy get quickly up and running using RESTer!
+It is extremely easy get quickly up and running using pRESTige!
 
-`git clone https://github.com/geekypedia/rester`
+`git clone https://github.com/geekypedia/prestige`
 
-`cd rester`
+`cd prestige`
 
 `php -S 0.0.0.0:8080`
 
@@ -66,12 +66,12 @@ If you wish to deploy it to Apache server, then you need to make sure that you r
 
 `sudo apt-get install -y libapache2-mod-php7.0 `
 
-How do I use RESTer?
+How do I use pRESTige?
 -----
 
 #### Run the application and configure it with DB
 
-RESTer Api Engine basically converts all of your MySQL database tables with relations into RESTful APIs. It is dynamic. It is a runtime. So once your API Engine is connected to the DB, any changes in the DB directly reflects in APIs.
+pRESTige Api Engine basically converts all of your MySQL database tables with relations into RESTful APIs. It is dynamic. It is a runtime. So once your API Engine is connected to the DB, any changes in the DB directly reflects in APIs.
 
 So the first step is to provide a connection string to the API Engine. It requires username, password and database name. Rather than modifying any config file, you can directly do that from the application itself. You can one of the following command to run the application.
 
@@ -101,7 +101,7 @@ The documentation is based on Swagger and you can use the same documentation too
 
 #### Manage and modify your database
 
-If you don't have an existing database, and you just installed mysql and you are looking for a quick light-weight tool to manage your MySQL, you are in luck. RESTer bundles an awsome open-source tool (Courtesy of Adminer) that you can use to create and manage your MySQL. Just hit this link. 
+If you don't have an existing database, and you just installed mysql and you are looking for a quick light-weight tool to manage your MySQL, you are in luck. pRESTige bundles an awsome open-source tool (Courtesy of Adminer) that you can use to create and manage your MySQL. Just hit this link. 
 
 <a href="http://localhost:8080/db" target="_blank">`http://localhost:8080/db`</a>.
 
@@ -122,7 +122,7 @@ We have created 2 projects for you already. One is 'web' and the other is 'api'.
 
 ##### Customize APIs
 
-Readymade APIs are good but what if you want to create your own customized API? May be you want to call a stored procedure in your DB, or you just want to write an API that is not doing your regular CRUD. Just load the API project. There is a sample API written there. Create a copy of that API and modify whatever you want. By default, RESTer will load anything that is written in the API project. If doesn't matter how many PHP file you create inside that project, it will load them all, so no need for you to do any kind of book keeping.
+Readymade APIs are good but what if you want to create your own customized API? May be you want to call a stored procedure in your DB, or you just want to write an API that is not doing your regular CRUD. Just load the API project. There is a sample API written there. Create a copy of that API and modify whatever you want. By default, pRESTige will load anything that is written in the API project. If doesn't matter how many PHP file you create inside that project, it will load them all, so no need for you to do any kind of book keeping.
 
 ##### Start writing your Application
 
@@ -159,7 +159,7 @@ The actual API design is very straightforward and follows the design patterns of
 	(U)pdate > POST   /table/id
 	(D)elete > DELETE /table/id
 
-To put this into practice below are some example of how you would use the Rester API:
+To put this into practice below are some example of how you would use the pRESTige API:
 
 	# Get all rows from the "customers" table
 	GET http://localhost:8080/customers/
@@ -251,7 +251,7 @@ Both of them use the same set of credentials. You can change the credentials by 
 
 Credits
 -----
-RESTer started as a fork of moddity/Rester. moddity/Rester was a nearly complete rewrite of [ArrestDB]. ArrestDB was a complete rewrite of [Arrest-MySQL].
+pRESTige started as a fork of moddity/Rester. moddity/Rester was a nearly complete rewrite of [ArrestDB]. ArrestDB was a complete rewrite of [Arrest-MySQL].
 
 It has reached a long way now after fixing existing bugs and adding more features in the original engine. Now it also bundles some more tool to get you productive quickly.
 
