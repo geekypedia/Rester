@@ -252,7 +252,7 @@ $loginFunction = function($params = NULL) {
 			token (string): token field string,
 			lease (string): lease field string(timestamp)
 		}
-		where email and username should be marked as UNIQUE index and id as PRIMARY index. lease should be CURRENT_TIMESTAMP and should change on update
+		where email and username should be marked as UNIQUE index and id as PRIMARY index.
 		
 		DROP TABLE IF EXISTS `users`;
 		CREATE TABLE `users` (
