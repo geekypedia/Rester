@@ -463,9 +463,11 @@ class DBController
 		unset($routes["oauth_server_token"]);
 		
 		//We create a virtual route called auth to add the auth methods
-		$authRoute = new Route();
-		$authRoute->routeName = "auth";
-		$routes["auth"]=$authRoute;
+		if(ENABLE_OAUTH == true){
+			$authRoute = new Route();
+			$authRoute->routeName = "auth";
+			$routes["auth"]=$authRoute;
+		}
 		
 		return $routes;
 	}
