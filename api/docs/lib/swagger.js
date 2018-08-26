@@ -65,6 +65,12 @@
           response: function(rawResponse) {
             var response;
             response = JSON.parse(rawResponse.content.data);
+            
+            //If no APIs are found
+            if(response.apis == null){
+             return _this.fail("No APIs found. Please add a table in the database to see it projected as an API. Please visit this link to manage your database: " + $('#input_baseUrl').val().substring(0,$('#input_baseUrl').val().length - 3) + "db/");
+            }
+            
             _this.swaggerVersion = response.swaggerVersion;
             if (_this.swaggerVersion === "1.2") {
               return _this.buildFromSpec(response);
