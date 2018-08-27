@@ -8,29 +8,31 @@ class SwaggerHelper {
 	
 	public static function getDocFromRoute($route, $allRoutes, $custom = false) {
 	
-		if($custom == true){
-		
-		//Without parameter
-		$apiCREATE["path"]="/".$route->routeName;
-		$apiCREATE["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET"), $route->routeName);
-		$apiCREATE["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "POST"), $route->routeName);
-		$apiCREATE["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName);
-		
-		$apiID["path"] = "/".$route->routeName."/{".$route->routeName."Id}";
-		$apiID["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "id"), $route->routeName);
-		$apiID["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
-		$apiID["operations"][]=SwaggerHelper::createOperation("DELETE", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void");
-				
-		/*$apiLIST["path"] = "/".$route->routeName."/list";
-		$apiLIST["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "list"), "array[".$route->routeName."]");*/
-		
-		$apis = array($apiCREATE, $apiID);
+		if($custom == false){
+			//Without parameter
+			$apiCREATE["path"]="/".$route->routeName;
+			$apiCREATE["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET"), $route->routeName);
+			$apiCREATE["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "POST"), $route->routeName);
+			$apiCREATE["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName);
 			
-		}	
-		
+			$apiID["path"] = "/".$route->routeName."/{".$route->routeName."Id}";
+			$apiID["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "id"), $route->routeName);
+			$apiID["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
+			$apiID["operations"][]=SwaggerHelper::createOperation("DELETE", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void");
+					
+			/*$apiLIST["path"] = "/".$route->routeName."/list";
+			$apiLIST["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "list"), "array[".$route->routeName."]");*/
+			
+			$apis = array($apiCREATE, $apiID);
+		}
+		else{
+			$apis = array();
+		}
+
 		foreach($route->routeCommands as $command) {
+			$apiCommand = array();
 			$apiCommand["path"] = "/".$route->routeName."/".$command->routeCommand;
-			$apiCommand["operations"][]=SwaggerHelper::createOperation($command->method, $route, SwaggerHelper::getParametersFromCommand($command), $route->routeName);
+			$apiCommand["operations"][]=SwaggerHelper::createOperation($command->method, $route, SwaggerHelper::getParametersFromCommand($command), $route->routeName, $custom);
 			$apis[] = $apiCommand;
 		}
 		
@@ -168,8 +170,7 @@ class SwaggerHelper {
 					'description' => $route->routeName." json representation. It can be an array to update multiple objects.");
 	}
 	
-	public static function createOperation($method, $route, $parameters = null, $operationType) {
-	
+	public static function createOperation($method, $route, $parameters = null, $operationType, $custom = false) {
 		switch($method) {
 			case "GET":
 				$notes = "Retrieve ".$route->routeName." objects<br /><br />";
@@ -210,6 +211,8 @@ class SwaggerHelper {
 				$notes = $route->routeName." ".$method." operation";
 			break;
 		}
+		
+		if($custom == true) $notes= "";
 	
 		$operation["method"]=$method;
 		$operation["nickname"]=strtolower($method).strtolower($route->routeName);
@@ -255,7 +258,7 @@ class SwaggerHelper {
 		return $models;
 	}
 	
-	public static function routeResume($routes) {
+	public static function routeResume($routes, $custom_routes = null) {
 	
 		foreach($routes as $routeName => $routeObject) {
 
@@ -263,6 +266,18 @@ class SwaggerHelper {
 			$operation["path"]="/api-doc/".$routeName;
 		
 			$r[] = $operation;
+		}
+		
+		if($custom_routes != null){
+			
+			foreach($custom_routes as $routeName => $routeObject) {
+
+				$operation["description"]="Operations about ".$routeName;
+				$operation["path"]="/api-doc-custom/".$routeName;
+				$r[] = $operation;
+			}
+
+			
 		}
 		
 		$result = array

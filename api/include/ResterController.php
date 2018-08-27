@@ -14,6 +14,8 @@ class ResterController {
 	
 	var $customRoutes = array();
 	
+	var $custom_routes = array();
+	
 	var $dbController;
 	
 	var $requestProcessors = array();
@@ -58,6 +60,12 @@ class ResterController {
 				ResterUtils::Log("Returning apidoc");
 				$this->doResponse(SwaggerHelper::getDocFromRoute($this->getAvailableRoutes()[$routePath[0]], $this->getAvailableRoutes()));
 			}
+			
+			if(isset($routeName) && $routeName == "api-doc-custom" && isset($routePath)) {
+				ResterUtils::Log("Returning custom apidoc");
+				$this->doResponse(SwaggerHelper::getDocFromRoute($this->getAvailableCustomRoutes()[$routePath[0]], $this->getAvailableCustomRoutes(), true));
+			}
+
 			
 			$this->checkRouteExists($routeName);
 			
@@ -366,16 +374,26 @@ class ResterController {
 		}
 	
 		$routes = $this->getAvailableRoutes();
+		
+		
 		//if(isset($routes[$routeCommand->routeName])) {
 			$this->customRoutes[$routeCommand->method][$routeCommand->routeName][$routeCommand->routeCommand]=$routeCommand->callback;
 			
-			if(!isset($routes[$routeCommand->routeName]))
+			if(!isset($routes[$routeCommand->routeName])){
 				$routes[$routeCommand->routeName]=NULL;
+			}
 			
 			$route = $routes[$routeCommand->routeName];
 			$route->routeCommands[$routeCommand->routeCommand]=$routeCommand;
+			
+			if(!isset($routes[$routeCommand->routeName]) && !isset($this->custom_routes[$routeCommand->routeName])){
+				$this->custom_routes[$routeCommand->routeName]=new Route();
+				$this->custom_routes[$routeCommand->routeName]->routeName = $routeCommand->routeName;
+				$this->custom_routes[$routeCommand->routeName]->routeCommands[$routeCommand->routeCommand] = $routeCommand;
+			}
+			
+			
 		//}
-		
 		
 	}
 	
@@ -978,7 +996,11 @@ class ResterController {
 	
 	function showRoutes() {
 		$routes = $this->getAvailableRoutes();
-		$result = SwaggerHelper::routeResume($routes);
+
+		$custom_routes = $this->getAvailableCustomRoutes();
+		
+		
+		$result = SwaggerHelper::routeResume($routes, $custom_routes);
 		$this->doResponse($result);
 	}
 	
@@ -1038,6 +1060,11 @@ class ResterController {
 		}
 		return $this->routes;
 	}
+	
+	function getAvailableCustomRoutes() {
+		return $this->custom_routes;
+	}
+	
 	
 	function getRoute($routeName) {
 		$routes = $this->getAvailableRoutes();
