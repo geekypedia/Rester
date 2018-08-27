@@ -6,8 +6,9 @@ require_once(__DIR__.'/DBController.php');
 class SwaggerHelper {
 	
 	
-	public static function getDocFromRoute($route, $allRoutes) {
+	public static function getDocFromRoute($route, $allRoutes, $custom = false) {
 	
+		if($custom == true){
 		
 		//Without parameter
 		$apiCREATE["path"]="/".$route->routeName;
@@ -24,6 +25,8 @@ class SwaggerHelper {
 		$apiLIST["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "list"), "array[".$route->routeName."]");*/
 		
 		$apis = array($apiCREATE, $apiID);
+			
+		}	
 		
 		foreach($route->routeCommands as $command) {
 			$apiCommand["path"] = "/".$route->routeName."/".$command->routeCommand;
