@@ -8,7 +8,7 @@ pRESTige is basically a RAD (Rapid Application Development) toolset that allows 
 
 It mainly comprises of an API engine that projects your MySQL database as a fully working collection of RESTful APIs which are compliant with OpenAPI Specifications (Swagger). You can just plug-in your existing database by providing a connection string, and immediately you will get fully featured RESTful APIs, along with documentation generated in Swagger. It supports OpenAuth and also provides a token based mechanism for securing your APIs. It also provides built-in login APIs to authenticate and generate token. It provides built-in file upload APIs. It provides embedded IDE, DB Management Tool and terminal and you can run all of these from browser. 
 
-Best part of this is, it has got a very simple architecture, so it is compatible to be hosted as-is on shared hosting environments, even on the free ones like 000webhost and byethost. So, all you need is your grandpa's laptop, a browser and internet.
+Best part of this is, it has got a very simple architecture, so it is compatible to be hosted as-is on shared hosting environments, even on the free ones like FreeHosting.com, GoogieHost and 000webhost. We have also tried it on cheaper hosts like HostBudget.com, BingLoft, Flaunt7, KatyaWeb. So, all you need is your grandpa's laptop, a browser and internet.
 
 This is your silver bullet for Rapid Application Development in web browser. 
 
