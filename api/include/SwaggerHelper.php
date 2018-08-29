@@ -11,7 +11,7 @@ class SwaggerHelper {
 		if($custom == false){
 			//Without parameter
 			$apiCREATE["path"]="/".$route->routeName;
-			$apiCREATE["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET"), $route->routeName);
+			$apiCREATE["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", NULL, true), $route->routeName);
 			$apiCREATE["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "POST"), $route->routeName);
 			$apiCREATE["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName);
 			
@@ -59,13 +59,15 @@ class SwaggerHelper {
 		$api["operations"] = $operations;
 	}
 	
-	public static function getParametersFromCommand($command) {
+	public static function getParametersFromCommand($command, $queryString = false) {
+
 
 		if(isset($command->parameters) && count($command->parameters) > 0) {
+			if($command->method == "GET") $queryString = true;
 			foreach($command->parameters as $p) {
 				$parameters[] = array('name' => $p,
 									'type' => 'string',
-									'paramType' => 'form',
+									'paramType' => ($queryString) ? 'query' : 'form',
 									//'required' => ($noRequired) ? false : $field->isRequired,
 									'description' => $p." parameter");
 			}
@@ -75,7 +77,7 @@ class SwaggerHelper {
 		return NULL;
 	}
 	
-	public static function getParametersFromRoute($route, $routeMethod, $routeAction = NULL) {
+	public static function getParametersFromRoute($route, $routeMethod, $routeAction = NULL, $queryString = false) {
 	
 		//Disable of show required fields
 		$noRequired = true;
@@ -92,8 +94,8 @@ class SwaggerHelper {
 				if($routeAction == "id") {
 					$parameters[] = SwaggerHelper::getIdParameter($route, true);
 				} else {
-					$parameters[] = SwaggerHelper::getIdParameter($route, false, true);
-					$parameters = array_merge($parameters, SwaggerHelper::getParametersFromModel($route, true));
+					$parameters[] = SwaggerHelper::getIdParameter($route, false, false, true);
+					$parameters = array_merge($parameters, SwaggerHelper::getParametersFromModel($route, true, true));
 					//var_dump($parameters);
 				}
 			break;
@@ -125,15 +127,15 @@ class SwaggerHelper {
 		return $parameters;
 	}
 	
-	public static function getIdParameter($route, $required, $asForm = false) {
-		return array('name' => ($asForm === true) ? $route->primaryKey->fieldName : $route->routeName."Id", 
-						'paramType' => ($asForm === true) ? 'form' : 'path',
+	public static function getIdParameter($route, $required, $asForm = false, $queryString = false) {
+		return array('name' => ($asForm === true) ? $route->primaryKey->fieldName : ($queryString ? $route->primaryKey->fieldName : $route->routeName."Id"), 
+						'paramType' => ($asForm === true) ? 'form' : (($queryString == true) ? 'query' : 'path'),
 						'type' => 'string',
 						'required' => $required,
 						"description" => "ID of ".$route->routeName);
 	}
 	
-	public static function getParametersFromModel($route, $noRequired = false) {
+	public static function getParametersFromModel($route, $noRequired = false, $queryString = false) {
 
 		foreach($route->routeFields as $field) {
 			
@@ -143,7 +145,7 @@ class SwaggerHelper {
 				$p = array('name' => (!$field->isRelation) ? $field->fieldName : $field->relation->field,
 									//'type' => ($field->fieldType) ? $field->fieldType : 'void',
 									'type' => 'string',
-									'paramType' => 'form',
+									'paramType' => ($queryString) ? 'query' : 'form',
 									'required' => ($noRequired) ? false : $field->isRequired,
 									'description' => $field->description);
 			
