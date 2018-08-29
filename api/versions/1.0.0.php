@@ -153,6 +153,15 @@ function string_intersect($string_1, $string_2)
 }
 
 
+function array_search_where($array, $column_name, $where, $return_only_key = false) {
+   foreach ($array as $key => $val) {
+       if ($val[$column_name] === $where) {
+       		if($return_only_key) return $key;
+       		return $val;
+       }
+   }
+   return null;
+}
 
 
 function get_current_api_path(){
