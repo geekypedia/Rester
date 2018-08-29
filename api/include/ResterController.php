@@ -389,8 +389,8 @@ class ResterController {
 			if(!isset($routes[$routeCommand->routeName]) && !isset($this->custom_routes[$routeCommand->routeName])){
 				$this->custom_routes[$routeCommand->routeName]=new Route();
 				$this->custom_routes[$routeCommand->routeName]->routeName = $routeCommand->routeName;
-				$this->custom_routes[$routeCommand->routeName]->routeCommands[$routeCommand->routeCommand] = $routeCommand;
 			}
+			$this->custom_routes[$routeCommand->routeName]->routeCommands[$routeCommand->routeCommand] = $routeCommand;
 			
 			
 		//}
