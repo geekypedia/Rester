@@ -113,8 +113,10 @@ Now that you can manipulate your DB directly from browser, and see its results r
 
 Put the default credentials
 
-`username: admin
-password: admin`
+```
+username: admin
+password: admin
+```
 
 This is a fully featured IDE directly in your browser. 
 
@@ -255,14 +257,14 @@ How do I create a custom API?
 3. Create a .php file under this project. You can keep it anywhere (direcly in project root folder or within a subfolder).
 4. Register a new custom API as shown in the example below.
 
-`
+```php
 	$resterController->addRouteCommand(
 		new RouteCommand("GET", "hello", "world", function($params=null){
 			$api = new ResterController();
 			$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
 			$api->showResult($value);
 	}, array(), "Hello World Api"));
-`
+```
 
 This will create a new API available at http://localhost:8080/api/hello/world
 
@@ -293,14 +295,14 @@ If you want to send e-mails from your code usually you use the SMTP send mail me
 
 There are some good 3rd party services which allow us to send emails using their platform for free. One of them is SparkPost. You just need a domain/subdomain. It doesn't matter paid or free. All you need is a way to manage DNS entries for that particular domain/subdomain. Then you need to register an account with SparkPost, register your domain with them, do the necessary configurations and get an api key for sending mails.
 
-`
+```php
 $from = "youremail@yourdomain.com";
 $to = ["recepientsemail@theirdomain.com"];
 $api_key = "YOUR_SPARKPOST_API_KEY";
 $subject = "SUBJECT GOES HERE";
 $body = "TEXT or HTML GOES HERE";
 send_email_sparkpost($from, $to, $subject, $body, $api_key);
-`
+```
 
 4. uuid()
 
@@ -315,19 +317,19 @@ Returns intersection between 2 strings.
 Similar to SQL search. Find a matching record in an array where the provided value matches the value of the specified property of an object in an array.
 
 The following will return first customer whose city is 'New York'
-`
+```php
 array_search_where($customers, 'city', 'New York');
-`
+```
 
 The following will return all customers whose city is 'New York'
-`
+```php
 array_search_where($customers, 'city', 'New York', false);
-`
+```
 
 The following will return only index of first customer in the $customers array whose city is 'New York'
-`
+```php
 array_search_where($customers, 'city', 'New York', true, true);
-`
+```
 
 
 Middleware Functions
