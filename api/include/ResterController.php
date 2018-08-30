@@ -601,6 +601,15 @@ class ResterController {
 		
 		if(isset($filters['api_key'])) unset($filters['api_key']);
 		
+		
+		if(function_exists('request_headers_remove')){
+			$headers_for_removal = request_headers_remove();
+			
+			foreach($headers_for_removal as $h){
+				if(isset($filters[$h])) unset($filters[$h]);
+			}
+		}
+		
 		$result = $this->dbController->getObjectsFromDB($route, $filters, $this->getAvailableRoutes(), $orFilter);
 		
 		
