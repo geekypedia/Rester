@@ -153,14 +153,25 @@ function string_intersect($string_1, $string_2)
 }
 
 
-function array_search_where($array, $column_name, $where, $return_only_key = false) {
+function array_search_where($array, $column_name, $where, $single=true, $return_only_key = false) {
+   $results = array();
    foreach ($array as $key => $val) {
        if ($val[$column_name] === $where) {
-       		if($return_only_key) return $key;
-       		return $val;
+	       
+       		if($return_only_key)
+		{
+			$ret = $key;
+		} else {
+			$ret = $val;
+		}
+       		if($single) {
+			return $ret;
+		} else {
+			array_push($results, $ret);
+		}
        }
    }
-   return null;
+   return $results;
 }
 
 
