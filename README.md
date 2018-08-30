@@ -258,12 +258,12 @@ How do I create a custom API?
 4. Register a new custom API as shown in the example below.
 
 ```php
-	$resterController->addRouteCommand(
-		new RouteCommand("GET", "hello", "world", function($params=null){
-			$api = new ResterController();
-			$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
-			$api->showResult($value);
-	}, array(), "Hello World Api"));
+$resterController->addRouteCommand(
+	new RouteCommand("GET", "hello", "world", function($params=null){
+		$api = new ResterController();
+		$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+		$api->showResult($value);
+}, array(), "Hello World Api"));
 ```
 
 This will create a new API available at http://localhost:8080/api/hello/world
@@ -273,15 +273,15 @@ You can access GET or POST parameters with $params['parameter_name'].
 ResterController Operations
 -----
 
-##### showResult($value)
+#### showResult($value)
 
 200 OK with specified value
 
-##### showError($errorCode)
+#### showError($errorCode)
 
 HTTP_ERROR. Exmaple 400, 422, 404, 500
 
-##### showErrorWithMessage($errorCode, $message)
+#### showErrorWithMessage($errorCode, $message)
 
 HTTP_ERROR with specified message
 
@@ -289,15 +289,15 @@ Custom Helper Functions
 -----
 You can use the following functions which are not part of core PHP library, but we have added them as part of the framework. You can use them anywhere in the API project.
 
-##### url_get($url, $params = null, $headers = null)
+#### url_get($url, $params = null, $headers = null)
 
 Get response from any 3rd party URL. Useful for integrating with various 3rd party platforms.
 
-##### url_post($url, $payload = null, $headers = null)
+#### url_post($url, $payload = null, $headers = null)
 
 Post data to any 3rd party URL. Useful for integrating with various 3rd party platforms.
 
-##### send_email_sparkpost($from, $to, $subject, $body, $api_key)
+#### send_email_sparkpost($from, $to, $subject, $body, $api_key)
 
 If you want to send e-mails from your code usually you use the SMTP send mail methods. However, in real world scenarios, most of shared hosting providers do not allow using that unless you pay them extra. If you use your private email account for this purpose, it is likely that providers like Google or Microsoft may block your account.
 
@@ -312,15 +312,15 @@ $body = "TEXT or HTML GOES HERE";
 send_email_sparkpost($from, $to, $subject, $body, $api_key);
 ```
 
-##### uuid()
+#### uuid()
 
 Returns a unique 32 characters identifier.
 
-##### string_intersect($str1, $str2)
+#### string_intersect($str1, $str2)
 
 Returns intersection between 2 strings.
 
-##### array_search_where($array, $property_name, $where, $single = true, $only_return_keys = false)
+#### array_search_where($array, $property_name, $where, $single = true, $only_return_keys = false)
 
 Similar to SQL search. Find a matching record in an array where the provided value matches the value of the specified property of an object in an array.
 
