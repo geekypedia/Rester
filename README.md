@@ -148,6 +148,13 @@ The credentials to use terminal are same as that of IDE.
 
 The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase. 
 
+What are the default credentials for IDE and Terminal?
+-----
+Username: admin
+Password: admin
+
+Both of them use the same set of credentials. You can change the credentials by logging into the IDE.
+
 How do I query APIs?
 -----
 
@@ -241,13 +248,102 @@ You don't need to. There is a built in API for the same.
 5. In order for the auth APIs to work, you need to have a 'files' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 6. You can use the API Docs to see the new Files API and you can test it out from there: <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> 
 
-
-What are the default credentials for IDE and Terminal?
+How do I create a custom API?
 -----
-Username: admin
-Password: admin
+1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
+2. Load 'api' project
+3. Create a .php file under this project. You can keep it anywhere (direcly in project root folder or within a subfolder).
+4. Register a new custom API as shown in the example below.
 
-Both of them use the same set of credentials. You can change the credentials by logging into the IDE.
+`
+	$resterController->addRouteCommand(
+		new RouteCommand("GET", "hello", "world", function($params=null){
+			$api = new ResterController();
+			$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+			$api->showResult($value);
+	}, array(), "Hello World Api"));
+`
+
+This will create a new API available at http://localhost:8080/api/hello/world
+
+You can access GET or POST parameters with $params['parameter_name'].
+
+ResterController Operations
+-----
+
+1. showResult($value) -> 200 OK with specified value
+2. showError($errorCode) -> HTTP_ERROR. Exmaple 400, 422, 404, 500
+3. showErrorWithMessage($errorCode, $message) -> HTTP_ERROR with specified message
+
+Custom Helper Functions
+-----
+You can use the following functions which are not part of core PHP library, but we have added them as part of the framework. You can use them anywhere in the API project.
+
+1. url_get($url, $params = null, $headers = null)
+
+Get response from any 3rd party URL. Useful for integrating with various 3rd party platforms.
+
+2. url_post($url, $payload = null, $headers = null)
+
+Post data to any 3rd party URL. Useful for integrating with various 3rd party platforms.
+
+3. send_email_sparkpost($from, $to, $subject, $body, $api_key)
+
+If you want to send e-mails from your code usually you use the SMTP send mail methods. However, in real world scenarios, most of shared hosting providers do not allow using that unless you pay them extra. If you use your private email account for this purpose, it is likely that providers like Google or Microsoft may block your account.
+
+There are some good 3rd party services which allow us to send emails using their platform for free. One of them is SparkPost. You just need a domain/subdomain. It doesn't matter paid or free. All you need is a way to manage DNS entries for that particular domain/subdomain. Then you need to register an account with SparkPost, register your domain with them, do the necessary configurations and get an api key for sending mails.
+
+`
+$from = "youremail@yourdomain.com";
+$to = ["recepientsemail@theirdomain.com"];
+$api_key = "YOUR_SPARKPOST_API_KEY";
+$subject = "SUBJECT GOES HERE";
+$body = "TEXT or HTML GOES HERE";
+send_email_sparkpost($from, $to, $subject, $body, $api_key);
+`
+
+4. uuid()
+
+Returns a unique 32 characters identifier.
+
+5. string_intersect($str1, $str2)
+
+Returns intersection between 2 strings.
+
+6. array_search_where($array, $property_name, $where, $single = true, $only_return_keys = false)
+
+Similar to SQL search. Find a matching record in an array where the provided value matches the value of the specified property of an object in an array.
+
+The following will return first customer whose city is 'New York'
+`
+array_search_where($customers, 'city', 'New York');
+`
+
+The following will return all customers whose city is 'New York'
+`
+array_search_where($customers, 'city', 'New York', false);
+`
+
+The following will return only index of first customer in the $customers array whose city is 'New York'
+`
+array_search_where($customers, 'city', 'New York', true, true);
+`
+
+
+Middleware Functions
+-----
+You can define these function anywhere in your API project and it will be injected in the request pipe-line to perform specific actions.
+
+1. request_headers_remove
+
+Sometimes, Your legacy applications might want to call your APIs and they are passing some extra paramters that the APIs are not expecting. This will force your APIs to return 405 - method not allowed error. This function is used to remove those extra headers, so your APIs will work fine even if any middleware in your legacy applications or infrastructure is passing on additional headers.
+
+Example
+`
+function request_headers_remove(){
+	return array("custom-header-1", "custom-header-2");
+}
+`
 
 Credits
 -----
