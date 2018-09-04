@@ -339,6 +339,10 @@ The following will return only index of first customer in the $customers array w
 array_search_where($customers, 'city', 'New York', true, true);
 ```
 
+#### request_is_mobile()
+
+Checks if request is being made from a mobile browser.
+
 
 Middleware Functions
 -----
