@@ -32,7 +32,7 @@ class SwaggerHelper {
 		foreach($route->routeCommands as $command) {
 			$apiCommand = array();
 			$apiCommand["path"] = "/".$route->routeName."/".$command->routeCommand;
-			$apiCommand["operations"][]=SwaggerHelper::createOperation($command->method, $route, SwaggerHelper::getParametersFromCommand($command), $route->routeName, $custom);
+			$apiCommand["operations"][]=SwaggerHelper::createOperation($command->method, $route, SwaggerHelper::getParametersFromCommand($command), $route->routeName, $custom, $command->description);
 			$apis[] = $apiCommand;
 		}
 		
@@ -172,7 +172,7 @@ class SwaggerHelper {
 					'description' => $route->routeName." json representation. It can be an array to update multiple objects.");
 	}
 	
-	public static function createOperation($method, $route, $parameters = null, $operationType, $custom = false) {
+	public static function createOperation($method, $route, $parameters = null, $operationType, $custom = false, $customNotes = "") {
 		switch($method) {
 			case "GET":
 				$notes = "Retrieve ".$route->routeName." objects<br /><br />";
@@ -214,7 +214,7 @@ class SwaggerHelper {
 			break;
 		}
 		
-		if($custom == true) $notes= "";
+		if($custom == true) $notes= $customNotes;
 	
 		$operation["method"]=$method;
 		$operation["nickname"]=strtolower($method).strtolower($route->routeName);
