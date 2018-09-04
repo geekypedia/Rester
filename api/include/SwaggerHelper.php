@@ -243,12 +243,28 @@ class SwaggerHelper {
 
 			foreach($route->routeFields as $f) {
 				
-				$properties[$f->fieldName]["description"]=$f->fieldName." field ".$f->fieldType;
+				if($f->isRelation) {
+					//Replace _id for relation fields and display proper name
+  					$fieldName = str_replace("_id","",$f->relation->field);
+					$relationFieldName = str_replace("id","",$fieldName);
+
+					$properties[$fieldName]["description"]=$fieldName." field ".$f->fieldType;
 				
-				$properties[$f->fieldName]["type"]=$f->fieldType;
+					$properties[$fieldName]["type"]=$f->fieldType;
+					
+					if($f->isRequired) {					
+						$models[$route->routeName]["required"][]=$fieldName;
+					}
+
+				} else {
 				
-				if($f->isRequired) {
-					$models[$route->routeName]["required"][]=$f->fieldName;
+					$properties[$f->fieldName]["description"]=$f->fieldName." field ".$f->fieldType;
+			
+					$properties[$f->fieldName]["type"]=$f->fieldType;
+				
+					if($f->isRequired) {
+						$models[$route->routeName]["required"][]=$f->fieldName;
+					}
 				}
 			}
 			
