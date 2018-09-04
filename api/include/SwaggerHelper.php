@@ -144,7 +144,8 @@ class SwaggerHelper {
 			
 				$p = array('name' => (!$field->isRelation) ? $field->fieldName : $field->relation->field,
 									//'type' => ($field->fieldType) ? $field->fieldType : 'void',
-									'type' => 'string',
+									//'type' => 'string',
+									'type' => ($field->fieldType) ? $field->fieldType : 'string',
 									'paramType' => ($queryString) ? 'query' : 'form',
 									'required' => ($noRequired) ? false : $field->isRequired,
 									'description' => $field->description);
