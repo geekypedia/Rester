@@ -1,69 +1,113 @@
-<html>
-	<head>
-		<!--Append / at the end of URL to load everything properly -->
-		<script>
-		window.onload = function(){
+<!doctype html>
+<html ng-app='app'>
+<head>
+	<!--Append / at the end of URL to load everything properly -->
+	<script>
+		window.onload = function() {
 			var location = "" + window.location;
-			if(location.charAt(location.length-1) !== '/'){
+			if (location.charAt(location.length - 1) !== '/') {
 				var newLocation = location + "/";
 				window.location = newLocation;
 			}
 		}
-		</script>
+	</script>
 
-		
-		<!-- Third party scripts from CDN -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-route.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">-->
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>-->
-		<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->		
-		 
-		<!-- Application scripts -->
-		<script src="index.js"></script>
-		
-		<script src="controllers/home.js"></script>
-		<script src="controllers/blog.js"></script>
-		<script src="controllers/about.js"></script>
-		
-		<link rel="stylesheet" href="index.css" />
-		
+	<!-- JQuery & Angular  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-route.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.7.2/angular-resource.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-cookies.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-animate.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-messages.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-md5/0.1.10/angular-md5.js"></script>
 
-		<!--Title-->
-		<title>pRESTige AngularJS Example</title>
-	</head>
-	<body>
-		<!--Angular App-->	  
-		<div ng-app='app'>
-			<!-- NAVIGTATION -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-danger navbar-dark">
-			  <a class="navbar-brand" href="#!">App</a>
-			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			    <span class="navbar-toggler-icon"></span>
-			  </button>
-			  <div class="collapse navbar-collapse" id="navbarNav">
-			    <ul class="navbar-nav">
-			      <li class="nav-item">
-			        <a class="nav-link" href="#!blog">Blog</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link" href="#!about">About</a>
-			      </li>
-			    </ul>
-			  </div>
-			</nav>
+	 <!-- Angular UI Grid -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.4.6/ui-grid.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.4.6/ui-grid.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	
+	<!-- Metrial Design -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Angular Material -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+	<!-- Application scripts -->
+	<!--<script src="app/index.js"></script>-->
+	<script src="app/index.php" type='text/javascript'></script>
+	<link rel="stylesheet" href="styles/index.css" />
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	
+	<!--Title-->
+	<title ng-controller="titleController">{{title}}</title>
+</head>
+
+<body>
+	<!--Main Container-->
+	<div>
+		
+		<nav class="blue" style="margin-top:-15px">
+			<div class="nav-wrapper">
+				<a ng-show="currentUser" href="" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+				<p style="text-align:center;">
+					<a href="#!">
+						<span style="font-size:xx-large;font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
+							<span style="color:cyan;"></span><span style="color:orange;  font-style:italic"></span>
+						</span>
+					</a>
+				</p>
+			</div>
+		</nav>
+		
+		<ul id="slide-out" class="sidenav" ng-show="currentUser" ng-controller="navController">
+			<li>
+				<div class="user-view" ng-controller="authController">
+					<div class="background">
+						<img src="images/background.png" width="100%">
+					</div>
+					<a href="#!profile"><img class="circle sidenav-close" src="images/user.png"></a>
+					<a href="#!profile"><span class="white-text name  sidenav-close">{{currentUser.first_name + ' ' + currentUser.last_name}}</span></a>
+					<a href="#!profile"><span class="white-text name sidenav-close" style="margin-top:0;">{{currentUser.email}}</span></a>
+					<a href="" ng-click="logout()"><span class="white-text font-underline email sidenav-close">Sign out</span></a>
+				</div>
+			</li>
+			<li ng-repeat='item in data.menu'><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<!--<li><a href="#!" class="sidenav-close"><i class="material-icons">home</i>Home</a></li>-->
+			<!--<li><a href="#!tasks" class="sidenav-close"><i class="material-icons">assignment_turned_in</i>Tasks</a></li>-->
+			<!--<li><a href="#!search" class="sidenav-close"><i class="material-icons">search</i>Search</a></li>-->
+			<!--<li><a href="#!reports" class="sidenav-close"><i class="material-icons">pie_chart</i>Reports</a></li>-->
+			<!--<li><a href="#!alerts" class="sidenav-close"><i class="material-icons">alarm</i>Alerts</a></li>-->
+			<li ng-if="currentUser.role == 'admin'">
+				<div class="divider"></div>
+			</li>
+			<li ng-if="currentUser.role == 'admin'" ><a class="subheader">Administration </a></li>
+			<li ng-if="currentUser.role == 'admin'" ng-repeat='item in data.adminMenu' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<!--<li><a href="#!settings" class="sidenav-close"><i class="material-icons">settings</i>Settings</a></li>-->
+			<!--<li ng-if="currentUser.role == 'admin'"><a href="#!categories" class="sidenav-close"><i class="material-icons">list</i>Categories</a></li>-->
+			<!--<li ng-if="currentUser.role == 'admin'"><a href="#!users" class="sidenav-close"><i class="material-icons">people</i>Users</a></li>-->
+			<!--<li ng-if="currentUser.role == 'admin'"><a href="#!groups" class="sidenav-close"><i class="material-icons">group_add</i>Groups</a></li>-->
+
+		</ul>
+
+		<div class="container">
 			<!-- CONTENT -->
 			<div ng-view></div>
 		</div>
-		<div>
-			<br>
-			<br>
-			<br>
-		</div>
-	</body>
+	</div>
+	<div>
+		<br>
+		<br>
+		<br>
+	</div>
+</body>
+
 </html>

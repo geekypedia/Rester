@@ -291,7 +291,7 @@ $loginFunction = function($params = NULL) {
 		  `username` varchar(50) NOT NULL,
 		  `password` varchar(100) NOT NULL,
 		  `token` varchar(50) NOT NULL,
-		  `lease` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+		  `lease` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `email` (`email`)
 		);
