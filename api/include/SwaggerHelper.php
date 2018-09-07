@@ -8,6 +8,9 @@ class SwaggerHelper {
 	
 	public static function getDocFromRoute($route, $allRoutes, $custom = false) {
 	
+	if(count($route->fileProcessors) > 0) $fileApi = true;
+	
+	
 		if($custom == false){
 			//Without parameter
 			$apiCREATE["path"]="/".$route->routeName;
@@ -17,7 +20,9 @@ class SwaggerHelper {
 			
 			$apiID["path"] = "/".$route->routeName."/{".$route->routeName."Id}";
 			$apiID["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "id"), $route->routeName);
-			$apiID["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
+			
+			if(!$fileApi) $apiID["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
+			
 			$apiID["operations"][]=SwaggerHelper::createOperation("DELETE", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void");
 					
 			/*$apiLIST["path"] = "/".$route->routeName."/list";
