@@ -69,9 +69,12 @@ class ResterController {
 			
 			$this->checkRouteExists($routeName);
 			
+			
 		
 			if(count($routePath) >= 1) {
 				$command = $routePath[0];
+				
+				$this->checkRouteCommandExists($routeName, $command, "GET");
 				
 				if(isset($this->customRoutes["GET"][$routeName][$command])) {
 					$callback = $this->customRoutes["GET"][$routeName][$command];
@@ -101,6 +104,9 @@ class ResterController {
 			//Check for command
 			if(count($routePath) == 1) {
 				$command = $routePath[0];
+
+				$this->checkRouteCommandExists($routeName, $command, "POST");
+				
 				if(isset($this->customRoutes["POST"][$routeName][$command])) {
 					ResterUtils::Log(">> Executing custom command <".$command.">");
 					$callback = $this->customRoutes["POST"][$routeName][$command];
@@ -352,6 +358,24 @@ class ResterController {
 				return false;
 		}
 		return true;
+	}
+	
+	
+	
+	function checkRouteCommandExists($routeName, $command, $method) {
+		$status = false;
+		
+		if(is_numeric($command)){
+			$status = true;
+		}
+		
+		if(($this->customRoutes[$method][$routeName] && $this->customRoutes[$method][$routeName][$command])){
+			$status = true;
+		}
+
+		if($status === true) return true;
+		$this->showError(404);
+		return false;
 	}
 	
 	function addFileProcessor($routeName, $fieldName, $acceptedTypes = NULL) {
