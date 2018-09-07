@@ -32,7 +32,7 @@ class SwaggerHelper {
 		foreach($route->routeCommands as $command) {
 			$apiCommand = array();
 			$apiCommand["path"] = "/".$route->routeName."/".$command->routeCommand;
-			$apiCommand["operations"][]=SwaggerHelper::createOperation($command->method, $route, SwaggerHelper::getParametersFromCommand($command), $route->routeName, $custom, $command->description);
+			$apiCommand["operations"][]=SwaggerHelper::createOperation($command->method, $route, SwaggerHelper::getParametersFromCommand($command), $route->routeName, true, $command->description);
 			$apis[] = $apiCommand;
 		}
 		
@@ -278,7 +278,6 @@ class SwaggerHelper {
 	}
 	
 	public static function routeResume($routes, $custom_routes = null) {
-	
 		foreach($routes as $routeName => $routeObject) {
 
 			$operation["description"]="Operations about ".$routeName;
@@ -290,10 +289,11 @@ class SwaggerHelper {
 		if($custom_routes != null){
 			
 			foreach($custom_routes as $routeName => $routeObject) {
-
-				$operation["description"]="Operations about ".$routeName;
-				$operation["path"]="/api-doc-custom/".$routeName;
-				$r[] = $operation;
+				if(!isset($routes[$routeName])){
+					$operation["description"]="Operations about ".$routeName;
+					$operation["path"]="/api-doc-custom/".$routeName;
+					$r[] = $operation;
+				}
 			}
 
 			
