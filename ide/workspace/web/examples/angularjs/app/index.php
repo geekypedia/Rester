@@ -2,7 +2,7 @@
 
 error_reporting(E_ERROR | E_PARSE);
 
-function getAllSubDirectories( $directory, $directory_seperator )
+function getAllSubDirectories( $directory, $directory_seperator)
 {
 	$dirs = array_map( function($item)use($directory_seperator){ return $item . $directory_seperator;}, array_filter( glob( $directory . '*' ), 'is_dir') );
 	foreach( $dirs AS $dir )
@@ -12,7 +12,7 @@ function getAllSubDirectories( $directory, $directory_seperator )
 	return $dirs;
 }
 
-function getAllFiles($directory, $excludedFiles){
+function getAllFiles($directory, $excludedFiles = array()){
 	$finalFiles = array();
 	$subDirectories = getAllSubDirectories($directory,'/');
 	array_push($subDirectories, $directory);
