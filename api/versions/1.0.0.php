@@ -22,11 +22,12 @@ function check_simple_auth($exclude)
 		//if(!$resterController) $resterController = new ResterController();
 		global $resterController;
 		$headers = getallheaders();
+		$allowed_auth_headers = array("api_key", "API_KEY", "Api_Key", "Api_key", "api-key", "API-KEY", "Api-Key", "Api-key");
 		$auth_header = $headers['api_key'];
 		if(!$auth_header) $auth_header = $_REQUEST['api_key'];
 		if(!$auth_header){
 			foreach($headers as $key=>$val){
-				if($key == 'api_key') $auth_header = $val;
+				if(in_array($key, $allowed_auth_headers)) $auth_header = $val;
 			}
 		}
 		if($auth_header){
