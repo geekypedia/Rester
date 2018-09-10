@@ -7,3 +7,7 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 <Limit GET POST PUT DELETE>
   Allow from all
 </Limit>
+<Files ~ "\.config$">
+Order allow,deny
+Deny from all
+</Files>
