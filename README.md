@@ -273,6 +273,10 @@ You can access GET or POST parameters with $params['parameter_name'].
 ResterController Operations
 -----
 
+#### query($queryString)
+
+200 OK with the result of executing the specified querystring against the database. It can be any kind of SQL statement such as SELECT, INSERT, UPDATE, DELETE or a CALL to any stored procedure, etc.
+
 #### showResult($value)
 
 200 OK with specified value
@@ -367,7 +371,7 @@ It has reached a long way now after fixing existing bugs and adding more feature
 
 Along with the original fork, I have also bundled some open-source productivity tools - a browser based code editor (Codiad), database administration tool (Adminer), a REST API testing tool [REST Test Test](https://resttesttest.com/), and a web-based terminal [web-console](https://github.com/nickola/web-console).
 
-I am thankful to all those people whose worked ultimately landed here and made this Frankenstein possible.
+I am thankful to all those people whose work directly or indirectly landed here and made creation of this Frankenstein possible.
 
 License (MIT)
 -----
