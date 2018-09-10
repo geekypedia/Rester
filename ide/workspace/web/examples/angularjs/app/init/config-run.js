@@ -2,7 +2,7 @@ app.factory('httpRequestInterceptor', function ($rootScope) {
     return {
         request: function (config) {
             if ($rootScope.currentUser) {
-                config.headers['api_key'] = $rootScope.currentUser.token;
+                config.headers['api-key'] = $rootScope.currentUser.token;
             }
             return config;
         }
