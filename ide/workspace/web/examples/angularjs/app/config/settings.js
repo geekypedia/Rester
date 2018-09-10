@@ -1,7 +1,7 @@
 app.service('S', function($http) {
 	return {
-		"baseUrl": "../../../../../../api",
+		"baseUrl": "../../../../../api",
 		"productName": "pRESTige",
-		"supportEmail": "support@geekypedia.net"
+		"supportEmail": "support@prestigeframework.com"
 	}
 });
