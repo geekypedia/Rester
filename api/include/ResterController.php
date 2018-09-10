@@ -624,6 +624,7 @@ class ResterController {
 		$this->NESTED_COUNTER++;
 		
 		if(isset($filters['api_key'])) unset($filters['api_key']);
+		if(isset($filters['api-key'])) unset($filters['api-key']);		
 		
 		
 		if(function_exists('request_headers_remove')){
