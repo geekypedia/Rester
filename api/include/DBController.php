@@ -269,6 +269,8 @@ class DBController
 			unset($filters['orFilter']);
 		}
 
+		//Return if $route is null, to prevent 500 error
+		if($route == null) return $route;		
 		
 		//Add the main route fields
 		$selectFields = array_merge($selectFields, $route->getFieldNames(FALSE, TRUE));
