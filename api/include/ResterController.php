@@ -383,7 +383,7 @@ class ResterController {
 			$this->getAvailableRoutes()[$routeName]->addFileProcessor($fieldName);	
 		} else {
 			//die("Can't add file processor ".$fieldName." to route ".$routeName);
-			$this->showErrorWithMessage(405, "File processor route '".$routeName."' is enabled, but can't find the table with name '".$routeName . "' or field with name '" . $fieldName . "'.");
+			$this->showErrorWithMessage(503, "File processor route '".$routeName."' is enabled, but can't find the table with name '".$routeName . "' or field with name '" . $fieldName . "'.");
 		}
 			
 	}
