@@ -64,6 +64,14 @@ $loginFunction = function($params = NULL) {
 	
 	$api = new ResterController();
 
+	//Check if the users table exists
+	try{
+	$tableExists = $api->query('select 1 from users');
+	}
+	catch(Exception $e){
+		$api->showErrorWithMessage(503, "Can't find table named 'users'. Please check the documentation for more info.");
+	}		
+	
 	$email = $params["email"];
 	$username = $params["username"];
 	$password = $params["password"];
