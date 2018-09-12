@@ -54,6 +54,7 @@ You can use the following endpoints to use the system.
 |Database Administration		| <a href="http://localhost:8080/db/" target="_blank">http://localhost:8080/db</a> |
 |Code Editor					| <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> |
 |Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
+|HTML5 Builder						| <a href="http://localhost:8080/builder/" target="_blank">http://localhost:8080/builder</a> |
 
 Prerequisites
 -----
