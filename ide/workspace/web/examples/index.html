@@ -20,32 +20,69 @@
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 		<!-- STYLESHEETS -->
-    <style>
-        .btn-sq-lg {
-          width: 150px !important;
-          height: 150px !important;
-        }
-        
-        .btn-sq {
-          width: 100px !important;
-          height: 100px !important;
-          font-size: 10px;
-        }
-        
-        .btn-sq-sm {
-          width: 50px !important;
-          height: 50px !important;
-          font-size: 10px;
-        }
-        
-        .btn-sq-xs {
-          width: 25px !important;
-          height: 25px !important;
-          padding:2px;
-        }
-        
-        
-    </style>
+	    <!-- Loader CSS -->
+	    <style>
+	        .loader {
+	            border: 16px solid #f3f3f3;
+	            border-radius: 50%;
+	            border-top: 16px solid blue;
+	            border-right: 16px solid green;
+	            border-bottom: 16px solid red;
+	            border-left: 16px solid pink;
+	            width: 120px;
+	            height: 120px;
+	            -webkit-animation: spin 2s linear infinite;
+	            animation: spin 2s linear infinite;
+	            left: 50%;
+	            margin-top: -60px;
+	            margin-left: -60px;
+	            position: absolute;
+	            top: 50%;
+	        }
+	
+	        @-webkit-keyframes spin {
+	            0% {
+	                -webkit-transform: rotate(0deg);
+	            }
+	            100% {
+	                -webkit-transform: rotate(360deg);
+	            }
+	        }
+	
+	        @keyframes spin {
+	            0% {
+	                transform: rotate(0deg);
+	            }
+	            100% {
+	                transform: rotate(360deg);
+	            }
+	        }
+	    </style>		
+		
+		<style>
+	        .btn-sq-lg {
+	          width: 150px !important;
+	          height: 150px !important;
+	        }
+	        
+	        .btn-sq {
+	          width: 100px !important;
+	          height: 100px !important;
+	          font-size: 10px;
+	        }
+	        
+	        .btn-sq-sm {
+	          width: 50px !important;
+	          height: 50px !important;
+	          font-size: 10px;
+	        }
+	        
+	        .btn-sq-xs {
+	          width: 25px !important;
+	          height: 25px !important;
+	          padding:2px;
+	        }
+	    </style>
     
 	    <style>
 	        .iconpanel {
@@ -70,6 +107,9 @@
 	    <script>
 		    $(function(){
 		    	setTimeout(function(){
+					$('.loader').hide();
+		    		$('#main').show();
+		    		
 			        $('.pageheading').css("margin-left", 0 - ($('.pageheading').width()/2));
 			        
 			        var width = 0;
@@ -81,42 +121,44 @@
 			        
 			        $('.iconpanel').css("margin-left", 0 - (width/2));
 			        $('.iconpanel').css("margin-top", 0 - (height/2));
-		    		
-		    	},100);
+		    	},1000);
 		    });
 	    </script>		
 		
 		<title>Examples</title>
 	</head>
 	<body>
-		    <div class="pageheading">
-        <img src="images/logo.png"></img>
-    </div>
-    <div class="container iconpanel">
-        <div class="row">
-            <div class="col-lg-12">
-                <p>
-                    <a href="angularjs/" target="_blank" class="btn btn-sq-lg btn-primary">
-                            <!--<i class="fa fa-adn fa-5x"></i><br/>-->
-                            <img src="images/angularjs.png" width=80px height=80px/><br/>
-                            AngularJS <br/> Complex Example
-                    </a>
-                    <a href="angularjs-noauth/" target="_blank" class="btn btn-sq-lg btn-success">
-                          <!--<i class="fa fa-file-text-o fa-5x"></i><br/>-->
-                          <img src="images/angularjs.png" width=80px height=80px/><br/>
-                          AngularJS <br/> Simple Example
-                    </a>
-                    <a href="vuejs/" target="_blank" class="btn btn-sq-lg btn-danger">
-                          <!--<i class="fa fa-exchange fa-5x"></i><br/>-->
-                          
-                          <img src="images/vuejs.png" width=80px height=80px/><br/>
-                          
-                          VueJS <br>Example
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
+		<div class="loader"></div> 
+		<div id="main" style="display:none;">
+			<div class="pageheading">
+		        <img src="images/logo.png"></img>
+		    </div>
+		    <div class="container iconpanel">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <p>
+		                    <a href="angularjs/" target="_blank" class="btn btn-sq-lg btn-primary">
+		                            <!--<i class="fa fa-adn fa-5x"></i><br/>-->
+		                            <img src="images/angularjs.png" width=80px height=80px/><br/>
+		                            AngularJS <br/> Complex Example
+		                    </a>
+		                    <a href="angularjs-noauth/" target="_blank" class="btn btn-sq-lg btn-success">
+		                          <!--<i class="fa fa-file-text-o fa-5x"></i><br/>-->
+		                          <img src="images/angularjs.png" width=80px height=80px/><br/>
+		                          AngularJS <br/> Simple Example
+		                    </a>
+		                    <a href="vuejs/" target="_blank" class="btn btn-sq-lg btn-danger">
+		                          <!--<i class="fa fa-exchange fa-5x"></i><br/>-->
+		                          
+		                          <img src="images/vuejs.png" width=80px height=80px/><br/>
+		                          
+		                          VueJS <br>Example
+		                    </a>
+		                </p>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 		
 	</body>
 </html>
