@@ -24,13 +24,13 @@ app.controller('homeController', function ($scope, $rootScope, H) {
 				action: 'users',
 				allowedRoles: ['admin']
 			},
-			customersCounter: {
-				title: 'Customers',
+			organizationsCounter: {
+				title: 'Organizations',
 				value: '0',
 				icon: 'person',
-				background: 'bg-blue',
+				background: 'bg-green',
 				color: 'white-text',
-				action: 'customers',
+				action: 'organizations',
 				allowedRoles: ['superadmin']
 			}
 		},
@@ -90,7 +90,9 @@ app.controller('homeController', function ($scope, $rootScope, H) {
 		resources = [];
 		for (var k in $scope.data.counters) {
 			var v = $scope.data.counters[k];
-			resources.push(v.action);
+			if(v.allowedRoles.indexOf($rootScope.currentUser.role) > -1){
+				resources.push(v.action);
+			}
 		}
 		setCounts(resources);
 	}
