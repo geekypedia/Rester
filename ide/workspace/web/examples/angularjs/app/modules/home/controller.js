@@ -27,7 +27,7 @@ app.controller('homeController', function ($scope, $rootScope, H) {
 			organizationsCounter: {
 				title: 'Organizations',
 				value: '0',
-				icon: 'person',
+				icon: 'people_outline',
 				background: 'bg-green',
 				color: 'white-text',
 				action: 'organizations',

@@ -20,17 +20,17 @@ function RegisterMenuItems(){
             items: [
         	    {action: 'settings', icon: 'settings',text: 'Settings'},
         	    {action: 'categories', icon: 'list',text: 'Categories'},
-        	    {action: 'users', icon: 'people',text: 'Users'},
-        	    {action: 'groups', icon: 'group_add',text: 'Groups'}
+        	    {action: 'users', icon: 'person',text: 'Users'},
+        	    {action: 'groups', icon: 'group',text: 'Groups'}
 	        ],
 	        allowedRoles: ['admin']
         },
         {
             header: 'Customer Management',
-            showHeader: true,
-            showSeparator: true,
+            showHeader: false,
+            showSeparator: false,
             items: [
-        	    {action: 'customers', icon: 'group_add',text: 'Customers'}
+        	    {action: 'organizations', icon: 'people_outline',text: 'Organizations'}
 	        ],
 	        allowedRoles: ['superadmin']
         }
