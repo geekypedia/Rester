@@ -5,7 +5,7 @@ app.factory('httpRequestInterceptor', function ($rootScope) {
                 config.headers['api-key'] = $rootScope.currentUser.token;
                 
                 if($rootScope.SETTINGS.enableSaaS){
-                    if(config.method == "GET" || config.method == "DELETE"){
+                    if(config.method == "GET" || config.method == "DELETE" || config.method == "PUT"){
                     	var m = config.url.match(/\.[0-9a-z]+$/i);
                         if(m && m.length > 0){
                         }else{

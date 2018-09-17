@@ -269,9 +269,16 @@ body {
   } */
   
   
-  
-  
-  
+/*Override MaterializeCSS*/  
+.input-field {
+  margin-bottom: 0em;
+}
+
+.input-field>label{
+  font-size: 1.2rem;
+  font-color: black;
+  font-weight: bolder;
+}  
   
   
   

@@ -56,17 +56,19 @@
 		CREATE TABLE `organizations` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `name` varchar(255) NOT NULL,
-		  `secret` varchar(50) NOT NULL,
+		  `org_secret` varchar(50) NOT NULL,
+		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
 		  PRIMARY KEY (`id`),
-		  UNIQUE KEY `secret` (`secret`)
+		  UNIQUE KEY `org_secret` (`org_secret`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 		
 		-- Insert a default organization
 		
-		INSERT INTO `organizations` (`id`, `name`, `secret`) VALUES
-		(1,	'Default Organization',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
-		
-		
+		INSERT INTO `organizations` (`id`, `name`, `org_secret`, `secret`) VALUES
+		(1,	'Default Organization',	'206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
+
+	
 		-- SQL Script for creating files table
 	
 		DROP TABLE IF EXISTS `files`;

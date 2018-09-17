@@ -1,6 +1,6 @@
 //ControllerFactory helps wrap basic CRUD operations for any API resource
 function ControllerFactory(resourceName, options, extras) {
-	return function($scope, H) {
+	return function($scope, $http, H) {
 		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
 		var Resource = H.R.get(resourceName);
 
@@ -121,6 +121,21 @@ function ControllerFactory(resourceName, options, extras) {
 				});
 			}
 		};
+		
+		$scope.update = function(obj, callback) {
+			var url = H.SETTINGS.baseUrl + "/" + resourceName;
+			$http.put(url, obj)
+            .success(function (data, status, headers, config) {
+				if (callback) {
+					callback(data);
+				}
+            })
+            .error(function (data, status, header, config) {
+				if (callback) {
+					callback(data);
+				}
+			});
+		}
 
 		//Clear errors
 		$scope.clearErrors = function() {

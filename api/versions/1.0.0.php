@@ -15,7 +15,7 @@ function api_get_current_route(){
 	return get_current_api_path();
 }
 
-//$exclude = array("GET hello/world", "POST hello/world");
+//$exclude = array("GET hello/world", "POST users/login");
 function check_simple_auth($exclude)
 {
 		if($exclude){
@@ -51,7 +51,7 @@ function check_simple_auth($exclude)
 }
 
 
-//$exclude = array("GET ", GET hello/world", "POST hello/world");
+//$exclude = array("GET ", GET hello/world", "POST users/login");
 function check_simple_saas($exclude)
 {
 	global $resterController;
@@ -60,8 +60,15 @@ function check_simple_saas($exclude)
 		return true;
 	}
 	else{
-		if(!isset($_REQUEST['secret'])){
-			$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
+		if(strpos(get_current_api_path(), "GET") > -1){
+			if(!isset($_REQUEST['secret'])){
+				$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
+			}
+		}
+		if(strpos(get_current_api_path(), "POST") > -1){
+			if(!empty($_REQUEST['secret'])){
+				$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
+			}
 		}
 	}
 

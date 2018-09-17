@@ -5,7 +5,15 @@ function RegisterMenuItems(){
             showHeader: false,
             showSeparator: false,
             items: [
-        	    {action: '', icon: 'home',text: 'Home'},
+        	    {action: '', icon: 'home',text: 'Home'}
+	        ],
+	        allowedRoles: ['user', 'admin', 'superadmin']
+        },
+        {
+            header: '',
+            showHeader: false,
+            showSeparator: false,
+            items: [
         	    {action: 'tasks', icon: 'assignment_turned_in',text: 'Tasks'},
         	    {action: 'search', icon: 'search',text: 'Search'},
         	    {action: 'reports', icon: 'pie_chart',text: 'Reports'},
