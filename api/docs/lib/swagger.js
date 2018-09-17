@@ -59,7 +59,16 @@
             } else if (response.status === 404) {
               return _this.fail('Can\'t read swagger JSON from ' + _this.url);
             } else {
-              return _this.fail(response.status + ' : ' + response.statusText + ' ' + _this.url);
+              //return _this.fail(response.status + ' : ' + response.statusText + ' ' + _this.url);
+                var message = response.status + ' - from' + _this.url;
+                if(response.statusText){
+                    message = response.status + ' : ' + response.statusText + ' - from' + _this.url;
+                } else {
+                    if(response._body && response._body._body){
+                        message = response._body._body;
+                    }
+                }
+                return _this.fail(message);
             }
           },
           response: function(rawResponse) {
