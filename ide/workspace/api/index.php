@@ -23,7 +23,7 @@
 	//enable_files_api();
 	
 	/*
-		--SQL Script for creating users table. role and secret are only useful if you enable SaaS mode, but won't harm if you keep them even if SaaS mode is disabled.
+		-- SQL Script for creating users table. role and secret are only useful if you enable SaaS mode, but won't harm if you keep them even if SaaS mode is disabled.
 		
 		DROP TABLE IF EXISTS `users`;
 		CREATE TABLE `users` (
@@ -39,7 +39,7 @@
 		  UNIQUE KEY `email` (`email`)
 		);
 		
-		--Insert 3 default users
+		-- Insert 3 default users
 		
 		INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`) VALUES
 		(1,	'superadmin@example.com',	'superadmin',	'17c4520f6cfd1ab53d8745e84681eb49',	'1',	'0000-00-00 00:00:00',	'superadmin', '206b2dbe-ecc9-490b-b81b-83767288bc5e');
@@ -51,7 +51,7 @@
 		(3,	'user@example.com',	'user',	'ee11cbb19052e40b07aac0ca060c23ee',	'1',	'0000-00-00 00:00:00',	'user', '206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 
-		--SQL Script for creating organizations table that can be used to associate secret key with each unique organization
+		-- SQL Script for creating organizations table that can be used to associate secret key with each unique organization
 		DROP TABLE IF EXISTS `organizations`;
 		CREATE TABLE `organizations` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -61,11 +61,13 @@
 		  UNIQUE KEY `secret` (`secret`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 		
+		-- Insert a default organization
+		
 		INSERT INTO `organizations` (`id`, `name`, `secret`) VALUES
 		(1,	'Default Organization',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 		
 		
-		--SQL Script for creating files table
+		-- SQL Script for creating files table
 	
 		DROP TABLE IF EXISTS `files`;
 		CREATE TABLE `files` (
