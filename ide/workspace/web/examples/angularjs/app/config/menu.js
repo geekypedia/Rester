@@ -12,6 +12,9 @@ function RegisterMenuItems(){
     	    {action: 'categories', icon: 'list',text: 'Categories'},
     	    {action: 'users', icon: 'people',text: 'Users'},
     	    {action: 'groups', icon: 'group_add',text: 'Groups'}
+    	],
+    	superAdminMenu: [
+    	    {action: 'customers', icon: 'group_add',text: 'Customers'}
     	]
     }
 }

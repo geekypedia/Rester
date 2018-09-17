@@ -81,7 +81,7 @@
 					<a href="" ng-click="logout()"><span class="white-text font-underline email sidenav-close">Sign out</span></a>
 				</div>
 			</li>
-			<li ng-repeat='item in data.menu'><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<li ng-if="currentUser.role == 'user'" ng-repeat='item in data.menu'><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
 			<!--<li><a href="#!" class="sidenav-close"><i class="material-icons">home</i>Home</a></li>-->
 			<!--<li><a href="#!tasks" class="sidenav-close"><i class="material-icons">assignment_turned_in</i>Tasks</a></li>-->
 			<!--<li><a href="#!search" class="sidenav-close"><i class="material-icons">search</i>Search</a></li>-->
@@ -96,6 +96,8 @@
 			<!--<li ng-if="currentUser.role == 'admin'"><a href="#!categories" class="sidenav-close"><i class="material-icons">list</i>Categories</a></li>-->
 			<!--<li ng-if="currentUser.role == 'admin'"><a href="#!users" class="sidenav-close"><i class="material-icons">people</i>Users</a></li>-->
 			<!--<li ng-if="currentUser.role == 'admin'"><a href="#!groups" class="sidenav-close"><i class="material-icons">group_add</i>Groups</a></li>-->
+			<li ng-if="currentUser.role == 'superadmin'" ><a class="subheader">Super Admin Zone </a></li>
+			<li ng-if="currentUser.role == 'superadmin'" ng-repeat='item in data.superAdminMenu' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
 
 		</ul>
 

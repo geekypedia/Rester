@@ -11,6 +11,10 @@ function get_current_api_path(){
 	return $currentApi;
 }
 
+function api_get_current_route(){
+	return get_current_api_path();
+}
+
 //$exclude = array("GET hello/world", "POST hello/world");
 function check_simple_auth($exclude)
 {
@@ -46,6 +50,23 @@ function check_simple_auth($exclude)
 		}
 }
 
+
+//$exclude = array("GET ", GET hello/world", "POST hello/world");
+function check_simple_saas($exclude)
+{
+	global $resterController;
+	
+	if($exclude){
+		if(in_array(get_current_api_path(), $exclude) || strpos(get_current_api_path(), "api-doc") > -1){
+			return true;
+		}
+		else{
+			if(!isset($_REQUEST['secret'])){
+				$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
+			}
+		}
+	}
+}
 
 
 /**
@@ -154,6 +175,12 @@ if(DEFAULT_LOGIN_API == true){
 	check_simple_auth(array("POST users/login", "GET hello/world"));
 }
 
+
+if(DEFAULT_SAAS_MODE == true){
+	check_simple_saas(array("GET ", "POST users/login", "GET hello/world"));
+}
+
+
 function enable_simple_auth($exclude){
 	if(!DEFAULT_LOGIN_API){
 		global $resterController, $loginCommand;
@@ -162,6 +189,11 @@ function enable_simple_auth($exclude){
 	}
 }
 
+function enable_simple_saas($exclude){
+	if(!DEFAULT_SAAS_MODE){
+		check_simple_saas(array_merge(array("GET ", "POST users/login", "GET hello/world"), $exclude));
+	}
+}
 
 
 //Test Login using GET

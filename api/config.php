@@ -40,6 +40,9 @@ define('ENABLE_OAUTH', false);
 //Enable simple login API
 define('DEFAULT_LOGIN_API', false);
 
+//Enable simple SaaS Mode
+define('DEFAULT_SAAS_MODE', false);
+
 //Enable deep nested queries
 define('ENABLE_DEEP_QUERY', true);
 define('MAX_NESTING_LEVEL', 10);

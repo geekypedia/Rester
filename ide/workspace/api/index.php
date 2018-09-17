@@ -7,15 +7,23 @@
 		$api->showResult($value);
 	}, array(), "Hello World Api");
 	$resterController->addRouteCommand($helloWorldApi);
-
-	//Enable Simple Auth (Make sure to run the scripts below before uncommenting)
-	//enable_simple_auth(array());
 	
+	//List of excluded APIs for Simple Authentication and Saas Mode
+	//Examples
+	//$excluded = array("POST users/forgot-password", "POST users/reset-password");
+	$excluded = array();
+	
+	//Enable Simple Auth (Make sure to run the scripts below before uncommenting)
+	//enable_simple_auth($excluded);
+
+	//Enable Simple SaaS Mode (Make sure to run the scripts below before uncommenting)
+	//enable_simple_saas($excluded);
+
 	//Enable Files API (Make sure to run the scripts below before uncommenting)
 	//enable_files_api();
 	
 	/*
-		//SQL Script for creating users table
+		--SQL Script for creating users table. role and secret are only useful if you enable SaaS mode, but won't harm if you keep them even if SaaS mode is disabled.
 		
 		DROP TABLE IF EXISTS `users`;
 		CREATE TABLE `users` (
@@ -25,11 +33,25 @@
 		  `password` varchar(100) NOT NULL,
 		  `token` varchar(50) NOT NULL,
 		  `lease` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+		  `role` varchar(50) DEFAULT 'user',
+		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `email` (`email`)
 		);
 		
-		//SQL Script for creating files table
+		--Insert 3 default users
+		
+		INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`) VALUES
+		(1,	'superadmin@example.com',	'superadmin',	'17c4520f6cfd1ab53d8745e84681eb49',	'1',	'0000-00-00 00:00:00',	'superadmin', '206b2dbe-ecc9-490b-b81b-83767288bc5e');
+		
+		INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`) VALUES
+		(2,	'admin@example.com',	'admin',	'21232f297a57a5a743894a0e4a801fc3',	'1',	'0000-00-00 00:00:00',	'admin', '206b2dbe-ecc9-490b-b81b-83767288bc5e');
+		
+		INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`) VALUES
+		(3,	'user@example.com',	'user',	'ee11cbb19052e40b07aac0ca060c23ee',	'1',	'0000-00-00 00:00:00',	'user', '206b2dbe-ecc9-490b-b81b-83767288bc5e');
+		
+		
+		--SQL Script for creating files table
 	
 		DROP TABLE IF EXISTS `files`;
 		CREATE TABLE `files` (

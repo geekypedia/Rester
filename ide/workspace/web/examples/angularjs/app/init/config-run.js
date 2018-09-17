@@ -3,6 +3,19 @@ app.factory('httpRequestInterceptor', function ($rootScope) {
         request: function (config) {
             if ($rootScope.currentUser) {
                 config.headers['api-key'] = $rootScope.currentUser.token;
+                
+                if($rootScope.SETTINGS.enableSaaS){
+                    if(config.method == "GET" || config.method == "DELETE"){
+                        var secret = '/?secret=';
+                        console.log(config.url);
+                        if(config.url.endsWith('/')) secret = '?secret=';
+                        if(config.url.indexOf('?') > -1) secret = '&secret=';
+                        config.url = config.url + secret + $rootScope.currentUser.secret;
+                    }
+                    else{
+                        config.data.secret = $rootScope.currentUser.secret;
+                    }
+                }
             }
             return config;
         }
