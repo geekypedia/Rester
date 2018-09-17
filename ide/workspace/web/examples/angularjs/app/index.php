@@ -2,6 +2,8 @@
 
 error_reporting(E_ERROR | E_PARSE);
 
+header('Content-Type: application/javascript');
+
 function getAllSubDirectories( $directory, $directory_seperator)
 {
 	$dirs = array_map( function($item)use($directory_seperator){ return $item . $directory_seperator;}, array_filter( glob( $directory . '*' ), 'is_dir') );
