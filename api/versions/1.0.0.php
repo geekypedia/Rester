@@ -56,16 +56,15 @@ function check_simple_saas($exclude)
 {
 	global $resterController;
 	
-	if($exclude){
-		if(in_array(get_current_api_path(), $exclude) || strpos(get_current_api_path(), "api-doc") > -1){
-			return true;
-		}
-		else{
-			if(!isset($_REQUEST['secret'])){
-				$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
-			}
+	if((isset($exclude) && in_array(get_current_api_path(), $exclude)) || strpos(get_current_api_path(), "api-doc") > -1){
+		return true;
+	}
+	else{
+		if(!isset($_REQUEST['secret'])){
+			$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
 		}
 	}
+
 }
 
 
