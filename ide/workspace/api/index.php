@@ -49,6 +49,20 @@
 		
 		INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`) VALUES
 		(3,	'user@example.com',	'user',	'ee11cbb19052e40b07aac0ca060c23ee',	'1',	'0000-00-00 00:00:00',	'user', '206b2dbe-ecc9-490b-b81b-83767288bc5e');
+
+
+		--SQL Script for creating organizations table that can be used to associate secret key with each unique organization
+		DROP TABLE IF EXISTS `organizations`;
+		CREATE TABLE `organizations` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `name` varchar(255) NOT NULL,
+		  `secret` varchar(50) NOT NULL,
+		  PRIMARY KEY (`id`),
+		  UNIQUE KEY `secret` (`secret`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+		
+		INSERT INTO `organizations` (`id`, `name`, `secret`) VALUES
+		(1,	'Default Organization',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 		
 		
 		--SQL Script for creating files table

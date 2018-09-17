@@ -348,6 +348,18 @@ array_search_where($customers, 'city', 'New York', true, true);
 
 Checks if request is being made from a mobile browser.
 
+#### api_get_current_route()
+
+Returns current route in the following format
+```
+METHOD route/path
+```
+
+Examples:
+```
+GET hello/world
+POST users/login
+```
 
 Middleware Functions
 -----
@@ -362,7 +374,10 @@ Example
 function request_headers_remove(){
 	return array("custom-header-1", "custom-header-2");
 }
-`
+
+Request Interceptors
+-----
+Whatever PHP code you write in the API project will be applied to all the request, unless it is inside the custom API.
 
 Credits
 -----
