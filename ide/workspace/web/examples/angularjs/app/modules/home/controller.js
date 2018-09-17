@@ -12,7 +12,8 @@ app.controller('homeController', function ($scope, $rootScope, H) {
 				icon: 'assignment_turned_in',
 				background: 'bg-green',
 				color: 'white-text',
-				action: 'tasks'
+				action: 'tasks',
+				allowedRoles: ['user', 'admin']
 			},
 			usersCounter: {
 				title: 'Users',
@@ -21,7 +22,16 @@ app.controller('homeController', function ($scope, $rootScope, H) {
 				background: 'bg-purple',
 				color: 'white-text',
 				action: 'users',
-				availableTo: ['admin']
+				allowedRoles: ['admin']
+			},
+			customersCounter: {
+				title: 'Customers',
+				value: '0',
+				icon: 'person',
+				background: 'bg-blue',
+				color: 'white-text',
+				action: 'customers',
+				allowedRoles: ['superadmin']
 			}
 		},
 		bgColors: [

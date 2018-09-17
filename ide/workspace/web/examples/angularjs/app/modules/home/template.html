@@ -2,6 +2,6 @@
 	<h6>DASHBOARD</h6>
 	<hr/>
 		<div class="row"> 
-			<info-box options='v' ng-if="v.availableTo==null || v.availableTo.indexOf(currentUser.role) > -1" ng-repeat="(k, v) in data.counters"></info-box>
+			<info-box options='v' ng-if="v.allowedRoles==null || v.allowedRoles.indexOf(currentUser.role) > -1" ng-repeat="(k, v) in data.counters"></info-box>
 		</div>
 </div>
