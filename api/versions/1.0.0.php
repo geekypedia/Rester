@@ -311,8 +311,12 @@ $approveFunction = function($params = NULL) {
 		
 		$organization = $api->getObjectsFromRouteName("organizations", $filter);
 		
-		if(function_exists('on_organization_activated')){
-			on_organization_activated($organization, $result);
+		try{
+			if(function_exists('on_organization_activated')){
+				on_organization_activated($organization, $result);
+			}
+		} catch (Exception $ex){
+			
 		}
 
 		$api->showResult($result);
