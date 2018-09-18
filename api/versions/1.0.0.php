@@ -308,6 +308,12 @@ $approveFunction = function($params = NULL) {
 		foreach ($result as &$r) {
 			$r['password'] = 'Not visible for security reasons';
 		}
+		
+		$organization = $api->getObjectsFromRouteName("organizations", $filter);
+		
+		if(function_exists('on_organization_activated')){
+			on_organization_activated($organization, $result);
+		}
 
 		$api->showResult($result);
 	}

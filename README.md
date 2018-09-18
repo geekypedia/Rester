@@ -365,7 +365,7 @@ Middleware Functions
 -----
 You can define these function anywhere in your API project and it will be injected in the request pipe-line to perform specific actions.
 
-1. request_headers_remove
+#### request_headers_remove()
 
 Sometimes, Your legacy applications might want to call your APIs and they are passing some extra paramters that the APIs are not expecting. This will force your APIs to return 405 - method not allowed error. This function is used to remove those extra headers, so your APIs will work fine even if any middleware in your legacy applications or infrastructure is passing on additional headers.
 
@@ -374,6 +374,11 @@ Example
 function request_headers_remove(){
 	return array("custom-header-1", "custom-header-2");
 }
+
+
+#### on_organization_activated($organization, $user)
+
+If you have enables SaaS mode, and you want an even on activation of an organization, probably to send an email, define this function in your api project.
 
 Request Interceptors
 -----
