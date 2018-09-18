@@ -275,8 +275,8 @@ body {
 }
 
 .input-field>label{
+  color: black;
   font-size: 1.2rem;
-  font-color: black;
   font-weight: bolder;
 }  
   

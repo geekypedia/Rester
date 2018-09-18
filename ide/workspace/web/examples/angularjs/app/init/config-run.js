@@ -38,11 +38,21 @@ app.provider('customRoutes', function() {
 });
 
 app.config(function ($routeProvider, $resourceProvider, $httpProvider, customRoutesProvider) {
-    var routes = customRoutesProvider.routes;
+    var routes = customRoutesProvider.routes.customRoutes;
+
+    var easyRoutes = customRoutesProvider.routes.easyRoutes;
+    for (var i = 0; i < easyRoutes.length; i++) {
+        var r = easyRoutes[i];
+        routes.push({route: r, template: 'common/templates/list', controller: r});
+        routes.push({route: r + '/new', template: 'common/templates/new', controller: r});
+        routes.push({route: r + '/:id', template: 'common/templates/edit', controller: r});
+    }
+
     for (var i = 0; i < routes.length; i++) {
         var r = routes[i];
         $routeProvider.when('/' + r.route, { templateUrl: 'app/modules/' + r.template + '.html', controller: r.controller + 'Controller'});
     }
+    
 
     $httpProvider.interceptors.push('httpRequestInterceptor');
 });

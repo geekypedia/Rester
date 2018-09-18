@@ -1,6 +1,6 @@
 //ControllerFactory helps wrap basic CRUD operations for any API resource
 function ControllerFactory(resourceName, options, extras) {
-	return function($scope, $http, H) {
+	return function($scope, $http, $routeParams, $location, H) {
 		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
 		var Resource = H.R.get(resourceName);
 
@@ -15,6 +15,22 @@ function ControllerFactory(resourceName, options, extras) {
 			'add': 'add'
 		}
 		$scope.mode = $scope.MODES.view;
+		$scope.locked = true;
+		
+		//Set currentRoute
+		$scope.currentRoute = (function(){
+			var route = $location.path().substring(1);
+			var slash = route.indexOf('/');
+			if(slash > -1){
+				route = route.substring(0, slash);
+			}
+			return route;
+		})();
+		
+		$scope.currentRouteHref = "#!" + $scope.currentRoute;
+		$scope.newRouteHref = "#!" + $scope.currentRoute + "/new";
+		$scope.editRouteHref = "#!" + $scope.currentRoute + "/:id";
+
 
 		//Default error handler
 		var errorHandler = function(error) {
@@ -23,6 +39,16 @@ function ControllerFactory(resourceName, options, extras) {
 					case 404:
 						$scope.errors.push({
 							message: H.MESSAGES.E404
+						});
+						break;
+					case 422:
+						$scope.errors.push({
+							message: H.MESSAGES.E422
+						});
+						break;
+					case 405:
+						$scope.errors.push({
+							message: H.MESSAGES.E405
 						});
 						break;
 					case 400:
@@ -84,6 +110,7 @@ function ControllerFactory(resourceName, options, extras) {
 						callback(r);
 					}
 				}, function(e) {
+					errorHandler(e);
 					if (callback) {
 						callback(e);
 					}
@@ -111,12 +138,22 @@ function ControllerFactory(resourceName, options, extras) {
 					if (callback) {
 						callback();
 					}
+				}, function(e){
+					errorHandler(e);
+					if (callback) {
+						callback(e);
+					}
 				});
 			} else if ($scope.data.single) {
 				var promise = $scope.data.single.$save();
 				promise.then(function() {
 					if (callback) {
 						callback();
+					}
+				}, function(e){
+					errorHandler(e);
+					if (callback) {
+						callback(e);
 					}
 				});
 			}
@@ -125,16 +162,16 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.update = function(obj, callback) {
 			var url = H.SETTINGS.baseUrl + "/" + resourceName;
 			$http.put(url, obj)
-            .success(function (data, status, headers, config) {
+			.then((function (data, status, headers, config) {
 				if (callback) {
 					callback(data);
 				}
-            })
-            .error(function (data, status, header, config) {
+            }), (function (e) {
+            	errorHandler(e);
 				if (callback) {
-					callback(data);
+					callback(e);
 				}
-			});
+			}));
 		}
 
 		//Clear errors
@@ -146,6 +183,59 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.refreshData = function() {
 			$scope.query();
 		};
+			
+	
+		//Load all entries on initialization
+		$scope.listAll = function(){
+		    $scope.query({}, function(r) {});
+		}
+		
+		//Load entry on initialization
+		$scope.loadSingle = function(callback){
+		    $scope.get($routeParams.id, function(r) {
+		    	if(callback) callback(r);
+		    });
+		}
+		
+		
+		//Toggle Visibility
+		$scope.toggleVisibility = function(item){
+		    item.visible = !item.visible;
+		}
+	
+		//Toggle lock
+	    $scope.toggleLock = function(){
+	        $scope.locked = !$scope.locked;
+	    }
+	    
+	    //Update a single record
+	    $scope.updateSingle = function(callback){
+	        $scope.update($scope.data.single, function(r){
+	            $scope.locked = true;
+	            if(callback) callback(r);
+	        });
+	    }
+	    
+	    //Initialize a single record
+	    $scope.newSingle = function(callback){
+	    	$scope.locked = false;
+	    	$scope.initSingle();
+	    	if(callback) callback();
+	    }
+	    
+	    //Save a new single record
+	    $scope.saveSingle = function(callback){
+	        $scope.save($scope.data.single, function(r){
+	            $scope.locked = true;
+	            if(callback) callback(r);
+	        });
+	    }
+	    
+	    //Change a property in single
+	    $scope.changeSingle = function(property, value){
+	    	this.data.single[property] = value;
+	    }
+		
 
 		/*Define options
 			init:true -> Load all records when the controller loads
@@ -163,6 +253,81 @@ function ControllerFactory(resourceName, options, extras) {
 				$scope.data[e] = extras[e];
 			}
 		}
+		
+		
+		//Localized resources
+		$scope.textResources = {
+			title: {
+				single: '',
+				list: ''
+			},
+			templates: {
+				edit: '',
+				create: '',
+				list: ''
+			}
+		}
+		
+		$scope.initTextResources = function(listTitle, singleTitle, listTemplate, newTemplate, editTemplate){
+			$scope.textResources.title.list = listTitle;
+			$scope.textResources.title.single = singleTitle;
+			$scope.textResources.templates.list = listTemplate;
+			$scope.textResources.templates.create = newTemplate;
+			$scope.textResources.templates.edit = editTemplate;
+		}		
+		
+		$scope.initTextResourcesEasy = function(route, singular){
+			if(!route || route == '') {
+				var route = $scope.currentRoute;
+			}
+			var plural = route.toUpperCase();
+			if(!singular || singular == '') var singular = plural.substring(0, plural.length - 1);
+			var listTemplate = 'app/modules/' + route + '/list.html';
+			var singleTemplate = 'app/modules/' + route + '/single.html'
+		
+			$scope.initTextResources(plural, singular, listTemplate, singleTemplate, singleTemplate);
+		}
 
+		$scope.getTitle = function(t){
+			switch (t) {
+				case 'single':
+					return $scope.textResources.title.single;
+					break;
+				case 'list':
+					return $scope.textResources.title.list;
+					break;
+				default:
+					return $scope.textResources.title.list;
+			}
+		}
+		
+		$scope.getTemplate = function(t){
+			switch (t) {
+				case 'edit':
+					return $scope.textResources.templates.edit;	
+					break;
+				case 'new':
+					return $scope.textResources.templates.create;	
+					break;
+				case 'list':
+					return $scope.textResources.templates.list;	
+					break;
+				default:
+					return $scope.textResources.templates.edit;	
+			}
+			
+		}
+		
+		$scope.getTableHeaders = function(){
+			var headers = [];
+			if($scope.data.list && $scope.data.list.length > 0 && $scope.data.list[0]){
+				headers = Object.getOwnPropertyNames($scope.data.list[0]);
+			}
+			return headers;
+		}
+		
+		$scope.setListHeaders = function(headers){
+			$scope.data.listHeaders = headers;
+		}
 	};
 }

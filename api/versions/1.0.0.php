@@ -93,7 +93,7 @@ $loginFunction = function($params = NULL) {
 
 	//Check if the users table exists
 	try{
-	$tableExists = $api->query('select 1 from users');
+		$tableExists = $api->query('select 1 from users');
 	}
 	catch(Exception $e){
 		$api->showErrorWithMessage(503, "Can't find table named 'users'. Please check the documentation for more info.");
@@ -182,7 +182,142 @@ if(DEFAULT_LOGIN_API == true){
 }
 
 
+/**
+* Sample organization activate command
+*/
+$approveFunction = function($params = NULL) {
+	
+	$api = new ResterController();
+
+	//Check if the users table exists
+	try{
+		$tableExists = $api->query('select 1 from organizations');
+	}
+	catch(Exception $e){
+		$api->showErrorWithMessage(503, "Can't find table named 'organizations'. Please check the documentation for more info.");
+	}		
+	
+	
+	$id = $params["id"];
+	$secret = $params["secret"];
+
+	$filter['id'] = $id;
+	$filter['secret'] = $secret;
+	// //Need to pass username/email and password.
+	// if($email == null && $username == null)
+	// {
+	// 	$errorResult = array('error' => array('code' => 422, 'status' => 'Required - username/email'));
+	// 	$api->showResult($errorResult);
+	// }
+	// if($password == null)
+	// {
+	// 	$errorResult = array('error' => array('code' => 422, 'status' => 'Required - password'));
+	// 	$api->showResult($errorResult);
+	// }
+		
+	// //Prefer login through e-mail. Alternately accept username.
+	// if($email != null) {
+	// 	$filter["email"]=$email;
+	// }
+	// else {
+	// 	$filter["username"]=$username;
+	// }
+	// $filter["password"]=md5($password);
+	
+	/*Match details with database. There needs to be a table with the following fields
+		users {
+			id (integer): id field integer,
+			email (string): email field string,
+			username (string): username field string,
+			password (string): password field string (md5 encrypted),
+			token (string): token field string,
+			lease (datetime): lease field datetime,
+			role (string, optional): role field string ('user', 'admin'),
+			secret (string): secret field string
+		}
+		where email and username should be marked as UNIQUE index and id as PRIMARY index.
+		
+		organizations {
+			id (integer): id field integer,
+			name (string): name field string,
+			org_secret (string): org_secret field string,
+			secret (string, optional): secret field string,
+			is_active (integer): is_active field integer
+		}
+		
+		DROP TABLE IF EXISTS `users`;
+		CREATE TABLE `users` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `email` varchar(100) NOT NULL,
+		  `username` varchar(50) NOT NULL,
+		  `password` varchar(100) NOT NULL,
+		  `token` varchar(50) NOT NULL,
+		  `lease` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+		  `role` varchar(50) DEFAULT 'user',
+		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
+		  `is_active` tinyint(1) NOT NULL DEFAULT '1',  		  
+		  PRIMARY KEY (`id`),
+		  UNIQUE KEY `email` (`email`)
+		);
+
+		-- SQL Script for creating organizations table that can be used to associate secret key with each unique organization
+		DROP TABLE IF EXISTS `organizations`;
+		CREATE TABLE `organizations` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `name` varchar(255) NOT NULL,
+		  `org_secret` varchar(50) NOT NULL,
+		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
+		  `is_active` tinyint(1) NOT NULL DEFAULT '0',  
+		  PRIMARY KEY (`id`),
+		  UNIQUE KEY `org_secret` (`org_secret`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+	*/
+	$result = $api->getObjectsFromRouteName("organizations", $filter);
+	
+	
+	if($result == null){
+		$errorResult = array('error' => array('code' => 404, 'status' => 'Not found'));
+		$api->showResult($errorResult);
+	}
+	else{
+		$update_id = $result[0]['id'];
+		$update_query = "update organizations set is_active = '1' where id = '$update_id'";
+		$updated = $api->query($update_query);
+
+		// $select_query = "select org_secret from organizations where id = '$update_id'";
+		// $seleted = $api->query($select_query);
+		$org_secret = $result[0]['org_secret'];
+		$email = $result[0]['email'];
+
+		$select_query = "select * from users where secret = '$org_secret' and email = '$email'";
+		$seleted = $api->query($select_query);
+		$user_id = $seleted[0]['id'];
+		
+		
+		if($user_id){
+			$activation_query = "update users set is_active = '1', role = 'admin' where id = '$user_id'";
+			$activated = $api->query($activation_query);
+		} else {
+			$activation_query = "INSERT INTO `users` (`email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES ('$email',	'$email',	'21232f297a57a5a743894a0e4a801fc3',	'1',	'0000-00-00 00:00:00',	'admin', '$org_secret', 1)";
+			$user_id = $api->query($activation_query);
+		}
+		
+		$resultFilter = array("id" => $user_id);
+		$result = $api->getObjectsFromRouteName("users", $resultFilter);
+		foreach ($result as &$r) {
+			$r['password'] = 'Not visible for security reasons';
+		}
+
+		$api->showResult($result);
+	}
+
+};
+
+$approveCommand = new RouteCommand("POST", "organizations", "activate", $approveFunction, array("org_secret"), "Method to activate an organization.");
+
 if(DEFAULT_SAAS_MODE == true){
+	$resterController->addRouteCommand($approveCommand);
 	check_simple_saas(array("GET ", "POST users/login", "GET hello/world"));
 }
 
@@ -197,6 +332,8 @@ function enable_simple_auth($exclude){
 
 function enable_simple_saas($exclude){
 	if(!DEFAULT_SAAS_MODE){
+		global $resterController, $approveCommand;
+		$resterController->addRouteCommand($approveCommand);
 		check_simple_saas(array_merge(array("GET ", "POST users/login", "GET hello/world"), $exclude));
 	}
 }
