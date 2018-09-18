@@ -52,7 +52,7 @@ function check_simple_auth($exclude)
 
 
 //$exclude = array("GET ", GET hello/world", "POST users/login");
-function check_simple_saas($exclude)
+function check_simple_saas($exclude, $check_request_authenticity = false)
 {
 	global $resterController;
 	
@@ -70,6 +70,7 @@ function check_simple_saas($exclude)
 				$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
 			}
 		}
+		if($check_request_authenticity) check_request_authenticity();
 	}
 
 }
@@ -358,11 +359,11 @@ function enable_simple_auth($exclude){
 	}
 }
 
-function enable_simple_saas($exclude){
+function enable_simple_saas($exclude, $check_request_authenticity  = false){
 	if(!DEFAULT_SAAS_MODE){
 		global $resterController, $approveCommand;
 		$resterController->addRouteCommand($approveCommand);
-		check_simple_saas(array_merge(array("GET ", "POST users/login", "GET hello/world"), $exclude));
+		check_simple_saas(array_merge(array("GET ", "POST users/login", "GET hello/world"), $exclude), $check_request_authenticity);
 	}
 }
 

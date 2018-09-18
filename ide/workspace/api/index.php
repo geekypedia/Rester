@@ -16,12 +16,12 @@
 	//Enable Simple Auth (Make sure to run the scripts below before uncommenting)
 	//enable_simple_auth($excluded);
 
-	//Enable Simple SaaS Mode (Make sure to run the scripts below before uncommenting)
-	//enable_simple_saas($excluded);
-	
 	//Check request authenticity in SaaS mode.
-	//check_request_authenticity();
+	//$check_request_authenticity=true;
 
+	//Enable Simple SaaS Mode (Make sure to run the scripts below before uncommenting)
+	//enable_simple_saas($excluded, $check_request_authenticity);
+	
 	//Enable Files API (Make sure to run the scripts below before uncommenting)
 	//enable_files_api();
 	
