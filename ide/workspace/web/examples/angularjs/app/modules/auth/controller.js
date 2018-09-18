@@ -24,3 +24,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		$location.path('/sign-in');
 	}
 });
+
+app.controller('unauthorizedController', function($scope){
+	
+});
