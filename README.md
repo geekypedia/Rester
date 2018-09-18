@@ -361,6 +361,11 @@ GET hello/world
 POST users/login
 ```
 
+#### check_request_authenticity()
+
+If SaaS mode is enabled, then you can call this method to check if the api_key and secret are from same organization.
+
+
 Middleware Functions
 -----
 You can define these function anywhere in your API project and it will be injected in the request pipe-line to perform specific actions.

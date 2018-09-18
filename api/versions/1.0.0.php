@@ -75,6 +75,24 @@ function check_simple_saas($exclude)
 }
 
 
+function check_request_authenticity(){
+	$secret = $_REQUEST['secret'];
+	$headers = getallheaders();
+	$api_key = '';
+	foreach($headers as $k => $v){
+		if(in_array(strtolower($k), array('api-key','api_key'))){
+			$api_key = $v;
+		}
+	}
+	$api = new ResterController();
+	$val = $api->query("select * from users where token='$api_key' and secret='$secret'");
+	if (!(count($val) > 0)){
+		$api->showErrorWithMessage(403, 'Forbidden');
+	}
+}
+
+
+
 /**
 * Sample custom login command
 */
