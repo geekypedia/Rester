@@ -56,7 +56,7 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 {
 	global $resterController;
 	
-	if((isset($exclude) && in_array(get_current_api_path(), $exclude)) || strpos(get_current_api_path(), "api-doc") > -1){
+	if((isset($exclude) && in_array(get_current_api_path(), $exclude)) || strpos(get_current_api_path(), "api-doc") > -1 || strpos(get_current_api_path(), "files") > -1){
 		return true;
 	}
 	else{
