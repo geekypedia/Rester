@@ -1,0 +1,26 @@
+<form class="col s12">
+  <div class="row">
+    <div class="input-field col s9">
+      <label for="username" class="active">Username:</label>
+      <input id="username" type="text" class="validate" ng-model="data.single.username" ng-disabled="locked">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s9">
+        <label for="email" class="active">Email:</label>
+        <input id="email" type="text" class="validate" ng-model="data.single.email" ng-disabled="locked">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s9">
+        <md-input-container>
+          <label for="role" class="adtive">Role:</label>
+          <md-select id="role" ng-model="data.single.role">
+            <md-option ng-repeat="u in [{key: 'user', value: 'User'}, {key: 'admin', value: 'Administrator'}]" ng-value="u.key">
+              {{u.value}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+    </div>
+  </div>
+</form>

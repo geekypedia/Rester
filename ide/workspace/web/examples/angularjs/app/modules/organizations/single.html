@@ -1,0 +1,22 @@
+<form class="col s12">
+  <div class="row">
+    <div class="input-field col s9">
+      <label for="organization_name" class="active">Organization:</label>
+      <input id="organization_name" type="text" class="validate" ng-model="data.single.name" ng-disabled="locked">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s9">
+      <label for="organization_email" class="active">Email:</label>
+      <input id="organization_email" type="text" class="validate" ng-model="data.single.email" ng-disabled="locked">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s9">
+        <label for="client_secret" class="active">Client Secret:</label>
+        <input id="client_secret" type="text" class="validate" ng-model="data.single.org_secret" disabled>
+    </div>
+  </div>
+</form>
+
+

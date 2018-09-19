@@ -1,0 +1,10 @@
+<td><a href="#!/{{currentRoute}}/{{item.id}}">{{item.name}}</a></td>
+<td><span>{{item.email}}</span></td>
+<td>
+    <span ng-if="item.visible">{{item.org_secret}}</span>
+    <button ng-click="toggleVisibility(item)" ng-if="!item.visible" class="btn">Show</button>
+</td>
+<td>
+    <button ng-if="item.is_active" class="btn green">Active</button>
+    <button ng-click="activate(item)" ng-if="!item.is_active" class="btn red">Activate</button>
+</td>

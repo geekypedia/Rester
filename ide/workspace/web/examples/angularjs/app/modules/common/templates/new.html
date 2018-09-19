@@ -1,0 +1,8 @@
+<div ng-init="newSingle()"></div>
+<h6>{{getTitle('single')}}</h6>
+<hr/>
+<div ng-include src="getTemplate('new')"></div>
+<button class="btn" ng-click="saveSingle()">Save</button>
+<div class="fixed-action-btn ">
+      <a class="btn-floating btn-large yellow darken-4" ng-href="{{currentRouteHref}}"><i class="material-icons">arrow_back</i></a>
+</div>

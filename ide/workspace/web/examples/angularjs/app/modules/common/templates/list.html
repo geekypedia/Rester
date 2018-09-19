@@ -1,0 +1,17 @@
+<div ng-init="listAll()"></div>
+<h6>{{getTitle('list')}}</h6>
+<hr/>
+<table class="striped">
+        <thead>
+          <tr>
+              <th ng-repeat="h in data.listHeaders">{{h}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in data.list" ng-include src="getTemplate('list')">
+          </tr>
+        </tbody>
+</table>
+<div class="fixed-action-btn ">
+      <a class="btn-floating btn-large blue" href="{{newRouteHref}}"><i class="material-icons">add</i></a>
+</div>

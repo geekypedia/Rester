@@ -1,0 +1,9 @@
+<div ng-init="loadSingle()"></div>
+<h6>{{getTitle('single')}}</h6>
+<hr/>
+<div ng-include src="getTemplate('edit')"></div>
+<button class="btn" ng-show="!locked" ng-click="updateSingle()">Update</button>
+<button class="btn" ng-show="locked" ng-click="toggleLock()">Edit</button>
+<div class="fixed-action-btn ">
+      <a class="btn-floating btn-large yellow darken-4" href="{{currentRouteHref}}"><i class="material-icons">arrow_back</i></a>
+</div>
