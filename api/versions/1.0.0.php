@@ -88,8 +88,11 @@ function check_request_authenticity(){
 		}
 	}
 	
+	$api_key = empty($api_key) ? (empty($_REQUEST['api-key']) ? $_REQUEST['api_key'] : $_REQUEST['api-key']) : $api_key;
+		
 	$request_body = $api->getRequestBody();
-	$secret = $request_body['secret'];
+	$secret = empty($request_body['secret']) ? $_REQUEST['secret'] : $request_body['secret'];
+
 	
 	if(!empty($secret) && !empty($api_key))
 	{

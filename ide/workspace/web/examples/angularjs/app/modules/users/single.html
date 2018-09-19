@@ -1,4 +1,4 @@
-<form class="col s12">
+<form class="col s12" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
   <div class="row">
     <div class="input-field col s9">
       <label for="username" class="active">Username:</label>
@@ -24,3 +24,15 @@
     </div>
   </div>
 </form>
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">You are not authorized to access this area!</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>
