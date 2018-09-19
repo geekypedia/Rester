@@ -116,6 +116,18 @@ class ResterController {
 					ResterUtils::Log(">> Update object from ID");
 					$this->processFiles($this->getAvailableRoutes()[$routeName], $routePath[0]);
 					$result = $this->updateObjectFromRoute($routeName, $routePath[0], $_POST);
+					
+					//Register event hook
+					try{
+						$func = 'on_post_' . $routeName;
+						if(function_exists($func)){
+							$func($result);
+						}
+					} catch (Exception $ex){
+						
+					}
+					
+					
 					$this->showResult($result);
 				}
 			}
@@ -140,6 +152,17 @@ class ResterController {
 					$result = $this->insertObject($routeName, $body);
 				}
 			}
+			
+			//Register event hook
+			try{
+				$func = 'on_post_' . $routeName;
+				if(function_exists($func)){
+					$func($result);
+				}
+			} catch (Exception $ex){
+				
+			}
+
 				
 			$this->showResult($result, 201);
 			
@@ -156,6 +179,18 @@ class ResterController {
 			}
 			
 			$result = $this->deleteObjectFromRoute($routeName, $routePath[0]);
+			
+			
+			//Register event hook
+			try{
+				$func = 'on_delete_' . $routeName;
+				if(function_exists($func)){
+					$func($result);
+				}
+			} catch (Exception $ex){
+				
+			}
+			
 			
 			if($result > 0) {
 				$this->showResult(ApiResponse::successResponse());
@@ -192,6 +227,18 @@ class ResterController {
 						}
 					}
 					ResterUtils::Log("SUCCESS");
+					
+					//Register event hook
+					try{
+						$func = 'on_put_' . $routeName;
+						if(function_exists($func)){
+							$func($result);
+						}
+					} catch (Exception $ex){
+						
+					}
+					
+					
 					$this->doResponse(ApiResponse::successResponse());
 				} else {
 					ResterUtils::Log("UPDATING SINGLE OBJECT");
@@ -201,6 +248,17 @@ class ResterController {
 						$this->showError(400);
 					}	 
 					$result = $this->updateObjectFromRoute($routeName, $putData[$route->primaryKey->fieldName], $putData);
+					
+					//Register event hook
+					try{
+						$func = 'on_post_' . $routeName;
+						if(function_exists($func)){
+							$func($result);
+						}
+					} catch (Exception $ex){
+						
+					}
+					
 					$this->showResult($result);
 				}
 			} else { //id from URL
@@ -213,6 +271,19 @@ class ResterController {
 			
 					ResterUtils::Log("IS INDEXED");
 					$result = $this->updateObjectFromRoute($routeName, $routePath[0], $putData);
+					
+					
+					//Register event hook
+					try{
+						$func = 'on_post_' . $routeName;
+						if(function_exists($func)){
+							$func($result);
+						}
+					} catch (Exception $ex){
+						
+					}
+					
+					
 					$this->showResult($result);
 		
 			}

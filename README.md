@@ -399,6 +399,33 @@ function request_headers_remove(){
 
 If you have enables SaaS mode, and you want an even on activation of an organization, probably to send an email, define this function in your api project.
 
+Default Middleware Events
+-----
+
+On POST, PUT and DELETE events of the generated APIs, you can hook your own code by calling these default middleware events.
+
+Convention for these events are as below:
+```
+on_method_route($result)
+```
+
+Example:
+If you create a table named 'users' in the database, you get RESTful APIs at '/users'. The events for this endpoint would be as below:
+```php
+on_post_users($result)
+on_put_users($result)
+on_delete_users($result)
+```
+
+You can just define these events as functions in your API project and do additional stuff there.
+
+Example:
+```php
+function on_post_users($result){
+	//send an email to $result['email'] using send_email_sparkpost() method
+}
+```
+
 Request Interceptors
 -----
 Whatever PHP code you write in the API project will be applied to all the request, unless it is inside the custom API.
