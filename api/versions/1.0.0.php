@@ -289,8 +289,8 @@ $activateFunction = function($params = NULL) {
 			token (string): token field string,
 			lease (datetime): lease field datetime,
 			role (string, optional): role field string ('user', 'admin'),
-			secret (string): secret field string,
-			is_active (integer): is_active field integer
+			is_active (integer): is_active field integer,
+			secret (string): secret field string
 		}
 		where email and username should be marked as UNIQUE index and id as PRIMARY index.
 		
@@ -300,9 +300,9 @@ $activateFunction = function($params = NULL) {
 			email (string): email field string,
 			license (string): license field string,
 			validity (datetime): validity field datetime,
+			is_active (integer): is_active field integer,
 			org_secret (string): org_secret field string,
-			secret (string, optional): secret field string,
-			is_active (integer): is_active field integer
+			secret (string, optional): secret field string
 		}
 		
 		DROP TABLE IF EXISTS `users`;
@@ -314,8 +314,8 @@ $activateFunction = function($params = NULL) {
 		  `token` varchar(50) NOT NULL,
 		  `lease` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 		  `role` varchar(50) DEFAULT 'user',
-		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
 		  `is_active` tinyint(1) NOT NULL DEFAULT '1',  		  
+		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `email` (`email`)
 		);
@@ -328,9 +328,9 @@ $activateFunction = function($params = NULL) {
 		  `email` varchar(100) NOT NULL,		  
 		  `license` varchar(15) NOT NULL DEFAULT 'basic',
 		  `validity` datetime NOT NULL,
+		  `is_active` tinyint(1) NOT NULL DEFAULT '0',  
 		  `org_secret` varchar(50) NOT NULL,
 		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
-		  `is_active` tinyint(1) NOT NULL DEFAULT '0',  
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `org_secret` (`org_secret`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;

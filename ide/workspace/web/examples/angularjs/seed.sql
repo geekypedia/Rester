@@ -18,8 +18,8 @@ CREATE TABLE `organizations` (
   `license` varchar(15) NOT NULL DEFAULT 'basic',
   `validity` datetime NOT NULL,  
   `org_secret` varchar(50) NOT NULL,
-  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   `is_active` tinyint(1) NOT NULL DEFAULT '0',  
+  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   PRIMARY KEY (`id`),
   UNIQUE KEY `org_secret` (`org_secret`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -36,8 +36,8 @@ CREATE TABLE `users` (
   `token` varchar(50) NOT NULL,
   `lease` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `role` varchar(50) DEFAULT 'user',
-  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',  
+  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
