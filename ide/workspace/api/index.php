@@ -1,12 +1,11 @@
 <?php
 
-    //Sample Hello World API. 
-	$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
-		$api = new ResterController();
-		$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
-		$api->showResult($value);
-	}, array(), "Hello World Api");
-	$resterController->addRouteCommand($helloWorldApi);
+    //Sample Custom API. 
+	$prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+		global $prestige;
+		$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+		$prestige->showResult($value);
+	}, array(), "Hello World Api"));
 	
 	//List of excluded APIs for Simple Authentication and Saas Mode
 	//Examples

@@ -259,11 +259,10 @@ How do I create a custom API?
 4. Register a new custom API as shown in the example below.
 
 ```php
-$resterController->addRouteCommand(
-	new RouteCommand("GET", "hello", "world", function($params=null){
-		$api = new ResterController();
-		$value = $api->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
-		$api->showResult($value);
+$prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+	global $prestige;
+	$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+	$prestige->showResult($value);
 }, array(), "Hello World Api"));
 ```
 
@@ -271,8 +270,28 @@ This will create a new API available at http://localhost:8080/api/hello/world
 
 You can access GET or POST parameters with $params['parameter_name'].
 
-ResterController Operations
+$prestige Operations
 -----
+$prestige is a global variable that references the core API engine. You can use it to write middleware, interceptors and custom REST APIs. It has got some useful methods available for routine operations.
+
+#### addRouteCommand(new RouteCommand($method, $route, $path, $api_function, $required_parameters, $description))
+
+Use this method to register a new custom API. This method accepts an object of type RouteCommand.
+
+```php
+$prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+	global $prestige;
+	$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+	$prestige->showResult($value);
+}, array(), "Hello World Api"));
+```
+
+The actual API function is passed with variable $params. You can access querystring or post-body data from $params.
+For example: $params['id'] or $params['email']
+
+If you want to use other methods of $prestige, just refer to it as a global variable.
+
+You can write any kind of PHP code here. You can also use the helper functions mentioned below. It is recommended to use showResult or showErrorWithMessage to render appropriate result from API.
 
 #### query($queryString)
 
@@ -288,7 +307,7 @@ HTTP_ERROR. Exmaple 400, 422, 404, 500
 
 #### showErrorWithMessage($errorCode, $message)
 
-HTTP_ERROR with specified message
+HTTP_ERROR with specific message
 
 Custom Helper Functions
 -----

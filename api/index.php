@@ -25,6 +25,7 @@ header('X-XRDS-Location: http://' . $_SERVER['SERVER_NAME'] .'/services.xrds.php
 
 $resterController = new ResterController();
 
+$prestige = $resterController;
 
 if(isset($_GET["cacheClear"])) {
 	ApiCacheManager::clear();
