@@ -109,6 +109,10 @@ function check_organization_is_active($secret){
 			if (!((count($val) > 0) && $val[0]["records"] > 0)){
 				$resterController->showErrorWithMessage(401, 'User belongs to an inactive organization!');
 			}
+			$val = $resterController->query("select count(*) as records from organizations where org_secret='$secret' and is_active=1");
+			if (!((count($val) > 0) && $val[0]["records"] > 0)){
+				$resterController->showErrorWithMessage(401, 'Organization license is expired! Please renew to continue using the system.');
+			}
 		}
 	} catch (Exception $ex){
 		
@@ -290,6 +294,9 @@ $approveFunction = function($params = NULL) {
 		organizations {
 			id (integer): id field integer,
 			name (string): name field string,
+			email (string): email field string,
+			license (string): license field string,
+			validity (datetime): validity field datetime,
 			org_secret (string): org_secret field string,
 			secret (string, optional): secret field string,
 			is_active (integer): is_active field integer
@@ -315,6 +322,9 @@ $approveFunction = function($params = NULL) {
 		CREATE TABLE `organizations` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `name` varchar(255) NOT NULL,
+		  `email` varchar(100) NOT NULL,		  
+		  `license` varchar(15) NOT NULL DEFAULT 'basic',
+		  `validity` datetime NOT NULL,
 		  `org_secret` varchar(50) NOT NULL,
 		  `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
 		  `is_active` tinyint(1) NOT NULL DEFAULT '0',  

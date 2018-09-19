@@ -15,6 +15,8 @@ CREATE TABLE `organizations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `license` varchar(15) NOT NULL DEFAULT 'basic',
+  `validity` datetime NOT NULL,  
   `org_secret` varchar(50) NOT NULL,
   `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   `is_active` tinyint(1) NOT NULL DEFAULT '0',  
@@ -22,8 +24,8 @@ CREATE TABLE `organizations` (
   UNIQUE KEY `org_secret` (`org_secret`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `organizations` (`id`, `name`, `email`, `org_secret`, `secret`, `is_active`) VALUES
-(1,	'Default Organization',	'superadmin@example.com', '206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
+INSERT INTO `organizations` (`id`, `name`, `email`, `license`, `validity`, `org_secret`, `secret`, `is_active`) VALUES
+(1,	'Default Organization',	'superadmin@example.com', 'basic',	'0000-00-00 00:00:00', '206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (

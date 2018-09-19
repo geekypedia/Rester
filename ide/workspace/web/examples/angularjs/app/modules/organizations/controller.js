@@ -1,4 +1,9 @@
 app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, H) {
+
+    if($rootScope.currentUser.role !== 'superadmin'){
+        $location.path('unauthorized');
+    }
+
     $scope.newSingle = function(){
         $scope.locked = false;
         $scope.initSingle();
@@ -17,7 +22,4 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         }
     }
     
-    if($rootScope.currentUser.role !== 'superadmin'){
-        $location.path('unauthorized');
-    }
 });

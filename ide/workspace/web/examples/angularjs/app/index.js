@@ -472,7 +472,7 @@ function ControllerFactory(resourceName, options, extras) {
 function RegisterData(){
     return{
         organizations: {
-            headers: ['Organization', 'Email', 'Client Secret', 'Actions']
+            headers: ['Organization', 'Email', 'License', 'Validity', 'Client Secret', 'Actions']
         },
         users: {
             headers: ['Username', 'Email', 'Last Lease', 'Role']
@@ -908,6 +908,11 @@ app.controller('titleController', function($scope, S){
 
 
 });app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, H) {
+
+    if($rootScope.currentUser.role !== 'superadmin'){
+        $location.path('unauthorized');
+    }
+
     $scope.newSingle = function(){
         $scope.locked = false;
         $scope.initSingle();
@@ -926,9 +931,6 @@ app.controller('titleController', function($scope, S){
         }
     }
     
-    if($rootScope.currentUser.role !== 'superadmin'){
-        $location.path('unauthorized');
-    }
 });app.controller('usersControllerExtension', function($scope, $controller, H) {
     
     $('select').formSelect();
