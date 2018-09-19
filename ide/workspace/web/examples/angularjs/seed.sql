@@ -25,7 +25,7 @@ CREATE TABLE `organizations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `organizations` (`id`, `name`, `email`, `license`, `validity`, `org_secret`, `secret`, `is_active`) VALUES
-(1,	'Default Organization',	'superadmin@example.com', 'basic',	'0000-00-00 00:00:00', '206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
+(1,	'Default Organization',	'superadmin@example.com', 'super',	'0000-00-00 00:00:00', '206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
