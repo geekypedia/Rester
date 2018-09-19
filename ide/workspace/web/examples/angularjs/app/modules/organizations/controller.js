@@ -1,6 +1,6 @@
 app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H) {
 
-    if($rootScope.currentUser.role !== 'superadmin'){
+    if(!(['superadmin'].indexOf($rootScope.currentUser.role) > -1)){
         $location.path('unauthorized');
     }
     

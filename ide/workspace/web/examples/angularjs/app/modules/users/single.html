@@ -1,5 +1,5 @@
 <form class="col s12" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
-  <div class="row">
+  <div class="row" ng-if="data.single.role != 'superadmin'">
     <div class="input-field col s9">
       <label for="username" class="active">Username:</label>
       <input id="username" type="text" class="validate" ng-model="data.single.username" ng-disabled="locked">
@@ -11,7 +11,7 @@
         <input id="email" type="text" class="validate" ng-model="data.single.email" ng-disabled="locked">
     </div>
   </div>
-  <div class="row">
+  <div class="row" ng-if="data.single.role != 'superadmin'">
     <div class="input-field col s9">
         <md-input-container>
           <label for="role" class="adtive">Role:</label>

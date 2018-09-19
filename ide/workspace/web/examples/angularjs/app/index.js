@@ -1004,7 +1004,13 @@ app.controller('titleController', function($scope, S){
 
 
     
-});app.controller('usersControllerExtension', function($scope, $controller, H) {
+});app.controller('usersControllerExtension', function($scope, $controller, $rootScope, $location, H) {
+    
+    
+    if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
+        $location.path('unauthorized');
+    }
+
     
     $('select').formSelect();
     $scope.newSingle = function(){
