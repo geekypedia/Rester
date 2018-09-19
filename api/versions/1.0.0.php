@@ -109,7 +109,7 @@ function check_organization_is_active($secret){
 			if (!((count($val) > 0) && $val[0]["records"] > 0)){
 				$resterController->showErrorWithMessage(401, 'User belongs to an inactive organization!');
 			}
-			$val = $resterController->query("select count(*) as records from (select *, if(curdate() > validity and license <> 'basic' and id <> 1, 'expired', 'valid') as license_status from organizations where org_secret='$secret') as o where license_status = 'valid'");
+			$val = $resterController->query("select count(*) as records from (select *, if(curdate() > validity and license not in ('basic', 'super'), 'expired', 'valid') as license_status from organizations where org_secret='$secret') as o where license_status = 'valid'");
 			if (!((count($val) > 0) && $val[0]["records"] > 0)){
 				$resterController->showErrorWithMessage(401, 'Organization license is expired! Please renew to continue using the system.');
 			}
