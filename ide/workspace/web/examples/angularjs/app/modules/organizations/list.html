@@ -1,16 +1,20 @@
-<td><a href="#!/{{currentRoute}}/{{item.id}}">{{item.name}}</a></td>
-<td><span>{{item.email}}</span></td>
-<td>
-    <span>{{item.license}}</span>
-</td>
-<td>
-    <span>{{item.validity}}</span>
-</td>
-<td>
-    <span ng-if="item.visible">{{item.org_secret}}</span>
-    <button ng-click="toggleVisibility(item)" ng-if="!item.visible" class="btn">Show</button>
-</td>
-<td>
-    <button ng-if="item.is_active" class="btn green">Active</button>
-    <button ng-click="activate(item)" ng-if="!item.is_active" class="btn red">Activate</button>
-</td>
+<div style="visibility: hidden">
+<div class="md-dialog-container" id="activationDialog">
+  <md-dialog layout-padding>
+    <h4>Activate Organization</h2>
+    <md-datepicker ng-model="newOrganizationValues.validity" md-placeholder="Validity:"></md-datepicker>
+    <md-input-container>
+      <label for="role" class="active">License:</label>
+      <md-select id="role" ng-model="newOrganizationValues.license">
+        <md-option ng-repeat="u in [{key: 'basic', value: 'Basic'}, {key: 'standard', value: 'Standard'}, {key: 'pro', value: 'Professional'}]" ng-value="u.key">
+          {{u.value}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <div>
+        <button ng-click="activate(currentOrganization, newOrganizationValues)" class="btn md-raised md-primary">Save</button>
+        <button ng-click="hideActivationDialog()" class="btn md-raised md-primary grey">Cancel</button>
+    </div>
+  </md-dialog>
+</div>
+</div>    

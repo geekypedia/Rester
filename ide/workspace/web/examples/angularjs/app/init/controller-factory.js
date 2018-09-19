@@ -268,10 +268,11 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 		}
 		
-		$scope.initTextResources = function(listTitle, singleTitle, listTemplate, newTemplate, editTemplate){
+		$scope.initTextResources = function(listTitle, singleTitle, listTemplate, listItemTemplate, newTemplate, editTemplate){
 			$scope.textResources.title.list = listTitle;
 			$scope.textResources.title.single = singleTitle;
 			$scope.textResources.templates.list = listTemplate;
+			$scope.textResources.templates.listItem = listItemTemplate;
 			$scope.textResources.templates.create = newTemplate;
 			$scope.textResources.templates.edit = editTemplate;
 		}		
@@ -283,9 +284,10 @@ function ControllerFactory(resourceName, options, extras) {
 			var plural = route.toUpperCase();
 			if(!singular || singular == '') var singular = plural.substring(0, plural.length - 1);
 			var listTemplate = 'app/modules/' + route + '/list.html';
+			var listItemTemplate = 'app/modules/' + route + '/list-item.html';
 			var singleTemplate = 'app/modules/' + route + '/single.html'
 		
-			$scope.initTextResources(plural, singular, listTemplate, singleTemplate, singleTemplate);
+			$scope.initTextResources(plural, singular, listTemplate, listItemTemplate, singleTemplate, singleTemplate);
 		}
 
 		$scope.getTitle = function(t){
@@ -311,6 +313,9 @@ function ControllerFactory(resourceName, options, extras) {
 					break;
 				case 'list':
 					return $scope.textResources.templates.list;	
+					break;
+				case 'list-item':
+					return $scope.textResources.templates.listItem;	
 					break;
 				default:
 					return $scope.textResources.templates.edit;	

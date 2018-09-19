@@ -15,7 +15,10 @@ app.service('H', function($location, md5, S, M, R) {
 		},
 		getAbsolutePath: Helper.getAbsolutePath,
 		getRandomNumber: Helper.getRandomNumber,
-		getUUID: Helper.getUUID
+		getUUID: Helper.getUUID,
+		toDateTime: Helper.toDateTime,
+		toMySQLDateTime: Helper.toMySQLDateTime,
+		checkLicenseValidity: Helper.checkLicenseValidity
 	}
 });
 
@@ -63,6 +66,30 @@ class Helper {
 	        }
 	      }
 	      return id;
+	}
+	
+	static toDateTime(str){
+		// Split timestamp into [ Y, M, D, h, m, s ]
+		var t = str.split(/[- :]/);
+		
+		// Apply each element to the Date function
+		var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+		
+		return d;
+	}
+	
+	static toMySQLDateTime(dt){
+		return dt.getUTCFullYear() + "-" + Helper.twoDigits(1 + dt.getUTCMonth()) + "-" + Helper.twoDigits(dt.getUTCDate()) + " " + Helper.twoDigits(dt.getUTCHours()) + ":" + Helper.twoDigits(dt.getUTCMinutes()) + ":" + Helper.twoDigits(dt.getUTCSeconds());
+	}
+	
+	static twoDigits(d) {
+	    if(0 <= d && d < 10) return "0" + d.toString();
+	    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+	    return d.toString();
+	}
+	
+	static checkLicenseValidity(organization){
+		return (new Date() > Helper.toDateTime(organization.validity) && !(['basic', 'super'].indexOf(organization.license) > -1)) ? 'expired' : 'valid';
 	}
 
 }

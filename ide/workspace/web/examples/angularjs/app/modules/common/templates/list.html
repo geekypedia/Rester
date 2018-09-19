@@ -8,10 +8,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in data.list" ng-include src="getTemplate('list')">
+          <tr ng-repeat="item in data.list" ng-include src="getTemplate('list-item')">
           </tr>
         </tbody>
 </table>
 <div class="fixed-action-btn ">
       <a class="btn-floating btn-large blue" href="{{newRouteHref}}"><i class="material-icons">add</i></a>
 </div>
+<div ng-include src="getTemplate('list')"></div>

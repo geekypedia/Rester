@@ -375,10 +375,11 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 		}
 		
-		$scope.initTextResources = function(listTitle, singleTitle, listTemplate, newTemplate, editTemplate){
+		$scope.initTextResources = function(listTitle, singleTitle, listTemplate, listItemTemplate, newTemplate, editTemplate){
 			$scope.textResources.title.list = listTitle;
 			$scope.textResources.title.single = singleTitle;
 			$scope.textResources.templates.list = listTemplate;
+			$scope.textResources.templates.listItem = listItemTemplate;
 			$scope.textResources.templates.create = newTemplate;
 			$scope.textResources.templates.edit = editTemplate;
 		}		
@@ -390,9 +391,10 @@ function ControllerFactory(resourceName, options, extras) {
 			var plural = route.toUpperCase();
 			if(!singular || singular == '') var singular = plural.substring(0, plural.length - 1);
 			var listTemplate = 'app/modules/' + route + '/list.html';
+			var listItemTemplate = 'app/modules/' + route + '/list-item.html';
 			var singleTemplate = 'app/modules/' + route + '/single.html'
 		
-			$scope.initTextResources(plural, singular, listTemplate, singleTemplate, singleTemplate);
+			$scope.initTextResources(plural, singular, listTemplate, listItemTemplate, singleTemplate, singleTemplate);
 		}
 
 		$scope.getTitle = function(t){
@@ -418,6 +420,9 @@ function ControllerFactory(resourceName, options, extras) {
 					break;
 				case 'list':
 					return $scope.textResources.templates.list;	
+					break;
+				case 'list-item':
+					return $scope.textResources.templates.listItem;	
 					break;
 				default:
 					return $scope.textResources.templates.edit;	
@@ -571,7 +576,10 @@ app.service('H', function($location, md5, S, M, R) {
 		},
 		getAbsolutePath: Helper.getAbsolutePath,
 		getRandomNumber: Helper.getRandomNumber,
-		getUUID: Helper.getUUID
+		getUUID: Helper.getUUID,
+		toDateTime: Helper.toDateTime,
+		toMySQLDateTime: Helper.toMySQLDateTime,
+		checkLicenseValidity: Helper.checkLicenseValidity
 	}
 });
 
@@ -620,6 +628,30 @@ class Helper {
 	      }
 	      return id;
 	}
+	
+	static toDateTime(str){
+		// Split timestamp into [ Y, M, D, h, m, s ]
+		var t = str.split(/[- :]/);
+		
+		// Apply each element to the Date function
+		var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+		
+		return d;
+	}
+	
+	static toMySQLDateTime(dt){
+		return dt.getUTCFullYear() + "-" + Helper.twoDigits(1 + dt.getUTCMonth()) + "-" + Helper.twoDigits(dt.getUTCDate()) + " " + Helper.twoDigits(dt.getUTCHours()) + ":" + Helper.twoDigits(dt.getUTCMinutes()) + ":" + Helper.twoDigits(dt.getUTCSeconds());
+	}
+	
+	static twoDigits(d) {
+	    if(0 <= d && d < 10) return "0" + d.toString();
+	    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+	    return d.toString();
+	}
+	
+	static checkLicenseValidity(organization){
+		return (new Date() > Helper.toDateTime(organization.validity) && !(['basic', 'super'].indexOf(organization.license) > -1)) ? 'expired' : 'valid';
+	}
 
 }
 
@@ -639,6 +671,16 @@ app.service('R', function($resource, $http, S) {
 				}, function(e) {});
 		}
 	};
+});
+app.filter('checkLicenseValidity', function() {
+    return function(organization) {
+        return Helper.checkLicenseValidity(organization);
+        //return new Date();
+    };
+});app.filter('toDateTime', function() {
+    return function(str) {
+        return Helper.toDateTime(str);
+    };
 });
 app.directive('fileModel', ['$parse', function ($parse) {
     return {
@@ -907,11 +949,13 @@ app.controller('titleController', function($scope, S){
 	setCountsDefault();
 
 
-});app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, H) {
+});app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H) {
 
     if($rootScope.currentUser.role !== 'superadmin'){
         $location.path('unauthorized');
     }
+    
+    $scope.checkLicenceValidity = function(item){return H.checkLicenseValidity(item) == 'valid' ? true : false };
 
     $scope.newSingle = function(){
         $scope.locked = false;
@@ -919,17 +963,46 @@ app.controller('titleController', function($scope, S){
         $scope.data.single.org_secret = H.getUUID();  
     }
     
-    $scope.activate = function(item) {
+    $scope.currentOrganization = {};
+    $scope.newOrganizationValues = {};
+    
+    $scope.activate = function(item, newItem) {
         if($rootScope.currentUser.role == 'superadmin'){
             var url = H.SETTINGS.baseUrl + '/organizations/activate';
+            item.validity = (newItem.validity) ? H.toMySQLDateTime(newItem.validity) : item.validity;
+            item.license = (newItem.license) ? newItem.license : item.license;
             $http.post(url, item)
                 .then(function(r){
                     $scope.refreshData();
+                    $scope.newOrganizationValues = {};
+                    $scope.currentOrganization = {};
+                    $mdDialog.cancel();   
                 },function(r){
-                    
+                    $scope.newOrganizationValues = {};
+                    $scope.currentOrganization = {};
+                    $mdDialog.cancel();   
                 });
         }
     }
+    
+    $scope.showActivationDialog = function(ev, item) {
+        $scope.currentOrganization = item;
+        $mdDialog.show({
+          contentElement: '#activationDialog',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: false
+        });
+    };
+    
+    $scope.hideActivationDialog = function(){
+        $scope.newOrganizationValues = {};
+        $scope.currentOrganization = {};
+        
+        $mdDialog.cancel();            
+    }
+
+
     
 });app.controller('usersControllerExtension', function($scope, $controller, H) {
     

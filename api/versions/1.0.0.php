@@ -238,7 +238,7 @@ if(DEFAULT_LOGIN_API == true){
 /**
 * Sample organization activate command
 */
-$approveFunction = function($params = NULL) {
+$activateFunction = function($params = NULL) {
 	
 	$api = new ResterController();
 
@@ -342,7 +342,9 @@ $approveFunction = function($params = NULL) {
 	}
 	else{
 		$update_id = $result[0]['id'];
-		$update_query = "update organizations set is_active = '1' where id = '$update_id'";
+		$license = empty($params['license']) ? $result[0]['license'] : $params['license'];
+		$validity = empty($params['validity']) ? $result[0]['validity'] : $params['validity'];
+		$update_query = "update organizations set is_active = '1', license = '$license', validity = '$validity' where id = '$update_id'";
 		$updated = $api->query($update_query);
 
 		// $select_query = "select org_secret from organizations where id = '$update_id'";
@@ -384,10 +386,10 @@ $approveFunction = function($params = NULL) {
 
 };
 
-$approveCommand = new RouteCommand("POST", "organizations", "activate", $approveFunction, array("org_secret"), "Method to activate an organization.");
+$activateCommand = new RouteCommand("POST", "organizations", "activate", $activateFunction, array("org_secret"), "Method to activate an organization.");
 
 if(DEFAULT_SAAS_MODE == true){
-	$resterController->addRouteCommand($approveCommand);
+	$resterController->addRouteCommand($activateCommand);
 	check_simple_saas(array("GET ", "POST users/login", "GET hello/world"));
 }
 
@@ -402,8 +404,8 @@ function enable_simple_auth($exclude){
 
 function enable_simple_saas($exclude, $check_request_authenticity  = false){
 	if(!DEFAULT_SAAS_MODE){
-		global $resterController, $approveCommand;
-		$resterController->addRouteCommand($approveCommand);
+		global $resterController, $activateCommand;
+		$resterController->addRouteCommand($activateCommand);
 		check_simple_saas(array_merge(array("GET ", "POST users/login", "GET hello/world"), $exclude), $check_request_authenticity);
 	}
 }
