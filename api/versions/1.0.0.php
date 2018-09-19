@@ -77,7 +77,8 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 
 
 function check_request_authenticity(){
-	$secret = $_REQUEST['secret'];
+	$api = new ResterController();
+
 	$headers = getallheaders();
 	$api_key = '';
 	foreach($headers as $k => $v){
@@ -85,10 +86,16 @@ function check_request_authenticity(){
 			$api_key = $v;
 		}
 	}
-	$api = new ResterController();
-	$val = $api->query("select * from users where token='$api_key' and secret='$secret'");
-	if (!(count($val) > 0)){
-		$api->showErrorWithMessage(403, 'Forbidden');
+	
+	$request_body = $api->getRequestBody();
+	$secret = $request_body['secret'];
+	
+	if(!empty($secret) && !empty($api_key))
+	{
+		$val = $api->query("select count(*) as records from users where token='$api_key' and secret='$secret'");
+		if (!((count($val) > 0) && $val[0]["records"] > 0)){
+			$api->showErrorWithMessage(403, 'Forbidden');
+		}
 	}
 }
 
