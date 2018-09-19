@@ -71,6 +71,7 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 			}
 		}
 		if($check_request_authenticity) check_request_authenticity();
+		
 	}
 
 }
@@ -99,7 +100,20 @@ function check_request_authenticity(){
 	}
 }
 
+function check_organization_is_active($secret){
+	global $resterController;
 
+	try {
+		if(!empty($secret)){
+			$val = $resterController->query("select count(*) as records from organizations where org_secret='$secret' and is_active=1");
+			if (!((count($val) > 0) && $val[0]["records"] > 0)){
+				$resterController->showErrorWithMessage(401, 'User belongs to an inactive organization!');
+			}
+		}
+	} catch (Exception $ex){
+		
+	}
+}
 
 /**
 * Sample custom login command
@@ -158,7 +172,8 @@ $loginFunction = function($params = NULL) {
 			username (string): username field string,
 			password (string): password field string,
 			token (string): token field string,
-			lease (string): lease field string(timestamp)
+			lease (string): lease field string(timestamp),
+			is_active (integer): is_active field integer
 		}
 		where email and username should be marked as UNIQUE index and id as PRIMARY index.
 		
@@ -170,6 +185,7 @@ $loginFunction = function($params = NULL) {
 		  `password` varchar(100) NOT NULL,
 		  `token` varchar(50) NOT NULL,
 		  `lease` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+		  `is_active` tinyint(1) NOT NULL DEFAULT '1',
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `email` (`email`)
 		);
@@ -179,10 +195,15 @@ $loginFunction = function($params = NULL) {
 	
 	
 	if($result == null){
-		$errorResult = array('error' => array('code' => 401, 'status' => 'Unauthorized'));
-		$api->showResult($errorResult);
+		//$errorResult = array('error' => array('code' => 401, 'status' => 'Unauthorized'));
+		//$api->showResult($errorResult);
+		$api->showErrorWithMessage(401, "Invalid email/username or password!");
 	}
 	else{
+		$is_active = $result[0]['is_active'];
+		if(!$is_active){
+			$api->showErrorWithMessage(401, "Inactive user!");
+		}
 		$new_token = uuid();
 		$update_id = $result[0]['id'];
 		$update_query = "update users set token = '$new_token', lease=now() where id = '$update_id' and ifnull(datediff(now(), lease), 1) > 0";
@@ -192,6 +213,8 @@ $loginFunction = function($params = NULL) {
 		foreach ($result as &$r) {
 			$r['password'] = 'Not visible for security reasons';
 		}
+		
+		check_organization_is_active($result[0]["secret"]);
 
 		$api->showResult($result);
 	}
@@ -259,7 +282,8 @@ $approveFunction = function($params = NULL) {
 			token (string): token field string,
 			lease (datetime): lease field datetime,
 			role (string, optional): role field string ('user', 'admin'),
-			secret (string): secret field string
+			secret (string): secret field string,
+			is_active (integer): is_active field integer
 		}
 		where email and username should be marked as UNIQUE index and id as PRIMARY index.
 		
