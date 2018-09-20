@@ -236,10 +236,132 @@ $loginFunction = function($params = NULL) {
 
 $loginCommand = new RouteCommand("POST", "users", "login", $loginFunction, array("email", "password"), "Method to login users");
 
+
+$setPasswordFunction = function($params = NULL) {
+	$api = new ResterController();
+	
+	$filter['email'] = $params['admin_email'];
+	$filter['password'] = md5($params['admin_password']);
+	
+	$result = $api->getObjectsFromRouteName("users", $filter);
+
+	if(count($result) > 0){
+
+		if(empty(array_search(($result[0]["role"]), array("admin", "superadmin")) > -1)){
+			$api->showErrorWithMessage(403, 'Forbidden');
+		}
+		
+		$user_filter['email'] = $params['email'];
+		
+		$user = $api->getObjectsFromRouteName("users", $user_filter);
+
+		$user[0]['password'] = md5($params['password']);
+
+		$result = $api->updateObjectFromRoute("users", $user[0]['id'], $user[0]);
+
+		if(!empty($result)){ 
+		
+			foreach ($result as &$r) {
+				$r['password'] = 'Not visible for security reasons';
+			}
+	
+			$api->showResult($result);
+		} else {
+			$api->showErrorWithMessage(403, 'Forbidden');
+		}
+		
+	} else{
+		$api->showErrorWithMessage(403, 'Forbidden');
+	}
+	
+};
+
+$setPasswordCommand = new RouteCommand("POST", "users", "set-password", $setPasswordFunction, array("email", "password", "admin_email", "admin_password"), "Method to set user password by admin");
+
+
+$changePasswordFunction = function($params = NULL) {
+	$api = new ResterController();
+	
+	$filter['email'] = $params['email'];
+	$filter['password'] = md5($params['password']);
+	
+	$result = $api->getObjectsFromRouteName("users", $filter);
+
+	if(count($result) > 0){
+
+		$result[0]['password'] = md5($params['new_password']);
+		$result = $api->updateObjectFromRoute("users", $result[0]['id'], $result[0]);
+
+		if(!empty($result)){ 
+		
+			foreach ($result as &$r) {
+				$r['password'] = 'Not visible for security reasons';
+			}
+	
+			$api->showResult($result);
+		} else {
+			$api->showErrorWithMessage(403, 'Forbidden');
+		}
+		
+	} else{
+		$api->showErrorWithMessage(403, 'Forbidden');
+	}
+	
+};
+
+$changePasswordCommand = new RouteCommand("POST", "users", "change-password", $changePasswordFunction, array("email", "password", "new_password"), "Method to change password");
+
+$forgotPasswordFunction = function($params = NULL) {
+	$api = new ResterController();
+	
+	$filter['email'] = $params['email'];
+
+	$result = $api->getObjectsFromRouteName("users", $filter);
+
+	if(count($result) > 0){
+
+		if(!$result[0]['is_active']){
+			$api->showErrorWithMessage(405, 'Inactive user!');
+		}
+		
+		$new_password = "pRESTige";
+		$result[0]['password'] = md5($new_password);
+		
+		$result = $api->updateObjectFromRoute("users", $result[0]['id'], $result[0]);
+		
+		if(!empty($result)){ 
+		
+			foreach ($result as &$r) {
+				$r['password'] = 'Not visible for security reasons';
+			}
+			
+			if(function_exists('on_forgot_password')){
+				on_forgot_password($result[0]['email'], $new_password);
+			}
+			
+	
+			$api->showResult($result);
+		} else {
+			$api->showErrorWithMessage(405, 'Invalid operation!');
+		}
+		
+
+	} else{
+		$api->showErrorWithMessage(404, 'User does not exist!');
+	}
+	
+};
+
+$forgotPasswordCommand = new RouteCommand("POST", "users", "forgot-password", $forgotPasswordFunction, array("email"), "Method to recover forgot password");
+
+
 //Add the command to controller
 //$resterController->addRouteCommand($loginCommand);
 if(DEFAULT_LOGIN_API == true){
 	$resterController->addRouteCommand($loginCommand);
+	$resterController->addRouteCommand($setPasswordCommand);
+	$resterController->addRouteCommand($changePasswordCommand);
+	$resterController->addRouteCommand($forgotPasswordCommand);
 	check_simple_auth(array("POST users/login", "GET hello/world"));
 }
 
@@ -405,8 +527,11 @@ if(DEFAULT_SAAS_MODE == true){
 
 function enable_simple_auth($exclude){
 	if(!DEFAULT_LOGIN_API){
-		global $resterController, $loginCommand;
+		global $resterController, $loginCommand, $setPasswordCommand, $changePasswordCommand, $forgotPasswordCommand;
 		$resterController->addRouteCommand($loginCommand);
+		$resterController->addRouteCommand($setPasswordCommand);
+		$resterController->addRouteCommand($changePasswordCommand);
+		$resterController->addRouteCommand($forgotPasswordCommand);
 		check_simple_auth(array_merge(array("POST users/login", "GET hello/world"), $exclude));
 	}
 }

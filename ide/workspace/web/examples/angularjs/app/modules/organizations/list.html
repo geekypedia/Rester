@@ -17,4 +17,29 @@
     </div>
   </md-dialog>
 </div>
+<div class="md-dialog-container" id="setPasswordDialog">
+  <md-dialog layout-padding>
+    <h4>Set Password</h2>
+    <div flex="100" class="flex flex-col">
+     <md-input-container>
+      <label for="admin_password">Super Admin Password</label>
+      <input required name="admin_password" ng-model="newUserValues.admin_password" type="password">
+    </md-input-container>
+     <md-input-container>
+      <label for="password">Password</label>
+      <input required name="password" ng-model="newUserValues.password" type="password">
+    </md-input-container>
+     <md-input-container>
+      <label for="confirm_password">Confirm Password</label>
+      <input required name="confirm_password" ng-model="newUserValues.confirm_password" type="password">
+    </md-input-container>
+    <p style="color:red;font-size:smaller;">{{newUserValues.error}}</p>
+    </div>
+    <div>
+        <button ng-click="setPassword(currentOrganization, newUserValues)" class="btn md-raised md-primary">Save</button>
+        <button ng-click="hideSetPasswordDialog()" class="btn md-raised md-primary grey">Cancel</button>
+    </div>
+  </md-dialog>
+</div>
+
 </div>    

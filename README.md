@@ -291,23 +291,40 @@ For example: $params['id'] or $params['email']
 
 If you want to use other methods of $prestige, just refer to it as a global variable.
 
-You can write any kind of PHP code here. You can also use the helper functions mentioned below. It is recommended to use showResult or showErrorWithMessage to render appropriate result from API.
+You can write any kind of PHP code here. You can also use the helper functions mentioned below. It is recommended to use showResult or showError to render appropriate result from API.
 
 #### query($queryString)
 
 200 OK with the result of executing the specified querystring against the database. It can be any kind of SQL statement such as SELECT, INSERT, UPDATE, DELETE or a CALL to any stored procedure, etc.
 
+#### find($route, $filters = NULL, $match_any = false)
+
+200 OK with the result of querying a particular REST API route by passing filter parameters. By default, all of the filter parameters will be matched. If you pass $match_any = true, then any of the filter parameter will be matched.
+
+#### findOne($route, $id)
+
+200 OK with the result
+
+#### create($route, $object)
+
+201 CREATED with the created object with id
+
+#### update($route, $id, $object)
+
+200 OK with the updated object
+
+#### delete($route, $id)
+
+200 OK with the deleted object
+
 #### showResult($value)
 
 200 OK with specified value
 
-#### showError($errorCode)
+#### showError($errorCode, $message = NULL)
 
-HTTP_ERROR. Exmaple 400, 422, 404, 500
+HTTP_ERROR. Exmaple 400, 404, 405, 422, 500. With optional message.
 
-#### showErrorWithMessage($errorCode, $message)
-
-HTTP_ERROR with specific message
 
 Custom Helper Functions
 -----
@@ -422,6 +439,10 @@ Custom Events
 #### on_organization_activated($organization, $user)
 
 If you have enabled SaaS mode, and you want an event on activation or license change of an organization, probably to send an email, define this function in your api project.
+
+#### on_forgot_password($email, $password)
+
+If you have enabled Simple Auth, and you want to handle the event when somebody calls /users/forgot-password API, just define this function and send an email to the email address in the parameter, with the password!
 
 Middleware Functions
 -----

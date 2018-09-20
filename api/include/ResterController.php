@@ -636,6 +636,14 @@ class ResterController {
 	/*************************************/
 	/* OBJECT MANAGEMENT METHODS
 	/*************************************/	
+	function create($route, $object){
+		try {
+			return $this->insertObject($route, $object);
+		} catch(Exception $ex) {
+			return null;
+		}
+	}
+	
 	function insertObject($routeName, $objectData) {
 
 		$route = $this->getAvailableRoutes()[$routeName];
@@ -727,6 +735,10 @@ class ResterController {
 				}
 			}
 		}
+	}
+	
+	function find($route_name, $filters = NULL, $match_any = false){
+		return $this->getObjectsFromRoute($this->getAvailableRoutes()[$route_name], $filters, $match_any);
 	}
 	
 	function getObjectsFromRouteName($routeName, $filters = NULL, $orFilter = false) {
@@ -997,6 +1009,13 @@ class ResterController {
 	function query($query) {
 		return $this->dbController->Query($query);
 	}
+	
+	
+	function findOne($route, $id){
+		$result = $this->getObjectByID($route, $id);
+		if(empty($result)) return null;
+		return $result[0];
+	}
 		
 	function getObjectByID($routeName, $ID) {
 
@@ -1013,6 +1032,14 @@ class ResterController {
 		return $result;	
 	}
 	
+	function delete($route, $id){
+		try{
+			return $this->deleteObjectFromRoute($route, $id);	
+		} catch(Exception $ex) {
+			return null;
+		}
+	}
+	
 	function deleteObjectFromRoute($routeName, $ID) {
 		$query = array(
 			sprintf('DELETE FROM "%s" WHERE "%s" = ?', $routeName, 'id')
@@ -1023,6 +1050,16 @@ class ResterController {
 		$result = $this->dbController->Query($query, $ID);
 
 		return $result;
+	}
+	
+	function update($route, $id, $object) {
+		try{
+			$currentRoute = $this->getAvailableRoutes()[$route];
+			$this->dbController->updateObjectOnDB($currentRoute, $id, $object);
+			return $this->findOne($route, $id);
+		} catch (Exception $ex){
+			return null;
+		}
 	}
 	
 	function updateObjectFromRoute($routeName, $objectID, $newData) {
@@ -1059,9 +1096,14 @@ class ResterController {
 	/* RETURN DATA FUNCTIONS
 	/*************************************/
 	
-	function showError($errorNumber) {
-		$result = ApiResponse::errorResponse($errorNumber);
-		exit($this->doResponse($result));
+	function showError($errorNumber, $message = NULL) {
+		if(empty($message)){
+			$result = ApiResponse::errorResponse($errorNumber);
+			exit($this->doResponse($result));
+		} else {
+			$result = ApiResponse::errorResponseWithMessage($errorNumber, $message);
+			exit($this->doResponse($result));
+		}
 	}
 	
 	function showErrorWithMessage($errorNumber, $message) {

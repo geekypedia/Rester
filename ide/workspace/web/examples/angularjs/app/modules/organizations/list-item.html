@@ -14,6 +14,9 @@
     <md-button ng-if="checkLicenceValidity(item) && item.license != 'super'" class="btn md-raised md-primary green" ng-click="showActivationDialog($event, item)" >
         Change License
     </md-button>
+    <md-button ng-if="checkLicenceValidity(item) && item.license != 'super'" class="btn md-raised md-primary green" ng-click="showSetPasswordDialog($event, item)" >
+        Set Password
+    </md-button>
     <md-button ng-if="!checkLicenceValidity(item) && item.license != 'super'" class="btn md-raised md-primary red" ng-click="showActivationDialog($event, item)" >
         Activate
     </md-button>

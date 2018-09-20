@@ -234,7 +234,7 @@ class DBController
 		);
 		
 		$query = sprintf('%s;', implode(' ', $query));
-			
+		
 		$result = $this->Query($query, $objectData);
 			
 		return $result;
