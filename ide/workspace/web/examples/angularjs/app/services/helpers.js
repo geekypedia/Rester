@@ -89,7 +89,7 @@ class Helper {
 	}
 	
 	static checkLicenseValidity(organization){
-		return (new Date() > Helper.toDateTime(organization.validity) && !(['basic', 'super'].indexOf(organization.license) > -1)) ? 'expired' : 'valid';
+		return ((new Date() > Helper.toDateTime(organization.validity) && !(['basic', 'super'].indexOf(organization.license) > -1))  || !organization.is_active ) ? 'expired' : 'valid';
 	}
 
 }
