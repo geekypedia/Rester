@@ -380,33 +380,14 @@ GET hello/world
 POST users/login
 ```
 
-Middleware Functions
------
-You can define these function anywhere in your API project and it will be injected in the request pipe-line to perform specific actions.
-
-#### request_headers_remove()
-
-Sometimes, Your legacy applications might want to call your APIs and they are passing some extra paramters that the APIs are not expecting. This will force your APIs to return 405 - method not allowed error. This function is used to remove those extra headers, so your APIs will work fine even if any middleware in your legacy applications or infrastructure is passing on additional headers.
-
-Example
-`
-function request_headers_remove(){
-	return array("custom-header-1", "custom-header-2");
-}
-
-
-#### on_organization_activated($organization, $user)
-
-If you have enables SaaS mode, and you want an even on activation of an organization, probably to send an email, define this function in your api project.
-
-Default Middleware Events
+Events
 -----
 
-On POST, PUT and DELETE events of the generated APIs, you can hook your own code by calling these default middleware events.
+On POST, PUT and DELETE events of the generated APIs, you can hook your own code by defining these functions as handlers of those events.
 
-Convention for these events are as below:
-```
-before_method_route($result)
+Convention for event handler function syntax:
+```php
+before_method_route($data)
 on_method_route($result)
 ```
 
@@ -435,9 +416,35 @@ function on_post_users($result){
 }
 ```
 
+Custom Events
+-----
+
+#### on_organization_activated($organization, $user)
+
+If you have enabled SaaS mode, and you want an event on activation or license change of an organization, probably to send an email, define this function in your api project.
+
+Middleware Functions
+-----
+You can define these function anywhere in your API project and it will be injected in the request pipe-line to perform specific actions.
+
+#### request_headers_remove()
+
+Sometimes, Your legacy applications might want to call your APIs and they are passing some extra paramters that the APIs are not expecting. This will force your APIs to return 405 - method not allowed error. This function is used to remove those extra headers, so your APIs will work fine even if any middleware in your legacy applications or infrastructure is passing on additional headers.
+
+Example
+`
+function request_headers_remove(){
+	return array("custom-header-1", "custom-header-2");
+}
+
+
 Request Interceptors
 -----
-Whatever PHP code you write in the API project will be applied to all the request, unless it is inside the custom API.
+All PHP files under the API project will be automatically picked up by API engine. You can use this project to do configuration, write Custom APIs, Event Handlers and Middleware functions.
+
+If you write any code that is not encapsulated in a function, it will be applied to all the requests. So you can use this behaviour to write interceptors.
+
+Example: Write code to restrict request coming from certain IP addresses.
 
 Credits
 -----
