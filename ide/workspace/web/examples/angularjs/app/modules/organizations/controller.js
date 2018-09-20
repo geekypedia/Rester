@@ -10,6 +10,8 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         $scope.locked = false;
         $scope.initSingle();
         $scope.data.single.org_secret = H.getUUID();  
+        $scope.data.single.license = 'basic';
+        $scope.data.single.validity = '0000-00-00 00:00:00';
     }
     
     $scope.currentOrganization = {};

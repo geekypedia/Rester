@@ -11,23 +11,23 @@
       <input id="organization_email" type="text" class="validate" ng-model="data.single.email" ng-disabled="locked">
     </div>
   </div>
-  <div class="row">
-    <div class="input-field col s9">
-        <md-input-container>
-          <label for="role" class="active">License:</label>
-          <md-select id="role" ng-model="data.single.license">
-            <md-option ng-repeat="u in [{key: 'basic', value: 'Basic'}, {key: 'standard', value: 'Standard'}, {key: 'pro', value: 'Professional'}]" ng-value="u.key">
-              {{u.value}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-    </div>
-  </div>
-  <div class="row">
-    <div flex-gt-xs>
-      <md-datepicker ng-model="data.single.validity" md-placeholder="Validity:"></md-datepicker>
-    </div>
-  </div>
+  <!--<div class="row">-->
+  <!--  <div class="input-field col s9">-->
+  <!--      <md-input-container>-->
+  <!--        <label for="role" class="active">License:</label>-->
+  <!--        <md-select id="role" ng-model="data.single.license">-->
+  <!--          <md-option ng-repeat="u in [{key: 'basic', value: 'Basic'}, {key: 'standard', value: 'Standard'}, {key: 'pro', value: 'Professional'}]" ng-value="u.key">-->
+  <!--            {{u.value}}-->
+  <!--          </md-option>-->
+  <!--        </md-select>-->
+  <!--      </md-input-container>-->
+  <!--  </div>-->
+  <!--</div>-->
+  <!--<div class="row">-->
+  <!--  <div flex-gt-xs>-->
+  <!--    <md-datepicker ng-model="data.single.validity" md-placeholder="Validity:"></md-datepicker>-->
+  <!--  </div>-->
+  <!--</div>-->
   <div class="row">
     <div class="input-field col s9">
         <label for="client_secret" class="active">Client Secret:</label>
