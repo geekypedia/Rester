@@ -96,21 +96,23 @@ class ResterController {
 		$this->addRequestProcessor("POST", function($routeName = NULL, $routePath = NULL, $parameters = NULL) {
 
 
-			//Register event hook
-			try{
-				$func = 'before_post_' . $routeName;
-				if(function_exists($func)){
-					$func($result);
-				}
-			} catch (Exception $ex){
-				
-			}
-			
 			if(!isset($routeName)) {
 				$this->showError(400);
 			}
 			
 			$body = $this->getPostData();
+
+
+			//Register event hook
+			try{
+				$func = 'before_post_' . $routeName;
+				if(function_exists($func)){
+					$func($body);
+				}
+			} catch (Exception $ex){
+				
+			}
+			
 
 			//Check for command
 			if(count($routePath) == 1) {
@@ -181,16 +183,6 @@ class ResterController {
 		
 		$this->addRequestProcessor("DELETE", function($routeName, $routePath) {
 		
-			//Register event hook
-			try{
-				$func = 'before_delete_' . $routeName;
-				if(function_exists($func)){
-					$func($result);
-				}
-			} catch (Exception $ex){
-				
-			}
-
 
 			if(!isset($routeName)) {
 				$this->showError(400);
@@ -198,6 +190,16 @@ class ResterController {
 			
 			if(!isset($routePath) || count($routePath) < 1) {
 				$this->showError(404);
+			}
+
+			//Register event hook
+			try{
+				$func = 'before_delete_' . $routeName;
+				if(function_exists($func)){
+					$func($routePath[0]);
+				}
+			} catch (Exception $ex){
+				
 			}
 			
 			$result = $this->deleteObjectFromRoute($routeName, $routePath[0]);
@@ -224,17 +226,6 @@ class ResterController {
 		
 		$this->addRequestProcessor("PUT", function($routeName, $routePath) {
 			
-			//Register event hook
-			try{
-				$func = 'before_put_' . $routeName;
-				if(function_exists($func)){
-					$func($result);
-				}
-			} catch (Exception $ex){
-				
-			}
-			
-		
 			ResterUtils::Log("PROCESSING PUT");
 			if(!isset($routeName)) {
 				$this->showError(400);
@@ -250,6 +241,21 @@ class ResterController {
 			if(!isset($routePath) || count($routePath) < 1) { //no id in URL, we expect json body
 			
 				$putData = json_decode($input, true);
+				
+				
+				//Register event hook
+				try{
+					$func = 'before_put_' . $routeName;
+					if(function_exists($func)){
+						$func($putData);
+					}
+				} catch (Exception $ex){
+					
+				}
+				
+			
+				
+				
 				$route = $this->getAvailableRoutes()[$routeName];
 				if(is_array($putData) && ResterUtils::isIndexed($putData) && count($putData) > 0) { //iterate on elements and try to update
 					ResterUtils::Log("UPDATING MULTIPLE OBJECTS");

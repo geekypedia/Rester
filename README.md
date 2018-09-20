@@ -406,12 +406,16 @@ On POST, PUT and DELETE events of the generated APIs, you can hook your own code
 
 Convention for these events are as below:
 ```
+before_method_route($result)
 on_method_route($result)
 ```
 
 Example:
 If you create a table named 'users' in the database, you get RESTful APIs at '/users'. The events for this endpoint would be as below:
 ```php
+before_post_users($data)
+before_put_users($data)
+before_delete_users($data)
 on_post_users($result)
 on_put_users($result)
 on_delete_users($result)
@@ -419,10 +423,15 @@ on_delete_users($result)
 
 You can just define these events as functions in your API project and do additional stuff there.
 
-Example:
+Examples:
 ```php
+function before_post_users($data){
+	//Write code to check if $data['email'] contains prohibited domain names.
+}
+
+
 function on_post_users($result){
-	//send an email to $result['email'] using send_email_sparkpost() method
+	//Write code to send an email to $result['email'] using send_email_sparkpost() method
 }
 ```
 
