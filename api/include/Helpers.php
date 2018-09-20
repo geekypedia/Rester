@@ -16,38 +16,59 @@ if (!function_exists('getallheaders')) {
 
 //Custom Functions
 function url_get($url, $params = null, $headers = null){
-	$ch = curl_init();
+    if(function_exists('curl_init')){
+    	$ch = curl_init();
+    
+    	curl_setopt($ch, CURLOPT_URL,$url);
+    	if($params != null) curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($params));
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    
+    	$server_output = curl_exec ($ch);
 
-	curl_setopt($ch, CURLOPT_URL,$url);
-	if($params != null) curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($params));
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-	$server_output = curl_exec ($ch);
-
-	curl_close ($ch);
+    	if(empty($server_output)){
+    	    
+            $server_error = curl_error($ch);
+            $server_errno = curl_errno($ch);
+        
+            $server_output = array(error => array("code" => $server_errno, "status" => $server_error)); 
+    	}    	
+    
+    	curl_close ($ch);
+    }
 
 	return $server_output;
 }
-
 
 function url_post($url, $payload = null, $headers = null){
+    if(function_exists('curl_init')){
 
-	$ch = curl_init();
+    	$ch = curl_init();
 
-	curl_setopt($ch, CURLOPT_URL,$url);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	if($payload != null) curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    	curl_setopt($ch, CURLOPT_URL,$url);
+    	curl_setopt($ch, CURLOPT_POST, 1);
+    	if($payload != null) curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-	$server_output = curl_exec ($ch);
+    	$server_output = curl_exec ($ch);
 
-	curl_close ($ch);
+    	if(empty($server_output)){
+    	    
+            $server_error = curl_error($ch);
+            $server_errno = curl_errno($ch);
+        
+            $server_output = array(error => array("code" => $server_errno, "status" => $server_error)); 
+    	}
+
+
+    	curl_close ($ch);
+    }
 
 	return $server_output;
 
 }
+
 
 function send_email_sparkpost($from, $to, $subject, $body, $api_key){
 	$url = "https://api.sparkpost.com/api/v1/transmissions";

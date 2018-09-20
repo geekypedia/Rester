@@ -94,6 +94,17 @@ class ResterController {
 		});
 		
 		$this->addRequestProcessor("POST", function($routeName = NULL, $routePath = NULL, $parameters = NULL) {
+
+
+			//Register event hook
+			try{
+				$func = 'before_post_' . $routeName;
+				if(function_exists($func)){
+					$func($result);
+				}
+			} catch (Exception $ex){
+				
+			}
 			
 			if(!isset($routeName)) {
 				$this->showError(400);
@@ -170,6 +181,17 @@ class ResterController {
 		
 		$this->addRequestProcessor("DELETE", function($routeName, $routePath) {
 		
+			//Register event hook
+			try{
+				$func = 'before_delete_' . $routeName;
+				if(function_exists($func)){
+					$func($result);
+				}
+			} catch (Exception $ex){
+				
+			}
+
+
 			if(!isset($routeName)) {
 				$this->showError(400);
 			}
@@ -201,6 +223,17 @@ class ResterController {
 		});
 		
 		$this->addRequestProcessor("PUT", function($routeName, $routePath) {
+			
+			//Register event hook
+			try{
+				$func = 'before_put_' . $routeName;
+				if(function_exists($func)){
+					$func($result);
+				}
+			} catch (Exception $ex){
+				
+			}
+			
 		
 			ResterUtils::Log("PROCESSING PUT");
 			if(!isset($routeName)) {
