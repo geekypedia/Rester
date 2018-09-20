@@ -170,6 +170,9 @@ $loginFunction = function($params = NULL) {
 	else {
 		$filter["username"]=$username;
 	}
+	
+	$user_exists = $api->getObjectsFromRouteName("users", $filter);
+	
 	$filter["password"]=md5($password);
 	
 	/*Match details with database. There needs to be a table with the following fields
@@ -202,6 +205,9 @@ $loginFunction = function($params = NULL) {
 	
 	
 	if($result == null){
+		if(!$user_exists){
+			$api->showErrorWithMessage(404, "User does not exist!");
+		}
 		//$errorResult = array('error' => array('code' => 401, 'status' => 'Unauthorized'));
 		//$api->showResult($errorResult);
 		$api->showErrorWithMessage(401, "Invalid email/username or password!");
