@@ -221,7 +221,7 @@ How do I enable authentication?
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
-4. Uncomment the call to 'enable_simple_auth(array());' function.
+4. Uncomment the call to 'enable_simple_auth($excluded);' function.
 5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_auth(array("GET your/api"));' will exclude GET your/api from authentication. Any other API will require you to pass auth token as api_key in header or query string. By default, the sample API 'GET hello/world' is always bypassed. Note: Some of the shared hosting providers do not allow headers with underscore. You may use 'api-key' in that case.
 6. In order for the auth APIs to work, you need to have a 'users' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 7. Once you uncomment the enable_simple_auth call, all APIs and even Documentation will be protected. You will need to call 'POST users/login' to authenticate and generate a token.
@@ -234,11 +234,44 @@ How do I generate token after enabling authentication?
 3. Make a POST request to 'http://localhost:8080/api/users/login'. Provide either username or email as parameter. Provide password as parameter.
 4. On successful request, you will get a users object. The object should have a token. The token expires every 24 hour. Everyday at 00:00 hour, the old token will not work and you will need to call this API again to generate a new token.
 
+What other users API are available after enabling authentication?
+-----
+```php
+POST users/login
+POST users/set-password
+POST users/change-password
+POST users/forgot-password
+```
+
 How do I use token?
 -----
 If authentication is enabled, you will get '401 Unauthorized' response when you call any of your API. You need to pass the value of the token as a header 'api_key' while calling your APIs.
 
 Even the API documentation section will be protected. You can use the same token as api_key on the documentation screen.
+
+
+What is SaaS Mode?
+-----
+In SaaS mode, the API engine automatically associates every table with a 'secret'. This secret is another 'token' similar to api_key. api_key makes sure you are authenticated, where as secret makes sure you only get to see data and users of your own organization.
+
+So, in order to enable SaaS mode, you need to have an 'organizations' table in your database. This table will have 'org_secret' that will be unique for each organization.
+
+Each user in the users table will have a 'secret' that matches the 'org_secret'. It is expected that whatever tables you create should also have a field called 'secret'.
+
+Once you login using the default users/login api, you will get both 'api_key' and 'secret'. Then you need to pass secret along with api_key for all subsequent requests. api_key goes in header, but secret goes in querystring (GET/DELETE) or body (POST/PUT). Being part of body/querystring it is matched with the secret field in the database for each table, hence you always get results filtered by organization. 
+
+
+How do I enable SaaS Mode?
+-----
+
+1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
+2. Load 'api' project
+3. Open 'index.php'
+4. Uncomment the call to 'enable_simple_saas($excluded);' function.
+5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_saas(array("GET your/api"));' will exclude GET your/api from organization permissions. Any other API will require you to pass secret in body or query string.
+6. In order for the SaaS APIs to work, you need to have a 'organizations' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
+7. Once you uncomment the enable_simple_auth call, all APIs will be protected by organization secret. You will need to call 'POST users/login' to authenticate and generate a secret.
+   For first time, just create a record in 'organizations' table and write any random string as secret. You can use the sample scripts in index.php to do it.
 
 How can I create an API that can upload files to the server?
 -----
@@ -454,11 +487,11 @@ You can define these function anywhere in your API project and it will be inject
 Sometimes, Your legacy applications might want to call your APIs and they are passing some extra paramters that the APIs are not expecting. This will force your APIs to return 405 - method not allowed error. This function is used to remove those extra headers, so your APIs will work fine even if any middleware in your legacy applications or infrastructure is passing on additional headers.
 
 Example
-`
+```php
 function request_headers_remove(){
 	return array("custom-header-1", "custom-header-2");
 }
-
+```
 
 Request Interceptors
 -----
