@@ -274,13 +274,9 @@ $prestige Operations
 -----
 $prestige is a global variable that references the core API engine. You can use it to write middleware, interceptors and custom REST APIs. It has got some useful methods available for routine operations.
 
-#### addRouteCommand(new RouteCommand($method, $route, $path, $api_function, $required_parameters, $description))
+#### register($method, $route, $path, $handler, $required_parameters, $description)
 
 Use this method to register a new custom API.
-
-```php
-function register($method, $route, $path, $handler, $required_parameters, $description)
-```
 
 Example:
 ```php
