@@ -581,6 +581,15 @@ function enable_files_api(){
 //}, array(), "Hello World Api");
 //$resterController->addRouteCommand($helloWorldApi);
 
+//Sample Custom API. 
+// $prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+// 	global $prestige;
+// 	$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
+// 	$prestige->showResult($value);
+// }, array(), "Hello World Api"));
+
+
+
 //Include APIs created using IDE
 //if(file_exists(__DIR__."/../ide/workspace/api/index.php")){
 //        include(__DIR__."/../ide/workspace/api/index.php");

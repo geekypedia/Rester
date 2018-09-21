@@ -1,12 +1,13 @@
 <?php
 
-    //Sample Custom API. 
-	$prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+	//Sample Custom API
+	$prestige->register("GET", "hello", "world", function($params=null){
 		global $prestige;
 		$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
 		$prestige->showResult($value);
-	}, array(), "Hello World Api"));
-	
+	}, array(), "Hello World Api");
+
+
 	//List of excluded APIs for Simple Authentication and Saas Mode
 	//Examples
 	//$excluded = array("POST users/forgot-password", "POST users/reset-password");

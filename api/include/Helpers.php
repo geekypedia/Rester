@@ -69,6 +69,98 @@ function url_post($url, $payload = null, $headers = null){
 
 }
 
+function send_email_smtp($from, $to, $subject, $body, $smtp, $debug=false, $cc = array(), $bcc = array(), $from_name = "", $to_names = array(), $reply_to = "", $reply_to_name = ""){
+    try{
+        //PHPMailer Object
+        $mail = GetPHPMailer();
+    
+        //Enable SMTP debugging. 
+        if($debug) $mail->SMTPDebug = 3;                               
+        //Set PHPMailer to use SMTP.
+        $mail->isSMTP();            
+        //Set SMTP host name                          
+        $mail->Host = $smtp["host"];
+        
+        if(!(empty($smtp["username"]) || empty($smtp["username"]))){
+            //Set this to true if SMTP host requires authentication to send email
+            $mail->SMTPAuth = true;                          
+            //Provide username and password     
+            $mail->Username = $smtp["username"];
+            $mail->Password = $smtp["password"];
+            
+        }
+    
+        if(!empty($smtp["proto"])){
+            //If SMTP requires TLS encryption then set it  - tls/ssl
+            $mail->SMTPSecure = $smtp["proto"];                           
+        }
+    
+        if(!empty($smtp["port"])){
+            //Set TCP port to connect to  - 587 / 25 / 465
+            $mail->Port = $smtp["port"];              
+        }
+        
+        
+        //From email address and name
+        $mail->From = $from;
+        $mail->FromName = empty($from_name) ? $from : $from_name;
+        
+        //To address and name
+        $to_names = empty($to_names) ? $to : $to_names;
+        
+        for ($i = 0; $i < count($to); $i++) {
+            $mail->addAddress($to[$i], empty($to_names[$i]) ? $to[$i] : $to_names[$i]);     
+        }
+        
+        //Address to which recipient will reply
+        if(!empty($reply_to))
+        $mail->addReplyTo($reply_to, empty($reply_to_name) ? $reply_to : $reply_to_name);
+        
+        //CC and BCC
+        for ($i = 0; $i < count($cc); $i++) {
+            $mail->addCC($cc[$i]);     
+        }
+    
+        for ($i = 0; $i < count($bcc); $i++) {
+            $mail->addBCC($bcc[$i]);     
+        }
+
+        //Send HTML or Plain Text email
+        $mail->isHTML(true);
+        
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        //$mail->AltBody = "This is the plain text version of the email content";
+        
+        if(!$mail->send()) 
+        {
+            return array("error" => array("status" => $mail->ErrorInfo));
+        } 
+        else 
+        {
+            return "OK";
+        }
+    } catch (Exception $e){
+        return array("error" => array("status" => $mail->ErrorInfo));
+    }
+
+}
+
+//Usage
+//$from = "youremail@yourdomain.com";
+//$to = ["recepientsemail@theirdomain.com"];
+//$subject = "SUBJECT HERE";
+//$body = "TEXT HERE";
+//$smtp = array(
+//          "host" => "smtp.theirdomain.com",
+//          "username" => "username",
+//          "password" => "password",
+//          "proto" => "tls",
+//          "port" => "587"
+//);
+//echo send_email_smtp($from, $to, $subject, $body, $smtp);
+
+
 
 function send_email_sparkpost($from, $to, $subject, $body, $api_key){
 	$url = "https://api.sparkpost.com/api/v1/transmissions";

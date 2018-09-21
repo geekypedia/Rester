@@ -1327,6 +1327,62 @@ class ResterController {
   }
 }
 
+
+
+
+
+
+//Helper Functions
+
+function getURL($url, $params = null, $headers = null){
+	return url_get($url, $params, $headers);
+}
+
+function postURL($url, $payload = null, $headers = null){
+	return url_post($url, $payload, $headers);
+}
+
+function sendMail($from, $to, $subject, $body, $smtp, $debug=false, $cc = array(), $bcc = array(), $from_name = "", $to_names = array(), $reply_to = "", $reply_to_name = ""){
+	return send_email_smtp($from, $to, $subject, $body, $smtp, $debug, $cc, $bcc, $from_name, $to_names, $reply_to, $reply_to_name);
+}
+
+function sendMailSparkPost($from, $to, $subject, $body, $api_key){
+	return send_email_sparkpost($from, $to, $subject, $body, $api_key);
+}
+
+function uuid() {
+	return uuid();
+}
+
+function intersectString($string_1, $string_2){
+	string_intersect($string_1, $string_2);
+}
+
+function where($array, $column_name, $where, $single=true, $return_only_key = false) {
+	array_search_where($array, $column_name, $where, $single, $return_only_key);
+}
+
+function requestIsMobile(){
+	return request_is_mobile();
+}
+
+function requestRoute(){
+	return get_current_api_path();
+}
+
+function register($method = "POST", $route = "custom", $path, $handler, $required_parameters = array(), $description = "Custom API"){
+	$allowedMethods = array("GET", "POST");
+	$suppliedMethod = strtoupper($method);
+	if(!in_array($suppliedMethod, $allowedMethods)){
+		$this->showError(503, "Error registering cutom route '$suppliedMethod $route/$path'. Allowed methods are " . implode(",", $allowedMethods) . ".");
+	}
+	
+	if(empty($route) || empty($path)){
+		$this->showError(503, "Error registering cutom route '$suppliedMethod $route/$path' due to invalid API route");
+	}
+	
+	$this->addRouteCommand(new RouteCommand($method, $route, $path, $handler, $required_parameters, $description));
+}
 	
 } //END
 

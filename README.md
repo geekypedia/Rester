@@ -259,11 +259,11 @@ How do I create a custom API?
 4. Register a new custom API as shown in the example below.
 
 ```php
-$prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+$prestige->register("GET", "hello", "world", function($params=null){
 	global $prestige;
 	$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
 	$prestige->showResult($value);
-}, array(), "Hello World Api"));
+}, array(), "Hello World Api");
 ```
 
 This will create a new API available at http://localhost:8080/api/hello/world
@@ -276,14 +276,19 @@ $prestige is a global variable that references the core API engine. You can use 
 
 #### addRouteCommand(new RouteCommand($method, $route, $path, $api_function, $required_parameters, $description))
 
-Use this method to register a new custom API. This method accepts an object of type RouteCommand.
+Use this method to register a new custom API.
 
 ```php
-$prestige->addRouteCommand(new RouteCommand("GET", "hello", "world", function($params=null){
+function register($method, $route, $path, $handler, $required_parameters, $description)
+```
+
+Example:
+```php
+$prestige->register("GET", "hello", "world", function($params=null){
 	global $prestige;
 	$value = $prestige->query("select 'world' as 'hello'"); //you can do any type of MySQL queries here.
 	$prestige->showResult($value);
-}, array(), "Hello World Api"));
+}, array(), "Hello World Api");
 ```
 
 The actual API function is passed with variable $params. You can access querystring or post-body data from $params.
@@ -325,20 +330,20 @@ You can write any kind of PHP code here. You can also use the helper functions m
 
 HTTP_ERROR. Exmaple 400, 404, 405, 422, 500. With optional message.
 
-
-Custom Helper Functions
------
-You can use the following functions which are not part of core PHP library, but we have added them as part of the framework. You can use them anywhere in the API project.
-
-#### url_get($url, $params = null, $headers = null)
+#### getURL($url, $params = null, $headers = null)
 
 Get response from any 3rd party URL. Useful for integrating with various 3rd party platforms.
 
-#### url_post($url, $payload = null, $headers = null)
+#### postURL($url, $payload = null, $headers = null)
 
 Post data to any 3rd party URL. Useful for integrating with various 3rd party platforms.
 
-#### send_email_sparkpost($from, $to, $subject, $body, $api_key)
+
+#### sendMail($from, $to, $subject, $body, $smtp)
+
+Send e-mail using SMTP.
+
+#### sendMailSparkPost($from, $to, $subject, $body, $api_key)
 
 If you want to send e-mails from your code usually you use the SMTP send mail methods. However, in real world scenarios, most of shared hosting providers do not allow using that unless you pay them extra. If you use your private email account for this purpose, it is likely that providers like Google or Microsoft may block your account.
 
@@ -350,41 +355,41 @@ $to = ["recepientsemail@theirdomain.com"];
 $api_key = "YOUR_SPARKPOST_API_KEY";
 $subject = "SUBJECT GOES HERE";
 $body = "TEXT or HTML GOES HERE";
-send_email_sparkpost($from, $to, $subject, $body, $api_key);
+$prestige->sendMailSparkPost($from, $to, $subject, $body, $api_key);
 ```
 
 #### uuid()
 
 Returns a unique 32 characters identifier.
 
-#### string_intersect($str1, $str2)
+#### intersectString($str1, $str2)
 
 Returns intersection between 2 strings.
 
-#### array_search_where($array, $property_name, $where, $single = true, $only_return_keys = false)
+#### where($array, $property_name, $where, $single = true, $only_return_keys = false)
 
 Similar to SQL search. Find a matching record in an array where the provided value matches the value of the specified property of an object in an array.
 
 The following will return first customer whose city is 'New York'
 ```php
-array_search_where($customers, 'city', 'New York');
+$prestige->where($customers, 'city', 'New York');
 ```
 
 The following will return all customers whose city is 'New York'
 ```php
-array_search_where($customers, 'city', 'New York', false);
+$prestige->where($customers, 'city', 'New York', false);
 ```
 
 The following will return only index of first customer in the $customers array whose city is 'New York'
 ```php
-array_search_where($customers, 'city', 'New York', true, true);
+$prestige->where($customers, 'city', 'New York', true, true);
 ```
 
-#### request_is_mobile()
+#### requestIsMobile()
 
 Checks if request is being made from a mobile browser.
 
-#### api_get_current_route()
+#### requestRoute()
 
 Returns current route in the following format
 ```

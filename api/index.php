@@ -1,9 +1,15 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 //Path for oauth lib
 set_include_path(__DIR__."/library/");
 
-require_once(__DIR__.'/vendor/autoload.php');
+//require_once(__DIR__.'/vendor/autoload.php');
+// require_once(__DIR__.'/vendor/phpmailer/phpmailer/src/PHPMailer.php');
+// require_once(__DIR__.'/vendor/phpmailer/phpmailer/src/Exception.php');
+// require_once(__DIR__.'/vendor/phpmailer/phpmailer/src/SMTP.php');
+require 'vendor/autoload.php';
 
 if(!file_exists(__DIR__."/config.php"))
 	die("No config file found!");
@@ -28,6 +34,10 @@ header('X-XRDS-Location: http://' . $_SERVER['SERVER_NAME'] .'/services.xrds.php
 $resterController = new ResterController();
 
 $prestige = $resterController;
+
+function GetPHPMailer(){
+	return new PHPMailer(true);                              // Passing `true` enables exceptions	
+}
 
 if(isset($_GET["cacheClear"])) {
 	ApiCacheManager::clear();
