@@ -3,7 +3,7 @@ var app = angular.module('app', ['ngRoute', 'ngResource']);
 
 //Defining constants
 app.constant('SETTINGS', {
-	baseUrl: '../../../../..'
+	baseUrl: '../../../../../api'
 });
 
 app.constant('MESSAGES', {
