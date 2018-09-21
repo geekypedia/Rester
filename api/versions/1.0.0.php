@@ -66,7 +66,7 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 			}
 		}
 		if(strpos(get_current_api_path(), "POST") > -1){
-			if(!empty($_REQUEST['secret'])){
+			if(empty($_REQUEST['secret'])){
 				$resterController->showErrorWithMessage(403, 'Forbidden. Your secret is safe!');
 			}
 		}
