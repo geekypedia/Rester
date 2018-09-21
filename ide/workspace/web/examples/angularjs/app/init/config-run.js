@@ -9,10 +9,16 @@ app.factory('httpRequestInterceptor', function ($rootScope) {
                     	var m = config.url.match(/\.[0-9a-z]+$/i);
                         if(m && m.length > 0){
                         }else{
-                            var secret = '/?secret=';
-                            if(config.url.endsWith('/')) secret = '?secret=';
-                            if(config.url.indexOf('?') > -1) secret = '&secret=';
-                            config.url = config.url + secret + $rootScope.currentUser.secret;
+                        	var idx = config.url.lastIndexOf("/");
+                        	var idt  = config.url.substr(idx);
+	                        if(config.method == "PUT" && isNaN(idt)){
+	                        	config.data.secret = $rootScope.currentUser.secret;
+	                        }else{
+	                            var secret = '/?secret=';
+	                            if(config.url.endsWith('/')) secret = '?secret=';
+	                            if(config.url.indexOf('?') > -1) secret = '&secret=';
+	                            config.url = config.url + secret + $rootScope.currentUser.secret;
+	                        }
                         }
                     }
                     else{
