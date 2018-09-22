@@ -11,4 +11,5 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
         $scope.locked = false;
         $scope.data.single.password = H.getHash('admin');
     }
+    
 });

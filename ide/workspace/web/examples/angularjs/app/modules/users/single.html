@@ -1,29 +1,28 @@
-<form class="col s12" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
-  <div class="row" ng-if="data.single.role != 'superadmin'">
-    <div class="input-field col s9">
-      <label for="username" class="active">Username:</label>
-      <input id="username" type="text" class="validate" ng-model="data.single.username" ng-disabled="locked">
+<form name="userForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container ng-if="data.single.role != 'superadmin'" class="md-block">
+    <label for="username" class="active">Username:</label>
+    <input id="username" name="username" type="text" class="validate" ng-model="data.single.username" required ng-disabled="locked">
+    <div ng-messages="userForm.username.$error" ng-show="userForm.username.$dirty">
+      <div ng-message="required">This field is required!</div>
     </div>
-  </div>
-  <div class="row">
-    <div class="input-field col s9">
-        <label for="email" class="active">Email:</label>
-        <input id="email" type="text" class="validate" ng-model="data.single.email" ng-disabled="locked">
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="email" class="active">Email:</label>
+    <input id="email" name="email" type="email" class="validate" ng-model="data.single.email" required ng-disabled="locked">
+    <div ng-messages="userForm.email.$error" ng-show="userForm.email.$dirty">
+      <div ng-message="required">This field is required!</div>
     </div>
-  </div>
-  <div class="row" ng-if="data.single.role != 'superadmin'">
-    <div class="input-field col s9">
-        <md-input-container>
-          <label for="role" class="adtive">Role:</label>
-          <md-select id="role" ng-model="data.single.role">
-            <md-option ng-repeat="u in [{key: 'user', value: 'User'}, {key: 'admin', value: 'Administrator'}]" ng-value="u.key">
-              {{u.value}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-    </div>
-  </div>
+  </md-input-container>
+  <md-input-container ng-if="data.single.role != 'superadmin'" class="md-block">
+    <label for="role" class="adtive">Role:</label>
+    <md-select id="role" ng-model="data.single.role">
+      <md-option ng-repeat="u in [{key: 'user', value: 'User'}, {key: 'admin', value: 'Administrator'}]" ng-value="u.key">
+        {{u.value}}
+      </md-option>
+    </md-select>
+  </md-input-container>
 </form>
+
 <div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
   <div class="middle-center-heading">You are not authorized to access this area!</div>
   <style type="text/css">

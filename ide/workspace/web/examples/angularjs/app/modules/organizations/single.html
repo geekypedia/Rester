@@ -1,21 +1,22 @@
-<form class="col s12">
-  <div class="row">
-    <div class="input-field col s9">
+<form name="organizationForm">
+    <md-input-container class="md-block">
       <label for="organization_name" class="active">Organization:</label>
-      <input id="organization_name" type="text" class="validate" ng-model="data.single.name" ng-disabled="locked">
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-field col s9">
+      <input id="organization_name" name="organization_name" type="text" class="validate" ng-model="data.single.name" required ng-disabled="locked">
+      <div ng-messages="organizationForm.organization_name.$error" ng-show="organizationForm.organization_name.$dirty">
+        <div ng-message="required">This field is required!</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
       <label for="organization_email" class="active">Email:</label>
-      <input id="organization_email" type="text" class="validate" ng-model="data.single.email" ng-disabled="locked">
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-field col s9">
+      <input id="organization_email" name="organization_email" type="email" class="validate" ng-model="data.single.email" required ng-disabled="locked">
+      <div ng-messages="organizationForm.organization_email.$error" ng-show="organizationForm.organization_email.$dirty">
+        <div ng-message="required">This field is required!</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
         <label for="client_secret" class="active">Client Secret:</label>
-        <input id="client_secret" type="text" class="validate" ng-model="data.single.org_secret" disabled>
-    </div>
+        <input id="client_secret" name="client_secret" type="text" class="validate" ng-model="data.single.org_secret" disabled>
+    </md-input-container>
   </div>
 </form>
 

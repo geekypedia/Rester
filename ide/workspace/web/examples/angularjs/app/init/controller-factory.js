@@ -1,6 +1,6 @@
 //ControllerFactory helps wrap basic CRUD operations for any API resource
 function ControllerFactory(resourceName, options, extras) {
-	return function($scope, $http, $routeParams, $location, H) {
+	return function($scope, $http, $routeParams, $location, $mdDialog, H) {
 		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
 		var Resource = H.R.get(resourceName);
 
@@ -210,10 +210,15 @@ function ControllerFactory(resourceName, options, extras) {
 	    
 	    //Update a single record
 	    $scope.updateSingle = function(callback){
-	        $scope.update($scope.data.single, function(r){
-	            $scope.locked = true;
-	            if(callback) callback(r);
-	        });
+	    	var update = true;
+	    	if($scope.beforeUpdate) update = $scope.beforeUpdate();
+	    	if(update){
+		        $scope.update($scope.data.single, function(r){
+		            $scope.locked = true;
+		            if($scope.onUpdate) $scope.onUpdate();
+		            if(callback) callback(r);
+		        });
+	    	}
 	    }
 	    
 	    //Initialize a single record
@@ -225,10 +230,15 @@ function ControllerFactory(resourceName, options, extras) {
 	    
 	    //Save a new single record
 	    $scope.saveSingle = function(callback){
-	        $scope.save($scope.data.single, function(r){
-	            $scope.locked = true;
-	            if(callback) callback(r);
-	        });
+	    	var save = true;
+	    	if($scope.beforeSave) save = $scope.beforeSave();
+	    	if(save){
+		        $scope.save($scope.data.single, function(r){
+		            $scope.locked = true;
+		            if($scope.onSave) $scope.onSave();
+		            if(callback) callback(r);
+		        });
+	    	}
 	    }
 	    
 	    //Change a property in single
@@ -334,5 +344,26 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.setListHeaders = function(headers){
 			$scope.data.listHeaders = headers;
 		}
+		
+		 $scope.showDialog = function(ev, title, content, okText = "OK", cancelText = "Cancel", okHandler, cancelHandler) {
+		    var confirm = $mdDialog.confirm()
+		          .title(title)
+		          .textContent(content)
+		          .ariaLabel('')
+		          .targetEvent(ev)
+		          .ok(okText)
+		          .cancel(cancelText);
+		
+		    $mdDialog.show(confirm).then(function() {
+		      if(okHandler) okHandler();
+		    }, function() {
+		      if(cancelHandler) cancelHandler();
+		    });
+		  };
+
+	    $scope.onSave = $scope.onUpdate = function(){
+	        $scope.showDialog(null, "Item Saved!", "You have successfully saved this record!","Stay Here", "Go Back To Listing", function(){}, function(){$location.path($scope.currentRoute)});
+	    }
+
 	};
 }
