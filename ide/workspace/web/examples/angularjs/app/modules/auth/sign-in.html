@@ -2,7 +2,7 @@
 <main>
 	<center>
 
-		<h5 class="blue-text">Please, sign into your account</h5>
+		<h5 class="blue-text">{{M.HEADING_LOGIN}}</h5>
 		<div class="section"></div>
 
 		<div class="container">
@@ -17,14 +17,14 @@
 					<div class='row'>
 						<div class='input-field col s12'>
 							<input class='validate' type='email' name='email' id='email' ng-model="email" />
-							<label for='email'>Enter your email</label>
+							<label for='email'>{{M.FIELD_EMAIL_ENTER}}</label>
 						</div>
 					</div>
 
 					<div class='row'>
 						<div class='input-field col s12'>
 							<input class='validate' type='password' name='password' id='password' ng-model="password" />
-							<label for='password'>Enter your password</label>
+							<label for='password'>{{M.FIELD_PASSWORD_ENTER}}</label>
 						</div>
 						<label style='float: right;'>
 							<!--<a class='pink-text' href='#!'><b>Forgot Password?</b></a>-->
@@ -35,7 +35,7 @@
 					<p class="small col-red" ng-if="error">{{error}}</p>
 					<center>
 						<div class='row'>
-							<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>Login</button>
+							<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>{{M.BTN_LOGIN}}</button>
 						</div>
 					</center>
 				</form>

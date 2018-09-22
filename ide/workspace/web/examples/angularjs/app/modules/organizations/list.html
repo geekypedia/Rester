@@ -1,10 +1,10 @@
 <div style="visibility: hidden">
 <div class="md-dialog-container" id="activationDialog">
   <md-dialog layout-padding>
-    <h4>Activate Organization</h2>
-    <md-datepicker ng-model="newOrganizationValues.validity" md-placeholder="Validity:"></md-datepicker>
+    <h4>{{M.BTN_ACTIVATE}} {{getTitle('single')}}</h2>
+    <md-datepicker ng-model="newOrganizationValues.validity" md-placeholder="{{M.FIELD_VALIDITY}}:"></md-datepicker>
     <md-input-container>
-      <label for="role" class="active">License:</label>
+      <label for="role" class="active">{{M.FIELD_LICENSE}}:</label>
       <md-select id="role" ng-model="newOrganizationValues.license">
         <md-option ng-repeat="u in [{key: 'basic', value: 'Basic'}, {key: 'standard', value: 'Standard'}, {key: 'pro', value: 'Professional'}]" ng-value="u.key">
           {{u.value}}
@@ -12,32 +12,32 @@
       </md-select>
     </md-input-container>
     <div>
-        <button ng-click="activate(currentOrganization, newOrganizationValues)" class="btn md-raised md-primary">Save</button>
-        <button ng-click="hideActivationDialog()" class="btn md-raised md-primary grey">Cancel</button>
+        <button ng-click="activate(currentOrganization, newOrganizationValues)" class="btn md-raised md-primary">{{M.BTN_SAVE}}</button>
+        <button ng-click="hideActivationDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
     </div>
   </md-dialog>
 </div>
 <div class="md-dialog-container" id="setPasswordDialog">
   <md-dialog layout-padding>
-    <h4>Set Password</h2>
+    <h4>{{M.BTN_SET_PASSWORD}}</h2>
     <div flex="100" class="flex flex-col">
      <md-input-container>
-      <label for="admin_password">Super Admin Password</label>
+      <label for="admin_password">{{M.FIELD_SUPERADMIN_PASSWORD}}</label>
       <input required name="admin_password" ng-model="newUserValues.admin_password" type="password">
     </md-input-container>
      <md-input-container>
-      <label for="password">Password</label>
+      <label for="password">{{M.FIELD_PASSWORD}}</label>
       <input required name="password" ng-model="newUserValues.password" type="password">
     </md-input-container>
      <md-input-container>
-      <label for="confirm_password">Confirm Password</label>
+      <label for="confirm_password">{{M.FIELD_CONFIRM_PASSWORD}}</label>
       <input required name="confirm_password" ng-model="newUserValues.confirm_password" type="password">
     </md-input-container>
     <p style="color:red;font-size:smaller;">{{newUserValues.error}}</p>
     </div>
     <div>
-        <button ng-click="setPassword(currentOrganization, newUserValues)" class="btn md-raised md-primary">Save</button>
-        <button ng-click="hideSetPasswordDialog()" class="btn md-raised md-primary grey">Cancel</button>
+        <button ng-click="setPassword(currentOrganization, newUserValues)" class="btn md-raised md-primary">{{M.BTN_SAVE}}</button>
+        <button ng-click="hideSetPasswordDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
     </div>
   </md-dialog>
 </div>

@@ -1,6 +1,6 @@
 //ControllerFactory helps wrap basic CRUD operations for any API resource
 function ControllerFactory(resourceName, options, extras) {
-	return function($scope, $http, $routeParams, $location, $mdDialog, H) {
+	return function($scope, $http, $routeParams, $location, $mdDialog, H, M, S, R) {
 		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
 		var Resource = H.R.get(resourceName);
 
@@ -16,7 +16,10 @@ function ControllerFactory(resourceName, options, extras) {
 		}
 		$scope.mode = $scope.MODES.view;
 		$scope.locked = true;
-		
+		$scope.forms = {};
+		$scope.H = H;
+		$scope.M = M;
+
 		//Set currentRoute
 		$scope.currentRoute = (function(){
 			var route = $location.path().substring(1);
@@ -362,8 +365,11 @@ function ControllerFactory(resourceName, options, extras) {
 		  };
 
 	    $scope.onSave = $scope.onUpdate = function(){
-	        $scope.showDialog(null, "Item Saved!", "You have successfully saved this record!","Stay Here", "Go Back To Listing", function(){}, function(){$location.path($scope.currentRoute)});
+	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE,M.SAVED_OK, M.SAVED_CANCEL, function(){}, function(){$location.path($scope.currentRoute)});
 	    }
-
+	    
+	    $scope.beforeSave = $scope.beforeUpdate = function(){
+	        return (!Object.keys($scope.forms[$scope.currentRoute + "Form"].$error).length);
+	    }
 	};
 }

@@ -8,19 +8,19 @@
 </td>
 <td>
     <span ng-if="item.visible">{{item.org_secret}}</span>
-    <button ng-click="toggleVisibility(item)" ng-if="!item.visible" class="btn md-raised md-primary">Show</button>
+    <button ng-click="toggleVisibility(item)" ng-if="!item.visible" class="btn md-raised md-primary">{{M.BTN_SHOW}}</button>
 </td>
 <td>
     <md-button ng-if="checkLicenceValidity(item) && item.license != 'super'" class="btn md-raised md-primary green" ng-click="showActivationDialog($event, item)" >
-        Change License
+        {{M.BTN_CHANGE_LICENSE}}
     </md-button>
     <md-button ng-if="checkLicenceValidity(item) && item.license != 'super'" class="btn md-raised md-primary green" ng-click="showSetPasswordDialog($event, item)" >
-        Set Password
+        {{M.BTN_SET_PASSWORD}}
     </md-button>
     <md-button ng-if="!checkLicenceValidity(item) && item.license != 'super'" class="btn md-raised md-primary red" ng-click="showActivationDialog($event, item)" >
-        Activate
+        {{M.BTN_ACTIVATE}}
     </md-button>
     <md-button ng-if="item.license == 'super'" class="btn md-raised md-primary blue darken-4" >
-        N/A
+        {{M.NA}}
     </md-button>
 </td>

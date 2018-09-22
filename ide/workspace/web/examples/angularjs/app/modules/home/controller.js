@@ -1,8 +1,11 @@
-app.controller('homeController', function ($scope, $rootScope, H) {
+app.controller('homeController', function ($scope, $rootScope, H, R) {
 
 	// $controller('homeControllerBase', {
 	// 	$rootScope:$rootScope
 	// });
+	
+	$scope.H = H;
+	$scope.M = H.M;
 
 	$scope.data = {
 		counters: {
@@ -73,7 +76,7 @@ app.controller('homeController', function ($scope, $rootScope, H) {
 	}
 	
 	function setCount(resourceName, counterName) {
-		H.R.count(resourceName, function (result) {
+		R.count(resourceName, function (result) {
 			$scope.data.counters[counterName].value = result;
 		});
 	}

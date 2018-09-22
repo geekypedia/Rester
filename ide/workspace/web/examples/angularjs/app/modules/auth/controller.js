@@ -3,6 +3,9 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		$location.path('/');
 	}
 	
+	$scope.H = H;
+	$scope.M = H.M;
+	
 	$scope.login = function(){
 		
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
@@ -25,6 +28,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	}
 });
 
-app.controller('unauthorizedController', function($scope){
-	
+app.controller('unauthorizedController', function($scope, H){
+	$scope.H = H;
+	$scope.M = H.M;
 });
