@@ -274,11 +274,11 @@ body {
   margin-bottom: 0em;
 }
 
-.input-field>label{
-  color: black;
-  font-size: 1.2rem;
-  font-weight: bolder;
-}  
+/*.input-field>label{*/
+/*  color: black;*/
+/*  font-size: 1.2rem;*/
+/*  font-weight: bolder;*/
+/*}  */
   
   
 .md-calendar-scroll-mask{
@@ -290,4 +290,14 @@ body {
 .md-calendar{
 	width: auto;
 }
-    
+
+.md-icon-button + .md-datepicker-input-container {
+  float: left;
+}
+
+/*.md-input-container>label {*/
+/*  color: black;*/
+/*  font-size: 1.2rem;*/
+/*  font-weight: bolder;*/
+/*}  */
+  
