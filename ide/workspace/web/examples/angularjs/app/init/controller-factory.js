@@ -68,6 +68,9 @@ function ControllerFactory(resourceName, options, extras) {
 							message: H.MESSAGES.E500
 						});
 						break;
+					case 401:
+					case 403:
+						$location.path('unauthorized');
 					default:
 						$scope.errors.push({
 							message: H.MESSAGES.E500
@@ -94,7 +97,12 @@ function ControllerFactory(resourceName, options, extras) {
 				if (callback) {
 					callback(result);
 				}
-			}, errorHandler);
+			}, function(error) {
+			    errorHandler(error);
+				if (callback) {
+					callback(error);
+				}
+			});
 		};
 		
 		//Get specific record
@@ -106,7 +114,12 @@ function ControllerFactory(resourceName, options, extras) {
 				if (callback) {
 					callback(result);
 				}
-			}, errorHandler);
+			}, function(error) {
+			    errorHandler(error);
+				if (callback) {
+					callback(error);
+				}
+			});
 		};
 		
 
@@ -119,7 +132,12 @@ function ControllerFactory(resourceName, options, extras) {
 				if (callback) {
 					callback(result);
 				}
-			}, errorHandler);
+			}, function(error) {
+			    errorHandler(error);
+				if (callback) {
+					callback(error);
+				}
+			});
 		};
 
 		//Delete specific record
