@@ -104,6 +104,21 @@ function check_request_authenticity(){
 	}
 }
 
+function check_response_authenticity($result){
+	$api = new ResterController();
+
+	$request_body = $api->getRequestBody();
+	$secret = empty($request_body['secret']) ? $_REQUEST['secret'] : $request_body['secret'];
+
+
+	if(!empty($secret) && !empty($result))
+	{
+		if (!($secret == $result['secret'])){
+			$api->showErrorWithMessage(403, 'Forbidden');
+		}
+	}
+}
+
 function check_organization_is_active($secret){
 	global $resterController;
 

@@ -81,6 +81,7 @@ class ResterController {
 					call_user_func($callback, $parameters);
 				} else {
 					$result = array_shift($this->getObjectByID($routeName, $command));
+					if(function_exists('check_response_authenticity')) check_response_authenticity($result);
 					$this->showResult($result);
 				}								
 			} else {
