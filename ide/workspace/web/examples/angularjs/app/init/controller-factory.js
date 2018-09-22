@@ -1,6 +1,6 @@
 //ControllerFactory helps wrap basic CRUD operations for any API resource
 function ControllerFactory(resourceName, options, extras) {
-	return function($scope, $http, $routeParams, $location, $mdDialog, H, M, S, R) {
+	return function($scope, $rootScope, $http, $routeParams, $location, $mdDialog, H, M, S, R) {
 		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
 		var Resource = H.R.get(resourceName);
 
@@ -8,6 +8,9 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.data = {};
 		$scope.data.single = new Resource();
 		$scope.data.list = [];
+		$scope.data.limit = 10;
+		$scope.data.currentPage = 1;
+		$scope.data.pages = [];
 		$scope.errors = [];
 		$scope.MODES = {
 			'view': 'view',
@@ -19,6 +22,7 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.forms = {};
 		$scope.H = H;
 		$scope.M = M;
+		
 
 		//Set currentRoute
 		$scope.currentRoute = (function(){
@@ -92,6 +96,19 @@ function ControllerFactory(resourceName, options, extras) {
 				}
 			}, errorHandler);
 		};
+		
+		//Get specific record
+		$scope.count = function(callback) {
+			Resource.query({
+				count: true
+			}, function(result) {
+				$scope.data.records = result[0].count;
+				if (callback) {
+					callback(result);
+				}
+			}, errorHandler);
+		};
+		
 
 		//Get specific record
 		$scope.get = function(id, callback) {
@@ -184,13 +201,33 @@ function ControllerFactory(resourceName, options, extras) {
 
 		//Refresh data
 		$scope.refreshData = function() {
-			$scope.query();
+			$scope.listAll();
 		};
-			
+		
+		$scope.setActive = function(i){
+			return ($rootScope.currentPage == i) ? 'active' : 'waves-effect';
+		}	
 	
 		//Load all entries on initialization
-		$scope.listAll = function(){
-		    $scope.query({}, function(r) {});
+		$scope.listAll = function(currentPage){
+			$scope.count(function(){
+				$scope.data.pagesCount = parseInt($scope.data.records / $scope.data.limit) + 1;
+				$scope.data.pages = [];
+				for (var i = 0; i < $scope.data.pagesCount; i++) {
+					$scope.data.pages.push(i + 1);
+				}
+				if(!currentPage){
+					if(!($scope.data.pages.indexOf($rootScope.currentPage) > -1)){
+						$rootScope.currentPage = $scope.data.pages[$scope.data.pagesCount - 1];
+					}
+				} else {
+					$rootScope.currentPage = currentPage;
+				}
+			    $scope.query({limit: $scope.data.limit, offset: ($rootScope.currentPage - 1) * $scope.data.limit}, function(r) {
+			    	
+			    });
+				
+			});
 		}
 		
 		//Load entry on initialization
