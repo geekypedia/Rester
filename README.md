@@ -372,6 +372,22 @@ Post data to any 3rd party URL. Useful for integrating with various 3rd party pl
 
 Send e-mail using SMTP.
 
+```php
+$from = "youremail@yourdomain.com";
+$to = ["recepientsemail@theirdomain.com"];
+$subject = "SUBJECT GOES HERE";
+$body = "TEXT or HTML GOES HERE";
+$smtp = array(
+	"host": "smtp.yourdomain.com",
+	"username": "YOUR USERNAME",
+	"password": "YOUR PASSWORD",
+	"proto": "tls",
+	"port": 587
+);
+$prestige->sendMail($from, $to, $subject, $body, $smtp);
+```
+
+
 #### sendMailSparkPost($from, $to, $subject, $body, $api_key)
 
 If you want to send e-mails from your code usually you use the SMTP send mail methods. However, in real world scenarios, most of shared hosting providers do not allow using that unless you pay them extra. If you use your private email account for this purpose, it is likely that providers like Google or Microsoft may block your account.
@@ -381,9 +397,9 @@ There are some good 3rd party services which allow us to send emails using their
 ```php
 $from = "youremail@yourdomain.com";
 $to = ["recepientsemail@theirdomain.com"];
-$api_key = "YOUR_SPARKPOST_API_KEY";
 $subject = "SUBJECT GOES HERE";
 $body = "TEXT or HTML GOES HERE";
+$api_key = "YOUR_SPARKPOST_API_KEY";
 $prestige->sendMailSparkPost($from, $to, $subject, $body, $api_key);
 ```
 
