@@ -100,6 +100,8 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 		setCounts(resources);
 	}
 	
+	$rootScope.currentPage = 1;
+	
 	
 	//Random colors for each tile
 	//randomizeTileColors();

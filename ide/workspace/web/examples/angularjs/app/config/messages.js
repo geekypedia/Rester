@@ -16,6 +16,7 @@ app.service('M', function($http) {
 		"TITLE_ADD_PREFIX": "ADD",
 		"TITLE_EDIT_PREFIX": "EDIT",
 		"TITLE_DASHBOARD": "DASHBOARD",
+		"TITLE_LICENSE": "License",
 		"BTN_SAVE": "Save",
 		"BTN_UPDATE": "Update",
 		"BTN_EDIT": "Edit",

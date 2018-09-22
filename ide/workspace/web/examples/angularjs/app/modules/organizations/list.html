@@ -1,7 +1,7 @@
 <div style="visibility: hidden">
 <div class="md-dialog-container" id="activationDialog">
   <md-dialog layout-padding>
-    <h4>{{M.BTN_ACTIVATE}} {{getTitle('single')}}</h2>
+    <h4>{{getTitle('single') | titleCase}} {{M.TITLE_LICENSE | titleCase}}</h4>
     <md-datepicker ng-model="newOrganizationValues.validity" md-placeholder="{{M.FIELD_VALIDITY}}:"></md-datepicker>
     <md-input-container>
       <label for="role" class="active">{{M.FIELD_LICENSE}}:</label>
@@ -19,7 +19,7 @@
 </div>
 <div class="md-dialog-container" id="setPasswordDialog">
   <md-dialog layout-padding>
-    <h4>{{M.BTN_SET_PASSWORD}}</h2>
+    <h4>{{M.BTN_SET_PASSWORD}}</h4>
     <div flex="100" class="flex flex-col">
      <md-input-container>
       <label for="admin_password">{{M.FIELD_SUPERADMIN_PASSWORD}}</label>

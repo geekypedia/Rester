@@ -20,6 +20,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
     
     $scope.activate = function(item, newItem) {
         if($rootScope.currentUser.role == 'superadmin'){
+            $scope.loading = true;
             var url = H.SETTINGS.baseUrl + '/organizations/activate';
             item.validity = (newItem.validity) ? H.toMySQLDateTime(newItem.validity) : item.validity;
             item.license = (newItem.license) ? newItem.license : item.license;
@@ -29,10 +30,12 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
                     $scope.newOrganizationValues = {};
                     $scope.currentOrganization = {};
                     $mdDialog.cancel();   
+                    $scope.loading = false;
                 },function(r){
                     $scope.newOrganizationValues = {};
                     $scope.currentOrganization = {};
                     $mdDialog.cancel();   
+                    $scope.loading = false;
                 });
         }
     }
@@ -55,16 +58,18 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
             newItem.admin_email = $rootScope.currentUser.email;
             newItem.secret = item.secret;
             newItem.email = item.email;
+            $scope.loading = true;
             $http.post(url, newItem)
                 .then(function(r){
                     $scope.currentOrganization = {};
                     $scope.newUserValues = {};
                     $mdDialog.cancel();   
+                    $scope.loading = false;
                 },function(r){
                     if(r && r.data && r.data.error && r.data.error.status){
                         newItem.error = r.data.error.status;    
                     }
-                    
+                    $scope.loading = false;
                     //$scope.currentOrganization = {};
                     //$scope.newUserValues = {};
                     //$mdDialog.cancel();   

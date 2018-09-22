@@ -210,6 +210,7 @@ function ControllerFactory(resourceName, options, extras) {
 	
 		//Load all entries on initialization
 		$scope.listAll = function(currentPage){
+			$scope.loading = true;
 			$scope.count(function(){
 				$scope.data.pagesCount = parseInt($scope.data.records / $scope.data.limit) + 1;
 				$scope.data.pages = [];
@@ -224,7 +225,7 @@ function ControllerFactory(resourceName, options, extras) {
 					$rootScope.currentPage = currentPage;
 				}
 			    $scope.query({limit: $scope.data.limit, offset: ($rootScope.currentPage - 1) * $scope.data.limit}, function(r) {
-			    	
+			    	$scope.loading = false;
 			    });
 				
 			});
@@ -232,8 +233,10 @@ function ControllerFactory(resourceName, options, extras) {
 		
 		//Load entry on initialization
 		$scope.loadSingle = function(callback){
+			$scope.loading = true;
 		    $scope.get($routeParams.id, function(r) {
 		    	if(callback) callback(r);
+		    	$scope.loading = false;
 		    });
 		}
 		
@@ -250,6 +253,7 @@ function ControllerFactory(resourceName, options, extras) {
 	    
 	    //Update a single record
 	    $scope.updateSingle = function(callback){
+			$scope.loading = true;
 	    	var update = true;
 	    	if($scope.beforeUpdate) update = $scope.beforeUpdate();
 	    	if(update){
@@ -257,6 +261,7 @@ function ControllerFactory(resourceName, options, extras) {
 		            $scope.locked = true;
 		            if($scope.onUpdate) $scope.onUpdate();
 		            if(callback) callback(r);
+					$scope.loading = false;
 		        });
 	    	}
 	    }
@@ -270,6 +275,7 @@ function ControllerFactory(resourceName, options, extras) {
 	    
 	    //Save a new single record
 	    $scope.saveSingle = function(callback){
+	    	$scope.loading = true;
 	    	var save = true;
 	    	if($scope.beforeSave) save = $scope.beforeSave();
 	    	if(save){
@@ -277,6 +283,7 @@ function ControllerFactory(resourceName, options, extras) {
 		            $scope.locked = true;
 		            if($scope.onSave) $scope.onSave();
 		            if(callback) callback(r);
+		    		$scope.loading = false;
 		        });
 	    	}
 	    }
