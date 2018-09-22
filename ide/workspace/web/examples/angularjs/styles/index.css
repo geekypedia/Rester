@@ -281,4 +281,13 @@ body {
 }  
   
   
-  
+.md-calendar-scroll-mask{
+	width: 340px;
+}
+.md-datepicker-calendar {
+	width: 340px;
+}
+.md-calendar{
+	width: auto;
+}
+    
