@@ -19,36 +19,56 @@
 			
 			var urlParams = new URLSearchParams(location.search);
 			var auth = urlParams.get('auth');
-			alert(location.search("auth1"));
-			if(auth === false){
+			if(location.search("auth=false") > -1){
 			  $('#error').text("Invalid Credentials!");
 			}
 
 		}
 		</script>
+		
+		<style type="text/css">
+		    .main-container {
+                margin: auto;
+                width: 40%;
+                margin-top: 100px;
+            }
+            .center-text{
+                text-align: center;
+            }
+		</style>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+	<script type="text/javascript">
+		$(function(){
+			$('#username').focus();
+		})
+	</script>  
 </head>
 <body>
-
-<div class="container">
-  <h2>pRESTige Configuration</h2>
-  <form id='configForm' action="configure/secure.php" method="post">
-    <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
-    </div>
-    <div class="form-group">
-      <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-    <p id="error" style="color:red; font-weight: small"></p>
-  </form>
+<div class="panel panel-primary main-container">
+  <div class="panel-heading center-text">pRESTige Configuration - Authenticate yourself!</div>
+  <div class="panel-body">
+      <form id='configForm' action="configure/secure.php" method="post">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+        <div class="form-group">
+            <p id="error" style="color:red; font-weight: small"></p>
+        </div>
+      </form>
+  </div>
 </div>
-
 </body>
 </html>
 
