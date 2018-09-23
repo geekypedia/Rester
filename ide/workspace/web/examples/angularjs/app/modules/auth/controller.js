@@ -8,6 +8,8 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	$scope.H = H;
 	$scope.M = M;
 	$scope.S = S;
+	
+	$scope.data = {};
 
 	$scope.login = function(){
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
@@ -36,8 +38,18 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 
 	$scope.register = function(){
 		var route = 'users';
-		if(S.enableSaaS) route = 'organizations'; 
-		$http.post(H.SETTINGS.baseUrl + '/' + route +'/register', {organization: $scope.organization, email: $scope.email})
+		var data = {username: $scope.data.username, email: $scope.data.email, password: $scope.data.password};
+		if(S.enableSaaS) {
+			route = 'organizations'; 
+			data = {organization: $scope.data.organization, email: $scope.data.email};
+		}else{
+			if($scope.data.password != $scope.data.confirmPassword){
+				$scope.error = "Password and Confirm Password should match!";
+				return;
+			}
+		}
+		
+		$http.post(H.SETTINGS.baseUrl + '/' + route +'/register', data)
 			.then(function(r){
 				$scope.error = M.REGISTRATION_EMAIL_SENT;
 			}, function(e){

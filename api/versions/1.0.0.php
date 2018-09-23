@@ -520,7 +520,9 @@ $activateFunction = function($params = NULL) {
 			$activation_query = "update users set is_active = '1', role = 'admin' where id = '$user_id'";
 			$activated = $api->query($activation_query);
 		} else {
-			$activation_query = "INSERT INTO `users` (`email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES ('$email',	'$email',	'21232f297a57a5a743894a0e4a801fc3',	'1',	'0000-00-00 00:00:00',	'admin', '$org_secret', 1)";
+			$new_password = substr(uuid(), 0, 8);
+			$new_password_md5 = md5($new_password); // md5 of 'admin' is 21232f297a57a5a743894a0e4a801fc3
+			$activation_query = "INSERT INTO `users` (`email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES ('$email',	'$email', '$new_password_md5',	'1',	'0000-00-00 00:00:00',	'admin', '$org_secret', 1)";
 			$user_id = $api->query($activation_query);
 		}
 		
@@ -533,8 +535,14 @@ $activateFunction = function($params = NULL) {
 		$organization = $api->getObjectsFromRouteName("organizations", $filter);
 		
 		try{
-			if(function_exists('on_organizations_activated')){
-				on_organization_activated($organization, $result);
+			if(function_exists('on_organization_activated')){
+				
+				if(!empty($new_password)) {
+					$user = $result[0];
+					$user['password'] = $new_password;
+				}
+				
+				on_organization_activated($organization[0], $user);
 			}
 		} catch (Exception $ex){
 			
@@ -589,8 +597,8 @@ $registerOrganizationFunction = function($params = NULL) {
 		$organization = $api->getObjectsFromRouteName("organizations", $filter_id);
 		
 		try{
-			if(function_exists('on_organizations_registered')){
-				on_organization_registered($organization);
+			if(function_exists('on_organization_registered')){
+				on_organization_registered($organization[0]);
 			}
 		} catch (Exception $ex){
 			
@@ -616,8 +624,7 @@ $registerUserFunction = function($params = NULL) {
 		$api->showErrorWithMessage(503, "Can't find table named 'users'. Please check the documentation for more info.");
 	}		
 	
-	$first_name = $params["first_name"];
-	$last_name = $params["last_name"];
+	$username = $params["username"];
 	$email = $params["email"];
 	$username = $params["email"];
 	$orig_password = $params["password"];
@@ -627,12 +634,12 @@ $registerUserFunction = function($params = NULL) {
 	$result = $api->getObjectsFromRouteName("users", $filter);
 	
 	if(!empty($result)){
-		$errorResult = array('error' => array('code' => 422, 'status' => 'This email is already registered with an organization. Please use a different one!'));
+		$errorResult = array('error' => array('code' => 422, 'status' => 'This email is already registered with a user. Please use a different one!'));
 		$api->showResult($errorResult);
 	}
 	else{
 		$token = uuid();
-		$query = "insert into users (`first_name`, `last_name`, `email`, `password`, `token`, `lease`, `is_active`) values ('$first_name', '$last_name', '$email', '$password', '$token', '0000-00-00 00:00:00', 1)";
+		$query = "insert into users (`username`, `email`, `password`, `token`, `lease`, `is_active`) values ('$username', '$email', '$password', '$token', '0000-00-00 00:00:00', 1)";
 		$updated = $api->query($query);
 
 
@@ -647,8 +654,10 @@ $registerUserFunction = function($params = NULL) {
 		}
 		
 		try{
-			if(function_exists('on_users_registered')){
-				on_user_registered($result, $orig_password);
+			if(function_exists('on_user_registered')){
+				$user = $result[0];
+				$user['password'] = $orig_password;
+				on_user_registered($user);
 			}
 		} catch (Exception $ex){
 			
@@ -678,13 +687,19 @@ else{
 
 
 
-function enable_simple_auth($exclude){
+function enable_simple_auth($exclude, $enable_open_registrations=false){
 	if(!DEFAULT_LOGIN_API){
 		global $resterController, $loginCommand, $setPasswordCommand, $changePasswordCommand, $forgotPasswordCommand;
 		$resterController->addRouteCommand($loginCommand);
 		$resterController->addRouteCommand($setPasswordCommand);
 		$resterController->addRouteCommand($changePasswordCommand);
 		$resterController->addRouteCommand($forgotPasswordCommand);
+		if(!ENABLE_OPEN_REGISTRATIONS){
+			if($enable_open_registrations){
+				global $registerUserCommand;
+				$resterController->addRouteCommand($registerUserCommand);
+			}
+		}
 		check_simple_auth(array_merge(excluded_routes(), $exclude));
 	}
 }

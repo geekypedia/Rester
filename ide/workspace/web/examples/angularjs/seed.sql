@@ -24,8 +24,8 @@ CREATE TABLE `organizations` (
   UNIQUE KEY `org_secret` (`org_secret`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `organizations` (`id`, `name`, `email`, `license`, `validity`, `org_secret`, `secret`, `is_active`) VALUES
-(1,	'Default Organization',	'superadmin@example.com', 'super',	'0000-00-00 00:00:00', '206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
+INSERT INTO `organizations` (`id`, `name`, `email`, `license`, `validity`, `is_active`, `org_secret`, `secret`) VALUES
+(1,	'Default Organization',	'superadmin@example.com', 'super',	'0000-00-00 00:00:00', 1, '206b2dbe-ecc9-490b-b81b-83767288bc5e',	'206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -42,12 +42,12 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES
-(1,	'superadmin@example.com',	'superadmin',	'17c4520f6cfd1ab53d8745e84681eb49',	'1',	'0000-00-00 00:00:00',	'superadmin', '206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
+INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `is_active`, `secret`) VALUES
+(1,	'superadmin@example.com',	'superadmin',	'17c4520f6cfd1ab53d8745e84681eb49',	'1',	'0000-00-00 00:00:00',	'superadmin', 1, '206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES
-(2,	'admin@example.com',	'admin',	'21232f297a57a5a743894a0e4a801fc3',	'1',	'0000-00-00 00:00:00',	'admin', '206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
+INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `is_active`, `secret`) VALUES
+(2,	'admin@example.com',	'admin',	'21232f297a57a5a743894a0e4a801fc3',	'1',	'0000-00-00 00:00:00',	'admin', 1, '206b2dbe-ecc9-490b-b81b-83767288bc5e');
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES
-(3,	'user@example.com',	'user',	'ee11cbb19052e40b07aac0ca060c23ee',	'1',	'0000-00-00 00:00:00',	'user', '206b2dbe-ecc9-490b-b81b-83767288bc5e', 1);
+INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `role`, `is_active`, `secret`) VALUES
+(3,	'user@example.com',	'user',	'ee11cbb19052e40b07aac0ca060c23ee',	'1',	'0000-00-00 00:00:00',	'user', 1, '206b2dbe-ecc9-490b-b81b-83767288bc5e');
 

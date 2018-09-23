@@ -230,7 +230,7 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.listAll = function(currentPage){
 			$scope.loading = true;
 			$scope.count(function(){
-				$scope.data.pagesCount = parseInt($scope.data.records / $scope.data.limit) + 1;
+				$scope.data.pagesCount = parseInt(($scope.data.records - 1)/ $scope.data.limit) + 1;
 				$scope.data.pages = [];
 				for (var i = 0; i < $scope.data.pagesCount; i++) {
 					$scope.data.pages.push(i + 1);

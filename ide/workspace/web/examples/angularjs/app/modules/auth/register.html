@@ -11,35 +11,42 @@
               <md-content layout-padding class="layout-padding _md">
                 <!--<div ng-include src="getTemplate('edit')"></div>-->
         		<form name="forms.registerForm" ng-submit="register()">
-                <md-input-container class="md-block">
+                <md-input-container class="md-block" ng-if="S.enableSaaS">
                     <label for="organization" class="active">{{M.FIELD_ORGANIZATION}}:</label>
-                    <input id="organization" name="organization" type="text" class="validate" ng-model="organization" required>
+                    <input id="organization" name="organization" type="text" class="validate" ng-model="data.organization" required>
                     <div ng-messages="forms.registerForm.organization.$error" ng-show="forms.registerForm.organization.$dirty">
+                      <div ng-message="required">{{M.REQUIRED}}</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" ng-if="!S.enableSaaS">
+                    <label for="username" class="active">{{M.FIELD_USERNAME}}:</label>
+                    <input id="username" name="username" type="text" class="validate" ng-model="data.username" required>
+                    <div ng-messages="forms.registerForm.username.$error" ng-show="forms.registerForm.username.$dirty">
                       <div ng-message="required">{{M.REQUIRED}}</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label for="email" class="active">{{M.FIELD_EMAIL}}:</label>
-                    <input id="email" name="email" type="email" class="validate" ng-model="email" required>
+                    <input id="email" name="email" type="email" class="validate" ng-model="data.email" required>
                     <div ng-messages="forms.registerForm.email.$error" ng-show="forms.registerForm.email.$dirty">
                       <div ng-message="required">{{M.REQUIRED}}</div>
                       <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
                     </div>
                 </md-input-container>
-                <!--<md-input-container class="md-block">-->
-                <!--    <label for="password">{{M.FIELD_PASSWORD}}:</label>-->
-                <!--    <input id="password" name="password" type="password" class="validate" ng-model="password" required>-->
-                <!--    <div ng-messages="forms.registerForm.password.$error" ng-show="forms.registerForm.password.$dirty">-->
-                <!--      <div ng-message="required">{{M.REQUIRED}}</div>-->
-                <!--    </div>-->
-                <!--</md-input-container>-->
-                <!--<md-input-container class="md-block">-->
-                <!--    <label for="password">{{M.FIELD_CONFIRM_PASSWORD}}:</label>-->
-                <!--    <input id="confirmPassword" name="confirmPassword" type="confirmPassword" class="validate" ng-model="confirmPassword" required>-->
-                <!--    <div ng-messages="forms.registerForm.confirmPassword.$error" ng-show="forms.registerForm.confirmPassword.$dirty">-->
-                <!--      <div ng-message="required">{{M.REQUIRED}}</div>-->
-                <!--    </div>-->
-                <!--</md-input-container>-->
+                <md-input-container class="md-block" ng-if="!S.enableSaaS">
+                    <label for="password">{{M.FIELD_PASSWORD}}:</label>
+                    <input id="password" name="password" type="password" class="validate" ng-model="data.password" required>
+                    <div ng-messages="forms.registerForm.password.$error" ng-show="forms.registerForm.password.$dirty">
+                      <div ng-message="required">{{M.REQUIRED}}</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" ng-if="!S.enableSaaS">
+                    <label for="password">{{M.FIELD_CONFIRM_PASSWORD}}:</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" class="validate" ng-model="data.confirmPassword" required>
+                    <div ng-messages="forms.registerForm.confirmPassword.$error" ng-show="forms.registerForm.confirmPassword.$dirty">
+                      <div ng-message="required">{{M.REQUIRED}}</div>
+                    </div>
+                </md-input-container>
                     
         				<div class='row'>
         					<button type='submit' name='btn_login' class='btn waves-effect blue'>{{M.BTN_REGISTER}}</button>
