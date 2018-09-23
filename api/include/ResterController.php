@@ -1343,6 +1343,10 @@ function postURL($url, $payload = null, $headers = null){
 	return url_post($url, $payload, $headers);
 }
 
+function prepareMail($template, $data){
+	return prepare_email_body($template, $data);
+}
+
 function sendMail($from, $to, $subject, $body, $smtp, $debug=false, $cc = array(), $bcc = array(), $from_name = "", $to_names = array(), $reply_to = "", $reply_to_name = ""){
 	return send_email_smtp($from, $to, $subject, $body, $smtp, $debug, $cc, $bcc, $from_name, $to_names, $reply_to, $reply_to_name);
 }

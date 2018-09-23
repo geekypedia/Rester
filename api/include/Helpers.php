@@ -296,7 +296,13 @@ function request_is_mobile(){
 	return $is_mobile;
 }
 
-
+function prepare_email_body($template, $data){
+    $result = $template;
+    foreach ($data as $k => $v) {
+        $result = str_replace("{{" . $k . "}}", $v, $result);    
+    }
+    return $result;
+}
 
 
 

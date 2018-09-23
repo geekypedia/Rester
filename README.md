@@ -367,6 +367,21 @@ Get response from any 3rd party URL. Useful for integrating with various 3rd par
 
 Post data to any 3rd party URL. Useful for integrating with various 3rd party platforms.
 
+#### prepareMail($template, $data)
+
+Provide a tokenize template with mustache/angularjs like syntax, and replace it with actual data.
+
+For example:
+The output of the following program
+```php
+$template = "Hello {{username}}!";
+$data["username"] = "batman";
+echo $prestige->prepareMail($template, $data);
+```
+will be
+```php
+Hello batman!
+```
 
 #### sendMail($from, $to, $subject, $body, $smtp)
 
@@ -486,9 +501,18 @@ function on_post_users($result){
 Custom Events
 -----
 
+#### on_organization_registered($organization)
+
+If you have enabled SaaS mode and open registrations, then you get /organizations/register API. When you call it to register an organization, you will get this event. You can use this event to notify end users to wait till they are activated.
+
+#### on_organization_registered($user)
+
+If you have enabled auth mode and open registrations, then you get /users/register API. When you call it to register a user, you will get this event. You can use this event to notify end users with a welcome email.
+
 #### on_organization_activated($organization, $user)
 
-If you have enabled SaaS mode, and you want an event on activation or license change of an organization, probably to send an email, define this function in your api project.
+If you have enabled SaaS mode, then you get /organizations/activate API. When you call it and you want an event on activation or license change of an organization, probably to send an email, define this function in your api project.
+$user will not be available if the event is fired after the user is already activated. This would be the case when you just want to change license or validity information.
 
 #### on_forgot_password($email, $password)
 
