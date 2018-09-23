@@ -35,7 +35,9 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	}
 
 	$scope.register = function(){
-		$http.post(H.SETTINGS.baseUrl + '/organizations', {name: $scope.organization, email: $scope.email})
+		var route = 'users';
+		if(S.enableSaaS) route = 'organizations'; 
+		$http.post(H.SETTINGS.baseUrl + '/' + route +'/register', {organization: $scope.organization, email: $scope.email})
 			.then(function(r){
 				$scope.error = M.REGISTRATION_EMAIL_SENT;
 			}, function(e){
@@ -44,7 +46,6 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				}
 			});
 	}
-
 	
 	$scope.logout = function(){
 		$cookies.remove(H.getCookieKey());

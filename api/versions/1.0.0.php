@@ -21,6 +21,8 @@ function excluded_routes(){
 				"POST users/forgot-password", 
 				"POST users/set-password", 
 				"POST users/change-password", 
+				"POST users/register", 
+				"POST organizations/register", 
 				"GET hello/world"
 				);
 }
@@ -399,7 +401,7 @@ $activateFunction = function($params = NULL) {
 	
 	$api = new ResterController();
 
-	//Check if the users table exists
+	//Check if the organizations table exists
 	try{
 		$tableExists = $api->query('select 1 from organizations');
 	}
@@ -531,7 +533,7 @@ $activateFunction = function($params = NULL) {
 		$organization = $api->getObjectsFromRouteName("organizations", $filter);
 		
 		try{
-			if(function_exists('on_organization_activated')){
+			if(function_exists('on_organizations_activated')){
 				on_organization_activated($organization, $result);
 			}
 		} catch (Exception $ex){
@@ -545,10 +547,135 @@ $activateFunction = function($params = NULL) {
 
 $activateCommand = new RouteCommand("POST", "organizations", "activate", $activateFunction, array("org_secret"), "Method to activate an organization.");
 
+
+/**
+* Sample organization register command
+*/
+$registerOrganizationFunction = function($params = NULL) {
+	
+	$api = new ResterController();
+
+	//Check if the organizations table exists
+	try{
+		$tableExists = $api->query('select 1 from organizations');
+	}
+	catch(Exception $e){
+		$api->showErrorWithMessage(503, "Can't find table named 'organizations'. Please check the documentation for more info.");
+	}		
+	
+	$organization = $params["organization"];
+	$email = $params["email"];
+
+	$filter['email'] = $email;
+	$result = $api->getObjectsFromRouteName("organizations", $filter);
+	
+	if(!empty($result)){
+		$errorResult = array('error' => array('code' => 422, 'status' => 'This email is already registered with an organization. Please use a different one!'));
+		$api->showResult($errorResult);
+	}
+	else{
+		$org_secret = uuid();
+		$query = "insert into organizations (`name`, `email`, `license`, `validity`, `is_active`, `org_secret`, `secret`) values ('$organization', '$email', 'basic', '0000-00-00 00:00:00', 0, '$org_secret', '206b2dbe-ecc9-490b-b81b-83767288bc5e')";
+		$updated = $api->query($query);
+
+
+		// $select_query = "select `id`, `name`, `email`, `license`, `validity`, `is_active`, `org_secret` from organizations where secret = '$org_secret' and email = '$email' and name ='$organization'";
+		// $result = $api->query($select_query); 
+
+		// foreach ($result as &$r) {
+		// 	$r['password'] = 'Not visible for security reasons';
+		// }
+		$filter_id['id'] = $updated;
+		$organization = $api->getObjectsFromRouteName("organizations", $filter_id);
+		
+		try{
+			if(function_exists('on_organizations_registered')){
+				on_organization_registered($organization);
+			}
+		} catch (Exception $ex){
+			
+		}
+
+		$api->showResult($organization);
+	}
+
+};
+
+/**
+* Sample user register command
+*/
+$registerUserFunction = function($params = NULL) {
+	
+	$api = new ResterController();
+
+	//Check if the users table exists
+	try{
+		$tableExists = $api->query('select 1 from users');
+	}
+	catch(Exception $e){
+		$api->showErrorWithMessage(503, "Can't find table named 'users'. Please check the documentation for more info.");
+	}		
+	
+	$first_name = $params["first_name"];
+	$last_name = $params["last_name"];
+	$email = $params["email"];
+	$username = $params["email"];
+	$orig_password = $params["password"];
+	$password = md5($orig_password);
+
+	$filter['email'] = $email;
+	$result = $api->getObjectsFromRouteName("users", $filter);
+	
+	if(!empty($result)){
+		$errorResult = array('error' => array('code' => 422, 'status' => 'This email is already registered with an organization. Please use a different one!'));
+		$api->showResult($errorResult);
+	}
+	else{
+		$token = uuid();
+		$query = "insert into users (`first_name`, `last_name`, `email`, `password`, `token`, `lease`, `is_active`) values ('$first_name', '$last_name', '$email', '$password', '$token', '0000-00-00 00:00:00', 1)";
+		$updated = $api->query($query);
+
+
+		// $select_query = "select `id`, `name`, `email`, `license`, `validity`, `is_active`, `org_secret` from organizations where secret = '$org_secret' and email = '$email' and name ='$organization'";
+		// $result = $api->query($select_query); 
+
+		$filter_id['id'] = $updated;
+		$result = $api->getObjectsFromRouteName("users", $filter_id);
+
+		foreach ($result as &$r) {
+			$r['password'] = 'Not visible for security reasons';
+		}
+		
+		try{
+			if(function_exists('on_users_registered')){
+				on_user_registered($result, $orig_password);
+			}
+		} catch (Exception $ex){
+			
+		}
+
+		$api->showResult($result);
+	}
+
+};
+
+
+$registerOrganizationCommand = new RouteCommand("POST", "organizations", "register", $registerOrganizationFunction, array("organization", "email"), "Method to register an organization.");
+$registerUserCommand = new RouteCommand("POST", "users", "register", $registerUserFunction, array("email", "password"), "Method to register a user.");
+
 if(DEFAULT_SAAS_MODE == true){
 	$resterController->addRouteCommand($activateCommand);
 	check_simple_saas(array_merge(array("GET "), excluded_routes()));
+	if(ENABLE_OPEN_REGISTRATIONS == true){
+		$resterController->addRouteCommand($registerOrganizationCommand);
+	}
 }
+else{
+	if(ENABLE_OPEN_REGISTRATIONS == true){
+		$resterController->addRouteCommand($registerUserCommand);
+	}
+}
+
 
 
 function enable_simple_auth($exclude){
@@ -562,10 +689,16 @@ function enable_simple_auth($exclude){
 	}
 }
 
-function enable_simple_saas($exclude, $check_request_authenticity  = false){
+function enable_simple_saas($exclude, $check_request_authenticity  = false, $enable_open_registrations = false){
 	if(!DEFAULT_SAAS_MODE){
 		global $resterController, $activateCommand;
 		$resterController->addRouteCommand($activateCommand);
+		if(!ENABLE_OPEN_REGISTRATIONS){
+			if($enable_open_registrations){
+				global $registerOrganizationCommand;
+				$resterController->addRouteCommand($registerOrganizationCommand);
+			}
+		}
 		check_simple_saas(array_merge(array("GET "),excluded_routes(), $exclude), $check_request_authenticity);
 	}
 }

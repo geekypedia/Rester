@@ -14,7 +14,7 @@ app.service('M', function($http) {
 		"SAVED_OK": "Stay Here",
 		"SAVED_CANCEL": "Go Back To Listing",
 		"RECOVERY_EMAIL_SENT": "We have sent instructions to your registered e-mail address. Please check your spam folder.",
-		"REGISTRATION_EMAIL_SENT": "We have sent your request for approval. This usually takes 48-72 hours. You will soon get an activation email. Please keep checking your spam folder.",
+		"REGISTRATION_EMAIL_SENT": "We have sent your request for approval. This usually takes upto 72 hours, but usually our approval panel is very quick to respond. You will soon get an activation email. Please keep checking your spam folder.",
 		"TITLE_ADD_PREFIX": "ADD",
 		"TITLE_EDIT_PREFIX": "EDIT",
 		"TITLE_DASHBOARD": "DASHBOARD",
