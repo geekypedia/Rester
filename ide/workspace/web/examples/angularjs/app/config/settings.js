@@ -3,6 +3,7 @@ app.service('S', function($http) {
 		"baseUrl": "../../../../../api",
 		"productName": "pRESTige",
 		"supportEmail": "support@prestigeframework.com",
-		"enableSaaS": true
+		"enableSaaS": true,
+		"openRegistration": false
 	}
 });

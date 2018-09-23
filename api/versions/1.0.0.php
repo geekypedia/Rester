@@ -15,6 +15,16 @@ function api_get_current_route(){
 	return get_current_api_path();
 }
 
+function excluded_routes(){
+	return array(
+				"POST users/login", 
+				"POST users/forgot-password", 
+				"POST users/set-password", 
+				"POST users/change-password", 
+				"GET hello/world"
+				);
+}
+
 //$exclude = array("GET hello/world", "POST users/login");
 function check_simple_auth($exclude)
 {
@@ -378,7 +388,7 @@ if(DEFAULT_LOGIN_API == true){
 	$resterController->addRouteCommand($setPasswordCommand);
 	$resterController->addRouteCommand($changePasswordCommand);
 	$resterController->addRouteCommand($forgotPasswordCommand);
-	check_simple_auth(array("POST users/login", "GET hello/world"));
+	check_simple_auth(excluded_routes());
 }
 
 
@@ -537,7 +547,7 @@ $activateCommand = new RouteCommand("POST", "organizations", "activate", $activa
 
 if(DEFAULT_SAAS_MODE == true){
 	$resterController->addRouteCommand($activateCommand);
-	check_simple_saas(array("GET ", "POST users/login", "GET hello/world"));
+	check_simple_saas(array_merge(array("GET "), excluded_routes()));
 }
 
 
@@ -548,7 +558,7 @@ function enable_simple_auth($exclude){
 		$resterController->addRouteCommand($setPasswordCommand);
 		$resterController->addRouteCommand($changePasswordCommand);
 		$resterController->addRouteCommand($forgotPasswordCommand);
-		check_simple_auth(array_merge(array("POST users/login", "GET hello/world"), $exclude));
+		check_simple_auth(array_merge(excluded_routes(), $exclude));
 	}
 }
 
@@ -556,7 +566,7 @@ function enable_simple_saas($exclude, $check_request_authenticity  = false){
 	if(!DEFAULT_SAAS_MODE){
 		global $resterController, $activateCommand;
 		$resterController->addRouteCommand($activateCommand);
-		check_simple_saas(array_merge(array("GET ", "POST users/login", "GET hello/world"), $exclude), $check_request_authenticity);
+		check_simple_saas(array_merge(array("GET "),excluded_routes(), $exclude), $check_request_authenticity);
 	}
 }
 

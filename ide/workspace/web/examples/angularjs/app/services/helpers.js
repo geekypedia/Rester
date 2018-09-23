@@ -18,7 +18,13 @@ app.service('H', function($location, md5, S, M, R) {
 		getUUID: Helper.getUUID,
 		toDateTime: Helper.toDateTime,
 		toMySQLDateTime: Helper.toMySQLDateTime,
-		checkLicenseValidity: Helper.checkLicenseValidity
+		checkLicenseValidity: Helper.checkLicenseValidity,
+		getOpenRoutes: function(){
+			var openRoutes = RegisterRoutes().customRoutes.filter(p => p.auth === false);
+			var openRouteNames = [];
+			openRoutes.forEach(p => openRouteNames.push("/" + p.route));
+			return openRouteNames;
+		}
 	}
 });
 

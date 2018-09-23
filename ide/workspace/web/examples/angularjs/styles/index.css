@@ -304,3 +304,9 @@ body {
 .demo-container{
   margin: 20px;
 }
+
+.main-container {
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+}

@@ -67,12 +67,17 @@ app.run(function ($rootScope, $location, $cookies, H) {
     $rootScope.SETTINGS = H.SETTINGS;
 
     $rootScope.fieldTypes = H.SETTINGS.fieldTypes;
+    
+    $rootScope.openRoutes = H.getOpenRoutes();
 
     $rootScope.$on("$locationChangeStart", function (event, next, current) {
         if (!$rootScope.currentUser) {
+            
             var cookie = $cookies.get(H.getCookieKey());
             if (!cookie) {
-                $location.path('/sign-in');
+                if($rootScope.openRoutes.indexOf($location.path()) > -1){} else {
+                    $location.path('/sign-in');
+                }
             }
             else {
                 var cu = JSON.parse(cookie);
