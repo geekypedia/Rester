@@ -70,3 +70,8 @@ app.controller('unauthorizedController', function($scope, H){
 	$scope.H = H;
 	$scope.M = H.M;
 });
+
+app.controller('profileController', function($scope, $rootScope, H){
+	$scope.H = H;
+	$scope.M = H.M;
+});

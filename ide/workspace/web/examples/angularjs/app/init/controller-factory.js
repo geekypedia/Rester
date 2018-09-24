@@ -22,7 +22,6 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.forms = {};
 		$scope.H = H;
 		$scope.M = M;
-		
 
 		//Set currentRoute
 		$scope.currentRoute = (function(){
@@ -237,7 +236,11 @@ function ControllerFactory(resourceName, options, extras) {
 				}
 				if(!currentPage){
 					if(!($scope.data.pages.indexOf($rootScope.currentPage) > -1)){
-						$rootScope.currentPage = $scope.data.pages[$scope.data.pagesCount - 1];
+						if($rootScope.currentPage > 0){
+							$rootScope.currentPage = $scope.data.pages[$scope.data.pagesCount - 1];
+						} else {
+							$rootScope.currentPage = 1;
+						}
 					}
 				} else {
 					$rootScope.currentPage = currentPage;
