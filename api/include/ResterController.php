@@ -1403,6 +1403,22 @@ function successResponse($data = null, $statusCode = 200) {
 function errorResponse($errorCode, $message = null) {
 	return ApiResponse::errorResponse($errorCode, $message);
 }
+
+function encrypt($text, $key){
+	return encrypt($text, $key);
+}
+
+function decrypt($text, $key){
+	return decrypt($text, $key);
+}
+
+function generateCryptoKey(){
+	return generate_encryption_key();
+}
+
+function diff($obj1, $obj2){
+	return get_diff_both($obj1, $obj2);
+}	
 	
 } //END
 

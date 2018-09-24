@@ -462,6 +462,22 @@ GET hello/world
 POST users/login
 ```
 
+#### encrypt($text, $key)
+
+Encrypt text.
+
+#### decrypt($text, $key)
+
+Decrypt text.
+
+#### generateCryptoKey()
+
+Generate key to be used in encryption and decryption.
+
+#### diff($obj1, $obj2)
+
+Generate diff between two objects. Can be useful for generating audit logs.
+
 Events
 -----
 

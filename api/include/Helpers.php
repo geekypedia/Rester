@@ -306,6 +306,66 @@ function prepare_email_body($template, $data){
     return $result;
 }
 
+function encrypt($text, $key){
+    $keyObj = load_encryption_key($key);
+    return Defuse\Crypto\Crypto::encrypt($text, $keyObj);
+}
 
+function decrypt($text, $key){
+    $keyObj = load_encryption_key($key);
+    return Defuse\Crypto\Crypto::decrypt($text, $keyObj);
+}
+
+function generate_encryption_key(){
+    $key = Defuse\Crypto\Key::createNewRandomKey();
+    return $key->saveToAsciiSafeString();
+}
+
+function load_encryption_key($key){
+    return Defuse\Crypto\Key::loadFromAsciiSafeString($key);
+}
+
+function recursive_array_diff($a1, $a2) { 
+    $r = array(); 
+    foreach ($a1 as $k => $v) {
+        if (array_key_exists($k, $a2)) { 
+            if (is_array($v)) { 
+                $rad = recursive_array_diff($v, $a2[$k]); 
+                if (count($rad)) { $r[$k] = $rad; } 
+            } else { 
+                if ($v != $a2[$k]) { 
+                    $r[$k] = $v; 
+                }
+            }
+        } else { 
+            $r[$k] = $v; 
+        } 
+    } 
+    return $r; 
+}
+
+function get_diff($obj1, $obj2){
+    if(is_array($obj1) && is_array($obj2)){
+        return recursive_array_diff((array) $obj1, (array) $obj2);
+    }
+    return recursive_array_diff($obj1, $obj2);
+}
+
+function print_var_name($var) {
+    foreach($GLOBALS as $var_name => $value) {
+        if ($value === $var) {
+            return $var_name;
+        }
+    }
+
+    return false;
+}
+
+function get_diff_both($obj1, $obj2){
+    return array(get_diff($obj1, $obj2),
+                get_diff($obj2, $obj1)
+                );
+    
+}
 
 ?>
