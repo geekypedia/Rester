@@ -553,6 +553,30 @@ If you write any code that is not encapsulated in a function, it will be applied
 
 Example: Write code to restrict request coming from certain IP addresses.
 
+Localization
+-----
+If you want to register your localized text at a central location, you can do so by calling 'M'.
+
+#### M($key, $message)
+
+Registers a message.
+
+#### M($key)
+
+Fetches the message referred by $key.
+
+#### M($key_message_pairs)
+
+Register bulk messages.
+
+#### M_load($tableName)
+
+Load $key and $message from a database table. The table should have 'key' and 'message' columns.
+
+#### M_load($tableName, $keyColumnName, $messageColumnName)
+
+Load $key and $message from a database table. Specify the column names for key and message.
+
 Credits
 -----
 pRESTige started as a fork of moddity/Rester. moddity/Rester was a nearly complete rewrite of [ArrestDB]. ArrestDB was a complete rewrite of [Arrest-MySQL].

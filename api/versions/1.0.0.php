@@ -1,23 +1,30 @@
 <?php
 
 $M = array(
+	"USER_404" => "User does not exist!"
 	);
 
 function M($key, $message=null){
 	global $M;
+	if(is_array($key) && empty($message)){
+		foreach ($key as $k => $v) {
+			$M[$k] = $v;
+		}
+		return;
+	}
 	if(empty($message)){
 		return $M[$key];
 	} else {
-		$m[$key] = $message;
+		$M[$key] = $message;
 	}
 }
 
-function M_init($route){
+function M_load($route, $key = 'key', $message = 'message'){
 	global $resterController;
 	$resterController->find($route);
 	foreach ($route as $r) {
-		if(!empty($r['key']) && !empty($r['message'])){
-			M($r['key'], $r['message']);	
+		if(!empty($r[$key]) && !empty($r[$message])){
+			M($r[$key], $r[$message]);	
 		}
 	}
 }
@@ -259,7 +266,7 @@ $loginFunction = function($params = NULL) {
 	
 	if($result == null){
 		if(!$user_exists){
-			$api->showError(404, "User does not exist!");
+			$api->showError(404, M("USER_404"));
 		}
 		$api->showError(401, "Invalid email/username or password!");
 	}
@@ -441,7 +448,7 @@ $forgotPasswordFunction = function($params = NULL) {
 		
 
 	} else{
-		$api->showError(404, 'User does not exist!');
+		$api->showError(404, M("USER_404"));
 	}
 	
 };
