@@ -113,7 +113,8 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 
 
 function check_request_authenticity(){
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 
 	$headers = getallheaders();
 	$api_key = '';
@@ -139,7 +140,8 @@ function check_request_authenticity(){
 }
 
 function check_response_authenticity($result){
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 
 	$request_body = $api->getRequestBody();
 	$secret = empty($request_body['secret']) ? $_REQUEST['secret'] : $request_body['secret'];
@@ -186,7 +188,8 @@ function check_organization_is_active($secret){
 
 $loginFunction = function($params = NULL) {
 	
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 
 	//Check if the users table exists
 	try{
@@ -316,7 +319,8 @@ $loginCommand = new RouteCommand("POST", "users", "login", $loginFunction, array
 
 
 $setPasswordFunction = function($params = NULL) {
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 	
 	$filter['email'] = $params['admin_email'];
 	$filter['password'] = md5($params['admin_password']);
@@ -363,7 +367,8 @@ $setPasswordCommand = new RouteCommand("POST", "users", "set-password", $setPass
 
 
 $changePasswordFunction = function($params = NULL) {
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 	
 	$filter['email'] = $params['email'];
 	$filter['password'] = md5($params['password']);
@@ -400,7 +405,8 @@ $changePasswordFunction = function($params = NULL) {
 $changePasswordCommand = new RouteCommand("POST", "users", "change-password", $changePasswordFunction, array("email", "password", "new_password"), "Method to change password");
 
 $forgotPasswordFunction = function($params = NULL) {
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 	
 	$filter['email'] = $params['email'];
 
@@ -459,7 +465,8 @@ if(DEFAULT_LOGIN_API == true){
 */
 $activateFunction = function($params = NULL) {
 	
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 
 	//Check if the organizations table exists
 	try{
@@ -619,7 +626,8 @@ $activateCommand = new RouteCommand("POST", "organizations", "activate", $activa
 */
 $registerOrganizationFunction = function($params = NULL) {
 	
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 
 	//Check if the organizations table exists
 	try{
@@ -671,7 +679,8 @@ $registerOrganizationFunction = function($params = NULL) {
 */
 $registerUserFunction = function($params = NULL) {
 	
-	$api = new ResterController();
+	global $resterController;
+	$api = $resterController;
 
 	//Check if the users table exists
 	try{

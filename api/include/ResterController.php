@@ -22,6 +22,9 @@ class ResterController {
 	
 	var $NESTED_COUNTER = 1;
 	
+	var $requestBody = null;
+
+	
 	/**
 	* Indexed array containing the methods don't checked by OAuth
 	*/
@@ -441,17 +444,18 @@ class ResterController {
      * @return object json parsed object
      */
 	function getRequestBody() {
-		$requestBody = @file_get_contents('php://input');
-			
-		if(empty($requestBody)) {
+		if(empty($this->requestBody)){
+			$this->requestBody = @file_get_contents('php://input');	
+		}
+		
+		if(empty($this->requestBody)) {
 			ResterUtils::Dump("ERR: Empty request body");
 			return NULL;
-		} 
+		}
 		
-	
-		ResterUtils::Dump($requestBody, "*** REQUEST BODY ***");
+		ResterUtils::Dump($this->requestBody, "*** REQUEST BODY ***");
 		
-		return json_decode($requestBody, true);
+		return json_decode($this->requestBody, true);
 	}
 	
 	/**
