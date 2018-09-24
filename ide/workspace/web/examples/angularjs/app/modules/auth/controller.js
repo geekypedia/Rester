@@ -16,6 +16,10 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
 			.then(function(r){
 				$scope.error = "";
+				if(!r.data.token){
+					$scope.error = M.E500;
+					return;
+				}
 				$rootScope.currentUser = r.data;
 				$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
 				$location.path('/');
