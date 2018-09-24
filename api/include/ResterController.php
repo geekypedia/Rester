@@ -232,8 +232,9 @@ class ResterController {
 				$this->showError(400);
 			}
 			
-			$input = file_get_contents('php://input');
-			
+			//$input = file_get_contents('php://input');
+			$input = $this->getRequestBody();
+
 			if(empty($input)) {
 				ResterUtils::Log("Empty PUT request");
 				$this->showError(400);
@@ -241,8 +242,8 @@ class ResterController {
 			
 			if(!isset($routePath) || count($routePath) < 1) { //no id in URL, we expect json body
 			
-				$putData = json_decode($input, true);
-				
+				//$putData = json_decode($input, true);
+				$putData = $input;
 				
 				//Register event hook
 				try{

@@ -1,5 +1,5 @@
 /*global angular, app*/
-app.controller('usersControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H) {
+app.controller('usersControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
     
     
     if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
@@ -14,15 +14,15 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
     $scope.setPassword = function(item, newItem) {
         if(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1){
             if(newItem.admin_password == null || newItem.admin_password == ""){
-                newItem.error = "Admin Password is required!";
+                newItem.error = M.ADMIN_PASSWORD_REQUIRED;
                 return;
             }
             if(newItem.password == null || newItem.password == ""){
-                newItem.error = "Password is required!";
+                newItem.error = M.PASSWORD_REQUIRED;
                 return;
             }
             if(newItem.password != newItem.confirm_password){
-                newItem.error = "Password and Confirm Password should match!";
+                newItem.error = M.PASSWORD_NOT_MATCHING;
                 return;
             }
             var url = H.SETTINGS.baseUrl + '/users/set-password';
