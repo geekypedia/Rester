@@ -274,10 +274,40 @@ $loginFunction = function($params = NULL) {
 		foreach ($result as &$r) {
 			$r['password'] = 'Not visible for security reasons';
 		}
-		
-		check_organization_is_active($result[0]["secret"]);
 
-		$api->showResult($result);
+		$user = $result[0];
+		
+		//Applicable in SaaS mode
+		check_organization_is_active($user["secret"]);
+
+		//Applicable in SaaS mode
+		try{
+			$org_filter["org_secret"] = $user["secret"];
+			$organizations = $api->getObjectsFromRouteName("organizations", $org_filter);
+			if(!empty($organizations)) {
+				if(in_array($user['role'], array("superadmin"))){
+					$user[organization] = $organizations[0];
+				} else if(in_array($user['role'], array("admin"))){
+					$user[organization] = array(
+												"name" => $organizations[0]["name"],
+												"email" => $organizations[0]["email"],
+												"secret" => $organizations[0]["org_secret"],
+												"license" => $organizations[0]["license"],
+												"validity" => $organizations[0]["validity"]
+											);
+				} else {
+					$user[organization] = array("name" => $organizations[0]["name"]);
+				}
+			}
+		} catch (Exception $ex){
+			
+		}
+		
+		if(function_exists('on_login')){
+			on_login($user);
+		}
+
+		$api->showResult($user);
 	}
 
 };
@@ -312,6 +342,11 @@ $setPasswordFunction = function($params = NULL) {
 			foreach ($result as &$r) {
 				$r['password'] = 'Not visible for security reasons';
 			}
+			
+			if(function_exists('on_set_password')){
+				on_set_password($result[0]['email'], $params['password']);
+			}
+
 	
 			$api->showResult($result);
 		} else {
@@ -345,6 +380,11 @@ $changePasswordFunction = function($params = NULL) {
 			foreach ($result as &$r) {
 				$r['password'] = 'Not visible for security reasons';
 			}
+			
+			if(function_exists('on_change_password')){
+				on_change_password($result[0]['email'], $params['new_password']);
+			}
+			
 	
 			$api->showResult($result);
 		} else {

@@ -73,6 +73,9 @@ class ApiResponse {
 			case 409:
 			$status = "Conflict";
 			break;
+			case 422:
+			$status = "Invalid Request";
+			break;
 			case 500:
 			$status = "Internal Server Error";
 			break;

@@ -75,4 +75,13 @@ app.controller('unauthorizedController', function($scope, H){
 app.controller('profileController', function($scope, $rootScope, H){
 	$scope.H = H;
 	$scope.M = H.M;
+	$scope.locked = true;
+	$scope.lockedClass = "hidden";
+	$scope.editingClass = "";
+	
+	$scope.edit = function(){
+		$scope.locked = false;
+		$scope.editingClass = "float-left";
+		$scope.lockedClass = "visible float-right formClass";
+	};
 });

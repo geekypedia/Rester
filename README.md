@@ -505,7 +505,7 @@ Custom Events
 
 If you have enabled SaaS mode and open registrations, then you get /organizations/register API. When you call it to register an organization, you will get this event. You can use this event to notify end users to wait till they are activated.
 
-#### on_organization_registered($user)
+#### on_user_registered($user)
 
 If you have enabled auth mode and open registrations, then you get /users/register API. When you call it to register a user, you will get this event. You can use this event to notify end users with a welcome email.
 
@@ -517,6 +517,18 @@ $user will not be available if the event is fired after the user is already acti
 #### on_forgot_password($email, $password)
 
 If you have enabled Simple Auth, and you want to handle the event when somebody calls /users/forgot-password API, just define this function and send an email to the email address in the parameter, with the password!
+
+#### on_set_password($email, $password)
+
+If you have enabled Simple Auth, and you want to handle the event when somebody calls /users/set-password API, just define this function and send an email to the email address in the parameter, with the password!
+
+#### on_change_password($email, $password)
+
+If you have enabled Simple Auth, and you want to handle the event when somebody calls /users/change-password API, just define this function and send an email to the email address in the parameter, with the password!
+
+#### on_login($user)
+
+If you have enabled Simple Auth, then you get /users/login API. On successful login, you can hook on_login function to run your own code.
 
 Middleware Functions
 -----
