@@ -1,3 +1,4 @@
+/*global app*/
 app.filter('titleCase', function() {
     return function(input) {
       input = input || '';

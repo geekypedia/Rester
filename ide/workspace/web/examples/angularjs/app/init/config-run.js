@@ -1,3 +1,4 @@
+/*global app, RegisterRoutes*/
 app.factory('httpRequestInterceptor', function ($rootScope) {
     return {
         request: function (config) {
@@ -86,4 +87,3 @@ app.run(function ($rootScope, $location, $cookies, H) {
         }
     });
 });
-

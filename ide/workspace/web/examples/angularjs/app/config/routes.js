@@ -11,4 +11,3 @@ function RegisterRoutes() {
         easyRoutes: ['organizations', 'users']
     };
 }
-

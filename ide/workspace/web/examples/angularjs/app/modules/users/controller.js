@@ -1,3 +1,4 @@
+/*global angular, app*/
 app.controller('usersControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H) {
     
     
@@ -5,12 +6,10 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
         $location.path('unauthorized');
     }
 
-    
-    $('select').formSelect();
     $scope.newSingle = function(){
         $scope.locked = false;
         $scope.data.single.password = H.getHash('admin');
-    }
+    };
     
     $scope.setPassword = function(item, newItem) {
         if(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1){
@@ -37,14 +36,14 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
                     $scope.newUserValues = {};
                     $mdDialog.cancel();   
                     $scope.loading = false;
-                },function(r){
-                    if(r && r.data && r.data.error && r.data.error.status){
-                        newItem.error = r.data.error.status;    
+                },function(e){
+                    if(e && e.data && e.data.error && e.data.error.status){
+                        newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
                     }
                     $scope.loading = false;
                 });
         }
-    }
+    };
 
     $scope.showSetPasswordDialog = function(ev, item) {
         $scope.clickedUser = item;
@@ -60,8 +59,7 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
     $scope.hideSetPasswordDialog = function(){
         $scope.clickedUser = {};
         $scope.newUserValues = {};
-        
         $mdDialog.cancel();            
-    }    
+    }   ; 
     
 });

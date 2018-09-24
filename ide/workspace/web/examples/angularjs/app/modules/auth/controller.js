@@ -1,9 +1,10 @@
+/*global app*/
 app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, H, M, S) {
 	if($rootScope.currentUser){
 		$location.path('/');
 	}
 	
-	$scope.forms = {}
+	$scope.forms = {};
 	
 	$scope.H = H;
 	$scope.M = M;
@@ -20,10 +21,10 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$location.path('/');
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					$scope.error = e.data.error.status;
+					$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
 				}
 			});
-	}
+	};
 
 	$scope.forgotPassword = function(){
 		$http.post(H.SETTINGS.baseUrl + '/users/forgot-password', {email: $scope.email})
@@ -31,10 +32,10 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$scope.error = M.RECOVERY_EMAIL_SENT;
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					$scope.error = e.data.error.status;
+					$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
 				}
 			});
-	}
+	};
 
 	$scope.register = function(){
 		var route = 'users';
@@ -54,16 +55,16 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$scope.error = M.REGISTRATION_EMAIL_SENT;
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					$scope.error = e.data.error.status;
+					$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
 				}
 			});
-	}
+	};
 	
 	$scope.logout = function(){
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
 		$location.path('/sign-in');
-	}
+	};
 });
 
 app.controller('unauthorizedController', function($scope, H){

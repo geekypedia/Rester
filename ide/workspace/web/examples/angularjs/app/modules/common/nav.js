@@ -1,3 +1,4 @@
+/*global app, RegisterMenuItems*/
 app.controller('navController', function($scope) {
     var data = RegisterMenuItems();
     for(var k in data){

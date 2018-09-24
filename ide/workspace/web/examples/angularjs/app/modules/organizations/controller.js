@@ -1,3 +1,4 @@
+/*global angular, app*/
 app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $timeout, $mdDialog, H) {
 
     if(!(['superadmin'].indexOf($rootScope.currentUser.role) > -1)){
@@ -12,7 +13,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         $scope.data.single.org_secret = H.getUUID();  
         $scope.data.single.license = 'basic';
         $scope.data.single.validity = '0000-00-00 00:00:00';
-    }
+    };
     
     $scope.currentOrganization = {};
     $scope.newOrganizationValues = {};
@@ -38,7 +39,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
                     $scope.loading = false;
                 });
         }
-    }
+    };
     
     $scope.setPassword = function(item, newItem) {
         if($rootScope.currentUser.role == 'superadmin'){
@@ -65,9 +66,9 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
                     $scope.newUserValues = {};
                     $mdDialog.cancel();   
                     $scope.loading = false;
-                },function(r){
-                    if(r && r.data && r.data.error && r.data.error.status){
-                        newItem.error = r.data.error.status;    
+                },function(e){
+                    if(e && e.data && e.data.error && e.data.error.status){
+                        newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
                     }
                     $scope.loading = false;
                     //$scope.currentOrganization = {};
@@ -75,7 +76,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
                     //$mdDialog.cancel();   
                 });
         }
-    }    
+    };  
     
     $scope.showActivationDialog = function(ev, item) {
         $scope.currentOrganization = item;
@@ -92,7 +93,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         $scope.currentOrganization = {};
         
         $mdDialog.cancel();            
-    }
+    };
 
     $scope.showSetPasswordDialog = function(ev, item) {
         $scope.currentOrganization = item;
@@ -109,9 +110,5 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         $scope.newUserValues = {};
         
         $mdDialog.cancel();            
-    }
-
-
-
-    
+    };
 });

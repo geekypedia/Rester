@@ -1,3 +1,4 @@
+/*global app*/
 app.service('M', function($http) {
 	return {
 		"E404": "The resource you are trying to access does not exist!",
@@ -51,5 +52,5 @@ app.service('M', function($http) {
 		"FIELD_CLIENT_SECRET": "Client Secret",
 		"FIELD_VALIDITY": "Validity",
 		"FIELD_LICENSE": "License"
-	}
+	};
 });

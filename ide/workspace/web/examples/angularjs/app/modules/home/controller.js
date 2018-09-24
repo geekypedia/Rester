@@ -1,3 +1,4 @@
+/*global app*/
 app.controller('homeController', function ($scope, $rootScope, H, R) {
 
 	// $controller('homeControllerBase', {
@@ -90,7 +91,7 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 	}
 	
 	function setCountsDefault(){
-		resources = [];
+		var resources = [];
 		for (var k in $scope.data.counters) {
 			var v = $scope.data.counters[k];
 			if(v.allowedRoles.indexOf($rootScope.currentUser.role) > -1){

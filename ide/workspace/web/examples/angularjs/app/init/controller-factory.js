@@ -16,7 +16,7 @@ function ControllerFactory(resourceName, options, extras) {
 			'view': 'view',
 			'edit': 'edit',
 			'add': 'add'
-		}
+		};
 		$scope.mode = $scope.MODES.view;
 		$scope.locked = true;
 		$scope.forms = {};
@@ -209,7 +209,7 @@ function ControllerFactory(resourceName, options, extras) {
 					callback(e);
 				}
 			}));
-		}
+		};
 
 		//Clear errors
 		$scope.clearErrors = function() {
@@ -223,7 +223,7 @@ function ControllerFactory(resourceName, options, extras) {
 		
 		$scope.setActive = function(i){
 			return ($rootScope.currentPage == i) ? 'active' : 'waves-effect';
-		}	
+		};
 	
 		//Load all entries on initialization
 		$scope.listAll = function(currentPage){
@@ -250,7 +250,7 @@ function ControllerFactory(resourceName, options, extras) {
 			    });
 				
 			});
-		}
+		};
 		
 		//Load entry on initialization
 		$scope.loadSingle = function(callback){
@@ -259,18 +259,18 @@ function ControllerFactory(resourceName, options, extras) {
 		    	if(callback) callback(r);
 		    	$scope.loading = false;
 		    });
-		}
+		};
 		
 		
 		//Toggle Visibility
 		$scope.toggleVisibility = function(item){
 		    item.visible = !item.visible;
-		}
+		};
 	
 		//Toggle lock
 	    $scope.toggleLock = function(){
 	        $scope.locked = !$scope.locked;
-	    }
+	    };
 	    
 	    //Update a single record
 	    $scope.updateSingle = function(callback){
@@ -285,14 +285,14 @@ function ControllerFactory(resourceName, options, extras) {
 					$scope.loading = false;
 		        });
 	    	}
-	    }
+	    };
 	    
 	    //Initialize a single record
 	    $scope.newSingle = function(callback){
 	    	$scope.locked = false;
 	    	$scope.initSingle();
 	    	if(callback) callback();
-	    }
+	    };
 	    
 	    //Save a new single record
 	    $scope.saveSingle = function(callback){
@@ -307,12 +307,12 @@ function ControllerFactory(resourceName, options, extras) {
 		    		$scope.loading = false;
 		        });
 	    	}
-	    }
+	    };
 	    
 	    //Change a property in single
 	    $scope.changeSingle = function(property, value){
 	    	this.data.single[property] = value;
-	    }
+	    };
 		
 
 		/*Define options
@@ -344,7 +344,7 @@ function ControllerFactory(resourceName, options, extras) {
 				create: '',
 				list: ''
 			}
-		}
+		};
 		
 		$scope.initTextResources = function(listTitle, singleTitle, listTemplate, listItemTemplate, newTemplate, editTemplate){
 			$scope.textResources.title.list = listTitle;
@@ -353,29 +353,27 @@ function ControllerFactory(resourceName, options, extras) {
 			$scope.textResources.templates.listItem = listItemTemplate;
 			$scope.textResources.templates.create = newTemplate;
 			$scope.textResources.templates.edit = editTemplate;
-		}		
+		};		
 		
 		$scope.initTextResourcesEasy = function(route, singular){
 			if(!route || route == '') {
-				var route = $scope.currentRoute;
+				route = $scope.currentRoute;
 			}
 			var plural = route.toUpperCase();
-			if(!singular || singular == '') var singular = plural.substring(0, plural.length - 1);
+			if(!singular || singular == '') singular = plural.substring(0, plural.length - 1);
 			var listTemplate = 'app/modules/' + route + '/list.html';
 			var listItemTemplate = 'app/modules/' + route + '/list-item.html';
-			var singleTemplate = 'app/modules/' + route + '/single.html'
+			var singleTemplate = 'app/modules/' + route + '/single.html';
 		
 			$scope.initTextResources(plural, singular, listTemplate, listItemTemplate, singleTemplate, singleTemplate);
-		}
+		};
 
 		$scope.getTitle = function(t){
 			switch (t) {
 				case 'single':
 					return $scope.textResources.title.single;
-					break;
 				case 'list':
 					return $scope.textResources.title.list;
-					break;
 				default:
 					return $scope.textResources.title.list;
 			}
@@ -385,21 +383,17 @@ function ControllerFactory(resourceName, options, extras) {
 			switch (t) {
 				case 'edit':
 					return $scope.textResources.templates.edit;	
-					break;
 				case 'new':
 					return $scope.textResources.templates.create;	
-					break;
 				case 'list':
 					return $scope.textResources.templates.list;	
-					break;
 				case 'list-item':
 					return $scope.textResources.templates.listItem;	
-					break;
 				default:
 					return $scope.textResources.templates.edit;	
 			}
 			
-		}
+		};
 		
 		$scope.getTableHeaders = function(){
 			var headers = [];
@@ -407,11 +401,11 @@ function ControllerFactory(resourceName, options, extras) {
 				headers = Object.getOwnPropertyNames($scope.data.list[0]);
 			}
 			return headers;
-		}
+		};
 		
 		$scope.setListHeaders = function(headers){
 			$scope.data.listHeaders = headers;
-		}
+		};
 		
 		 $scope.showDialog = function(ev, title, content, okText = "OK", cancelText = "Cancel", okHandler, cancelHandler) {
 		    var confirm = $mdDialog.confirm()
@@ -431,10 +425,10 @@ function ControllerFactory(resourceName, options, extras) {
 
 	    $scope.onSave = $scope.onUpdate = function(){
 	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE,M.SAVED_OK, M.SAVED_CANCEL, function(){}, function(){$location.path($scope.currentRoute)});
-	    }
+	    };
 	    
 	    $scope.beforeSave = $scope.beforeUpdate = function(){
 	        return (!Object.keys($scope.forms[$scope.currentRoute + "Form"].$error).length);
-	    }
+	    };
 	};
 }

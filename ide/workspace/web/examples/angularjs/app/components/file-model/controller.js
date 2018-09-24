@@ -1,3 +1,4 @@
+/*global app*/
 app.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',

@@ -48,11 +48,12 @@ $app = array(__DIR__.'/app.js');
 $init = getAllFiles(__DIR__.'/init/');
 $conf = getAllFiles(__DIR__.'/config/');
 $services = getAllFiles(__DIR__.'/services/');
+$directives = getAllFiles(__DIR__.'/directives/');
 $filters = getAllFiles(__DIR__.'/filters/');
 $components = getAllFiles(__DIR__.'/components/');
 $modules = getAllFiles(__DIR__.'/modules/');
 
-$files = array_merge($app, $init, $conf, $services, $filters, $components, $modules);
+$files = array_merge($app, $init, $conf, $services, $directives, $filters, $components, $modules);
 
 $fp = fopen($scriptFile, 'w'); 
 

@@ -1,3 +1,4 @@
+/*global app, ControllerFactory, RegisterRoutes, RegisterData*/
 function RegisterEasyController(route, headers, controller){
 	app.controller(route + 'ControllerBase', ControllerFactory(route));
 	

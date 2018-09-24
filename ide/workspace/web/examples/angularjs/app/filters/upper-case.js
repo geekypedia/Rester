@@ -1,3 +1,4 @@
+/*global app*/
 app.filter('upperCase', function() {
     return function(input) {
       input = input || '';

@@ -1,3 +1,4 @@
+/*global app*/
 app.component('infoBox', {
 	templateUrl: 'app/components/infobox/template.html',
 	controller: 'infoboxController',
@@ -21,7 +22,6 @@ app.controller('infoboxController', function($scope){
 		if(self.options){
 			$scope.options = self.options;
 		}
-	}
+	};
 	
 });
-

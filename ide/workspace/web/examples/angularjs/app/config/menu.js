@@ -42,6 +42,5 @@ function RegisterMenuItems(){
 	        ],
 	        allowedRoles: ['superadmin']
         }
-    ]
+    ];
 }
-

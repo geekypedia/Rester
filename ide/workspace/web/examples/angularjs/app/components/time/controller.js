@@ -1,3 +1,4 @@
+/*global app*/
 app.component('time', {
 	templateUrl: 'app/components/time/template.html',
 	controller: 'timeController',
@@ -31,7 +32,6 @@ app.controller('timeController', function($scope){
 		if(self.label){
 			$scope.label = self.label;
 		}
-	}
+	};
 	
 });
-

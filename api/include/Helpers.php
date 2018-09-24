@@ -31,7 +31,7 @@ function url_get($url, $params = null, $headers = null){
             $server_error = curl_error($ch);
             $server_errno = curl_errno($ch);
         
-            $server_output = array(error => array("code" => $server_errno, "status" => $server_error)); 
+            $server_output = ApiResponse::errorResponse($server_errno, $server_error); 
     	}    	
     
     	curl_close ($ch);
@@ -58,7 +58,7 @@ function url_post($url, $payload = null, $headers = null){
             $server_error = curl_error($ch);
             $server_errno = curl_errno($ch);
         
-            $server_output = array(error => array("code" => $server_errno, "status" => $server_error)); 
+            $server_output = ApiResponse::errorResponse($server_errno, $server_error); 
     	}
 
 
@@ -134,14 +134,16 @@ function send_email_smtp($from, $to, $subject, $body, $smtp, $debug=false, $cc =
         
         if(!$mail->send()) 
         {
-            return array("error" => array("status" => $mail->ErrorInfo));
+            $error = ApiResponse::errorResponse(500, $mail->ErrorInfo); 
+            return $error;
         } 
         else 
         {
             return "OK";
         }
     } catch (Exception $e){
-        return array("error" => array("status" => $mail->ErrorInfo));
+            $error = ApiResponse::errorResponse(500, $mail->ErrorInfo); 
+            return $error;
     }
 
 }

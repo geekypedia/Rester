@@ -90,7 +90,7 @@ class ResterController {
 				} else
 					$result = $this->getObjectsFromRoute($this->routes[$routeName]);
 				//show result forcing array result
-				$this->showResult($result, true);
+				$this->showResult($result, 200, true);
 			}
 		});
 		
@@ -407,7 +407,7 @@ class ResterController {
 				header('Content-Type: text/plain; charset=utf8');
 				ResterUtils::Log(">> OAUTH ERROR >> ".$e->getMessage());
 				
-				$this->showErrorWithMessage(401, 'Unauthorized. Signed but Failed Verification');
+				$this->showError(401, 'Unauthorized. Signed but Failed Verification');
 				exit();
 			}	
 		} else {
@@ -428,7 +428,7 @@ class ResterController {
 					ResterUtils::Log(">> OAUTH ERROR >> Request not signed");
 					ResterUtils::Log("*** AUTH ERROR *** ===>");
 					
-					$this->showErrorWithMessage(401, 'Unauthorized. Request not signed. Please provide oauth_signature');					
+					$this->showError(401, 'Unauthorized. Request not signed. Please provide oauth_signature');					
 					exit();
 				}
 			//$this->showError(401);
@@ -494,7 +494,7 @@ class ResterController {
 			$this->getAvailableRoutes()[$routeName]->addFileProcessor($fieldName);	
 		} else {
 			//die("Can't add file processor ".$fieldName." to route ".$routeName);
-			$this->showErrorWithMessage(503, "File processor route '".$routeName."' is enabled, but can't find the table with name '".$routeName . "' or field with name '" . $fieldName . "'.");
+			$this->showError(503, "File processor route '".$routeName."' is enabled, but can't find the table with name '".$routeName . "' or field with name '" . $fieldName . "'.");
 		}
 			
 	}
@@ -627,7 +627,7 @@ class ResterController {
 	function checkConnectionStatus() {
 		if(is_null(DBController::$db))
                 {
-                        $this->showErrorWithMessage(503, "Could not connect to the database. Please check your configurations!");
+                        $this->showError(503, "Could not connect to the database. Please check your configurations!");
                 }
 		/*if ($this->dbController->Query(DSN) === false) {
 			exit($this->dbController->Reply(ApiResponse::errorResponseWithMessage(503, "Error connecting to SQL")));	
@@ -1098,36 +1098,38 @@ class ResterController {
 	/*************************************/
 	
 	function showError($errorNumber, $message = NULL) {
-		if(empty($message)){
-			$result = ApiResponse::errorResponse($errorNumber);
-			exit($this->doResponse($result));
-		} else {
-			$result = ApiResponse::errorResponseWithMessage($errorNumber, $message);
-			exit($this->doResponse($result));
-		}
+		// if(empty($message)){
+		// 	$result = ApiResponse::errorResponse($errorNumber);
+		// 	exit($this->doResponse($result));
+		// } else {
+		// 	$result = ApiResponse::errorResponseWithMessage($errorNumber, $message);
+		// 	exit($this->doResponse($result));
+		// }
+		$result = ApiResponse::errorResponse($errorNumber, $message);
+		exit($this->doResponse($result));
 	}
 	
 	function showErrorWithMessage($errorNumber, $message) {
-		$result = ApiResponse::errorResponseWithMessage($errorNumber, $message);
+		$result = ApiResponse::errorResponse($errorNumber, $message);
 		exit($this->doResponse($result));
 	}
 
 	
-	function showResult($result, $forceArray = false) {
+	function showResult($result, $code = 200,$forceArray = false) {
 	
 		ResterUtils::Log("*** DISPLAY RESULT TO API ***");
 	
 		if (empty($result) === true) {
-			$this->showErrorWithMessage(204, "No content");
+			$this->showError(204);
 		} else if ($result === false || count($result) == 0) {
 			$this->showError(404);
 		} else if($result === true || (is_int($result) && $result >= 1) ) {
-			$this->doResponse(ApiResponse::successResponse());
+			$this->doResponse(ApiResponse::successResponse($result));
 		} else {
 			if(is_array($result) && count($result) == 1 && !$forceArray && ResterUtils::isIndexed($result)) {
-				$this->doResponse($result[0]);
+				$this->doResponse($result[0], $code);
 			} else
-				$this->doResponse($result);
+				$this->doResponse($result, $code);
 		}
 	}
 	
@@ -1387,6 +1389,14 @@ function register($method = "POST", $route = "custom", $path, $handler, $require
 	}
 	
 	$this->addRouteCommand(new RouteCommand($method, $route, $path, $handler, $required_parameters, $description));
+}
+
+function successResponse($data = null, $statusCode = 200) {
+	return ApiResponse::successResponse($data, $statusCode);
+}
+
+function errorResponse($errorCode, $message = null) {
+	return ApiResponse::errorResponse($errorCode, $message);
 }
 	
 } //END

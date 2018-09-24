@@ -1,3 +1,4 @@
+/*global app, $, M*/
 app.component('modal', {
 	templateUrl: 'app/components/modal/template.html',
 	controller: 'modalController',
@@ -17,11 +18,11 @@ app.controller('modalController', function($scope){
 			$scope.options = {};
 			$scope.options.open = openModal;
 		}
-	}
+	};
 	
 	$(function(){
 		self.modal = M.Modal.init(document.querySelector('#mdmodal'));
-	})
+	});
 
 	function openModal(options){
 		if(options){
@@ -32,6 +33,4 @@ app.controller('modalController', function($scope){
 		self.modal.open();
 	}
 
-	
 });
-

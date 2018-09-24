@@ -1,3 +1,4 @@
+/*global angular*/
 //Initialize app
 var app = angular.module('app', [
 							'ngRoute', 

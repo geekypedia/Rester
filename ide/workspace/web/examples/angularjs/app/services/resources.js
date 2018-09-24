@@ -1,3 +1,4 @@
+/*global app*/
 //Service for quickly getting the API Resource Object
 app.service('R', function($resource, $http, S) {
 	return {

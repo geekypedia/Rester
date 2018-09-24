@@ -1,3 +1,4 @@
+/*global app, RegisterRoutes*/
 app.service('H', function($location, md5, S, M, R) {
 	return {
 		S: S,
@@ -25,7 +26,7 @@ app.service('H', function($location, md5, S, M, R) {
 			openRoutes.forEach(p => openRouteNames.push("/" + p.route));
 			return openRouteNames;
 		}
-	}
+	};
 });
 
 class Helper {
@@ -99,4 +100,3 @@ class Helper {
 	}
 
 }
-

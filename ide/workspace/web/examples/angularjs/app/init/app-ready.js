@@ -1,3 +1,4 @@
+/*global $*/
 //JQuery
 $(function() {
 	$('.sidenav').sidenav({
@@ -6,8 +7,3 @@ $(function() {
 	
 	$('select').formSelect();
 });
-
-
-
-
-  

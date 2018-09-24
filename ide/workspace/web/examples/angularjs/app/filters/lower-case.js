@@ -1,3 +1,4 @@
+/*global app*/
 app.filter('lowerCase', function() {
     return function(input) {
       input = input || '';
