@@ -1,7 +1,21 @@
 <?php
 
 $M = array(
-	"USER_404" => "User does not exist!"
+	"USER_404" => "User does not exist!",
+	"USERS_TABLE_404" => "Can't find table named 'users'. Please check the documentation for more info.",
+	"ORGANIZATION_404" => "Organization does not exist!",
+	"ORGANIZATIONS_TABLE_404" => "Can't find table named 'organizations'. Please check the documentation for more info.",
+	"DUPLICATE_ORG_EMAIL" => "This email is already registered with an organization. Please use a different one!",
+	"DUPLICATE_USER_EMAIL" => "This email is already registered with a user. Please use a different one!",
+	"SECRET_FORBIDDEN" => "Forbidden. Your secret is safe!",
+	"USER_ORGANIZATION_INACTIVE" => "User belongs to an inactive organization!",
+	"ORGANIZATION_LICENSE_EXPIRED" => "Organization license is expired! Please renew to continue using the system.",
+	"USERNAME_EMAIL_REQUIRED" => "Required - username/email",
+	"PASSWORD_REQUIRED" => "Required - password",
+	"USERNAME_EMAIL_INVALID" => "Invalid email/username or password!",
+	"USER_INACTIVE" => "Inactive user!",
+	"PASSWORD_MASK" => "Not visible for security reasons",
+	"INVALID_OPERATION" => "The operation you just tried to perform is not valid!"	
 	);
 
 function M($key, $message=null){
@@ -11,6 +25,9 @@ function M($key, $message=null){
 			$M[$k] = $v;
 		}
 		return;
+	}
+	if(empty($key) && empty($message)){
+		return $M;
 	}
 	if(empty($message)){
 		return $M[$key];
@@ -83,11 +100,11 @@ function check_simple_auth($exclude)
 			}
 			else
 			{
-				$resterController->showError(401,"Unauthorized");
+				$resterController->showError(401);
 			}
 		}
 		else{
-			$resterController->showError(401,"Unauthorized");
+			$resterController->showError(401);
 		}
 }
 
@@ -103,13 +120,13 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 	else{
 		if(strpos(get_current_api_path(), "GET") > -1){
 			if(!isset($_REQUEST['secret'])){
-				$resterController->showError(403, 'Forbidden. Your secret is safe!');
+				$resterController->showError(403, M('SECRET_FORBIDDEN'));
 			}
 		}
 		if(strpos(get_current_api_path(), "POST") > -1){
 		    $body = $resterController->getPostData();
 			if(empty($body['secret'])){
-				$resterController->showError(403, 'Forbidden. Your secret is safe!');
+				$resterController->showError(403, M('SECRET_FORBIDDEN'));
 			}
 		}
 		if($check_request_authenticity) check_request_authenticity();
@@ -141,7 +158,7 @@ function check_request_authenticity(){
 	{
 		$val = $api->query("select count(*) as records from users where token='$api_key' and secret='$secret'");
 		if (!((count($val) > 0) && $val[0]["records"] > 0)){
-			$api->showError(403, 'Forbidden');
+			$api->showError(403);
 		}
 	}
 }
@@ -157,7 +174,7 @@ function check_response_authenticity($result){
 	if(!empty($secret) && !empty($result))
 	{
 		if (!($secret == $result['secret'])){
-			$api->showError(403, 'Forbidden');
+			$api->showError(403);
 		}
 	}
 }
@@ -169,11 +186,11 @@ function check_organization_is_active($secret){
 		if(!empty($secret)){
 			$val = $resterController->query("select count(*) as records from organizations where org_secret='$secret' and is_active=1");
 			if (!((count($val) > 0) && $val[0]["records"] > 0)){
-				$resterController->showError(401, 'User belongs to an inactive organization!');
+				$resterController->showError(401, M('USER_ORGANIZATION_INACTIVE'));
 			}
 			$val = $resterController->query("select count(*) as records from (select *, if(curdate() > validity and license not in ('basic', 'super'), 'expired', 'valid') as license_status from organizations where org_secret='$secret') as o where license_status = 'valid'");
 			if (!((count($val) > 0) && $val[0]["records"] > 0)){
-				$resterController->showError(401, 'Organization license is expired! Please renew to continue using the system.');
+				$resterController->showError(401, M('ORGANIZATION_LICENSE_EXPIRED'));
 			}
 		}
 	} catch (Exception $ex){
@@ -203,7 +220,7 @@ $loginFunction = function($params = NULL) {
 		$tableExists = $api->query('select 1 from users');
 	}
 	catch(Exception $e){
-		$api->showError(503, "Can't find table named 'users'. Please check the documentation for more info.");
+		$api->showError(503, M('USERS_TABLE_404'));
 	}		
 	
 	$email = $params["email"];
@@ -214,12 +231,12 @@ $loginFunction = function($params = NULL) {
 	//Need to pass username/email and password.
 	if($email == null && $username == null)
 	{
-		$errorResult = $api->errorResponse(422, 'Required - username/email');
+		$errorResult = $api->errorResponse(422, M('USERNAME_EMAIL_REQUIRED'));
 		$api->showResult($errorResult);
 	}
 	if($password == null)
 	{
-		$errorResult = $api->errorResponse(422, 'Required - password');
+		$errorResult = $api->errorResponse(422, M('PASSWORD_REQUIRED'));
 		$api->showResult($errorResult);
 	}
 		
@@ -268,12 +285,12 @@ $loginFunction = function($params = NULL) {
 		if(!$user_exists){
 			$api->showError(404, M("USER_404"));
 		}
-		$api->showError(401, "Invalid email/username or password!");
+		$api->showError(401, M('USERNAME_EMAIL_INVALID'));
 	}
 	else{
 		$is_active = $result[0]['is_active'];
 		if(!$is_active){
-			$api->showError(401, "Inactive user!");
+			$api->showError(401, M('USER_INACTIVE'));
 		}
 		$new_token = uuid();
 		$update_id = $result[0]['id'];
@@ -282,7 +299,7 @@ $loginFunction = function($params = NULL) {
 		
 		$result = $api->getObjectsFromRouteName("users", $filter);
 		foreach ($result as &$r) {
-			$r['password'] = 'Not visible for security reasons';
+			$r['password'] = M('PASSWORD_MASK');
 		}
 
 		$user = $result[0];
@@ -337,7 +354,7 @@ $setPasswordFunction = function($params = NULL) {
 	if(count($result) > 0){
 
 		if(empty(array_search(($result[0]["role"]), array("admin", "superadmin")) > -1)){
-			$api->showError(403, 'Forbidden');
+			$api->showError(403);
 		}
 		
 		$user_filter['email'] = $params['email'];
@@ -351,7 +368,7 @@ $setPasswordFunction = function($params = NULL) {
 		if(!empty($result)){ 
 		
 			foreach ($result as &$r) {
-				$r['password'] = 'Not visible for security reasons';
+				$r['password'] = M('PASSWORD_MASK');
 			}
 			
 			if(function_exists('on_set_password')){
@@ -361,11 +378,11 @@ $setPasswordFunction = function($params = NULL) {
 	
 			$api->showResult($result);
 		} else {
-			$api->showError(403, 'Forbidden');
+			$api->showError(403);
 		}
 		
 	} else{
-		$api->showError(403, 'Forbidden');
+		$api->showError(403);
 	}
 	
 };
@@ -390,7 +407,7 @@ $changePasswordFunction = function($params = NULL) {
 		if(!empty($result)){ 
 		
 			foreach ($result as &$r) {
-				$r['password'] = 'Not visible for security reasons';
+				$r['password'] = M('PASSWORD_MASK');
 			}
 			
 			if(function_exists('on_change_password')){
@@ -400,11 +417,11 @@ $changePasswordFunction = function($params = NULL) {
 	
 			$api->showResult($result);
 		} else {
-			$api->showError(403, 'Forbidden');
+			$api->showError(403);
 		}
 		
 	} else{
-		$api->showError(403, 'Forbidden');
+		$api->showError(403);
 	}
 	
 };
@@ -422,7 +439,7 @@ $forgotPasswordFunction = function($params = NULL) {
 	if(count($result) > 0){
 
 		if(!$result[0]['is_active']){
-			$api->showError(405, 'Inactive user!');
+			$api->showError(405, M('USER_INACTIVE'));
 		}
 		
 		$new_password = "pRESTige";
@@ -433,7 +450,7 @@ $forgotPasswordFunction = function($params = NULL) {
 		if(!empty($result)){ 
 		
 			foreach ($result as &$r) {
-				$r['password'] = 'Not visible for security reasons';
+				$r['password'] = M('PASSWORD_MASK');
 			}
 			
 			if(function_exists('on_forgot_password')){
@@ -443,7 +460,7 @@ $forgotPasswordFunction = function($params = NULL) {
 	
 			$api->showResult($result);
 		} else {
-			$api->showError(405, 'Invalid operation!');
+			$api->showError(405, M('INVALID_OPERATION'));
 		}
 		
 
@@ -569,7 +586,7 @@ $activateFunction = function($params = NULL) {
 	
 	
 	if($result == null){
-		$api->showError(404, 'Organization does not exist!');
+		$api->showError(404, M('ORGANIZATION_404'));
 	}
 	else{
 		$update_id = $result[0]['id'];
@@ -587,7 +604,6 @@ $activateFunction = function($params = NULL) {
 		$seleted = $api->query($select_query);
 		$user_id = $seleted[0]['id'];
 		
-		
 		if($user_id){
 			$activation_query = "update users set is_active = '1', role = 'admin' where id = '$user_id'";
 			$activated = $api->query($activation_query);
@@ -601,7 +617,7 @@ $activateFunction = function($params = NULL) {
 		$resultFilter = array("id" => $user_id);
 		$result = $api->getObjectsFromRouteName("users", $resultFilter);
 		foreach ($result as &$r) {
-			$r['password'] = 'Not visible for security reasons';
+			$r['password'] = M('PASSWORD_MASK');
 		}
 		
 		$organization = $api->getObjectsFromRouteName("organizations", $filter);
@@ -641,7 +657,7 @@ $registerOrganizationFunction = function($params = NULL) {
 		$tableExists = $api->query('select 1 from organizations');
 	}
 	catch(Exception $e){
-		$api->showError(503, "Can't find table named 'organizations'. Please check the documentation for more info.");
+		$api->showError(503, M('ORGANIZATIONS_TABLE_404'));
 	}		
 	
 	$organization = $params["organization"];
@@ -651,7 +667,7 @@ $registerOrganizationFunction = function($params = NULL) {
 	$result = $api->getObjectsFromRouteName("organizations", $filter);
 	
 	if(!empty($result)){
-		$api->showError(422, 'This email is already registered with an organization. Please use a different one!');
+		$api->showError(422, M('DUPLICATE_ORG_EMAIL'));
 	}
 	else{
 		$org_secret = uuid();
@@ -694,7 +710,7 @@ $registerUserFunction = function($params = NULL) {
 		$tableExists = $api->query('select 1 from users');
 	}
 	catch(Exception $e){
-		$api->showError(503, "Can't find table named 'users'. Please check the documentation for more info.");
+		$api->showError(503, M('USERS_TABLE_404'));
 	}		
 	
 	$username = $params["username"];
@@ -707,7 +723,7 @@ $registerUserFunction = function($params = NULL) {
 	$result = $api->getObjectsFromRouteName("users", $filter);
 	
 	if(!empty($result)){
-		$api->showError(422, 'This email is already registered with a user. Please use a different one!');
+		$api->showError(422, M('DUPLICATE_USER_EMAIL'));
 	}
 	else{
 		$token = uuid();
@@ -722,7 +738,7 @@ $registerUserFunction = function($params = NULL) {
 		$result = $api->getObjectsFromRouteName("users", $filter_id);
 
 		foreach ($result as &$r) {
-			$r['password'] = 'Not visible for security reasons';
+			$r['password'] = M('PASSWORD_MASK');
 		}
 		
 		try{
