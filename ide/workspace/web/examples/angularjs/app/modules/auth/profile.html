@@ -1,0 +1,109 @@
+<div ng-init="newSingle()"></div>
+<h6>MY PROFILE&nbsp;<img src="images/spinner.gif" ng-if="loading" style="width:13px;height:13px"></h6>
+<hr/>
+<section class="demo-container md-whiteframe-z1">
+    <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
+        <div class="md-toolbar-tools">
+            <h3 class="ng-binding ng-isolate-scope"><a class="docs-anchor ng-scope">{{currentUser.email}}</a></h3>
+            <span flex="" class="flex"></span>
+        </div>
+    </md-toolbar> 
+    <md-content layout-padding class="layout-padding _md">
+        <div class="card {{editingClass}}">
+            <img src="images/user.png" alt="{{currentUser.username}}" style="width:192px; height: 192px">
+            <h2>{{currentUser.username}}</h2>
+            <h5>{{currentUser.email}}</h5>
+            <p class="title">{{currentUser.title}}</p>
+            <p>{{currentUser.organization.name}}</p>
+            <div style="margin: 24px 0;">
+                <a ng-if="currentUser.profile.dribble" href="{{currentUser.profile.dribble}}"><i class="fa fa-dribbble"></i></a>
+                <a ng-if="currentUser.profile.twitter" href="{{currentUser.profile.twitter}}"><i class="fa fa-twitter"></i></a>
+                <a ng-if="currentUser.profile.linkedin" href="{{currentUser.profile.linkedin}}"><i class="fa fa-linkedin"></i></a>
+                <a ng-if="currentUser.profile.facebook" href="{{currentUser.profile.facebook}"><i class="fa fa-facebook"></i></a>
+            </div>
+            <p><button class="button-block" ng-show="locked" ng-click="edit()">Edit</button></p>
+        </div>
+        <form class="{{lockedClass}}">
+            <input type="text"/>
+            <button type="submit" class="button-black" ng-show="!locked" ng-click="update()">{{M.BTN_UPDATE}}</button>
+        </form>
+        <div>
+            
+            
+        </div>
+    </md-content>
+</section>
+<div class="fixed-action-btn ">
+    <a class="btn-floating btn-large yellow darken-4" ng-href="{{currentRouteHref}}"><i class="material-icons">arrow_back</i></a>
+</div>
+<style type="text/css">
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+    
+    .float-left {
+        float: left;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+    
+    .hidden{
+        display:none;
+    }
+    
+    .visible{
+        display: block;
+    }
+    
+    .formClass{
+        width: 500px;
+    }
+
+    .button-block {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .button-black {
+        border: none;
+        outline: 0;
+        /*display: inline-block;*/
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        /*text-align: center;*/
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 18px;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+    }
+
+    button:hover,
+    a:hover {
+        opacity: 0.7;
+    }
+</style>
