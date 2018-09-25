@@ -29,18 +29,18 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
             newItem.admin_email = $rootScope.currentUser.email;
             newItem.secret = item.secret;
             newItem.email = item.email;
-            $scope.loading = true;
+            //$scope.loading = true;
             $http.post(url, newItem)
                 .then(function(r){
                     $scope.clickedUser = {};
                     $scope.newUserValues = {};
                     $mdDialog.cancel();   
-                    $scope.loading = false;
+                    //$scope.loading = false;
                 },function(e){
                     if(e && e.data && e.data.error && e.data.error.status){
                         newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
                     }
-                    $scope.loading = false;
+                    //$scope.loading = false;
                 });
         }
     };

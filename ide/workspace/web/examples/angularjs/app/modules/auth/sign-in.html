@@ -1,97 +1,50 @@
 <div class="section">
-<main>
-	<div class="main-container">
-        <section class="demo-container md-whiteframe-z1">
-              <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
-                <div class="md-toolbar-tools">
-                  <h3 class="ng-binding ng-isolate-scope"><a class="docs-anchor ng-scope">{{M.HEADING_LOGIN}}</a></h3>
-                  <span flex="" class="flex"></span>
-                </div>
-              </md-toolbar>
-              <md-content layout-padding class="layout-padding _md">
-                <!--<div ng-include src="getTemplate('edit')"></div>-->
-        		<form name="forms.loginForm" ng-submit="login()">
-                    <md-input-container class="md-block">
-                        <label for="email">{{M.FIELD_EMAIL_ENTER}}:</label>
-                        <input id="email" name="email" type="email" class="validate" ng-model="email" required>
-                        <div ng-messages="forms.loginForm.email.$error" ng-show="forms.loginForm.email.$dirty">
-                          <div ng-message="required">{{M.REQUIRED}}</div>
-                          <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
-                        </div>
-                    </md-input-container>
+  <main>
+    <div class="main-container">
+      <section class="demo-container md-whiteframe-z1">
+        <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
+          <div class="md-toolbar-tools">
+            <h3 class="ng-binding ng-isolate-scope"><a class="docs-anchor ng-scope">{{M.HEADING_LOGIN}}</a></h3>
+            <span flex="" class="flex"></span>
+          </div>
+        </md-toolbar>
+        <md-content layout-padding class="layout-padding _md">
+          <!--<div ng-include src="getTemplate('edit')"></div>-->
+          <form name="forms.loginForm" ng-submit="login()">
+            <md-input-container class="md-block">
+              <label for="email">{{M.FIELD_EMAIL_ENTER}}:</label>
+              <input id="email" name="email" type="email" class="validate" ng-model="email" required>
+              <div ng-messages="forms.loginForm.email.$error" ng-show="forms.loginForm.email.$dirty">
+                <div ng-message="required">{{M.REQUIRED}}</div>
+                <div ng-message="email">{{M.INVALID_EMAIL}}</div>
+              </div>
+            </md-input-container>
 
-                    <md-input-container class="md-block">
-                        <label for="password">{{M.FIELD_PASSWORD_ENTER}}:</label>
-                        <input id="password" name="password" type="password" class="validate" ng-model="password" required>
-                        <div ng-messages="forms.loginForm.password.$error" ng-show="forms.loginForm.password.$dirty">
-                          <div ng-message="required">{{M.REQUIRED}}</div>
-                        </div>
-                    </md-input-container>
+            <md-input-container class="md-block">
+              <label for="password">{{M.FIELD_PASSWORD_ENTER}}:</label>
+              <input id="password" name="password" type="password" class="validate" ng-model="password" required>
+              <div ng-messages="forms.loginForm.password.$error" ng-show="forms.loginForm.password.$dirty">
+                <div ng-message="required">{{M.REQUIRED}}</div>
+              </div>
+            </md-input-container>
 
-    				<div class='row'>
-    					<button type='submit' name='btn_login' class='btn waves-effect blue'>{{M.BTN_LOGIN}}</button>
-    					<p class="small col-red" ng-if="error">{{error}}</p>
-    				</div>
+            <div class='row'>
+              <button type='submit' name='btn_login' class='btn waves-effect blue'>{{M.BTN_LOGIN}}</button>
+              &nbsp;<spinner/>
+              <p class="small col-red" ng-if="error">{{error}}</p>
+            </div>
 
-    				<div class='row'>
-						<label style='float: right;text-decoration: underline'>
+            <div class='row'>
+              <label style='float: right;text-decoration: underline'>
 							<a class='blue-text' href='#!forgot-password'><b>{{M.LNK_FORGOT_PASSWORD}}</b></a>
 						</label>
-						<p style="float: right">&nbsp;</p>
-						<label ng-if="S.openRegistration" style='float: right;text-decoration: underline'>
+              <p style="float: right">&nbsp;</p>
+              <label ng-if="S.openRegistration" style='float: right;text-decoration: underline'>
 							<a class='blue-text' href='#!register'><b>{{M.LNK_REGISTER}}</b></a>
 						</label>
-    				</div>
-        		</form>                
-              </md-content>
-        </section>
-</main>
+            </div>
+          </form>
+        </md-content>
+      </section>
+  </main>
 </div>
-<!--<div class="section">-->
-<!--<main>-->
-<!--	<center>-->
-
-<!--		<h5 class="blue-text">{{M.HEADING_LOGIN}}</h5>-->
-<!--		<div class="section"></div>-->
-
-<!--		<div class="container">-->
-<!--			<div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE; width:400px">-->
-
-<!--				<form class="col s12" ng-submit="login()">-->
-<!--					<div class='row'>-->
-<!--						<div class='col s12'>-->
-<!--						</div>-->
-<!--					</div>-->
-
-<!--					<div class='row'>-->
-<!--						<div class='input-field col s12'>-->
-<!--							<input class='validate' type='email' name='email' id='email' ng-model="email" />-->
-<!--							<label for='email'>{{M.FIELD_EMAIL_ENTER}}</label>-->
-<!--						</div>-->
-<!--					</div>-->
-
-<!--					<div class='row'>-->
-<!--						<div class='input-field col s12'>-->
-<!--							<input class='validate' type='password' name='password' id='password' ng-model="password" />-->
-<!--							<label for='password'>{{M.FIELD_PASSWORD_ENTER}}</label>-->
-<!--						</div>-->
-<!--						<label style='float: right;'>-->
-<!--							<a class='pink-text' href='#!forgot-password'><b>Forgot Password?</b></a>-->
-<!--						</label>-->
-<!--					</div>-->
-
-<!--					<br />-->
-<!--					<p class="small col-red" ng-if="error">{{error}}</p>-->
-<!--					<center>-->
-<!--						<div class='row'>-->
-<!--							<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>{{M.BTN_LOGIN}}</button>-->
-<!--						</div>-->
-<!--					</center>-->
-<!--				</form>-->
-<!--			</div>-->
-<!--		</div>-->
-		<!--<a href="#!">Create account</a>-->
-<!--	</center>-->
-
-<!--</main>-->
-<!--</div>-->

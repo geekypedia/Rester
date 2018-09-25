@@ -243,11 +243,15 @@ How do I enable authentication?
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
-4. Uncomment the call to 'enable_simple_auth($excluded);' function.
+4. Uncomment the call to 'enable_simple_auth' function.
 5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_auth(array("GET your/api"));' will exclude GET your/api from authentication. Any other API will require you to pass auth token as api_key in header or query string. By default, the sample API 'GET hello/world' is always bypassed. Note: Some of the shared hosting providers do not allow headers with underscore. You may use 'api-key' in that case.
 6. In order for the auth APIs to work, you need to have a 'users' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 7. Once you uncomment the enable_simple_auth call, all APIs and even Documentation will be protected. You will need to call 'POST users/login' to authenticate and generate a token.
    For first time, just create a record in 'users' table and write any random string as token. Use this token to access to access protected areas, or generate an actual token.
+
+```php
+enable_simple_auth($excluded, $enable_open_user_registrations);
+```
 
 How do I generate token after enabling authentication?
 -----
@@ -263,6 +267,7 @@ POST users/login
 POST users/set-password
 POST users/change-password
 POST users/forgot-password
+POST users/register
 ```
 
 How do I use token?
@@ -289,11 +294,16 @@ How do I enable SaaS Mode?
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
-4. Uncomment the call to 'enable_simple_saas($excluded, $check_request_authenticity, $enable_open_registrations);' function. (Authentication is a prerequisite, so make sure you have already enabled simple authentication mentioned in the point below!).
+4. Uncomment the call to 'enable_simple_saas' function. (Authentication is a prerequisite, so make sure you have already enabled simple authentication mentioned in the point above!).
 5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_saas(array("GET your/api"));' will exclude GET your/api from organization permissions. Any other API will require you to pass secret in body or query string.
 6. In order for the SaaS APIs to work, you need to have a 'organizations' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 7. Once you uncomment the enable_simple_auth call, all APIs will be protected by organization secret. You will need to call 'POST users/login' to authenticate and generate a secret.
    For first time, just create a record in 'organizations' table and write any random string as secret. You can use the sample scripts in index.php to do it.
+
+```php
+enable_simple_auth($excluded, $enable_open_user_registrations);
+enable_simple_saas($excluded, $check_request_authenticity, $enable_open_organization_registrations);
+```
 
 Roles in SaaS Mode
 -----
@@ -314,6 +324,14 @@ Can create new users under organizations and reset their passwords. Can access A
 Have no specific permissions. Can use the rest of the APIs.
 
 
+What organizations API are available after enabling SaaS mode?
+-----
+```php
+POST organizations/activate
+POST organizations/register
+```
+
+
 How can I create an API that can upload files to the server?
 -----
 You don't need to. There is a built in API for the same.
@@ -321,9 +339,13 @@ You don't need to. There is a built in API for the same.
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
-4. Uncomment the call to 'enable_files_api();' function.
+4. Uncomment the call to 'enable_files_api' function.
 5. In order for the auth APIs to work, you need to have a 'files' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 6. You can use the API Docs to see the new Files API and you can test it out from there: <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> 
+
+```php
+enable_files_api();
+```
 
 How do I create a custom API?
 -----
@@ -442,7 +464,6 @@ $smtp = array(
 );
 $prestige->sendMail($from, $to, $subject, $body, $smtp);
 ```
-
 
 #### sendMailSparkPost($from, $to, $subject, $body, $api_key)
 

@@ -14,7 +14,11 @@
     </md-input-container>
     <div>
         <button type="submit" class="btn md-raised md-primary">{{M.BTN_SAVE}}</button>
-        <button ng-click="hideActivationDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
+        <button type="button" ng-click="hideActivationDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
+        &nbsp;<spinner/>
+    </div>
+    <div ng-if="newOrganizationValues.error">
+        <p style="color: red; font-weight: small">{{newOrganizationValues.error}}</p>
     </div>
     </form>    
   </md-dialog>
@@ -39,7 +43,8 @@
     </div>
     <div>
         <button type="submit" class="btn md-raised md-primary">{{M.BTN_SAVE}}</button>
-        <button ng-click="hideSetPasswordDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
+        <button type="button" ng-click="hideSetPasswordDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
+        &nbsp;<spinner/>
     </div>
     <div>
         <p style="color:red;font-size:smaller;">{{newUserValues.error}}</p>

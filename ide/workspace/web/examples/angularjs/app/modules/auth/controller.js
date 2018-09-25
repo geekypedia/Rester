@@ -11,13 +11,17 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	$scope.S = S;
 	
 	$scope.data = {};
+	
+	//$scope.loading = false;
 
 	$scope.login = function(){
+		//$scope.loading = true;
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
 			.then(function(r){
 				$scope.error = "";
 				if(!r.data.token){
 					$scope.error = M.E500;
+					//$scope.loading = false;
 					return;
 				}
 				$rootScope.currentUser = r.data;
@@ -25,28 +29,32 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$location.path('/');
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					if(e.data.error.code == 404){
+					if(e.data.error.code == 404 && e.data.error.message == "Not Found"){
 						$scope.error = M.LOGIN_API_UNAVAILABLE;
 					} else {
 						$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;	
 					}
 					
 				}
+				//$scope.loading = false;
 			});
 	};
 
 	$scope.forgotPassword = function(){
+		//$scope.loading = true;
 		$http.post(H.SETTINGS.baseUrl + '/users/forgot-password', {email: $scope.email})
 			.then(function(r){
 				$scope.error = M.RECOVERY_EMAIL_SENT;
+				//$scope.loading = false;
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					if(e.data.error.code == 404){
+					if(e.data.error.code == 404 && e.data.error.message == "Not Found"){
 						$scope.error = M.LOGIN_API_UNAVAILABLE;
 					} else {
 						$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
 					}
 				}
+				//$scope.loading = false;
 			});
 	};
 
@@ -68,7 +76,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$scope.error = M.REGISTRATION_EMAIL_SENT;
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					if(e.data.error.code == 404){
+					if(e.data.error.code == 404 && e.data.error.message == "Not Found"){
 						$scope.error = M.REGISTER_API_UNAVAILABLE;
 					} else {
 						$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
@@ -84,75 +92,4 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	};
 });
 
-app.controller('unauthorizedController', function($scope, H){
-	$scope.H = H;
-	$scope.M = H.M;
-});
 
-app.controller('profileController', function($scope, $rootScope, $http, $cookies, H, M){
-	$scope.H = H;
-	$scope.M = H.M;
-	$scope.locked = true;
-	$scope.lockedClass = "hidden";
-	$scope.editingClass = "";
-	$scope.forms = {};
-	$scope.data = {};
-	$scope.pass = {};
-
-	$scope.disableEdit = function(){
-		$scope.locked = true;
-		$scope.lockedClass = "hidden";
-		$scope.editingClass = "";
-	}
-	
-	$scope.edit = function(){
-		$scope.locked = false;
-		$scope.editingClass = "float-left";
-		$scope.lockedClass = "visible float-right formClass";
-		$scope.data.username = $rootScope.currentUser.username;
-		$scope.data.email = $rootScope.currentUser.email;
-		$scope.data.role = $rootScope.currentUser.role;
-	};
-	
-	$scope.save = function(){
-		$scope.error = "";
-		$scope.message = "";
-		$http.get(H.S.baseUrl + '/users/' + $rootScope.currentUser.id).then(function(res){
-			var r = res.data;
-			r.username = $scope.data.username;
-			r.email = $scope.data.email;
-			r.role = $scope.data.role;
-			$http.put(H.S.baseUrl + '/users', r).then(function(r){
-				$scope.message = H.M.PROFILE_SAVED;
-				var user = r.data;
-				user.password = $rootScope.currentUser.password;
-				user.organization = $rootScope.currentUser.organization;
-				$rootScope.currentUser = user;
-				$cookies.putObject(H.getCookieKey(), JSON.stringify($rootScope.currentUser));
-			}, function(e){
-				$scope.error = H.M.PROFILE_SAVE_ERROR;
-			});
-		},function(e){
-			$scope.error = H.M.PROFILE_SAVE_ERROR;
-		});
-	};
-	
-	$scope.changePassword = function(){
-		$scope.pass.error = "";
-		$scope.pass.message = "";
-		if($scope.pass.newPassword != $scope.pass.confirmPassword){
-			$scope.pass.error = M.PASSWORD_NOT_MATCHING;
-			return;
-		}
-		var data = {
-			email: $rootScope.currentUser.email,
-			password: $scope.pass.password,
-			new_password: $scope.pass.newPassword
-		};
-		$http.post(H.S.baseUrl + '/users/change-password', data).then(function(res){
-			$scope.pass.message = H.M.PASSWORD_CHANGED;
-		},function(e){
-			$scope.pass.error = H.M.PASSWORD_CHANGE_ERROR + " " + e.data.error.message;
-		});
-	};	
-});

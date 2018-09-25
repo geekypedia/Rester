@@ -13,17 +13,18 @@
 	$excluded = array();
 	
 	//Enable open registrations (POST users/register in auth mode and POST organizations/register in SaaS mode)
-	$enable_open_registrations = false;
+	$enable_open_user_registrations = false;
+	$enable_open_organization_registrations = true;
 	
 	//Check request authenticity in SaaS mode.
 	$check_request_authenticity=true;
 
 	//Enable Simple Auth (Make sure to run the scripts below before uncommenting)
-	//enable_simple_auth($excluded, $enable_open_registrations);
+	//enable_simple_auth($excluded, $enable_open_user_registrations);
 
 
 	//Enable Simple SaaS Mode (Make sure to run the scripts below before uncommenting)
-	//enable_simple_saas($excluded, $check_request_authenticity, $enable_open_registrations);
+	//enable_simple_saas($excluded, $check_request_authenticity, $enable_open_organization_registrations);
 	
 	//Enable Files API (Make sure to run the scripts below before uncommenting)
 	//enable_files_api();

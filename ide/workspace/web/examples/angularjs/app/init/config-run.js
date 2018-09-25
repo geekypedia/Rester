@@ -1,7 +1,8 @@
 /*global app, RegisterRoutes*/
-app.factory('httpRequestInterceptor', function ($rootScope) {
+app.factory('httpRequestInterceptor', function ($rootScope, $q) {
     return {
         request: function (config) {
+            $rootScope.loading = true;
             if ($rootScope.currentUser) {
                 config.headers['api-key'] = $rootScope.currentUser.token;
                 
@@ -28,6 +29,16 @@ app.factory('httpRequestInterceptor', function ($rootScope) {
                 }
             }
             return config;
+        },
+        response: function(response){
+            //if(response.headers()['content-type'] === "application/json; charset=utf-8"){
+                $rootScope.loading = false;
+            //}
+            return response;            
+        },
+        responseError: function(response){
+            $rootScope.loading = false;
+            return $q.reject(response);
         }
     };
 });

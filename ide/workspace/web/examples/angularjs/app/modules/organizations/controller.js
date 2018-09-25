@@ -1,5 +1,5 @@
 /*global angular, app*/
-app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $timeout, $mdDialog, H) {
+app.controller('organizationsControllerExtension', function($scope, $controller, $rootScope, $http, $location, $timeout, $mdDialog, H, M) {
 
     if(!(['superadmin'].indexOf($rootScope.currentUser.role) > -1)){
         $location.path('unauthorized');
@@ -21,7 +21,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
     
     $scope.activate = function(item, newItem) {
         if($rootScope.currentUser.role == 'superadmin'){
-            $scope.loading = true;
+            //$scope.loading = true;
             var url = H.SETTINGS.baseUrl + '/organizations/activate';
             item.validity = (newItem.validity) ? H.toMySQLDateTime(newItem.validity) : item.validity;
             item.license = (newItem.license) ? newItem.license : item.license;
@@ -31,12 +31,19 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
                     $scope.newOrganizationValues = {};
                     $scope.currentOrganization = {};
                     $mdDialog.cancel();   
-                    $scope.loading = false;
-                },function(r){
-                    $scope.newOrganizationValues = {};
-                    $scope.currentOrganization = {};
-                    $mdDialog.cancel();   
-                    $scope.loading = false;
+                    //$scope.loading = false;
+                },function(e){
+                    if(e && e.data && e.data.error && e.data.error.message){
+                        if(e.data.error.code == 404){
+                            $scope.newOrganizationValues.error =  M.SAAS_API_UNAVAILABLE;
+                        } else {
+                            $scope.newOrganizationValues.error = e.data.error.message;
+                        }
+                    }
+                    //$scope.newOrganizationValues = {};
+                    //$scope.currentOrganization = {};
+                    //$mdDialog.cancel();   
+                    //$scope.loading = false;
                 });
         }
     };
@@ -59,18 +66,18 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
             newItem.admin_email = $rootScope.currentUser.email;
             newItem.secret = item.secret;
             newItem.email = item.email;
-            $scope.loading = true;
+            //$scope.loading = true;
             $http.post(url, newItem)
                 .then(function(r){
                     $scope.currentOrganization = {};
                     $scope.newUserValues = {};
                     $mdDialog.cancel();   
-                    $scope.loading = false;
+                    //$scope.loading = false;
                 },function(e){
                     if(e && e.data && e.data.error && e.data.error.status){
                         newItem.error = e.data.error.message ? e.data.error.message : e.data.error.status;    
                     }
-                    $scope.loading = false;
+                    //$scope.loading = false;
                     //$scope.currentOrganization = {};
                     //$scope.newUserValues = {};
                     //$mdDialog.cancel();   

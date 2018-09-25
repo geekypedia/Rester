@@ -1,5 +1,5 @@
 <div ng-init="loadSingle()"></div>
-<h6>{{getTitle('list')}}&nbsp;<img src="images/spinner.gif" ng-if="loading" style="width:13px;height:13px"></h6>
+<h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
 <hr/>
 <section class="demo-container md-whiteframe-z1">
       <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
@@ -13,6 +13,7 @@
         <div>
             <button class="btn" ng-show="!locked" ng-click="updateSingle()">{{M.BTN_UPDATE}}</button>
             <button class="btn" ng-show="locked" ng-click="toggleLock()">{{M.BTN_EDIT}}</button>
+            &nbsp;<spinner/>
         </div>
       </md-content>
 </section>

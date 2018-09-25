@@ -1,5 +1,5 @@
 <div ng-init="newSingle()"></div>
-<h6>{{getTitle('list')}}&nbsp;<img src="images/spinner.gif" ng-if="loading" style="width:13px;height:13px"></h6>
+<h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
 <hr/>
 <section class="demo-container md-whiteframe-z1">
       <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
@@ -12,6 +12,7 @@
         <div ng-include src="getTemplate('new')"></div>
         <div>
             <button class="btn" ng-click="saveSingle()">{{M.BTN_SAVE}}</button>    
+            &nbsp;<spinner/>
         </div>
       </md-content>
 </section>

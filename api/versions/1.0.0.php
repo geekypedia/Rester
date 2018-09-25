@@ -15,7 +15,8 @@ $M = array(
 	"USERNAME_EMAIL_INVALID" => "Invalid email/username or password!",
 	"USER_INACTIVE" => "Inactive user!",
 	"PASSWORD_MASK" => "Not visible for security reasons",
-	"INVALID_OPERATION" => "The operation you just tried to perform is not valid!"	
+	"INVALID_OPERATION" => "The operation you just tried to perform is not valid!",
+	"UNAUTHORIZED_ACTION" => "You are not authorized to perform this action!",
 	);
 
 function M($key, $message=null){
@@ -158,7 +159,7 @@ function check_request_authenticity(){
 	{
 		$val = $api->query("select count(*) as records from users where token='$api_key' and secret='$secret'");
 		if (!((count($val) > 0) && $val[0]["records"] > 0)){
-			$api->showError(403);
+			$api->showError(403, M('UNAUTHORIZED_ACTION'));
 		}
 	}
 }
@@ -174,7 +175,7 @@ function check_response_authenticity($result){
 	if(!empty($secret) && !empty($result))
 	{
 		if (!($secret == $result['secret'])){
-			$api->showError(403);
+			$api->showError(403, M('UNAUTHORIZED_ACTION'));
 		}
 	}
 }
@@ -354,7 +355,7 @@ $setPasswordFunction = function($params = NULL) {
 	if(count($result) > 0){
 
 		if(empty(array_search(($result[0]["role"]), array("admin", "superadmin")) > -1)){
-			$api->showError(403);
+			$api->showError(403, M('UNAUTHORIZED_ACTION'));
 		}
 		
 		$user_filter['email'] = $params['email'];
@@ -382,7 +383,7 @@ $setPasswordFunction = function($params = NULL) {
 		}
 		
 	} else{
-		$api->showError(403);
+		$api->showError(403, M('USERNAME_EMAIL_INVALID'));
 	}
 	
 };
