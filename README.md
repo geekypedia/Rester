@@ -634,6 +634,13 @@ Load $key and $message from a database table. The table should have 'key' and 'm
 
 Load $key and $message from a database table. Specify the column names for key and message.
 
+Examples
+-----
+
+We have bundled some examples for you to get started with your application development very quickly. You can use these tempates to start your new project and you get a lot of goodies for the front-end already implemented, such as login, registration screens, SaaS management etc.
+
+[Documentation for the AngularJS Example](https://github.com/geekypedia/pRESTige/blob/master/ide/workspace/web/examples/angularjs/README.md)
+
 Credits
 -----
 pRESTige started as a fork of moddity/Rester. moddity/Rester was a nearly complete rewrite of [ArrestDB]. ArrestDB was a complete rewrite of [Arrest-MySQL].
