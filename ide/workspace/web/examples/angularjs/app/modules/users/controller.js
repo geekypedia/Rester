@@ -8,7 +8,7 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
 
     $scope.newSingle = function(){
         $scope.locked = false;
-        $scope.data.single.password = H.getHash('admin');
+        $scope.data.single.password = H.getHash('pRESTige');
     };
     
     $scope.setPassword = function(item, newItem) {
