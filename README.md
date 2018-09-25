@@ -41,13 +41,22 @@ It is extremely easy get quickly up and running using pRESTige!
 
 `php -S 0.0.0.0:8080`
 
-Now just open the following link to configure the engine with the database: <a href="http://localhost:8080/api" target="_blank">http://localhost:8080/api</a>
+Now just open the following link to open the dashboard: <a href="http://localhost:8080/api" target="_blank">http://localhost:8080/api</a>
+
+Open the 'API Configuration' to connect the system to a database.
+
+```
+username: admin
+password: admin
+```
+
 
 You can use the following endpoints to use the system.
 
 |Component						| URL									|
 |-------------------------------|---------------------------------------|
-|Web							| <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> |
+|Dashboard							| <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> |
+|API Configuration				| <a href="http://localhost:8080/api/configure/" target="_blank">http://localhost:8080/api/configure</a> |
 |API							| <a href="http://localhost:8080/api/" target="_blank">http://localhost:8080/api</a> |
 |API Documentation				| <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> |
 |API Testing Tool				| <a href="http://localhost:8080/api/test/" target="_blank">http://localhost:8080/api/test</a> |
@@ -55,6 +64,7 @@ You can use the following endpoints to use the system.
 |Code Editor					| <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> |
 |Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
 |HTML5 Builder						| <a href="http://localhost:8080/builder/" target="_blank">http://localhost:8080/builder</a> |
+
 
 Prerequisites
 -----
@@ -82,11 +92,23 @@ OR
 
 `./serve.sh`
 
-If you have an existing database that you want to use, just go to the following URL. 
+You will see a dashboard from where you can control settings or launch the tools.
+
+The first thing is to configure the database connection. Click on 'API Configuration' from the dashboard.
+
+Put the default credentials (Note: You can always change these credentials by changing them in the Code Editor)
+
+```
+username: admin
+password: admin
+```
+
+
+OR you can just go to the following URL. 
 
 <a href="http://localhost:8080/api" target="_blank">`http://localhost:8080/api`</a>
 
-When you are running this application for the first time, you will see prompt to provide your database credentials. Don't worry if you make a mistake here. You can always re-configure it by hitting the following URL again. 
+When you are running this application for the first time, you will see prompt to provide your database credentials. Don't worry if you make a mistake here. You can always re-configure it by hitting the following URL again, or going to the dashboard and click on 'API Configuration'.
 
 <a href="http://localhost:8080/api/configure" target="_blank">`http://localhost:8080/api/configure`</a>
 
@@ -112,7 +134,7 @@ Now that you can manipulate your DB directly from browser, and see its results r
 
 <a href="http://localhost:8080/ide" target="_blank">`http://localhost:8080/ide`</a>
 
-Put the default credentials
+Put the default credentials (Note: You can always change these credentials in the Code Editor)
 
 ```
 username: admin
@@ -147,11 +169,11 @@ Last but not least, if you want to run linux terminal commands within your appli
 
 <a href="http://localhost:8080/terminal" target="_blank">`http://localhost:8080/terminal`</a>
 
-The credentials to use terminal are same as that of IDE.
+The credentials to use terminal are same as that of IDE/Code Editor.
 
 The terminal feature will usually not work in shared hosting environment, because they don't allow calling external processes from PHP. However, if you have hosted it on your own server, there won't be such restrictions. This will make it easy during development phase. 
 
-What are the default credentials for IDE and Terminal?
+What are the default credentials for API Configuration, IDE and Terminal?
 -----
 Username: admin
 Password: admin
@@ -267,11 +289,30 @@ How do I enable SaaS Mode?
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
-4. Uncomment the call to 'enable_simple_saas($excluded);' function.
+4. Uncomment the call to 'enable_simple_saas($excluded, $check_request_authenticity, $enable_open_registrations);' function. (Authentication is a prerequisite, so make sure you have already enabled simple authentication mentioned in the point below!).
 5. If you want to bypass any specific API you can pass it as parameter. For example, 'enable_simple_saas(array("GET your/api"));' will exclude GET your/api from organization permissions. Any other API will require you to pass secret in body or query string.
 6. In order for the SaaS APIs to work, you need to have a 'organizations' table in your DB. The script to create this table is already mentioned in 'index.php'. You can copy this script and execute it in the DB Administration tool (<a href="http://localhost:8080/db" target="_blank">http://localhost:8080/db</a> )
 7. Once you uncomment the enable_simple_auth call, all APIs will be protected by organization secret. You will need to call 'POST users/login' to authenticate and generate a secret.
    For first time, just create a record in 'organizations' table and write any random string as secret. You can use the sample scripts in index.php to do it.
+
+Roles in SaaS Mode
+-----
+
+#### superadmin
+
+Can create new organizations, approve their licenses and make changes to the validity, reset password of the admin account.
+
+By default $check_request_authenticity = true, so a superadmin can control licensing of an organization but can not see the actual data of that organization, which is the core requirement of SaaS.
+However, for some reason, if you want superadmin to see everything you can do it by setting $check_request_authenticity = false.
+
+#### admin
+
+Can create new users under organizations and reset their passwords. Can access Administration section in menu.
+
+#### user
+
+Have no specific permissions. Can use the rest of the APIs.
+
 
 How can I create an API that can upload files to the server?
 -----

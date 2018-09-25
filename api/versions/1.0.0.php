@@ -443,6 +443,11 @@ $forgotPasswordFunction = function($params = NULL) {
 		}
 		
 		$new_password = "pRESTige";
+
+		if(function_exists('on_forgot_password')){
+			$new_password = $new_password = substr(uuid(), 0, 8);
+		}
+
 		$result[0]['password'] = md5($new_password);
 		
 		$result = $api->updateObjectFromRoute("users", $result[0]['id'], $result[0]);
@@ -608,7 +613,10 @@ $activateFunction = function($params = NULL) {
 			$activation_query = "update users set is_active = '1', role = 'admin' where id = '$user_id'";
 			$activated = $api->query($activation_query);
 		} else {
-			$new_password = substr(uuid(), 0, 8);
+			$new_password = "pRESTige";
+			if(function_exists('on_organization_activated')){
+				$new_password = substr(uuid(), 0, 8);	
+			}
 			$new_password_md5 = md5($new_password); // md5 of 'admin' is 21232f297a57a5a743894a0e4a801fc3
 			$activation_query = "INSERT INTO `users` (`email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES ('$email',	'$email', '$new_password_md5',	'1',	'0000-00-00 00:00:00',	'admin', '$org_secret', 1)";
 			$user_id = $api->query($activation_query);
@@ -624,9 +632,9 @@ $activateFunction = function($params = NULL) {
 		
 		try{
 			if(function_exists('on_organization_activated')){
+				$user = $result[0];
 				
 				if(!empty($new_password)) {
-					$user = $result[0];
 					$user['password'] = $new_password;
 				}
 				
