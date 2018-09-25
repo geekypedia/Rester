@@ -33,6 +33,14 @@
 	//	//global $prestige;
 	// 	//Use $prestige->sendMail() to Send email with new password
 	// }
+	// function on_set_password($email, $password){
+	//	//global $prestige;
+	// 	//Use $prestige->sendMail() to Send email with new password.
+	// }
+	// function on_change_password($email, $password){
+	//	//global $prestige;
+	// 	//Use $prestige->sendMail() to Send email with new password.
+	// }
 	// function on_user_registered($user){
 	//	//global $prestige;
 	// 	//Send email to the user's registered e-mail address
