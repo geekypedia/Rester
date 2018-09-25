@@ -6,6 +6,8 @@ app.service('M', function($http) {
 		"E405": "Invalid operation!",
 		"E400": "Bad request!",
 		"E500": "An error accured!",
+		"LOGIN_API_UNAVAILABLE": "Please contact the administrator. It seems that the login services are not enabled!",
+		"REGISTER_API_UNAVAILABLE": "Please contact the administrator. It seems that the registration services are not enabled!",
 		"REQUIRED": "This field is required!",
 		"INVALID_EMAIL": "Invalid email!",
 		"UNAUTHORIZED_AREA": "You are not authorized to access this area!",

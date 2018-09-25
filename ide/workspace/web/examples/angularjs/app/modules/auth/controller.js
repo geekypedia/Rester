@@ -25,7 +25,12 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$location.path('/');
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
+					if(e.data.error.code == 404){
+						$scope.error = M.LOGIN_API_UNAVAILABLE;
+					} else {
+						$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;	
+					}
+					
 				}
 			});
 	};
@@ -36,7 +41,11 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$scope.error = M.RECOVERY_EMAIL_SENT;
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
+					if(e.data.error.code == 404){
+						$scope.error = M.LOGIN_API_UNAVAILABLE;
+					} else {
+						$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
+					}
 				}
 			});
 	};
@@ -59,7 +68,11 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$scope.error = M.REGISTRATION_EMAIL_SENT;
 			}, function(e){
 				if(e && e.data && e.data.error && e.data.error.status){
-					$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
+					if(e.data.error.code == 404){
+						$scope.error = M.REGISTER_API_UNAVAILABLE;
+					} else {
+						$scope.error = e.data.error.message ? e.data.error.message : e.data.error.status;
+					}
 				}
 			});
 	};
