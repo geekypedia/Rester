@@ -354,7 +354,7 @@ $setPasswordFunction = function($params = NULL) {
 
 	if(count($result) > 0){
 
-		if(empty(array_search(($result[0]["role"]), array("admin", "superadmin")) > -1)){
+		if(!(in_array(($result[0]["role"]), array("admin", "superadmin")))){
 			$api->showError(403, M('UNAUTHORIZED_ACTION'));
 		}
 		
@@ -422,7 +422,7 @@ $changePasswordFunction = function($params = NULL) {
 		}
 		
 	} else{
-		$api->showError(403);
+		$api->showError(403, M('USERNAME_EMAIL_INVALID'));
 	}
 	
 };
