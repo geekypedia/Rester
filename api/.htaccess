@@ -11,3 +11,7 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 Order allow,deny
 Deny from all
 </Files>
+<Files ~ "\.key$">
+Order allow,deny
+Deny from all
+</Files>

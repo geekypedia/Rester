@@ -108,7 +108,7 @@ if($SUPPLIED_PASSWORD_ENC == $PASSWORD && $SUPPLIED_USERNAME == $USERNAME){
 		    </div>
 		    <div class="form-group">
 		      <label for="pwd">Password:</label>
-		      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
+		      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
 		    </div>
 		    <div class="form-group">
 		      <label for="database">Database:</label>

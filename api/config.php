@@ -7,9 +7,17 @@ define('API_VERSION', "1.0.0");
 
 //Initialize Configuration
 $configPath = __DIR__.'/prestige.config';
+$keyPath = __DIR__.'/prestige.key';
+
+
 if(file_exists($configPath)){
+    if(file_exists($keyPath)){
+        $key = file_get_contents($keyPath);
+        $keyObj = Defuse\Crypto\Key::loadFromAsciiSafeString($key);
+    }
     $configContents = file_get_contents($configPath);
-    $configDecoded = $encode_decode_simple->decode($configContents);
+    $configDecrypted = Defuse\Crypto\Crypto::decrypt($configContents, $keyObj);
+    $configDecoded = $encode_decode_simple->decode($configDecrypted);
     $configJson = ($configDecoded);
     $config = json_decode($configJson);
 }
