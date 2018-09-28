@@ -54,6 +54,7 @@ class ResterController {
 		* Else we process the parameters, checks if we have a command or an ID to return the results 
 		*/
 		$this->addRequestProcessor("GET", function($routeName = NULL, $routePath = NULL, $parameters = NULL) {
+			
 			//If we ask for the root, give the docs
 			if($routeName == NULL) {
 				$this->showRoutes();
@@ -99,13 +100,11 @@ class ResterController {
 		
 		$this->addRequestProcessor("POST", function($routeName = NULL, $routePath = NULL, $parameters = NULL) {
 
-
 			if(!isset($routeName)) {
 				$this->showError(400);
 			}
 			
 			$body = $this->getPostData();
-
 
 			//Register event hook
 			try{
@@ -117,23 +116,53 @@ class ResterController {
 				
 			}
 			
-
 			//Check for command
 			if(count($routePath) == 1) {
 				$command = $routePath[0];
 
 				$this->checkRouteCommandExists($routeName, $command, "POST");
-				
+
 				if(isset($this->customRoutes["POST"][$routeName][$command])) {
 					ResterUtils::Log(">> Executing custom command <".$command.">");
 					$callback = $this->customRoutes["POST"][$routeName][$command];
 					call_user_func($callback, $body);
 					return;
-				} else { //tenemos un id; hacemos un update
+				} else { 
+					
+					if(LEGACY_MODE){
+						$methodOverride = strtoupper($routePath[0]);
+						if(in_array($methodOverride, array("GET", "UPDATE", "DELETE"))){
+							if($methodOverride == "UPDATE") $methodOverride = "PUT";
+							$callbackParameters[0] = $routeName;
+							$callbackOverride = $this->requestProcessors[$methodOverride];
+							switch ($methodOverride) {
+								case 'GET':
+									$callbackParameters[1] = null;
+									$callbackParameters[2] = $parameters;
+									break;
+								case 'PUT':
+									$callbackParameters[1] = null;
+									break;
+								case 'DELETE':
+									if(!empty($parameters) && !empty($parameters['id'])){
+										$callbackParameters[1] = array($parameters['id']);
+									} else {
+										$this->showError(405, "Missing parameter: id");
+									}
+									break;
+							}
+
+							call_user_func_array($callbackOverride[0], $callbackParameters);						
+							exit();
+						}
+					}
+					
+
+					//tenemos un id; hacemos un update
 					ResterUtils::Log(">> Update object from ID");
 					$this->processFiles($this->getAvailableRoutes()[$routeName], $routePath[0]);
 					$result = $this->updateObjectFromRoute($routeName, $routePath[0], $_POST);
-					
+
 					//Register event hook
 					try{
 						$func = 'on_post_' . $routeName;
@@ -147,6 +176,31 @@ class ResterController {
 					
 					$this->showResult($result);
 				}
+			} else if(count($routePath) == 2){
+					if(LEGACY_MODE){
+						$methodOverride = strtoupper($routePath[0]);
+						if(in_array($methodOverride, array("GET", "UPDATE", "DELETE"))){
+							if($methodOverride == "UPDATE") $methodOverride = "PUT";
+							$callbackParameters[0] = $routeName;
+							$callbackOverride = $this->requestProcessors[$methodOverride];
+							switch ($methodOverride) {
+								case 'GET':
+									$callbackParameters[1] = null;
+									$callbackParameters[2] = array("id" => $routePath[1]);
+									break;
+								case 'PUT':
+									$callbackParameters[1] = array($routePath[1]);
+									break;
+								case 'DELETE':
+									$callbackParameters[1] = array($routePath[1]);
+									break;
+							}
+
+							call_user_func_array($callbackOverride[0], $callbackParameters);						
+							exit();
+						}
+					}
+									
 			}
 			
 			if($body == NULL) {
@@ -186,8 +240,6 @@ class ResterController {
 		});
 		
 		$this->addRequestProcessor("DELETE", function($routeName, $routePath) {
-		
-
 			if(!isset($routeName)) {
 				$this->showError(400);
 			}
@@ -234,19 +286,27 @@ class ResterController {
 			if(!isset($routeName)) {
 				$this->showError(400);
 			}
-			
+
 			//$input = file_get_contents('php://input');
 			$input = $this->getRequestBody();
+			
+			if(LEGACY_MODE){
+				$input = $this->getPostData();
+			}
+
 
 			if(empty($input)) {
 				ResterUtils::Log("Empty PUT request");
 				$this->showError(400);
 			}
-			
+
 			if(!isset($routePath) || count($routePath) < 1) { //no id in URL, we expect json body
-			
 				//$putData = json_decode($input, true);
-				$putData = $input;
+				//$putData = $input;
+				
+				if(is_string($input)) parse_str($input, $putData);
+				else $putData = $input;
+				
 				
 				//Register event hook
 				try{
@@ -258,9 +318,7 @@ class ResterController {
 					
 				}
 				
-			
-				
-				
+
 				$route = $this->getAvailableRoutes()[$routeName];
 				if(is_array($putData) && ResterUtils::isIndexed($putData) && count($putData) > 0) { //iterate on elements and try to update
 					ResterUtils::Log("UPDATING MULTIPLE OBJECTS");
@@ -310,8 +368,9 @@ class ResterController {
 				//parse_str($input, $putData);
 				//$putData = json_decode($input, true);
 				
-				parse_str($input, $putData);
-			
+				if(is_string($input)) parse_str($input, $putData);
+				else $putData = $input;
+				
 			
 					ResterUtils::Log("IS INDEXED");
 					$result = $this->updateObjectFromRoute($routeName, $routePath[0], $putData);
@@ -347,6 +406,7 @@ class ResterController {
 	function getPostData() {
 		
 		$body = $this->getRequestBody();
+		
 		if($body != NULL && is_array($body)) {
 		  return $body;	
 		} if (empty($_POST) === true) { //if empty, create a barebone object
@@ -488,7 +548,15 @@ class ResterController {
 		if(($this->customRoutes[$method][$routeName] && $this->customRoutes[$method][$routeName][$command])){
 			$status = true;
 		}
-
+		
+		if(LEGACY_MODE){
+			if($method == "POST"){
+				if(in_array($command, array("get", "update", "delete"))){
+					$status = true;	
+				}
+			}
+		}
+		
 		if($status === true) return true;
 		$this->showError(404);
 		return false;
@@ -619,7 +687,7 @@ class ResterController {
 						//call_user_func_array($callback, $callbackParameters);
 						
 						//LEGACY MODE
-						if(LEGACY_MODE){
+						//if(LEGACY_MODE){
 							if($requestMethod == "POST"){
 								$overrideParam = 'X-HTTP-Method-Override';
 								$requestMethodOverride = $_REQUEST[$overrideParam];
@@ -627,16 +695,14 @@ class ResterController {
 									$callbackOverride = $this->requestProcessors[$requestMethodOverride];	
 								}
 							}
-						}
+						//}
 						
 						if($callbackOverride){
 							call_user_func_array($callbackOverride, $callbackParameters);
 						} else {
 							call_user_func_array($callback, $callbackParameters);
 						}
-			
-						
-						
+
 					} else {
 						call_user_func($callback);
 					}
