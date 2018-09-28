@@ -584,6 +584,8 @@ class ResterController {
 		$this->checkAuthentication();
 		
 		if(isset($this->requestProcessors[$requestMethod])) {
+			
+			
 			foreach($this->requestProcessors[$requestMethod] as $callback) {
 			
 				ResterUtils::Log(">> Found processor callback");
@@ -614,7 +616,27 @@ class ResterController {
 								
 				try {
 					if(isset($callbackParameters) && count($callbackParameters) > 0) {
-						call_user_func_array($callback, $callbackParameters);
+						//call_user_func_array($callback, $callbackParameters);
+						
+						//LEGACY MODE
+						if(LEGACY_MODE){
+							if($requestMethod == "POST"){
+								$overrideParam = 'X-HTTP-Method-Override';
+								$requestMethodOverride = $_REQUEST[$overrideParam];
+								if(in_array($requestMethodOverride, array("PUT", "DELETE", "GET"))){
+									$callbackOverride = $this->requestProcessors[$requestMethodOverride];	
+								}
+							}
+						}
+						
+						if($callbackOverride){
+							call_user_func_array($callbackOverride, $callbackParameters);
+						} else {
+							call_user_func_array($callback, $callbackParameters);
+						}
+			
+						
+						
 					} else {
 						call_user_func($callback);
 					}

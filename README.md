@@ -655,6 +655,28 @@ Load $key and $message from a database table. The table should have 'key' and 'm
 
 Load $key and $message from a database table. Specify the column names for key and message.
 
+Legacy Mode
+-----
+Certain free hosting sites do not allow PUT or DELETE methods. In that case, you can still use POST with X-HTTP-Method-Override header.
+
+Example:
+If you need to make a call to 
+
+```
+DELETE http://localhost:8080/api/customers/5
+```
+
+You will actually make a call to the following URL
+
+```
+POST http://localhost:8080/api/customers/5
+```
+
+But, along with that POST request, you will pass an extra header in the request
+```
+X-HTTP-Method-Override: DELETE
+```
+
 Examples
 -----
 
