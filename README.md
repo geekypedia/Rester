@@ -677,6 +677,8 @@ But, along with that POST request, you will pass an extra header in the request
 X-HTTP-Method-Override: DELETE
 ```
 
+If the above solution is not good enough and you want old fashioned POST apis without using headers, just go to [PROJECT_ROOT]/api/config.php and turn the globale variable LEGACY_MODE to true. Now explore the API documentation, you will see that all of the APIs have been changed to support old fashioned URLs with POST method. This will also help you to deploy the framwork in a tightly controlled environments with strict firewalls.
+
 Examples
 -----
 

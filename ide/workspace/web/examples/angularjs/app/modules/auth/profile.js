@@ -27,6 +27,15 @@ app.controller('profileController', function($scope, $rootScope, $http, $cookies
 		$scope.userData.role = $rootScope.currentUser.role;
 	};
 	
+	$scope.updateHandler = function(r){
+				$scope.userData.message = H.M.PROFILE_SAVED;
+				var user = r.data;
+				user.password = $rootScope.currentUser.password;
+				user.organization = $rootScope.currentUser.organization;
+				$rootScope.currentUser = user;
+				$cookies.putObject(H.getCookieKey(), JSON.stringify($rootScope.currentUser));
+	}
+	
 	$scope.save = function(){
 		$scope.userData.error = "";
 		$scope.userData.message = "";
@@ -35,16 +44,20 @@ app.controller('profileController', function($scope, $rootScope, $http, $cookies
 			r.username = $scope.userData.username;
 			r.email = $scope.userData.email;
 			r.role = $scope.userData.role;
-			$http.put(H.S.baseUrl + '/users', r).then(function(r){
-				$scope.userData.message = H.M.PROFILE_SAVED;
-				var user = r.data;
-				user.password = $rootScope.currentUser.password;
-				user.organization = $rootScope.currentUser.organization;
-				$rootScope.currentUser = user;
-				$cookies.putObject(H.getCookieKey(), JSON.stringify($rootScope.currentUser));
-			}, function(e){
-				$scope.userData.error = H.M.PROFILE_SAVE_ERROR;
-			});
+			
+			if(H.S.legacyMode){
+				$http.post(H.S.baseUrl + '/users/update', r).then(function(r){
+					$scope.updateHandler(r);
+				}, function(e){
+					$scope.userData.error = H.M.PROFILE_SAVE_ERROR;
+				});
+			} else {
+				$http.put(H.S.baseUrl + '/users', r).then(function(r){
+					$scope.updateHandler(r);
+				}, function(e){
+					$scope.userData.error = H.M.PROFILE_SAVE_ERROR;
+				});
+			}
 		},function(e){
 			$scope.userData.error = H.M.PROFILE_SAVE_ERROR;
 		});

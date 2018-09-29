@@ -142,16 +142,29 @@ function ControllerFactory(resourceName, options, extras) {
 		//Delete specific record
 		$scope.delete = function(obj, callback) {
 			if (obj && obj.$delete) {
-				obj.$delete(function(r) {
-					if (callback) {
-						callback(r);
-					}
-				}, function(e) {
-					errorHandler(e);
-					if (callback) {
-						callback(e);
-					}
-				});
+				if(S.legacyMode){
+					$http.post(S.baseUrl + "/" + resourceName + "/delete/", obj).then(function(r){
+						if (callback && r.data) {
+							callback(r.data);
+						}
+					}, function(e){
+						errorHandler(e);
+						if (callback) {
+							callback(e);
+						}
+					});
+				} else {
+					obj.$delete(function(r) {
+						if (callback) {
+							callback(r);
+						}
+					}, function(e) {
+						errorHandler(e);
+						if (callback) {
+							callback(e);
+						}
+					});					
+				}
 
 			} else if (!isNaN(obj)) {
 				$scope.get(obj, function(result) {
@@ -198,17 +211,34 @@ function ControllerFactory(resourceName, options, extras) {
 		
 		$scope.update = function(obj, callback) {
 			var url = H.SETTINGS.baseUrl + "/" + resourceName;
-			$http.put(url, obj)
-			.then((function (data, status, headers, config) {
-				if (callback) {
-					callback(data);
-				}
-            }), (function (e) {
-            	errorHandler(e);
-				if (callback) {
-					callback(e);
-				}
-			}));
+			
+			if(H.S.legacyMode){
+				$http.post(url + "/update", obj)
+				.then((function (data, status, headers, config) {
+					if (callback) {
+						callback(data);
+					}
+	            }), (function (e) {
+	            	errorHandler(e);
+					if (callback) {
+						callback(e);
+					}
+				}));
+			} else {
+				$http.put(url, obj)
+				.then((function (data, status, headers, config) {
+					if (callback) {
+						callback(data);
+					}
+	            }), (function (e) {
+	            	errorHandler(e);
+					if (callback) {
+						callback(e);
+					}
+				}));
+				
+			}
+			
 		};
 
 		//Clear errors

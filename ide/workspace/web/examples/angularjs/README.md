@@ -71,3 +71,7 @@ All the users will be seen as part of the same organization. It is rather recomm
 #### openRegistration
 
 This if turned off by default. If you turn it on, you will see a 'Register' link under the login screen. Based on your SaaS settings either 'Register Organization' or 'Register User' functionality will be enabled.
+
+Legacy Mode
+-----
+If you want to host this application on shared hosting providers such as 000webhost, they do not allow PUT and DELETE methods. In that case, just turn on legacyMode in app/config/settings.js, and also enable LEGACY_MODE in API project. All the PUT and DELETE requests will turn into POST requests.
