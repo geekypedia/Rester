@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>amMap examples</title>
+
+        <link rel="stylesheet" href="../ammap/ammap.css" type="text/css">
+        <script src="../ammap/ammap.js" type="text/javascript"></script>
+        <!-- map file should be included after ammap.js -->
+		<script src="../ammap/maps/js/continentsLow.js" type="text/javascript"></script>
+
+		<script>
+			AmCharts.makeChart("mapdiv", {
+
+				type: "map",
+
+				handDrawn: true,
+				dragMap: false,
+				color: "#FFFFFF",
+
+				areasSettings: {
+					autoZoom: false,
+					rollOverOutlineColor: "#FFFFFF",
+					selectedColor: "#FFFFFF",
+					rollOverColor: "#FFFFFF",
+					outlineAlpha: 1,
+					outlineColor: "#FFFFFF",
+					outlineThickness: 1,
+					color: "#000000"
+				},
+
+				dataProvider: {
+					map: "continentsLow",
+
+					areas: [{
+						"id": "africa",
+						"title": "Africa",
+						"pattern": {
+							"url": "patterns/white/pattern1.png",
+							width: 4,
+							height: 4
+						}
+					}, {
+						"id": "asia",
+						"title": "Asia",
+						"pattern": {
+							"url": "patterns/white/pattern2.png",
+							width: 4,
+							height: 4
+						}
+					}, {
+						"id": "australia",
+						"title": "Australia",
+						"pattern": {
+							"url": "patterns/white/pattern3.png",
+							width: 4,
+							height: 4
+						}
+					}, {
+						"id": "europe",
+						"title": "Europe",
+						"pattern": {
+							"url": "patterns/white/pattern4.png",
+							width: 4,
+							height: 4
+						}
+					}, {
+						"id": "north_america",
+						"title": "North America",
+						"pattern": {
+							"url": "patterns/white/pattern5.png",
+							width: 4,
+							height: 4
+						}
+					}, {
+						"id": "south_america",
+						"title": "South America",
+						"pattern": {
+							"url": "patterns/white/pattern6.png",
+							width: 4,
+							height: 4
+						}
+					}]
+				},
+				zoomControl: {
+					panControlEnabled: false,
+					zoomControlEnabled: false
+				}
+
+			});
+        </script>
+    </head>
+
+    <body style="background-image: url('images/board.jpg'); background-color:#000000;">
+        <div id="mapdiv" style="width: 100%; height: 500px;"></div>
+    </body>
+
+</html>

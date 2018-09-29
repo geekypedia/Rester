@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>amStock Example</title>
+		<link rel="stylesheet" href="../amcharts/style.css"	type="text/css">
+
+		<script src="../amcharts/amcharts.js" type="text/javascript"></script>
+		<script src="../amcharts/serial.js" type="text/javascript"></script>
+		<script src="../amcharts/amstock.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+
+			var chartData = generateChartData();
+
+			function generateChartData() {
+				var chartData = [];
+				var firstDate = new Date(2012, 0, 1);
+				firstDate.setDate(firstDate.getDate() - 500);
+				firstDate.setHours(0, 0, 0, 0);
+
+				for (var i = 0; i < 500; i++) {
+					var newDate = new Date(firstDate);
+					newDate.setDate(newDate.getDate() + i);
+
+					var value = Math.round(Math.random() * (40 + i)) + 100 + i;
+
+					chartData.push({
+						date: newDate,
+						value: value
+					});
+				}
+				return chartData;
+			}
+
+
+			AmCharts.makeChart("chartdiv", {
+
+				type: "stock",
+
+				pathToImages: "../amcharts/images/",
+
+				dataSets: [{
+					color: "#b0de09",
+					fieldMappings: [{
+						fromField: "value",
+						toField: "value"
+					}],
+					dataProvider: chartData,
+					categoryField: "date"
+				}],
+
+				panelsSettings:{
+					creditsPosition: "bottom-right"
+				},
+
+				panels: [{
+					showCategoryAxis: true,
+					title: "Value",
+					eraseAll: false,
+					labels: [{
+						x: 0,
+						y: 100,
+						text: "Click on the pencil icon on top-right to start drawing",
+						align: "center",
+						size: 16
+					}],
+
+					stockGraphs: [{
+						id: "g1",
+						valueField: "value",
+						bullet: "round",
+						bulletColor: "#FFFFFF",
+						bulletBorderColor: "#00BBCC",
+						bulletBorderAlpha: 1,
+						bulletBorderThickness: 2,
+						bulletSize: 7,
+						lineThickness: 2,
+						lineColor: "#00BBCC",
+						useDataSetColors: false
+					}],
+
+
+					stockLegend: {
+						valueTextRegular: " ",
+						markerType: "none"
+					},
+
+					drawingIconsEnabled: true
+				}],
+
+				chartScrollbarSettings: {
+					graph: "g1"
+				},
+				chartCursorSettings: {
+					valueBalloonsEnabled: true,
+					valueLineEnabled:true,
+					valueLineBalloonEnabled:true
+				},
+				periodSelector: {
+					position: "bottom",
+					periods: [{
+						period: "DD",
+						count: 10,
+						label: "10 days"
+					}, {
+						period: "MM",
+						count: 1,
+						label: "1 month"
+					}, {
+						period: "YYYY",
+						count: 1,
+						label: "1 year"
+					}, {
+						period: "YTD",
+						label: "YTD"
+					}, {
+						period: "MAX",
+						label: "MAX"
+					}]
+				}
+			});
+		</script>
+	</head>
+	<body style="background-color:#FFFFFF">
+		<div id="chartdiv" style="width:100%; height:500px;"></div>
+	</body>
+
+</html>

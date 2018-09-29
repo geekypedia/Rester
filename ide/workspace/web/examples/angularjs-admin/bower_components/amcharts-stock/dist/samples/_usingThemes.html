@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>amStock Example</title>
+		<link href='http://fonts.googleapis.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../amcharts/style.css"	type="text/css">
+		<link rel="stylesheet" href="style.css" type="text/css">
+
+		<script src="../amcharts/amcharts.js" type="text/javascript"></script>
+		<script src="../amcharts/serial.js" type="text/javascript"></script>
+		<script src="../amcharts/amstock.js" type="text/javascript"></script>
+
+        <!-- theme files. you only need to include the theme you use.
+             feel free to modify themes and create your own themes -->
+        <script src="../amcharts/themes/light.js" type="text/javascript"></script>
+        <script src="../amcharts/themes/dark.js" type="text/javascript"></script>
+        <script src="../amcharts/themes/black.js" type="text/javascript"></script>
+        <script src="../amcharts/themes/chalk.js" type="text/javascript"></script>
+        <script src="../amcharts/themes/patterns.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+			var chartData1 = [];
+			var chartData2 = [];
+			var chartData3 = [];
+			var chartData4 = [];
+
+			generateChartData();
+
+			function generateChartData() {
+				var firstDate = new Date();
+				firstDate.setDate(firstDate.getDate() - 500);
+				firstDate.setHours(0, 0, 0, 0);
+
+				for (var i = 0; i < 500; i++) {
+					var newDate = new Date(firstDate);
+					newDate.setDate(newDate.getDate() + i);
+
+					var a1 = Math.round(Math.random() * (40 + i)) + 100 + i;
+					var b1 = Math.round(Math.random() * (1000 + i)) + 500 + i * 2;
+
+					var a2 = Math.round(Math.random() * (100 + i)) + 200 + i;
+					var b2 = Math.round(Math.random() * (1000 + i)) + 600 + i * 2;
+
+					var a3 = Math.round(Math.random() * (100 + i)) + 200;
+					var b3 = Math.round(Math.random() * (1000 + i)) + 600 + i * 2;
+
+					var a4 = Math.round(Math.random() * (100 + i)) + 200 + i;
+					var b4 = Math.round(Math.random() * (100 + i)) + 600 + i;
+
+					chartData1.push({
+						date: newDate,
+						value: a1,
+						volume: b1
+					});
+					chartData2.push({
+						date: newDate,
+						value: a2,
+						volume: b2
+					});
+					chartData3.push({
+						date: newDate,
+						value: a3,
+						volume: b3
+					});
+					chartData4.push({
+						date: newDate,
+						value: a4,
+						volume: b4
+					});
+				}
+			}
+
+			// in order to set theme for a chart, all you need to include theme file
+			// located in amcharts/themes folder and set theme property for the chart.
+
+			var chart;
+
+			makeChart("light", "#FFFFFF");
+
+			// Theme can only be applied when creating chart instance - this means
+			// that if you need to change theme at run time, youhave to create whole
+			// chart object once again.
+
+			function makeChart(theme, bgColor, bgImage) {
+
+				if (chart) {
+					chart.clear();
+				}
+
+				// background
+				if (document.body) {
+					document.body.style.backgroundColor = bgColor;
+					document.body.style.backgroundImage = "url(" + bgImage + ")";
+				}
+
+				AmCharts.makeChart("chartdiv", {
+					type: "stock",
+					theme: theme,
+					pathToImages: "../amcharts/images/",
+
+					dataSets: [{
+							title: "first data set",
+							fieldMappings: [{
+								fromField: "value",
+								toField: "value"
+							}, {
+								fromField: "volume",
+								toField: "volume"
+							}],
+							dataProvider: chartData1,
+							categoryField: "date"
+						},
+
+						{
+							title: "second data set",
+							fieldMappings: [{
+								fromField: "value",
+								toField: "value"
+							}, {
+								fromField: "volume",
+								toField: "volume"
+							}],
+							dataProvider: chartData2,
+							categoryField: "date"
+						},
+
+						{
+							title: "third data set",
+							fieldMappings: [{
+								fromField: "value",
+								toField: "value"
+							}, {
+								fromField: "volume",
+								toField: "volume"
+							}],
+							dataProvider: chartData3,
+							categoryField: "date"
+						},
+
+						{
+							title: "fourth data set",
+							fieldMappings: [{
+								fromField: "value",
+								toField: "value"
+							}, {
+								fromField: "volume",
+								toField: "volume"
+							}],
+							dataProvider: chartData4,
+							categoryField: "date"
+						}
+					],
+
+					panels: [{
+
+							showCategoryAxis: false,
+							title: "Value",
+							percentHeight: 70,
+
+							stockGraphs: [{
+								id: "g1",
+
+								valueField: "value",
+								comparable: true,
+								compareField: "value",
+								bullet: "round",
+								balloonText: "[[title]]:<b>[[value]]</b>",
+								compareGraphBalloonText: "[[title]]:<b>[[value]]</b>",
+								compareGraphBullet: "round"
+							}],
+
+							stockLegend: {
+								periodValueTextComparing: "[[percents.value.close]]%",
+								periodValueTextRegular: "[[value.close]]"
+							}
+						},
+
+						{
+							title: "Volume",
+							percentHeight: 30,
+							stockGraphs: [{
+								valueField: "volume",
+								type: "column",
+								showBalloon: false,
+								fillAlphas: 1
+							}],
+
+
+							stockLegend: {
+								periodValueTextRegular: "[[value.close]]"
+							}
+						}
+					],
+
+					chartScrollbarSettings: {
+						graph: "g1"
+					},
+
+					chartCursorSettings: {
+						valueBalloonsEnabled: true
+					},
+
+					periodSelector: {
+						position: "left",
+						periods: [{
+							period: "DD",
+							count: 10,
+							label: "10 days"
+						}, {
+							period: "MM",
+							selected: true,
+							count: 1,
+							label: "1 month"
+						}, {
+							period: "YYYY",
+							count: 1,
+							label: "1 year"
+						}, {
+							period: "YTD",
+							label: "YTD"
+						}, {
+							period: "MAX",
+							label: "MAX"
+						}]
+					},
+
+					dataSetSelector: {
+						position: "left"
+					}
+				});
+			}
+		</script>
+	</head>
+    <body style="font-size:15px;">Select theme:
+        <a href="#" onclick="makeChart('light', '#ffffff');">Light</a> |
+        <a href="#" onclick="makeChart('dark', '#282828')">Dark</a> |
+        <a href="#" onclick="makeChart('black', '#222222')">Black</a> |
+        <a href="#" onclick="makeChart('patterns', '#FFFFFF')">Patterns</a> |
+        <a href="#" onclick="makeChart('chalk', '#282828', 'images/board.jpg')">Chalk</a>
+        <br><br>
+		<div id="chartdiv" style="width:100%; height:600px;"></div>
+	</body>
+
+</html>

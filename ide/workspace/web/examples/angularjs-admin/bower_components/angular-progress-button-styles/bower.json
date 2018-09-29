@@ -1,0 +1,26 @@
+{
+  "name": "angular-progress-button-styles",
+  "version": "0.1.0",
+  "authors": [
+    "Vladimir Lugovsky <lugovsky.v@gmail.com>"
+  ],
+  "main": [ 
+    "dist/angular-progress-button-styles.min.js", 
+    "dist/angular-progress-button-styles.min.css"
+  ],
+  "description": "Different types of progressbuttons implemented on AngularJS",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "directive",
+    "progress",
+    "button",
+    "style",
+    "less",
+    "sass"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.x"
+  }
+}

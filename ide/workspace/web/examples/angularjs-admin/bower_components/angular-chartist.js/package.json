@@ -1,0 +1,68 @@
+{
+  "name": "angular-chartist.js",
+  "version": "3.3.13",
+  "description": "Angular directive for Chartist.js",
+  "main": "dist/angular-chartist.js",
+  "scripts": {
+    "build": "npm install && gulp build",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paradox41/angular-chartist.js"
+  },
+  "keywords": [
+    "angular",
+    "chartist.js",
+    "directive"
+  ],
+  "author": "Will <will.soto9+github@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paradox41/angular-chartist.js/issues"
+  },
+  "git": {
+    "scripts": {
+      "commit-msg": "./node_modules/.bin/validate-commit-msg $1"
+    }
+  },
+  "homepage": "https://github.com/paradox41/angular-chartist.js",
+  "devDependencies": {
+    "angular-mocks": "^1.4.8",
+    "babel-core": "^6.2.1",
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.1.18",
+    "bower": "^1.4.1",
+    "browser-sync": "^2.8.2",
+    "chai": "^3.2.0",
+    "del": "^2.2.0",
+    "git-scripts": "^0.2.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.0",
+    "gulp-bump": "^1.0.0",
+    "gulp-conventional-changelog": "^0.7.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-git": "^1.2.4",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-tag-version": "^1.3.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-wrap-umd": "^0.2.1",
+    "jquery": "^2.1.4",
+    "karma": "^0.13.9",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "mocha": "^2.2.5",
+    "phantomjs": "^1.9.18",
+    "phantomjs-polyfill": "0.0.1",
+    "run-sequence": "^1.1.2",
+    "validate-commit": "^1.0.13"
+  },
+  "dependencies": {
+    "angular": "^1.2.28",
+    "chartist": "^0.9.0"
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>amMap example</title>
+
+        <link rel="stylesheet" href="../ammap/ammap.css" type="text/css">
+
+        <script src="../ammap/ammap.js" type="text/javascript"></script>
+        <!-- map file should be included after ammap.js -->
+		<script src="../ammap/maps/js/worldLow.js" type="text/javascript"></script>
+        <script>
+			var map;
+
+			function writeDevInfo(event) {
+			    document.getElementById("devInfo").innerHTML = event.str;
+			}
+
+			AmCharts.ready(function() {
+			    map = new AmCharts.AmMap();
+
+
+			    map.balloon.color = "#000000";
+
+				var icon= "M21.25,8.375V28h6.5V8.375H21.25zM12.25,28h6.5V4.125h-6.5V28zM3.25,28h6.5V12.625h-6.5V28z";
+
+				var dataProvider = {
+				    mapVar: AmCharts.maps.worldLow,
+				    images:[{latitude:40.3951, longitude:-73.5619, svgPath:icon, color:"#CC0000", scale:0.5, label:"New York", labelShiftY:2, zoomLevel:5, title:"New York", description:"New York is the most populous city in the United States and the center of the New York Metropolitan Area, one of the most populous metropolitan areas in the world."}]
+				};
+
+			    map.dataProvider = dataProvider;
+
+			    map.smallMap = new AmCharts.SmallMap();
+
+			    // developer mode related
+			    map.developerMode = true;
+			    map.addListener("writeDevInfo", writeDevInfo);
+
+			    map.write("mapdiv");
+
+			});
+       </script>
+    </head>
+
+    <body>
+
+		<p class="ammapAlert">Shift + left mouse click to get dev info of desired zoom info, longitude/latitude, left/right/top/bottom coordinates</p>
+    	<br>
+        <div id="mapdiv" style="width: 800px; background-color:#EEEEEE; height: 500px;"></div>
+		<br>
+		<textarea id="devInfo" style="width:795px; height:150px;"></textarea>
+    </body>
+
+</html>

@@ -1,0 +1,276 @@
+###############################################################################################################################
+
+Since version 3.8.9, change log moved to: http://www.amcharts.com/javascript-maps/changelog/
+
+#### 3.8.8 ####################################################################################################################
+
+   # two finger zoom with touch devices fixed.
+
+#### 3.8.7 ####################################################################################################################
+
+   # link to amCharts.com site in a free version was made less noticable - it uses chart's font color and font size and you
+     can adjust it's position using creditsPosition property of AmChart. Possible values are: top-left, top-right, bottom-right
+     and bottom-left. This will help you to achieve better layout of a chart.
+
+#### 3.8.6 ####################################################################################################################
+
+   # Bug fix - charts with legend could fail if there was a google analytics script in the page.
+
+#### 3.8.5 ####################################################################################################################
+
+   # Old listeners are removed automatically if the same listener was added, this helps to avoid duplicate calls of event
+     handlers
+
+#### 3.8.4 ####################################################################################################################
+
+   # some improvements for export as image script were made.
+
+#### 3.8.3 ####################################################################################################################
+
+   # hideBalloonTime property added to AmChart class, default value is 150 (milliseconds). It sets time after which balloon is
+     hidden if user rolls-out of the object. Increasing the time might help to prevent balloon flickering while moving the
+     mouse over the object.
+
+#### 3.8.2 ####################################################################################################################
+
+     skipping this version to match the version of amCharts.
+
+#### 3.8.1 ####################################################################################################################
+
+   # You can now set theme for all the charts on your page by setting:
+     AmCharts.theme = AmCharts.themes.light;  // or some other theme
+     If you are creating charts using JavaScript API, not JSON, then this is quite a comfortable way, as you won't need to
+     pass theme to each object you create.
+
+   # bug fix: rendered event was fired only on first render, now it is fired each time the chart is rendered after
+     chart.validateNow(); method is called. This bug caused the export buttons to dissapear after the validateNow() method.
+
+
+#### 3.8.0 ####################################################################################################################
+
+   # Since this version amMaps support themes. This means that instead of seting every property for each object, you can set
+     new defaults in a theme file. This will make devs' life a lot easier.
+
+     Currently you can find three themes in ammap/themes folder - dark.js, light.js and chalk.js To set a theme for a map,
+     simply set theme property to the name of the file: theme:"light". Note, this will work only if you are creating map
+     using JSON config. If you do it in old way (JSON config is supported since v 3.7.0), you should pass theme object for
+     each new object you build, for example: var smallMap = new AmCharts.SmallMap(AmCharts.themes.light);
+
+     We will be adding more themes soon. Check _usingThemes.html file in samples folder to see themes in action.
+
+#### 3.7.0 ####################################################################################################################
+
+
+   # AmCharts.makeChart(divID, chartConfig); method added. divID is id of a div where your chart should appear. chartConfig is
+     JSON object with chart or map configuration. Check examples with _JSON_ prefix in samples folder to see this in action.
+
+   # type property added to AmChart class. It is required to specify type to one of the following, when creating charts from
+     JSON config: serial, xy, radar, pie, gauge, funnel, map, stock
+
+   # a possibility to export charts as image/pdf/svg added for all modern browsers except IE9 (IE10 is supported). The
+     exporting doesn't require any server side software and is made using js libraries only. Check samples with
+     _exporting_ prefix to see this in action. Exporting to SVG doesn't work very properly with stock chart or charts with
+     legend (will offer saving multiple files).
+
+   # Color picking for maps with values adjusted.
+
+
+#### 3.6.1 ####################################################################################################################
+
+   # FireFox error messages about style declarations fixed
+
+   # Bug fix: maxWidth property of AmBalloon was ignored
+
+   # Some other minor bugs fixed
+
+   # draging of a map on touch devices fixed
+
+#### 3.6.0 ####################################################################################################################
+
+     Great new features added - map now support patterns - areas can be filled with images. Check our new inspiring samples at
+     http://www.amcharts.com/inspiration/ to see new possibilities in action.
+
+   # patterns
+     Patterns can be set for areas via pattern property of MapArea. Value of pattern should be object with url, width, height
+     of an image, optionally it might have x, y, randomX and randomY values. For example:
+
+     graph.pattern = {"url":"../amcharts/patterns/black/pattern1.png", "width":4, "height":4};
+
+     check ammap/patterns folder for some patterns. You can create your own patterns and use them.
+
+     Check mapWithPatterns.html example to see this in action.
+
+   # hand-drawn style
+     if you set map.handDrawn = true, lines used in a map will be distorted and will produce hand-drawn effect.
+     You can also modify map.handDrawScatter (default value is 2) and map.handDrawThickness (default value 1) values for
+     more scattered view.
+
+   # offsetY and offsetX properties added to AmBalloon. Specifies the distance from the mouse position to balloon's pointer.
+     You might want to increase distance when using hand drawn style.
+
+   # Some minor problems fixed
+
+#### 3.5.0 ####################################################################################################################
+
+We jumped to 3.5.0 version to mark a version which must use amCharts V.3 instead of V.2 (if you use them together).
+This new version added a lot of new cool features to the balloon:
+
+    # Balloons can now display any HTML and CSS inside them. This means you can add images, format text or display just about
+      any HTML/CSS content. Because of this new feature, we removed textShadow property of AmBalloon in this version.
+      Example: areaStacked.html, barStacked.html and many other.
+
+
+    # Balloon now can animate from point to point and also fade out when user moves away from the chart. animationDuration and
+      fadeOutDuration properties added to AmBalloon, with default values 0.3. animationDuration property was also added to
+      ChartCursor, so that the cursor line would also animate to its position.
+      Example: any chart with balloon.
+
+
+    # Balloon now can display shadow. shadowColor (default #000000) and shadowAlpha (default 0.4) added to AmBalloon.
+      Example: any chart with balloon.
+
+
+    # Some default values of AmBalloon changed for a better usability - adjustBorderColor to true, cornerRadius to 0,
+      pointerWidth to 6, color to #000000.
+      Example: any chart with balloon.
+
+*******************************************************************************************************************************
+*******************************************************************************************************************************
+*******************************************************************************************************************************
+
+
+3.3.5
+Minor bugs fixed.
+
+3.3.4
+Features:
+labelBackgroundAlpha and labelBackgroundColor added to MapImage.
+
+Fixes:
+map.addLegend(legend, legendDiv) ignored legendDiv attribute.
+with IE, labels could be wrongly resized in case they are clickable.
+
+3.3.3
+
+maps can be rendered in "rtl" (right-to-left) mode. You have to set AmCharts.rtl = true in order this mode to be enabled.
+some minor bugs fixed.
+
+3.3.2
+Some minor bugs fixed.
+
+3.3.1
+A bug with FireFox and roll-over area fixed
+
+3.3.0
+linesAboveImages property added to AmMap, default value is true.
+
+minValue and maxValue properties added to AmMap. Use them in case you set values for your areas and wish
+to set a different minValue (it's 0 by default) or maxValue (it's actual maxValue by default).
+These values are used when choosing a color for an area.
+
+AmMap now supports negative values.
+
+getDevInfo() method added to AmMap. Returns object with a lot of information about the coordinate where the
+mouse currently is:
+{type:"writeDevInfo", chart:AmMap, zoomLevel:zoomLevel, zoomX:zoomX, zoomY:zoomY, zoomLatitude:zoomLatitude,
+zoomLongitude:zoomLongitude, latitude:latitude, longitude:longitude, left:left, top:top, right:right,
+bottom:bottom, percentLeft:percentLeft, percentTop:percentTop, percentRight:percentRight,
+percentBottom:percentBottom, str:string}
+
+"click" event added to AmMap. fired everytime user clicks on a map, except if the map was dragged or zoomed-in with zoomControl.
+By using this event and getDevInfo method you can build your custom map editing user interface.
+
+"rendered" event added to AmChart class. fired only once, when chart is first rendered.
+
+zoomToGroup method can accept not only a group id but also array of areas.
+
+selectedOutlineColor property added to AreasSettings.
+
+3.2.1
+
+FIX: clickMapObject event was not always fired.
+
+3.2.0
+IMPORTANT! All included maps were updated to follow ISO country and region codes.
+All world maps use two-digit ISO codes. All country-level maps use country code dash region code notation,
+i.e. US-AK. Please note that this is different from the codes we used previously which used underscores.
+Map files for consistency were also renamed to correspond to the map entity names,
+i.e. usaLow.js and AmCharts.maps.usaLow.
+
+
+FEATURES:
+lines have bigger hit area;
+
+selectedLabelColor property added to MapImage and ImagesSettings.
+
+balloonLabelFunction added to AmMap
+
+allowClickOnSelectedObject added to AmMap, default value true
+
+FIXES:
+lines and some other objects had hand cursor even if they were not clickable.
+
+
+3.1.0
+Zooming with mouse wheel wasn't working properly.
+
+zoomToObject(mapObject) method added added;
+
+images could be resized incorrectly after zoom on mouse over.
+
+3.0.9
+
+AmCharts.clear method added. Call this method if you want completely to remove all charts from a page.
+
+Memory leak fixed.
+
+3.0.8
+
+new maps were added, some maps were updated.
+
+3.0.7
+
+balloon could be wrongly positioned in marginTop style was added directly to <html> element.
+
+3.0.6
+
+Object's position accuracy increased.
+Objects list wasn't cleared when drill-down map was used.
+zoomCompleted event wasn't always fired.
+
+3.0.5
+
+showDescriptionOnHover property added to AmMap class. If you set it to true,
+description window instead of a balloon will be displayed when hovering MapObject.
+
+descriptionWindowX, descriptionWindowY, descriptionWindowWidth and
+descriptionWindowHeight properties added to ImagesSettings, AreasSettings and
+LinesSettings. Allows you to set these properties for all objects of the type.
+
+HTML can be displayed in description window.
+
+Map wasn't correctly resized if container of a map changed and map.invalidateSize()
+method was called.
+
+Some other minor bugs fixed.
+
+New maps were added.
+
+3.0.4
+
+Some minor bugs fixed
+
+3.0.3
+
+Bug fixes:
+Blurry lines on all browsers fixed
+
+3.0.2
+numberFormatter was not working when formatting values in balloon.
+problems with window resizing fixed.
+some other problems fixed
+
+3.0.1
+Some minor bugs fixed
+
+3.0 is Out!

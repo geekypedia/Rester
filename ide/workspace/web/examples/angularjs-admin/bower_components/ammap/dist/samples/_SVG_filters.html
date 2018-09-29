@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>amMap example</title>
+
+        <link rel="stylesheet" href="../ammap/ammap.css" type="text/css">
+        <script src="../ammap/ammap.js" type="text/javascript"></script>
+        <!-- map file should be included after ammap.js -->
+		<script src="../ammap/maps/js/usaLow.js" type="text/javascript"></script>
+
+        <style type="text/css">
+
+            .amcharts-map-area-US-TX {
+                filter: url(#shadow);
+            }
+
+        </style>
+
+        <script>
+			AmCharts.makeChart("mapdiv", {
+				"type": "map",
+				"pathToImages": "../ammap/images/",
+				"addClassNames": true,
+				"colorSteps": 10,
+
+				"dataProvider": {
+					"getAreasFromMap":true,
+					"map": "usaLow",
+					"areas": [{
+						"id": "US-TX",
+						"value": 4447100
+					}]
+				},
+
+				"areasSettings": {
+					"autoZoom": true
+				},
+
+				"defs": {
+		            "filter":[
+		              {
+		                "id": "shadow",
+		                "width": "150%",
+		                "height": "150%",
+		                "feOffset": {
+		                  "result": "offOut",
+		                  "in": "SourceAlpha",
+		                  "dx": "5",
+		                  "dy": "5"
+		                },
+		                "feGaussianBlur": {
+		                  "result": "blurOut",
+		                  "in": "offOut",
+		                  "stdDeviation": "5"
+		                },
+		                "feBlend": {
+		                  "in": "SourceGraphic",
+		                  "in2": "blurOut",
+		                  "mode": "normal"
+		                }
+		              }
+		            ]
+		        }
+
+			});
+		</script>
+    </head>
+
+    <body>
+        <div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>
+    </body>
+
+</html>

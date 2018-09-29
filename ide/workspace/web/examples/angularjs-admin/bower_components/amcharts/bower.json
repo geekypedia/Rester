@@ -1,0 +1,5 @@
+{
+    "name": "amcharts",
+    "version": "3.15.2",
+    "main": "./dist/amcharts/amcharts.js"
+}

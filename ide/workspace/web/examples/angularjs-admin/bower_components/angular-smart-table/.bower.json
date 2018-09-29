@@ -1,0 +1,33 @@
+{
+  "name": "angular-smart-table",
+  "description": "smart table component for angular v < 2.0",
+  "main": "./dist/smart-table.js",
+  "authors": [
+    "Laurent Renard"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "smart-table",
+    "table",
+    "grid",
+    "angular"
+  ],
+  "homepage": "https://github.com/lorenzofox3/Smart-Table",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "2.1.11",
+  "_release": "2.1.11",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.1.11",
+    "commit": "bb52704f81eaff98d8abb9e5554572880502b92d"
+  },
+  "_source": "https://github.com/lorenzofox3/Smart-Table.git",
+  "_target": "~2.1.3",
+  "_originalSource": "angular-smart-table"
+}

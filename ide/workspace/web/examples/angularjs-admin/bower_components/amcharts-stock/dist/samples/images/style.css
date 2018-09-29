@@ -1,0 +1,84 @@
+@import url(http://fonts.googleapis.com/css?family=Amatic+SC);
+ body {
+    font-family:"Amatic SC";
+    font-size: 40px;
+    color: #FFFFFF;
+    opacity:0.9;
+}
+h1 {
+    font-size: 40px;
+}
+image {
+    border:none;
+}
+a:link {
+    color: #FFFFFF;
+    opacity:0.9;
+    text-decoration: none;
+}
+a:active {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+a:visited {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+    opacity:1;
+}
+.amChartsDataSetSelector {
+}
+.amChartsPeriodSelector {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.amChartsButtonSelected {
+    font-family:"Amatic SC";
+    background-color:#FFFFFF;
+    border-style:solid;
+    border-color:#FFFFFF;
+    border-width:1px;
+    color:#000000;
+    opacity:0.8;
+    font-size:30px;
+    margin: 1px;
+}
+.amChartsButton {
+    font-family:"Amatic SC";
+    background-color:#FFFFFF;
+    border-style:solid;
+    border-color:#FFFFFF;
+    border-width:1px;
+    color:#FFFFFF;
+    background: transparent;
+    opacity:0.8;
+    font-size:30px;
+    margin: 1px;
+}
+.amChartsCompareList {
+    border-style:solid;
+    border-color:#CCCCCC;
+    border-width:1px;
+}
+.amChartsInputField {
+    font-family:"Amatic SC";
+    font-size:30px;
+    background: transparent;
+    font-family:"Amatic SC";
+    background-color:#FFFFFF;
+    border-style:solid;
+    border-color:#FFFFFF;
+    border-width:1px;
+    color:#FFFFFF;
+    background: transparent;
+    opacity:0.8;
+}
+.amChartsLegend {
+    font-family:"Amatic SC";
+}
+.amChartsPanel {
+    font-family:"Amatic SC";
+}

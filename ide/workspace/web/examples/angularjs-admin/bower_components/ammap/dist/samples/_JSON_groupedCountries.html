@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>amMap example</title>
+
+        <link rel="stylesheet" href="../ammap/ammap.css" type="text/css">
+        <script src="../ammap/ammap.js" type="text/javascript"></script>
+        <!-- map file should be included after ammap.js -->
+		<script src="../ammap/maps/js/worldLow.js" type="text/javascript"></script>
+        <script>
+
+			var map = AmCharts.makeChart("mapdiv", {
+
+				type: "map",
+
+				creditsPosition: "top-right",
+
+				dataProvider: {
+					map: "worldLow",
+					zoomLevel: 3.5,
+					zoomLongitude: 10,
+					zoomLatitude: 52,
+					areas: [{
+							title: "Austria",
+							id: "AT",
+							color: "#3366CC",
+							customData: "1995",
+							groupId: "before2004"
+						}, {
+							title: "Ireland",
+							id: "IE",
+							color: "#3366CC",
+							customData: "1973",
+							groupId: "before2004"
+						}, {
+							title: "Denmark",
+							id: "DK",
+							color: "#3366CC",
+							customData: "1973",
+							groupId: "before2004"
+						}, {
+							title: "Finland",
+							id: "FI",
+							color: "#3366CC",
+							customData: "1995",
+							groupId: "before2004"
+						}, {
+							title: "Sweden",
+							id: "SE",
+							color: "#3366CC",
+							customData: "1995",
+							groupId: "before2004"
+						}, {
+							title: "Great Britain",
+							id: "GB",
+							color: "#3366CC",
+							customData: "1973",
+							groupId: "before2004"
+						}, {
+							title: "Italy",
+							id: "IT",
+							color: "#3366CC",
+							customData: "1957",
+							groupId: "before2004"
+						}, {
+							title: "France",
+							id: "FR",
+							color: "#3366CC",
+							customData: "1957",
+							groupId: "before2004"
+						}, {
+							title: "Spain",
+							id: "ES",
+							color: "#3366CC",
+							customData: "1986",
+							groupId: "before2004"
+						}, {
+							title: "Greece",
+							id: "GR",
+							color: "#3366CC",
+							customData: "1981",
+							groupId: "before2004"
+						}, {
+							title: "Germany",
+							id: "DE",
+							color: "#3366CC",
+							customData: "1957",
+							groupId: "before2004"
+						}, {
+							title: "Belgium",
+							id: "BE",
+							color: "#3366CC",
+							customData: "1957",
+							groupId: "before2004"
+						}, {
+							title: "Luxembourg",
+							id: "LU",
+							color: "#3366CC",
+							customData: "1957",
+							groupId: "before2004"
+						}, {
+							title: "Netherlands",
+							id: "NL",
+							color: "#3366CC",
+							customData: "1957",
+							groupId: "before2004"
+						}, {
+							title: "Portugal",
+							id: "PT",
+							color: "#3366CC",
+							customData: "1986",
+							groupId: "before2004"
+						},
+
+						{
+							title: "Lithuania",
+							id: "LT",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Latvia",
+							id: "LV",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Czech Republic ",
+							id: "CZ",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Slovakia",
+							id: "SK",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Slovenia",
+							id: "SI",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Estonia",
+							id: "EE",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Hungary",
+							id: "HU",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Cyprus",
+							id: "CY",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Malta",
+							id: "MT",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						}, {
+							title: "Poland",
+							id: "PL",
+							color: "#FFCC33",
+							customData: "2004",
+							groupId: "2004"
+						},
+
+						{
+							title: "Romania",
+							id: "RO",
+							color: "#66CC99",
+							customData: "2007",
+							groupId: "2007"
+						}, {
+							title: "Bulgaria",
+							id: "BG",
+							color: "#66CC99",
+							customData: "2007",
+							groupId: "2007"
+						}
+					]
+				},
+
+				areasSettings: {
+					unlistedAreasColor: "#DDDDDD",
+					rollOverOutlineColor: "#FFFFFF",
+					rollOverColor: "#CC0000",
+					balloonText: "[[title]] joined EU at [[customData]]"
+				},
+
+
+				legend: {
+					width: 600,
+					backgroundAlpha: 0.5,
+					backgroundColor: "#FFFFFF",
+					borderColor: "#666666",
+					borderAlpha: 1,
+					bottom: 15,
+					left: 15,
+					horizontalGap: 10,
+					data: [{
+						title: "Joined EU before 2004",
+						color: "#3366CC"
+					}, {
+						title: "Joined EU at 2004",
+						color: "#FFCC33"
+					}, {
+						title: "Joined EU at 2007",
+						color: "#66CC99"
+					}]
+				}
+
+			});
+
+        </script>
+    </head>
+
+    <body>
+        <div id="mapdiv" style="width: 800px; background-color:#eeeeee; height: 500px;"></div>
+    </body>
+
+</html>

@@ -1,0 +1,54 @@
+{
+  "name": "angular-chart.js",
+  "version": "1.0.3",
+  "main": [
+    "./dist/angular-chart.js"
+  ],
+  "authors": [
+    "Jerome Touffe-Blin <jtblin@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jtblin/angular-chart.js.git"
+  },
+  "description": "An angular.js wrapper for Chart.js - reactive, responsive, beautiful charts.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angular",
+    "angular.js",
+    "chartjs",
+    "chart",
+    "reactive",
+    "responsive",
+    "graph",
+    "bar",
+    "line",
+    "area",
+    "donut"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "examples",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.x",
+    "chart.js": "2.x"
+  },
+  "homepage": "https://github.com/jtblin/angular-chart.js",
+  "_release": "1.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.3",
+    "commit": "1c85df5524c8b8e6a36c310fa26f7656123614b8"
+  },
+  "_source": "https://github.com/jtblin/angular-chart.js.git",
+  "_target": "~1.0.3",
+  "_originalSource": "angular-chart.js"
+}
