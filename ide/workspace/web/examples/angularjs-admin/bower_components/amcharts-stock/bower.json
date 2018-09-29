@@ -1,5 +1,0 @@
-{
-    "name": "amcharts-stock",
-    "version": "3.13.0",
-    "main": "./dist/amcharts/amcharts.js"
-}

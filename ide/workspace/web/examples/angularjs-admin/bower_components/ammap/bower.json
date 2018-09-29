@@ -1,7 +1,0 @@
-{
-  "name": "ammap",
-  "version": "3.14.5 ",
-  "main": "./dist/ammap/ammap.js",
-  "dependencies": {
-  }
-}
