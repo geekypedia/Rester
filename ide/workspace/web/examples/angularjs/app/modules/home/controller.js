@@ -12,7 +12,7 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 		counters: {
 			tasksCounter: {
 				title: 'Tasks',
-				value: '0',
+				value: '...',
 				icon: 'assignment_turned_in',
 				background: 'bg-green',
 				color: 'white-text',
@@ -21,7 +21,7 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 			},
 			usersCounter: {
 				title: 'Users',
-				value: '0',
+				value: '...',
 				icon: 'person',
 				background: 'bg-purple',
 				color: 'white-text',
@@ -30,7 +30,7 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 			},
 			organizationsCounter: {
 				title: 'Organizations',
-				value: '0',
+				value: '...',
 				icon: 'people_outline',
 				background: 'bg-green',
 				color: 'white-text',
