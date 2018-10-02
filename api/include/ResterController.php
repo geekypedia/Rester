@@ -708,6 +708,11 @@ class ResterController {
 					}
 				} catch(Exception $e) {
 					if(API_EXCEPTIONS_IN_RESPONSE){
+						if(!empty($e->errorInfo) && is_array($e->errorInfo) && count($e->errorInfo) > 2){
+						    if($e->errorInfo[0] == "42S22" && $e->errorInfo[1] == 1054){
+						        $this->showError(400, "Supplied criteria parameters do not exists!", $e);
+						    }
+						}
 						$this->showError(500, null, $e);
 					} else {
 						return false;
