@@ -13,6 +13,7 @@ $data["host"] = $_POST["host"];
 $data["user"] = $_POST["user"];
 $data["password"] = $_POST["password"];
 $data["database"] = $_POST["database"];
+$data["legacy_mode"] = $_POST["legacy_mode"];
 
 if(empty($data["host"])){
     $data["host"] = "localhost";

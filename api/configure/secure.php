@@ -1,4 +1,6 @@
 <?php
+require_once('lib.php');
+require_once(__DIR__.'/../vendor/phar/defuse-crypto-2.1.0.phar');
 
 //GET PASSWORD FROM Codiad Settings
 $users_file = '../../ide/data/users.php';
@@ -40,6 +42,23 @@ if($SUPPLIED_PASSWORD_ENC == $PASSWORD && $SUPPLIED_USERNAME == $USERNAME){
 } else {
   header('Location: .?auth=false');
   exit();
+}
+
+
+//Initialize Configuration
+$configPath = __DIR__.'/../prestige.config';
+$keyPath = __DIR__.'/../prestige.key';
+
+if(file_exists($configPath)){
+    if(file_exists($keyPath)){
+        $key = file_get_contents($keyPath);
+        $keyObj = Defuse\Crypto\Key::loadFromAsciiSafeString($key);
+    }
+    $configContents = file_get_contents($configPath);
+    $configDecrypted = Defuse\Crypto\Crypto::decrypt($configContents, $keyObj);
+    $configDecoded = $encode_decode_simple->decode($configDecrypted);
+    $configJson = ($configDecoded);
+    $config = json_decode($configJson);
 }
 
 ?>
@@ -90,7 +109,25 @@ if($SUPPLIED_PASSWORD_ENC == $PASSWORD && $SUPPLIED_USERNAME == $USERNAME){
 	<script type="text/javascript">
 		$(function(){
 			$('#host').focus();
-		})
+			
+			 var cfg = '<?php echo json_encode($config) ?>';
+			 if(cfg){
+			 	try{
+			 		console.log(cfg);
+				 	var config = JSON.parse(cfg);
+				 	if(config){
+				 		if(config.host) $('#host').val(config.host);
+				 		if(config.user) $('#user').val(config.user);
+				 		if(config.password) $('#pwd').val(config.password);
+				 		if(config.database) $('#database').val(config.database);
+				 		if(config.legacy_mode) $('#legacy_mode').attr("checked", "checked");
+				 	}
+			 	} catch (e){
+			 		
+			 	}
+			 }
+			
+		});
 	</script>  
 </head>
 <body>
@@ -113,6 +150,10 @@ if($SUPPLIED_PASSWORD_ENC == $PASSWORD && $SUPPLIED_USERNAME == $USERNAME){
 		    <div class="form-group">
 		      <label for="database">Database:</label>
 		      <input type="text" class="form-control" id="database" placeholder="Enter database name" name="database" required>
+		    </div>
+		    <div class="form-group">
+		      <label for="legacy_mode">Legacy mode:</label>
+		      <input type="checkbox" class="form-control" id="legacy_mode" placeholder="Legacy mode" name="legacy_mode">
 		    </div>
 		    <button type="submit" class="btn btn-default">Submit</button>
 		  </form>

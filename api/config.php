@@ -58,7 +58,7 @@ define('ENABLE_OPEN_REGISTRATIONS', false);
 define('ENABLE_DEEP_QUERY', true);
 define('MAX_NESTING_LEVEL', 10);
 
-define('LEGACY_MODE', false);
+define('LEGACY_MODE', empty($config->legacy_mode) ? false : true);
 
 //Disable PHP Errors
 error_reporting(0);

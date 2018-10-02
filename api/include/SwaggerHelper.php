@@ -20,7 +20,7 @@ class SwaggerHelper {
 				$apiCREATE["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName);
 			} else {
 				$apiPUT["path"]="/".$route->routeName ."/update";
-				$apiPUT["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName);	
+				$apiPUT["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName, false, "Update ");	
 			}
 			
 			$apiID["path"] = "/".$route->routeName."/{".$route->routeName."Id}";
@@ -31,7 +31,7 @@ class SwaggerHelper {
 					$apiID["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
 				} else {
 					$apiPUTID["path"] = "/".$route->routeName ."/update". "/{".$route->routeName."Id}";
-					$apiPUTID["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
+					$apiPUTID["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void", false, "Update ");	
 				}
 			}
 			
@@ -39,7 +39,7 @@ class SwaggerHelper {
 					$apiID["operations"][]=SwaggerHelper::createOperation("DELETE", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void");
 			} else {
 					$apiDELETEID["path"] = "/".$route->routeName ."/delete". "/{".$route->routeName."Id}";
-					$apiDELETEID["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void");
+					$apiDELETEID["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void", false, "Delete ");
 			}
 			
 					
@@ -49,7 +49,7 @@ class SwaggerHelper {
 			if(!LEGACY_MODE) {
 				$apis = array($apiCREATE, $apiID);
 			} else {
-				$apis = array($apiCREATE, $apiPUT, $apiID, $apiPUTID, $apiDELETEID);
+				$apis = array_values(array_filter(array($apiCREATE, $apiPUT, $apiID, $apiPUTID, $apiDELETEID)));
 			}
 			
 		}
@@ -233,10 +233,15 @@ class SwaggerHelper {
 				}
 			break;
 			case "POST":
-				$notes = "Create ".$route->routeName." object";
+				if(LEGACY_MODE && !empty($customNotes)){
+					$notes = $customNotes . $route->routeName." object";
+					$notes = $customNotes . $route->routeName." object";
+				} else {
+					$notes = "Create ".$route->routeName." object";
+				}
 			break;
 			case "DELETE":
-				$notes = "Deletes ".$route->routeName." object";
+				$notes = "Delete ".$route->routeName." object";
 			break;
 			default:
 				$notes = $route->routeName." ".$method." operation";

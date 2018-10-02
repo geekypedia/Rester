@@ -50,7 +50,6 @@ username: admin
 password: admin
 ```
 
-
 You can use the following endpoints to use the system.
 
 |Component						| URL									|
@@ -102,7 +101,6 @@ Put the default credentials (Note: You can always change these credentials by ch
 username: admin
 password: admin
 ```
-
 
 OR you can just go to the following URL. 
 
@@ -657,7 +655,11 @@ Load $key and $message from a database table. Specify the column names for key a
 
 Legacy Mode
 -----
-Certain free hosting sites do not allow PUT or DELETE methods. In that case, you can still use POST with X-HTTP-Method-Override header.
+Certain free hosting sites do not allow PUT or DELETE methods. Even some tightly controlled corporate environments have such restrictions. While configuring the API, there is an option to turn the Legacy Mode on. This will magically convert all of your PUT and DELETE APIs into old fashioned POST APIs with /update and /delete in the route path.
+
+If you want to see the difference, just turn on/off the feature and refresh the API documentation explorer.
+
+If the above solution does not work for you, then you can still follow standard practices by using POST with X-HTTP-Method-Override header. You can do that without turning Legacy Mode on.
 
 Example:
 If you need to make a call to 
@@ -677,7 +679,6 @@ But, along with that POST request, you will pass an extra header in the request
 X-HTTP-Method-Override: DELETE
 ```
 
-If the above solution is not good enough and you want old fashioned POST apis without using headers, just go to [PROJECT_ROOT]/api/config.php and turn the globale variable LEGACY_MODE to true. Now explore the API documentation, you will see that all of the APIs have been changed to support old fashioned URLs with POST method. This will also help you to deploy the framwork in a tightly controlled environments with strict firewalls.
 
 Examples
 -----
