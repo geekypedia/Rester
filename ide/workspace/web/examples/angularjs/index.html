@@ -87,31 +87,91 @@
 				<div class="divider"></div>
 			</li>
 			<li ng-if="data[0].allowedRoles.indexOf(currentUser.role) > -1 && data[0].showHeader" ><a class="subheader">{{data[0].header}}</a></li>
-			<li ng-if="data[0].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[0].items' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<li ng-if="data[0].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[0].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
 
 			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1 && data[1].showSeparator">
 				<div class="divider"></div>
 			</li>
 			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1 && data[1].showHeader" ><a class="subheader">{{data[1].header}}</a></li>
-			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[1].items' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[1].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
 
 			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1 && data[2].showSeparator">
 				<div class="divider"></div>
 			</li>
 			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1 && data[2].showHeader" ><a class="subheader">{{data[2].header}}</a></li>
-			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[2].items' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[2].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
 
 			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1 && data[3].showSeparator">
 				<div class="divider"></div>
 			</li>
 			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1 && data[3].showHeader" ><a class="subheader">{{data[3].header}}</a></li>
-			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[3].items' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[3].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
 
 			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1 && data[4].showSeparator">
 				<div class="divider"></div>
 			</li>
 			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1 && data[4].showHeader" ><a class="subheader">{{data[4].header}}</a></li>
-			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[4].items' ><a ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a></li>
+			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[4].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
 
 		</ul>
 
