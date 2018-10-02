@@ -707,7 +707,11 @@ class ResterController {
 						call_user_func($callback);
 					}
 				} catch(Exception $e) {
-					return false;
+					if(API_EXCEPTIONS_IN_RESPONSE){
+						$this->showError(500, null, $e);
+					} else {
+						return false;
+					}
 				}
 			}
 		} else {
@@ -1190,7 +1194,7 @@ class ResterController {
 	/* RETURN DATA FUNCTIONS
 	/*************************************/
 	
-	function showError($errorNumber, $message = NULL) {
+	function showError($errorNumber, $message = NULL, $exception = NULL) {
 		// if(empty($message)){
 		// 	$result = ApiResponse::errorResponse($errorNumber);
 		// 	exit($this->doResponse($result));
@@ -1198,7 +1202,7 @@ class ResterController {
 		// 	$result = ApiResponse::errorResponseWithMessage($errorNumber, $message);
 		// 	exit($this->doResponse($result));
 		// }
-		$result = ApiResponse::errorResponse($errorNumber, $message);
+		$result = ApiResponse::errorResponse($errorNumber, $message, $exception);
 		exit($this->doResponse($result));
 	}
 	

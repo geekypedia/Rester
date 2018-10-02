@@ -3,7 +3,7 @@
 class ApiResponse {
 
 
-	public static function errorResponseWithMessage($errorCode, $status, $message) {
+	public static function errorResponseWithMessage($errorCode, $status, $message, $exception = null) {
 		if(empty($message)) $message = $status;
 
 
@@ -17,6 +17,8 @@ class ApiResponse {
 					'message' => $message,
 				),
 		);
+		
+		if(!empty($exception)) $result['error']['exception'] = $exception;
 
 		return $result;
 	}
@@ -47,7 +49,7 @@ class ApiResponse {
 	}
 
 	
-	public static function errorResponse($errorCode, $message = null) {
+	public static function errorResponse($errorCode, $message = null, $exception = null) {
 		
 		$status = "Bad Request";
 		
@@ -85,7 +87,7 @@ class ApiResponse {
 		
 		}
 		
-		return ApiResponse::errorResponseWithMessage($errorCode, $status, $message);
+		return ApiResponse::errorResponseWithMessage($errorCode, $status, $message, $exception);
 		
 	}
 	

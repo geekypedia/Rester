@@ -58,6 +58,10 @@ define('ENABLE_OPEN_REGISTRATIONS', false);
 define('ENABLE_DEEP_QUERY', true);
 define('MAX_NESTING_LEVEL', 10);
 
+//Return exceptions in API response
+define('API_EXCEPTIONS_IN_RESPONSE', true);
+
+//Legacy mode
 define('LEGACY_MODE', empty($config->legacy_mode) ? false : true);
 
 //Disable PHP Errors
