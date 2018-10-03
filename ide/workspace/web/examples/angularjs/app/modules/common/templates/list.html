@@ -1,6 +1,7 @@
 <div ng-init="listAll()"></div>
 <h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
 <hr/>
+<div style="overflow:auto">
 <table class="striped responsive-table">
         <thead>
           <tr>
@@ -12,6 +13,7 @@
           </tr>
         </tbody>
 </table>
+</div>
 <ul class="pagination center-align">
     <!--<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
     <li class="{{setActive(i)}}" ng-repeat="i in data.pages"><a ng-click="listAll(i)">{{i}}</a></li>
