@@ -1180,6 +1180,14 @@ class ResterController {
 		$currentRoute = $this->getAvailableRoutes()[$routeName];
 		
 		if(is_array($newData) === true) {
+			if(!empty($objectID) && $objectID > 0){
+				$existing = $this->getObjectsFromRouteName($routeName, array("id" => $objectID));
+				if(empty($existing)){
+					$this->showError(404, "The object you are trying to update is not found.");
+				}
+			} else{
+				$this->showError(400, "The request body is not in acceptable format.");
+			}
 			$this->dbController->updateObjectOnDB($currentRoute, $objectID, $newData);
 			return $this->getObjectByID($routeName, $objectID);
 		} else {
