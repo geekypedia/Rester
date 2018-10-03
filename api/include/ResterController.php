@@ -101,7 +101,7 @@ class ResterController {
 		$this->addRequestProcessor("POST", function($routeName = NULL, $routePath = NULL, $parameters = NULL) {
 
 			if(!isset($routeName)) {
-				$this->showError(400);
+				$this->showError(400, "Invalid route name supplied.");
 			}
 			
 			$body = $this->getPostData();
@@ -241,7 +241,7 @@ class ResterController {
 		
 		$this->addRequestProcessor("DELETE", function($routeName, $routePath) {
 			if(!isset($routeName)) {
-				$this->showError(400);
+				$this->showError(400, "Invalid route name supplied.");
 			}
 			
 			if(!isset($routePath) || count($routePath) < 1) {
@@ -273,9 +273,9 @@ class ResterController {
 			
 			
 			if($result > 0) {
-				$this->showResult(ApiResponse::successResponse());
+				$this->showResult(ApiResponse::successResponse($result));
 			} else {
-				$this->showResult($result);
+				$this->showError(404, "Could not find the item you are trying to delete.");
 			}
 		
 		});
@@ -284,7 +284,7 @@ class ResterController {
 			
 			ResterUtils::Log("PROCESSING PUT");
 			if(!isset($routeName)) {
-				$this->showError(400);
+				$this->showError(400, "Invalid route name supplied.");
 			}
 
 			//$input = file_get_contents('php://input');
@@ -297,7 +297,7 @@ class ResterController {
 
 			if(empty($input)) {
 				ResterUtils::Log("Empty PUT request");
-				$this->showError(400);
+				$this->showError(400, "The request body is empty.");
 			}
 
 			if(!isset($routePath) || count($routePath) < 1) { //no id in URL, we expect json body
@@ -347,7 +347,7 @@ class ResterController {
 					if(!isset($putData[$route->primaryKey->fieldName])) {
 						ResterUtils::Log("No PRIMARY KEY FIELD ".$input);
 						echo $route->primaryKey->fieldName;
-						$this->showError(400);
+						$this->showError(400, "No key field supplied.");
 					}	 
 					$result = $this->updateObjectFromRoute($routeName, $putData[$route->primaryKey->fieldName], $putData);
 					
@@ -530,7 +530,7 @@ class ResterController {
 					return true;
 				}
 
-				$this->showError(404);
+				$this->showError(404, "Requested route does not exist.");
 				return false;
 		}
 		return true;
@@ -710,8 +710,12 @@ class ResterController {
 					if(API_EXCEPTIONS_IN_RESPONSE){
 						if(!empty($e->errorInfo) && is_array($e->errorInfo) && count($e->errorInfo) > 2){
 						    if($e->errorInfo[0] == "42S22" && $e->errorInfo[1] == 1054){
-						        $this->showError(400, "Supplied criteria parameters do not exists!", $e);
+						        $this->showError(422, "Supplied criteria parameters do not exist.", $e);
 						    }
+						    if($e->errorInfo[0] == "23000" && $e->errorInfo[1] == 1062){
+						        $this->showError(409, $e->errorInfo[2], $e);
+						    }
+						    
 						}
 						$this->showError(500, null, $e);
 					} else {
@@ -729,7 +733,7 @@ class ResterController {
 	function checkConnectionStatus() {
 		if(is_null(DBController::$db))
                 {
-                        $this->showError(503, "Could not connect to the database. Please check your configurations!");
+                        $this->showError(503, "Could not connect to the database. Please check your configurations.");
                 }
 		/*if ($this->dbController->Query(DSN) === false) {
 			exit($this->dbController->Reply(ApiResponse::errorResponseWithMessage(503, "Error connecting to SQL")));	
@@ -1152,7 +1156,7 @@ class ResterController {
 	
 		$result = $this->dbController->Query($query, $ID);
 
-		return $result;
+		return empty($result) ? $result : array("id" => $ID, "status" => "deleted");
 	}
 	
 	function update($route, $id, $object) {
@@ -1168,7 +1172,7 @@ class ResterController {
 	function updateObjectFromRoute($routeName, $objectID, $newData) {
 		ResterUtils::Log("UPDATING OBJECT");
 		if (empty($newData) === true) {
-			$this->showError(204);
+			$this->showError(400, "The request body is empty.");
 		}
 		
 		$currentRoute = $this->getAvailableRoutes()[$routeName];
@@ -1177,7 +1181,7 @@ class ResterController {
 			$this->dbController->updateObjectOnDB($currentRoute, $objectID, $newData);
 			return $this->getObjectByID($routeName, $objectID);
 		} else {
-			$this->showError(500);
+			$this->showError(400, "The request body is not in acceptable format.");
 		}
 	}
 	

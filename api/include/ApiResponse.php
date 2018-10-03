@@ -76,7 +76,7 @@ class ApiResponse {
 			$status = "Conflict";
 			break;
 			case 422:
-			$status = "Invalid Request";
+			$status = "Unprocessable Entity";
 			break;
 			case 500:
 			$status = "Internal Server Error";
