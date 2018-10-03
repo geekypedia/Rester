@@ -722,6 +722,8 @@ class ResterController {
 						return false;
 					}
 				}
+				//Handle in case custom methods do not send a response
+				//exit();
 			}
 		} else {
 			ResterUtils::Log("*** ERROR *** Request processor not set ".$requestMethod);

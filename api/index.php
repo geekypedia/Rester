@@ -65,7 +65,7 @@ if(defined('API_VERSION') && file_exists(__DIR__."/versions/".API_VERSION.".php"
 $resterController->processRequest($_SERVER['REQUEST_METHOD']);
 
 //We never have to be here
-$resterController->showError(405);
+$resterController->showError(500, "Ragnarok");
 
 
 ?>
