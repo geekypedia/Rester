@@ -6,6 +6,7 @@ app.controller('navController', function($scope) {
             for (var i = 0; i < data[k].items.length; i++) {
                 data[k].items[i].action = '#!' + data[k].items[i].action;
                 if(data[k].items[i].items && data[k].items[i].items.length > 0){
+                    data[k].items[i].action = '';
                     for (var j = 0; j < data[k].items[i].items.length; j++) {
                         data[k].items[i].items[j].action = '#!' + data[k].items[i].items[j].action;
                     }
