@@ -68,6 +68,7 @@ function ControllerFactory(resourceName, options, extras) {
 						});
 						break;
 					case 401:
+						$rootScope.$emit('loginRequired');
 					case 403:
 						$location.path('unauthorized');
 					default:

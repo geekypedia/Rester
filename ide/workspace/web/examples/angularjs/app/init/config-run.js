@@ -38,6 +38,9 @@ app.factory('httpRequestInterceptor', function ($rootScope, $q) {
         },
         responseError: function(response){
             $rootScope.loading = false;
+            if(response.status === 401){
+            	$rootScope.$emit('loginRequired');
+            }
             return $q.reject(response);
         }
     };
@@ -97,4 +100,11 @@ app.run(function ($rootScope, $location, $cookies, H) {
             }
         }
     });
+    
+    $rootScope.$on("loginRequired", function (event, next, current) {
+    	$cookies.remove(H.getCookieKey());
+		delete $rootScope.currentUser;
+		$location.path('/sign-in');
+    });
+    
 });

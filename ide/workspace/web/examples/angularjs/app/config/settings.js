@@ -5,7 +5,7 @@ app.service('S', function($http) {
 		"productName": "pRESTige",
 		"supportEmail": "support@prestigeframework.com",
 		"enableSaaS": true,
-		"openRegistration": false,
+		"openRegistration": true,
 		"legacyMode": false
 	}
 });
