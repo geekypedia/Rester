@@ -144,10 +144,13 @@ class ResterController {
 									$callbackParameters[1] = null;
 									break;
 								case 'DELETE':
-									if(!empty($parameters) && !empty($parameters['id'])){
-										$callbackParameters[1] = array($parameters['id']);
+									$route = $this->getRoute($routeName);
+								    $key = $route->primaryKey->fieldName;
+								    //if(empty($key)) $key = "id";
+									if(!empty($parameters) && !empty($parameters[$key])){
+										$callbackParameters[1] = array($parameters[$key]);
 									} else {
-										$this->showError(405, "Missing parameter: id");
+										$this->showError(422, "Missing parameter: $key");
 									}
 									break;
 							}
@@ -323,7 +326,7 @@ class ResterController {
 				if(is_array($putData) && ResterUtils::isIndexed($putData) && count($putData) > 0) { //iterate on elements and try to update
 					ResterUtils::Log("UPDATING MULTIPLE OBJECTS");
 					foreach($putData as $updateObject) {
-						ResterUtils::Log("UPDATING OBJECT ".$routeName." ID: ".$updateObject["id"]);
+						ResterUtils::Log("UPDATING OBJECT ".$routeName." ID: ".$updateObject[$route->primaryKey->fieldName]);
 						if(isset($updateObject[$route->primaryKey->fieldName])) {
 							$result = $this->updateObjectFromRoute($routeName, $updateObject[$route->primaryKey->fieldName], $updateObject);
 						}
@@ -1150,15 +1153,16 @@ class ResterController {
 	}
 	
 	function deleteObjectFromRoute($routeName, $ID) {
+		$key = $this->getRoute($routeName)->primaryKey->fieldName;
 		$query = array(
-			sprintf('DELETE FROM "%s" WHERE "%s" = ?', $routeName, 'id')
+			sprintf('DELETE FROM "%s" WHERE "%s" = ?', $routeName, $key)
 		);
 
 		$query = sprintf('%s;', implode(' ', $query));
 	
 		$result = $this->dbController->Query($query, $ID);
-
-		return empty($result) ? $result : array("id" => $ID, "status" => "deleted");
+		
+		return empty($result) ? $result : array($key => $ID, "status" => "deleted");
 	}
 	
 	function update($route, $id, $object) {
@@ -1181,9 +1185,9 @@ class ResterController {
 		
 		if(is_array($newData) === true) {
 			if(!empty($objectID) && $objectID > 0){
-				$existing = $this->getObjectsFromRouteName($routeName, array("id" => $objectID));
+				$existing = $this->getObjectsFromRouteName($routeName, array($currentRoute->primaryKey->fieldName => $objectID));
 				if(empty($existing)){
-					$this->showError(404, "The object you are trying to update is not found.");
+					$this->showError(404, "Could not find the item you are trying to update.");
 				}
 			} else{
 				$this->showError(400, "The request body is not in acceptable format.");
