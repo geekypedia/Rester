@@ -346,8 +346,8 @@ class ResterController {
 					ResterUtils::Log("UPDATING SINGLE OBJECT");
 					if(!isset($putData[$route->primaryKey->fieldName])) {
 						ResterUtils::Log("No PRIMARY KEY FIELD ".$input);
-						echo $route->primaryKey->fieldName;
-						$this->showError(400, "No key field supplied.");
+						//echo $route->primaryKey->fieldName;
+						$this->showError(400, "No key field supplied. Expecting: " . $route->primaryKey->fieldName);
 					}	 
 					$result = $this->updateObjectFromRoute($routeName, $putData[$route->primaryKey->fieldName], $putData);
 					
