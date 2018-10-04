@@ -278,7 +278,7 @@ class ResterController {
 			if($result > 0) {
 				$this->showResult(ApiResponse::successResponse($result));
 			} else {
-				$this->showError(404, "Could not find the item you are trying to delete.");
+				$this->showError(404, "Could not find the object you are trying to delete.");
 			}
 		
 		});
@@ -665,6 +665,11 @@ class ResterController {
 				
 				if($this->getCurrentRoute() && $this->getCurrentRoute() != "/") {
 					$callbackParameters[0] = $this->getCurrentRoute();
+					
+					if(!empty($this->getRoute($callbackParameters[0])) && empty($this->getRoute($callbackParameters[0])->primaryKey)){
+					    $this->showError(422, "Could not find a primary key with autoincrement for API route /$callbackParameters[0]");
+					}
+					
 					ResterUtils::Log(">> Processing route /".$this->getCurrentRoute());
 					if(count($this->getCurrentPath()) > 0) {
 						$callbackParameters[1]=$this->getCurrentPath();
@@ -1187,7 +1192,7 @@ class ResterController {
 			if(!empty($objectID) && $objectID > 0){
 				$existing = $this->getObjectsFromRouteName($routeName, array($currentRoute->primaryKey->fieldName => $objectID));
 				if(empty($existing)){
-					$this->showError(404, "Could not find the item you are trying to update.");
+					$this->showError(404, "Could not find the object you are trying to update.");
 				}
 			} else{
 				$this->showError(400, "The request body is not in acceptable format.");
