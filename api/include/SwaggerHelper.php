@@ -143,6 +143,7 @@ class SwaggerHelper {
 			break;
 			case "POST":
 				//$parameters[] = SwaggerHelper::getBodyParameterFromModel($route);
+				if(!$route->primaryKey->isAutoIncrement) $parameters[] = SwaggerHelper::getIdParameter($route, true, true);
 				$parameters = array_merge($parameters, SwaggerHelper::getParametersFromModel($route, false));
 			break;
 			case "DELETE":
