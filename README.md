@@ -35,13 +35,29 @@ Installation
 
 It is extremely easy get quickly up and running using pRESTige!
 
+#### Windows
+
+Install any AMP stack (PHP, MySQL and Apache server) software such as [XAMPP](https://www.apachefriends.org/download.html), WAMP Server etc.
+
+If you have set up XAMPP, launch the server using its control panel.
+
+[Download](https://github.com/geekypedia/pRESTige/archive/master.zip) the latest bundle of pRESTige.
+
+Extract the pRESTige bundle in htdocs folder under XAMPP (or relevant http docs folder under WAMP server, Apache or any other alternative). 
+
+launch the URL http://localhost/YOUR_PRESTIGE_FOLDER_NAME
+
+#### Linux/Mac
+
 `git clone https://github.com/geekypedia/prestige`
 
 `cd prestige`
 
 `php -S 0.0.0.0:8080`
 
-Now just open the following link to open the dashboard: <a href="http://localhost:8080/api" target="_blank">http://localhost:8080/api</a>
+Now just open the following link to open the dashboard: <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a>
+
+#### Initial Configuration
 
 Open the 'API Configuration' to connect the system to a database.
 
