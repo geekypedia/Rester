@@ -695,6 +695,18 @@ But, along with that POST request, you will pass an extra header in the request
 X-HTTP-Method-Override: DELETE
 ```
 
+I am trying to open the Code Editor in iPad, but when I try to double click (tap), it zooms in/out. Can I use single tap to open files?
+-----
+Yes you can.
+1. Log into Code Editor.
+2. Tap on the hamburger menu on the right hand side to open panel.
+3. Click on Settings.
+4. Click on System Settings.
+5. Set Filemanager Trigger as Single Click.
+6. Click on Save.
+
+Now you will be able to open files by just tapping on the filename on the explorer on the left hand side.
+
 
 Examples
 -----
