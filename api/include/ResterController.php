@@ -666,9 +666,9 @@ class ResterController {
 				if($this->getCurrentRoute() && $this->getCurrentRoute() != "/") {
 					$callbackParameters[0] = $this->getCurrentRoute();
 					
-					if(!empty($this->getRoute($callbackParameters[0])) && empty($this->getRoute($callbackParameters[0])->primaryKey)){
-					    $this->showError(422, "Could not find a primary key with autoincrement for API route /$callbackParameters[0]");
-					}
+					// if(!empty($this->getRoute($callbackParameters[0])) && empty($this->getRoute($callbackParameters[0])->primaryKey)){
+					//     $this->showError(422, "Could not find a primary key with autoincrement for API route /$callbackParameters[0]");
+					// }
 					
 					ResterUtils::Log(">> Processing route /".$this->getCurrentRoute());
 					if(count($this->getCurrentPath()) > 0) {
@@ -677,6 +677,14 @@ class ResterController {
 					} else {
 						$callbackParameters[1] = NULL;
 					}
+					
+                    $route = $this->getRoute($callbackParameters[0]);
+					if(!empty($route)){
+					    if((!empty($route->routeCommands) && !empty($route->routeCommands[$callbackParameters[1][0]]))){
+					    } else if(empty($route->primaryKey)) {
+					        $this->showError(422, "Could not find a primary key with autoincrement for API route /$callbackParameters[0]");
+					    }
+					}					
 					
 					if($requestMethod == "GET")
 						parse_str($_SERVER['QUERY_STRING'], $requestParameters);
