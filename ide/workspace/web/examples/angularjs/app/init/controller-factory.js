@@ -306,18 +306,47 @@ function ControllerFactory(resourceName, options, extras) {
 	    //Update a single record
 	    $scope.updateSingle = function(callback){
 			//$scope.loading = true;
-	    	var update = true;
-	    	if($scope.beforeUpdate) update = $scope.beforeUpdate();
-	    	if(update){
-		        $scope.update($scope.data.single, function(r){
-		            $scope.locked = true;
-		            if($scope.onUpdate) $scope.onUpdate();
-		            if(callback) callback(r);
-					//$scope.loading = false;
-		        });
+	    	if($scope.beforeUpdate) {
+	    		$scope.beforeUpdate(function(r){
+		    	var update = true;
+		    	if($scope.beforeUpdateBase) update = $scope.beforeUpdateBase();
+			    	if(update){
+				        $scope.update($scope.data.single, function(r){
+				            $scope.locked = true;
+				            if($scope.onUpdate) {
+				            	$scope.onUpdate(function(r){
+				            		if($scope.onUpdateBase) $scope.onUpdateBase();		
+				            	});
+				            } else {
+				            	if($scope.onUpdateBase) $scope.onUpdateBase();		
+				            }
+		                    
+				            if(callback) callback(r);
+							//$scope.loading = false;
+				        });
+			    	}
+	    			
+	    		});            
+	    	} else {
+		    	var update = true;
+		    	if($scope.beforeUpdateBase) update = $scope.beforeUpdateBase();
+		    	if(update){
+				        $scope.update($scope.data.single, function(r){
+				            $scope.locked = true;
+				            if($scope.onUpdate) {
+				            	$scope.onUpdate(function(r){
+				            		if($scope.onUpdateBase) $scope.onUpdateBase();		
+				            	});
+				            } else {
+				            	if($scope.onUpdateBase) $scope.onUpdateBase();		
+				            }
+		                    
+				            if(callback) callback(r);
+							//$scope.loading = false;
+				        });
+		    	}
 	    	}
-	    };
-	    
+	    };	    
 	    //Initialize a single record
 	    $scope.newSingle = function(callback){
 	    	$scope.locked = false;
@@ -328,16 +357,47 @@ function ControllerFactory(resourceName, options, extras) {
 	    //Save a new single record
 	    $scope.saveSingle = function(callback){
 	    	//$scope.loading = true;
-	    	var save = true;
-	    	if($scope.beforeSave) save = $scope.beforeSave();
-	    	if(save){
-		        $scope.save($scope.data.single, function(r){
-		            $scope.locked = true;
-		            if($scope.onSave) $scope.onSave();
-		            if(callback) callback(r);
-		    		//$scope.loading = false;
-		        });
+	    	
+	    	if($scope.beforeSave) {
+	    		$scope.beforeSave(function(r){
+	    			var save = true;
+	    			if($scope.beforeSaveBase) save = $scope.beforeSaveBase();
+	    			if(save){
+				        $scope.save($scope.data.single, function(r){
+				            $scope.locked = true;
+				            if($scope.onSave) {
+				            	$scope.onSave(function(r){
+				            		if($scope.onSaveBase) $scope.onSaveBase();
+				            	});
+				            } else {
+				            	if($scope.onSaveBase) $scope.onSaveBase();	
+				            }
+				            
+				            if(callback) callback(r);
+				    		//$scope.loading = false;
+				        });
+	    			}
+	    		});	
+	    	} else {
+		    	var save = true;
+		    	if($scope.beforeSaveBase) save = $scope.beforeSaveBase();
+		    	if(save){
+			        $scope.save($scope.data.single, function(r){
+			            $scope.locked = true;
+			            if($scope.onSave) {
+			            	$scope.onSave(function(r){
+			            		if($scope.onSaveBase) $scope.onSaveBase();
+			            	});
+			            } else {
+			            	if($scope.onSaveBase) $scope.onSaveBase();	
+			            }
+			            
+			            if(callback) callback(r);
+			    		//$scope.loading = false;
+			        });
+		    	}    		
 	    	}
+
 	    };
 	    
 	    //Change a property in single
@@ -454,11 +514,11 @@ function ControllerFactory(resourceName, options, extras) {
 		    });
 		  };
 
-	    $scope.onSave = $scope.onUpdate = function(){
+	    $scope.onSaveBase = $scope.onUpdateBase = function(){
 	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE,M.SAVED_OK, M.SAVED_CANCEL, function(){}, function(){$location.path($scope.currentRoute)});
 	    };
 	    
-	    $scope.beforeSave = $scope.beforeUpdate = function(){
+	    $scope.beforeSaveBase = $scope.beforeUpdateBase = function(){
 	        return (!Object.keys($scope.forms[$scope.currentRoute + "Form"].$error).length);
 	    };
 	};
