@@ -307,11 +307,13 @@ function ControllerFactory(resourceName, options, extras) {
 	    $scope.updateSingle = function(callback){
 			//$scope.loading = true;
 	    	var update = true;
-	    	if($scope.beforeUpdate) update = $scope.beforeUpdate();
+	    	if($scope.beforeUpdateBase) update = $scope.beforeUpdateBase();
+	    	if($scope.beforeUpdate) update = $scope.beforeUpdate();            
 	    	if(update){
 		        $scope.update($scope.data.single, function(r){
 		            $scope.locked = true;
 		            if($scope.onUpdate) $scope.onUpdate();
+                    if($scope.onUpdateBase) $scope.onUpdateBase();
 		            if(callback) callback(r);
 					//$scope.loading = false;
 		        });
@@ -329,11 +331,13 @@ function ControllerFactory(resourceName, options, extras) {
 	    $scope.saveSingle = function(callback){
 	    	//$scope.loading = true;
 	    	var save = true;
-	    	if($scope.beforeSave) save = $scope.beforeSave();
+	    	if($scope.beforeSaveBase) save = $scope.beforeSaveBase();
+	    	if($scope.beforeSave) save = $scope.beforeSave();            
 	    	if(save){
 		        $scope.save($scope.data.single, function(r){
 		            $scope.locked = true;
-		            if($scope.onSave) $scope.onSave();
+		            if($scope.onSave) $scope.onSave();                    
+		            if($scope.onSaveBase) $scope.onSaveBase();
 		            if(callback) callback(r);
 		    		//$scope.loading = false;
 		        });
@@ -454,11 +458,11 @@ function ControllerFactory(resourceName, options, extras) {
 		    });
 		  };
 
-	    $scope.onSave = $scope.onUpdate = function(){
+	    $scope.onSaveBase = $scope.onUpdateBase = function(){
 	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE,M.SAVED_OK, M.SAVED_CANCEL, function(){}, function(){$location.path($scope.currentRoute)});
 	    };
 	    
-	    $scope.beforeSave = $scope.beforeUpdate = function(){
+	    $scope.beforeSaveBase = $scope.beforeUpdateBase = function(){
 	        return (!Object.keys($scope.forms[$scope.currentRoute + "Form"].$error).length);
 	    };
 	};
