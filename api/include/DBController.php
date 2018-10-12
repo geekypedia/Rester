@@ -94,6 +94,12 @@ class DBController
 						case 'SHOW':
 						case 'DESCRIBE':
 							return $result[$hash]->fetchAll();
+						case 'CALL':
+						    //$r = array();
+						    do {
+							$r[] = $result[$hash]->fetchAll();
+						    } while ($result[$hash]->nextRowset());
+						    return $r;							
 						
 					}
 					return true;
