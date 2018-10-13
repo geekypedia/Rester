@@ -8,6 +8,6 @@ function RegisterRoutes() {
             {route: 'profile', template: 'auth/profile', controller: 'profile'},
             {route: 'unauthorized', template: 'auth/unauthorized', controller: 'unauthorized'}
         ],
-        easyRoutes: ['organizations', 'users']
+        easyRoutes: ['organizations', 'users', 'groups']
     };
 }

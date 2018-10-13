@@ -5,6 +5,9 @@ function RegisterData(){
         },
         users: {
             headers: ['Username', 'Email', 'Last Lease', 'Role', 'Actions']
+        },
+        groups: {
+            headers: ['Title']
         }
     };
 }

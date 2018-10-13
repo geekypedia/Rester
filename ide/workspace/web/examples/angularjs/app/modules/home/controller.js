@@ -28,6 +28,15 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 				action: 'users',
 				allowedRoles: ['admin']
 			},
+			groupsCounter: {
+				title: 'Groups',
+				value: '...',
+				icon: 'group',
+				background: 'bg-pink',
+				color: 'white-text',
+				action: 'groups',
+				allowedRoles: ['admin']
+			},
 			organizationsCounter: {
 				title: 'Organizations',
 				value: '...',

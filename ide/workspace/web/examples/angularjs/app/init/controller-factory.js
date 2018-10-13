@@ -181,13 +181,11 @@ function ControllerFactory(resourceName, options, extras) {
 
 		//Save a record
 		$scope.save = function(obj, callback) {
-			
-			
 			if (obj && obj.$save) {
 				var promise = obj.$save();
-				promise.then(function() {
+				promise.then(function(r) {
 					if (callback) {
-						callback();
+						callback(r);
 					}
 				}, function(e){
 					errorHandler(e);
@@ -197,9 +195,9 @@ function ControllerFactory(resourceName, options, extras) {
 				});
 			} else if ($scope.data.single) {
 				var promise = $scope.data.single.$save();
-				promise.then(function() {
+				promise.then(function(r) {
 					if (callback) {
-						callback();
+						callback(r);
 					}
 				}, function(e){
 					errorHandler(e);
@@ -260,6 +258,7 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.listAll = function(currentPage){
 			//$scope.loading = true;
 			$scope.count(function(){
+				$scope.loading = true;
 				$scope.data.pagesCount = parseInt(($scope.data.records - 1)/ $scope.data.limit) + 1;
 				$scope.data.pages = [];
 				for (var i = 0; i < $scope.data.pagesCount; i++) {
@@ -277,7 +276,8 @@ function ControllerFactory(resourceName, options, extras) {
 					$rootScope.currentPage = currentPage;
 				}
 			    $scope.query({limit: $scope.data.limit, offset: ($rootScope.currentPage - 1) * $scope.data.limit}, function(r) {
-			    	//$scope.loading = false;
+			    	$scope.loading = false;
+			    	if($scope.onLoad) $scope.onLoad(r);
 			    });
 				
 			});
@@ -287,6 +287,7 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.loadSingle = function(callback){
 			//$scope.loading = true;
 		    $scope.get($routeParams.id, function(r) {
+		    	if($scope.onLoadSingle) $scope.onLoadSingle(r);
 		    	if(callback) callback(r);
 		    	//$scope.loading = false;
 		    });
@@ -314,7 +315,7 @@ function ControllerFactory(resourceName, options, extras) {
 				        $scope.update($scope.data.single, function(r){
 				            $scope.locked = true;
 				            if($scope.onUpdate) {
-				            	$scope.onUpdate(function(r){
+				            	$scope.onUpdate(r, function(r){
 				            		if($scope.onUpdateBase) $scope.onUpdateBase();		
 				            	});
 				            } else {
@@ -334,7 +335,7 @@ function ControllerFactory(resourceName, options, extras) {
 				        $scope.update($scope.data.single, function(r){
 				            $scope.locked = true;
 				            if($scope.onUpdate) {
-				            	$scope.onUpdate(function(r){
+				            	$scope.onUpdate(r, function(r){
 				            		if($scope.onUpdateBase) $scope.onUpdateBase();		
 				            	});
 				            } else {
@@ -366,7 +367,7 @@ function ControllerFactory(resourceName, options, extras) {
 				        $scope.save($scope.data.single, function(r){
 				            $scope.locked = true;
 				            if($scope.onSave) {
-				            	$scope.onSave(function(r){
+				            	$scope.onSave(r, function(r){
 				            		if($scope.onSaveBase) $scope.onSaveBase();
 				            	});
 				            } else {
@@ -385,7 +386,7 @@ function ControllerFactory(resourceName, options, extras) {
 			        $scope.save($scope.data.single, function(r){
 			            $scope.locked = true;
 			            if($scope.onSave) {
-			            	$scope.onSave(function(r){
+			            	$scope.onSave(r, function(r){
 			            		if($scope.onSaveBase) $scope.onSaveBase();
 			            	});
 			            } else {

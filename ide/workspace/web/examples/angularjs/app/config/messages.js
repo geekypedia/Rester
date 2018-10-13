@@ -62,6 +62,8 @@ app.service('M', function($http) {
 		"FIELD_SUPERADMIN_PASSWORD": "Super Admin Password",
 		"FIELD_CLIENT_SECRET": "Client Secret",
 		"FIELD_VALIDITY": "Validity",
-		"FIELD_LICENSE": "License"
+		"FIELD_LICENSE": "License",
+		"FIELD_GROUPNAME": "Group Title",
+		"FIELD_ACTIVE": "Active"
 	};
 });

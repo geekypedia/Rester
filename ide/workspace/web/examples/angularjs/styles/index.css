@@ -310,3 +310,11 @@ body {
     width: 60%;
     padding: 10px;
 }
+
+.no-margin{
+  margin: 0;
+}
+
+.top-margin-20{
+  margin-top: 20px;
+}
