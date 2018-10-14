@@ -24,15 +24,19 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
     };
     
     $scope.onLoadSingle = function(result){
+        $scope.loadUsers();
         $scope.UserGroups.query({group_id: result.id}, function(r){
-            $scope.loadUsers();
             $scope.data.groupUsers = r;
         });
     };
     
     $scope.removeGroupUser = function(item){
+        $scope.loading = true;
         $scope.delete(item, function(r){
-            $scope.onLoadSingle($scope.data.single);
+            $scope.loading = false;
+            // $scope.UserGroups.query({group_id: $scope.data.single.id}, function(r){
+            //     $scope.data.groupUsers = r;
+            // });
         });
     };
     
@@ -41,10 +45,14 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
             var ug = new $scope.UserGroups();
             ug.user_id = user.id;
             ug.group_id = $scope.data.single.id;
-            if(!$scope.groupUserElements) $scope.groupUserElements = [];
-            $scope.groupUserElements.push(ug);
+            // if(!$scope.groupUserElements) $scope.groupUserElements = [];
+            // $scope.groupUserElements.push(ug);
             $scope.save(ug, function(r){
-                $scope.data.groupUsers.push(r);
+                console.log(r);
+                if(!((r && r.data && r.data.error) || (r && r.error))){
+                    $scope.data.groupUsers.push(r);    
+                }
+                
             });
         }
     };
