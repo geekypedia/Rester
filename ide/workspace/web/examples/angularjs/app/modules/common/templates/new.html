@@ -11,7 +11,8 @@
       <md-content layout-padding class="layout-padding _md">
         <div ng-include src="getTemplate('new')"></div>
         <div>
-            <button class="btn" ng-click="saveSingle()">{{M.BTN_SAVE}}</button>    
+            <button class="btn" ng-if="!data.single.id" ng-click="saveSingle()">{{M.BTN_SAVE}}</button>    
+            <button class="btn" ng-if="data.single.id" ng-click="goToEdit()">{{M.BTN_EDIT}}</button>    
             &nbsp;<spinner/>
         </div>
       </md-content>

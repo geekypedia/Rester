@@ -20,7 +20,6 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
     $scope.newSingle = function(){
         $scope.locked = false;
         $scope.data.single.is_active = true;
-        $scope.data.groupUsers = [{id: 3}];
         $scope.loadUsers();
     };
     
@@ -53,14 +52,14 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
     $scope.onSave = function(result, next){
         
         if(result && result.id){
-            var UserGroups = H.R.get('user_groups');
-            for (var i = 0; i < $scope.data.groupUsers.length; i++) {
-                var ug = new $scope.UserGroups();
-                ug.user_id = $scope.data.groupUsers[i].id;
-                ug.group_id = result.id;
-                $scope.save(ug);
+            // var UserGroups = H.R.get('user_groups');
+            // for (var i = 0; i < $scope.data.groupUsers.length; i++) {
+            //     var ug = new $scope.UserGroups();
+            //     ug.user_id = $scope.data.groupUsers[i].id;
+            //     ug.group_id = result.id;
+            //     $scope.save(ug);
                 
-            } 
+            // } 
         } else {
         }
         

@@ -37,7 +37,6 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.newRouteHref = "#!" + $scope.currentRoute + "/new";
 		$scope.editRouteHref = "#!" + $scope.currentRoute + "/:id";
 
-
 		//Default error handler
 		var errorHandler = function(error) {
 			if (error && error.status) {
@@ -522,5 +521,9 @@ function ControllerFactory(resourceName, options, extras) {
 	    $scope.beforeSaveBase = $scope.beforeUpdateBase = function(){
 	        return (!Object.keys($scope.forms[$scope.currentRoute + "Form"].$error).length);
 	    };
+	    
+	    $scope.goToEdit = function(){
+	    	$location.path($scope.currentRoute + "/" + $scope.data.single.id);
+	    }
 	};
 }
