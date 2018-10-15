@@ -75,3 +75,40 @@ This if turned off by default. If you turn it on, you will see a 'Register' link
 Legacy Mode
 -----
 If you want to host this application on shared hosting providers such as 000webhost, they do not allow PUT and DELETE methods. In that case, just turn on legacyMode in app/config/settings.js, and also enable LEGACY_MODE in API project. All the PUT and DELETE requests will turn into POST requests.
+
+Sample Code
+-----
+Please take a look at app/modules/tasks as a reference to write your own code.
+
+Easiest way to add your own components is
+1. Go to the Database Administration Tool http://localhost:8080/db and add table for your module. (For example if you wish to create a screen to manage employees, you would create an 'employees' table).
+2. Adding a table to the database automatically creates relevant REST APIs. The route path of the API will be same as of the table name. (For example, in this case it will be /api/employees).
+3. Go to app/config/routes.js and add an entry for the route under 'easyRoutes'.(For example, in this case it would be 'employees').
+4. Go to app/config/menu.js and add an item under second array element.
+For example, in this case add the following item
+```
+{action: 'employees', icon: 'people',text: 'Employees'}
+```
+The 'action' should always match the name of the API/table. You can use any 'icon' from [Materialize CSS Icons](https://materializecss.com/icons.html).
+The menu.js will look like the following
+```JavaScript
+...
+        {
+            header: '',
+            showHeader: false,
+            showSeparator: false,
+            items: [
+        	    {action: 'tasks', icon: 'assignment_turned_in',text: 'Tasks'},
+        	    {action: 'search', icon: 'search',text: 'Search'},
+        	    {action: 'reports', icon: 'pie_chart',text: 'Reports'},
+        	    {action: 'alerts', icon: 'alarm',text: 'Alerts'},
+        	    {action: 'employees', icon: 'people',text: 'Employees'}
+	        ],
+	        allowedRoles: ['user', 'admin']
+        },
+...
+```
+5. Copy the 'app/modules/tasks' to 'app/modules/your-module-name'. In this case it will be 'app/modules/employees'. This is a boilerplate code and you will get all the CRUD operations along with pagination and loader.
+6. See the comments in 'app/modules/your-module-name/controller.js'
+
+Note: You can always go for customized code, and not follow the above rules. So in that case, you will start with 'customRoutes' in app/config/routes.js

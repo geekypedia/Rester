@@ -12,7 +12,6 @@ var app = angular.module('app', [
 							'ui.grid.autoResize', 
 							'ngMaterial', 
 							'ngMessages',
-							'angular-md5'
+							'angular-md5',
+							'zingchart-angularjs'
 							]);
-
-
