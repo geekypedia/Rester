@@ -105,10 +105,12 @@ function ControllerFactory(resourceName, options, extras) {
 		};
 		
 		//Get specific record
-		$scope.count = function(callback) {
-			Resource.query({
+		$scope.count = function(query, callback) {
+			query = query || {
 				count: true
-			}, function(result) {
+			};
+			if(!query['count']) query['count'] = true;
+			Resource.query(query, function(result) {
 				$scope.data.records = result[0].count;
 				if (callback) {
 					callback(result);
@@ -255,8 +257,14 @@ function ControllerFactory(resourceName, options, extras) {
 	
 		//Load all entries on initialization
 		$scope.listAll = function(currentPage){
+			if(!$scope.beforeLoadAll) $scope.beforeLoadAll = function(query){
+				return query;
+			};
+			var countQueryParam = {count:false};
+			var countQuery = $scope.beforeLoadAll(countQueryParam) || countQueryParam;
+
 			//$scope.loading = true;
-			$scope.count(function(){
+			$scope.count(countQuery, function(){
 				$scope.loading = true;
 				$scope.data.pagesCount = parseInt(($scope.data.records - 1)/ $scope.data.limit) + 1;
 				$scope.data.pages = [];
@@ -274,13 +282,24 @@ function ControllerFactory(resourceName, options, extras) {
 				} else {
 					$rootScope.currentPage = currentPage;
 				}
-			    $scope.query({limit: $scope.data.limit, offset: ($rootScope.currentPage - 1) * $scope.data.limit}, function(r) {
+				var dataQueryParam = {limit: $scope.data.limit, offset: ($rootScope.currentPage - 1) * $scope.data.limit};
+				var dataQuery = $scope.beforeLoadAll(dataQueryParam) || dataQueryParam;
+				
+			    $scope.query(dataQuery, function(r) {
 			    	$scope.loading = false;
 			    	if(r && r.length > 0){
 				    	var headers = Object.getOwnPropertyNames(r[0]);
 				    	$scope.data.listHeadersRaw = headers;
 				    	if(headers.indexOf("id") > -1) headers.splice(headers.indexOf("id"), 1);
 				    	if(headers.indexOf("secret") > -1) headers.splice(headers.indexOf("secret"), 1);
+				    	headers = headers.filter(p => (p.slice(-3) !== "_id"));
+				    	if($scope.removeListHeaders){
+				    		var removeHeaders = $scope.removeListHeaders();
+				    		for (var i = 0; i < removeHeaders.length; i++) {
+				    			var h = removeHeaders[i];
+				    			if(headers.indexOf(h) > -1) headers.splice(headers.indexOf(h), 1);
+				    		}
+				    	}
 				    	$scope.data.listKeys = headers;
 				    	headers = headers.map(p => H.toTitleCase(H.replaceAll(p, '_', ' ')));
 				    	$scope.setListHeaders(headers);
@@ -532,17 +551,22 @@ function ControllerFactory(resourceName, options, extras) {
 		
 			$scope.initTextResources(plural, singular, listTemplate, listItemTemplate, listHeaderTemplate, listFooterTemplate, singleTemplate, singleTemplate, singleHeaderTemplate, singleFooterTemplate);
 		};
+		
+		$scope.setTitle = function(t, v){
+			$scope.textResources.title[t] = v;
+		};
 
 		$scope.getTitle = function(t){
 			switch (t) {
 				case 'single':
+					if($scope.getSingularTitle) return $scope.getSingularTitle();
 					return $scope.textResources.title.single;
 				case 'list':
 					return $scope.textResources.title.list;
 				default:
 					return $scope.textResources.title.list;
 			}
-		}
+		};
 		
 		$scope.getTemplate = function(t){
 			switch (t) {
@@ -580,6 +604,12 @@ function ControllerFactory(resourceName, options, extras) {
 			$scope.data.listHeaders = headers;
 		};
 		
+		$scope.changeListHeaders = function(header, replacement){
+			if($scope.data.listHeaders && $scope.data.listHeaders.indexOf(header) > -1){
+				$scope.data.listHeaders[$scope.data.listHeaders.indexOf(header)] = replacement;
+			}
+		};
+		
 		 $scope.showDialog = function(ev, title, content, okText = "OK", cancelText = "Cancel", okHandler, cancelHandler) {
 		    var confirm = $mdDialog.confirm()
 		          .title(title)
@@ -597,7 +627,7 @@ function ControllerFactory(resourceName, options, extras) {
 		  };
 		  
 		$scope.onErrorBase = function(obj){
-	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_ERROR,M.SAVED_OK, M.SAVED_CANCEL, function(){$scope.locked = false;}, function(){$location.path($scope.currentRoute)});			
+	        $scope.showDialog(null, M.ERROR_TITLE, M.SAVED_ERROR,M.SAVED_OK, M.SAVED_CANCEL, function(){$scope.locked = false;}, function(){$location.path($scope.currentRoute)});			
 		};
 
 	    $scope.onSaveBase = $scope.onUpdateBase = function(obj){

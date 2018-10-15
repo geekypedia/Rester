@@ -10,6 +10,6 @@ function RegisterRoutes() {
             {route: 'out-of-service', template: 'auth/out-of-service', controller: 'outOfService', auth: false},
             {route: 'settings', template: 'settings/template', controller: 'settings'}
         ],
-        easyRoutes: ['organizations', 'users', 'groups', 'tasks']
+        easyRoutes: ['organizations', 'users', 'groups', 'categories', 'tasks']
     };
 }

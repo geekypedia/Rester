@@ -1114,6 +1114,8 @@ class ResterController {
 						$relationFieldName = str_replace("_id","",$rf->relation->field);
 						$relationFieldName = str_replace("id","",$relationFieldName);
 						$mainObject[$relationFieldName]=$relationObject;
+						
+						$mainObject[$rf->relation->field]=$relationObject["id"];
 
 
 						

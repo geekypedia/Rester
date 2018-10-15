@@ -75,6 +75,18 @@ CREATE TABLE `user_groups` (
   CONSTRAINT `user_groups_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `secret` varchar(50) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  CONSTRAINT `categories_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

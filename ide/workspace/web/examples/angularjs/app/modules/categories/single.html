@@ -1,0 +1,23 @@
+<!--This is the template that will be used in new/edit screens. It should be in <form></form> tag. The name of the form should be matching the name of your API route, prefixed with 'froms.' and suffixed by 'Form'. e.g. in this case, it would be 'forms.categoriesForm'-->
+<!--Example-->
+<form name="forms.categoriesForm">
+    <md-input-container class="md-block">
+      <label for="category_title" class="active">{{M.FIELD_TITLE}}:</label>
+      <input id="category_title" name="category_title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
+      <div ng-messages="forms.categoriesForm.category_title.$error" ng-show="forms.categoriesForm.category_title.$dirty">
+        <div ng-message="required">{{M.REQUIRED}}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label for="category_is_active" class="active">{{M.FIELD_ACTIVE}}:</label>
+        <br>
+        <md-switch id="category_is_active" name="category_is_active" ng-disabled="locked" aria-label="Disabled active switch" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0">
+        </md-switch>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <md-select ng-model="data.single.category_id" placeholder="{{M.FIELD_CATEGORY}}" class="md-no-underline" ng-disabled="locked">
+          <md-option ng-repeat="c in data.categories track by $index" value="{{c.id}}">{{c.title}}</md-option>
+        </md-select>    
+    </md-input-container>
+  </div>
+</form>

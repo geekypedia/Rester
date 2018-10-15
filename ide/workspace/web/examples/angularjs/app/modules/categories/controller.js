@@ -1,15 +1,16 @@
 /*global app*/
 //The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
-//Example: your API is http://localhost:8080/api/tasks then the name of the controller is tasksControllerExtension.
-//To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' array.
-app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+//Example: your API is http://localhost:8080/api/categories then the name of the controller is categoriesControllerExtension.
+//To register this controller, just go to app/config/routes.js and add 'categories' in 'easyRoutes' array.
+app.controller('categoriesControllerExtension', function($scope, $controller, $rootScope, $http, $location, $mdDialog, H, M) {
+    
     
     //This function is called when you need to make changes to the new single object.
     $scope.onInit = function(obj){
-        //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'tasks' resource that matches the structure of your 'tasks' API.
+        //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'categories' resource that matches the structure of your 'categories' API.
     };
     
-    //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/tasks/1
+    //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/categories/1
     $scope.onLoad = function(obj){
         //$scope.data.single is available here. 'obj' refers to the same. It represents the object you are trying to edit.
     };
@@ -21,12 +22,16 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
         //return query;
     };
 
+
     //This function is called when you are in list mode. i.e. after a call has returned from one of your API that returns a the paginated list of all objects matching your API.
     $scope.onLoadAll = function(obj){
         //$scope.data.list is available here. 'obj' refers to the same. It represents the object you are trying to edit.
         
         //You can call $scope.setListHeaders(['column1','column2',...]) in case the auto generated column names are not what you wish to display.
         //or You can call $scope.changeListHeaders('current column name', 'new column name') to change the display text of the headers;
+        $scope.changeListHeaders('Category', 'Parent Category');
+        
+        console.log(parseInt(($scope.data.records - 1)/ $scope.data.limit));
     };
     
     //This function is called before the create (POST) request goes to API
@@ -43,6 +48,7 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
     
     //This function is called before the update (PUT) request goes to API
     $scope.beforeUpdate = function(obj, next){
+        delete obj.category;
         //You can choose not to call next(), thus rejecting the update request. This can be used for extra validations.
         next();
     };
@@ -59,15 +65,14 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
         next();
     };
     
-    // If the singular of your title is having different spelling then you can define it as shown below.
-    // $scope.getSingularTitle = function(){
-    //     return "TASK";
-    // }
-
-    // If you want don't want to display certain columns in the list view you can remove them by defining the function below.
-    // $scope.removeListHeaders = function(){
-    //     return ['is_active'];
-    // }
-
+    $scope.getSingularTitle = function(){
+        return M.FIELD_CATEGORY.toUpperCase();
+    };
+    
+    H.R.get('categories').query({}, function(r){
+        $scope.data.categories = r;
+    });
+    
+    
 
 });

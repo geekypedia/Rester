@@ -18,6 +18,7 @@ app.service('M', function($http) {
 		"SAVED_MESSAGE": "You have successfully saved this record!",
 		"SAVED_OK": "Stay Here",
 		"SAVED_CANCEL": "Go Back To Listing",
+		"ERROR_TITLE": "Error!",
 		"SAVED_ERROR": "An error occured while trying to save the object.",
 		"RECOVERY_EMAIL_SENT": "We have sent instructions to your registered e-mail address. Please check your spam folder.",
 		"REGISTRATION_EMAIL_SENT": "We have sent your request for approval. This usually takes upto 72 hours, but usually our approval panel is very quick to respond. You will soon get an activation email. Please keep checking your spam folder.",
@@ -78,6 +79,7 @@ app.service('M', function($http) {
 		"FIELD_ADDR1": "Address 1",
 		"FIELD_ADDR2": "Address 2",
 		"FIELD_GENDER": "Gender",
-		"FIELD_ACTIVE": "Active"
+		"FIELD_ACTIVE": "Active",
+		"FIELD_CATEGORY": "Category"
 	};
 });
