@@ -41,6 +41,9 @@ app.factory('httpRequestInterceptor', function ($rootScope, $q) {
             if(response.status === 401){
             	$rootScope.$emit('loginRequired');
             }
+            if(response.status === 503){
+            	$rootScope.$emit('outOfService');
+            }
             return $q.reject(response);
         }
     };
@@ -105,6 +108,12 @@ app.run(function ($rootScope, $location, $cookies, H) {
     	$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
 		$location.path('/sign-in');
+    });
+
+    $rootScope.$on("outOfService", function (event, next, current) {
+    	$cookies.remove(H.getCookieKey());
+		delete $rootScope.currentUser;
+		$location.path('/out-of-service');
     });
     
 });

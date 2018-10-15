@@ -19,7 +19,7 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
 
     $scope.newSingle = function(){
         $scope.locked = false;
-        $scope.data.single.is_active = true;
+        $scope.data.single.is_active = 1;
         $scope.loadUsers();
     };
     

@@ -6,6 +6,7 @@ app.service('M', function($http) {
 		"E405": "Invalid operation!",
 		"E400": "Bad request!",
 		"E500": "An error accured!",
+		"OUT_OF_SERVICE": "The system is under unscheduled maintenance! We'll be back soon.",
 		"LOGIN_API_UNAVAILABLE": "Please contact the administrator. It seems that the login services are not enabled!",
 		"REGISTER_API_UNAVAILABLE": "Please contact the administrator. It seems that the registration services are not enabled!",
 		"SAAS_API_UNAVAILABLE": "Please contact the administrator. It seems that the SaaS services are not enabled!",
