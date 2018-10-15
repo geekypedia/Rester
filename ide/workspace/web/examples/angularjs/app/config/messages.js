@@ -18,6 +18,7 @@ app.service('M', function($http) {
 		"SAVED_MESSAGE": "You have successfully saved this record!",
 		"SAVED_OK": "Stay Here",
 		"SAVED_CANCEL": "Go Back To Listing",
+		"SAVED_ERROR": "An error occured while trying to save the object.",
 		"RECOVERY_EMAIL_SENT": "We have sent instructions to your registered e-mail address. Please check your spam folder.",
 		"REGISTRATION_EMAIL_SENT": "We have sent your request for approval. This usually takes upto 72 hours, but usually our approval panel is very quick to respond. You will soon get an activation email. Please keep checking your spam folder.",
 		"PROFILE_SAVED": "Profile information updated successfully!",
@@ -65,6 +66,15 @@ app.service('M', function($http) {
 		"FIELD_VALIDITY": "Validity",
 		"FIELD_LICENSE": "License",
 		"FIELD_GROUPNAME": "Group Title",
+		"FIELD_TITLE": "Title",
+		"FIELD_DESCRIPTION": "Description",
+		"FIELD_FIRST_NAME": "First Name",
+		"FIELD_LAST_NAME": "Last Name",
+		"FIELD_AGE": "Age",
+		"FIELD_ADDR": "Address",
+		"FIELD_ADDR1": "Address 1",
+		"FIELD_ADDR2": "Address 2",
+		"FIELD_GENDER": "Gender",
 		"FIELD_ACTIVE": "Active"
 	};
 });

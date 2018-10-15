@@ -1,6 +1,7 @@
 <div ng-init="listAll()"></div>
 <h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
 <hr/>
+<div ng-include src="getTemplate('list-header')"></div>
 <div style="overflow:auto">
 <table class="striped responsive-table">
         <thead>
@@ -22,4 +23,5 @@
 <div class="fixed-action-btn ">
       <a class="btn-floating btn-large blue" href="{{newRouteHref}}"><i class="material-icons">add</i></a>
 </div>
+<div ng-include src="getTemplate('list-footer')"></div>
 <div ng-include src="getTemplate('list')"></div>

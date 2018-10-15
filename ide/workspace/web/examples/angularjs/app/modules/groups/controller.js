@@ -17,13 +17,13 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
         });
     }
 
-    $scope.newSingle = function(){
-        $scope.locked = false;
+    $scope.onInit = function(){
+        //$scope.locked = false;
         $scope.data.single.is_active = 1;
         $scope.loadUsers();
     };
     
-    $scope.onLoadSingle = function(result){
+    $scope.onLoad = function(result){
         $scope.loadUsers();
         $scope.UserGroups.query({group_id: result.id}, function(r){
             $scope.data.groupUsers = r;

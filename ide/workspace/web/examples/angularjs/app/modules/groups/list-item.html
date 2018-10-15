@@ -1,5 +1,5 @@
 <td><a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')" href="#!/{{currentRoute}}/{{item.id}}">{{item.title}}</a><span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.title}}</span></td>
-<td style="float:right">
+<td>
     <md-switch class="no-margin" ng-disabled="true" aria-label="Disabled active switch" ng-model="item.is_active" ng-true-value="1" ng-false-value="0">
     </md-switch>
 </td>

@@ -6,10 +6,15 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
         $location.path('unauthorized');
     }
 
-    $scope.newSingle = function(){
-        $scope.locked = false;
-        $scope.data.single.password = H.getHash('pRESTige');
+    $scope.onInit = function(){
+        //$scope.newSingle(function(){
+        $scope.data.single.password = H.getHash('pRESTige');    
+        //});
     };
+    
+    $scope.onLoadAll = function(){
+        $scope.setListHeaders(['Username', 'Email', 'Last Lease', 'Role', 'Actions']);
+    }
     
     $scope.setPassword = function(item, newItem) {
         if(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1){
@@ -60,6 +65,6 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
         $scope.clickedUser = {};
         $scope.newUserValues = {};
         $mdDialog.cancel();            
-    }   ; 
+    }; 
     
 });

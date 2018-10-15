@@ -25,7 +25,9 @@ app.service('H', function($location, md5, S, M, R) {
 			var openRouteNames = [];
 			openRoutes.forEach(p => openRouteNames.push("/" + p.route));
 			return openRouteNames;
-		}
+		},
+		toTitleCase: Helper.toTitleCase,
+		replaceAll: Helper.replaceAll
 	};
 });
 
@@ -97,6 +99,16 @@ class Helper {
 	
 	static checkLicenseValidity(organization){
 		return ((new Date() > Helper.toDateTime(organization.validity) && !(['basic', 'super'].indexOf(organization.license) > -1))  || !organization.is_active ) ? 'expired' : 'valid';
+	}
+	
+	static toTitleCase(input){
+		input = input || '';
+		return input.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	}
+	
+	static replaceAll(input, search, replacement){
+		input = input || '';
+		return input.replace(new RegExp(search, 'g'), replacement);
 	}
 
 }

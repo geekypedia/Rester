@@ -8,7 +8,8 @@ function RegisterRoutes() {
             {route: 'profile', template: 'auth/profile', controller: 'profile'},
             {route: 'unauthorized', template: 'auth/unauthorized', controller: 'unauthorized'},
             {route: 'out-of-service', template: 'auth/out-of-service', controller: 'outOfService', auth: false},
+            {route: 'settings', template: 'settings/template', controller: 'settings'}
         ],
-        easyRoutes: ['organizations', 'users', 'groups']
+        easyRoutes: ['organizations', 'users', 'groups', 'tasks']
     };
 }

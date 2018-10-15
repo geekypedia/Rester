@@ -17,7 +17,7 @@ function RegisterEasyController(route, headers, controller){
 		
 		$scope.initTextResourcesEasy();
 		
-		$scope.setListHeaders(headers);
+		//$scope.setListHeaders(headers);
 		
 	});
 }
@@ -25,9 +25,9 @@ function RegisterEasyController(route, headers, controller){
 //Register Easy Routes
 (function(){
     var easyRoutes = RegisterRoutes().easyRoutes;
-    var data = RegisterData();
+    //var data = RegisterData();
     
     for (var i = 0; i < easyRoutes.length; i++) {
-        RegisterEasyController(easyRoutes[i], data[easyRoutes[i]].headers);
+        RegisterEasyController(easyRoutes[i]/*, data[easyRoutes[i]].headers*/);
     }
 })();

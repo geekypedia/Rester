@@ -1,6 +1,7 @@
 <div ng-init="newSingle()"></div>
 <h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
 <hr/>
+<div ng-include src="getTemplate('single-header')"></div>
 <section class="demo-container md-whiteframe-z1">
       <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
         <div class="md-toolbar-tools">
@@ -20,3 +21,4 @@
 <div class="fixed-action-btn ">
       <a class="btn-floating btn-large yellow darken-4" ng-href="{{currentRouteHref}}"><i class="material-icons">arrow_back</i></a>
 </div>
+<div ng-include src="getTemplate('single-footer')"></div>
