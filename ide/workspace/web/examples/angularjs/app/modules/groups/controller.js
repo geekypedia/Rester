@@ -22,6 +22,14 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
             if(callback) callback();
         });
     };
+    
+    $scope.getUsers = function(searchText){
+        return $http.get(H.S.baseUrl + '/users?username[in]=' + searchText)
+            .then(function(r){
+                return r.data;
+            });
+        //return $scope.data.users.filter(p => p.username.includes(searchText));
+    };
 
     $scope.onInit = function(obj){
         obj.is_active = 1;

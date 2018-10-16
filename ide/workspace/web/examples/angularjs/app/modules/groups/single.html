@@ -17,16 +17,22 @@
 <form ng-submit="addGroupUser(selectedUser)">
     <div layout="row" layout-sm="column">
       <div flex=80>
-        <md-autocomplete class="no-bottom" 
+        <md-autocomplete class="no-bottom md-no-underline"  
                           md-no-cache="true" 
                           md-selected-item="selectedUser" 
-                          md-items="item in users" 
+                          md-items="item in getUsers(searchText)" 
                           md-search-text="searchText" 
                           md-item-text="item.username"
                           md-floating-label="People"
+                          md-delay=3
                           ng-disabled="locked"
                           >
-          <span><img src="images/user.png" class="btn-floating btn-small white"> {{ item.username }} ({{item.email}}) - {{item.role}}</span>
+          <md-item-template>
+          <span><img src="images/user.png" class="btn-floating btn-small white"> <span md-highlight-text="searchText">{{ item.username }}</span> ({{item.email}}) - {{item.role}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found.
+          </md-not-found>
         </md-autocomplete>
       </div>
       <div flex=20>
