@@ -8,6 +8,7 @@ app.controller('categoriesControllerExtension', function($scope, $controller, $r
     //This function is called when you need to make changes to the new single object.
     $scope.onInit = function(obj){
         //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'categories' resource that matches the structure of your 'categories' API.
+        obj.is_active = 1;
     };
     
     //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/categories/1

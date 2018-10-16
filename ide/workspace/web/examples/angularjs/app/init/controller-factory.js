@@ -627,11 +627,15 @@ function ControllerFactory(resourceName, options, extras) {
 		  };
 		  
 		$scope.onErrorBase = function(obj){
-	        $scope.showDialog(null, M.ERROR_TITLE, M.SAVED_ERROR,M.SAVED_OK, M.SAVED_CANCEL, function(){$scope.locked = false;}, function(){$location.path($scope.currentRoute)});			
+	        $scope.showDialog(null, M.ERROR_TITLE, M.SAVED_ERROR, M.SAVED_OK, M.SAVED_CANCEL, function(){$scope.locked = false;}, function(){$location.path($scope.currentRoute)});			
 		};
 
-	    $scope.onSaveBase = $scope.onUpdateBase = function(obj){
-	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE,M.SAVED_OK, M.SAVED_CANCEL, function(){}, function(){$location.path($scope.currentRoute)});
+	    $scope.onSaveBase = function(obj){
+	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE, M.SAVED_OK, M.SAVED_CANCEL, function(){ $scope.newSingle(); }, function(){$location.path($scope.currentRoute)});
+	    };
+
+	    $scope.onUpdateBase = function(obj){
+	        $scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE, M.SAVED_OK, M.SAVED_CANCEL, function(){}, function(){$location.path($scope.currentRoute)});
 	    };
 	    
 	    $scope.beforeSaveBase = $scope.beforeUpdateBase = function(obj){
