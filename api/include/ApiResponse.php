@@ -18,7 +18,7 @@ class ApiResponse {
 				),
 		);
 		
-		if(!empty($exception)) $result['error']['exception'] = $exception;
+		if(!empty($exception)) $result['error']['details'] = $exception;
 
 		return $result;
 	}

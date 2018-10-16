@@ -179,6 +179,49 @@ function ControllerFactory(resourceName, options, extras) {
 				});
 			}
 		};
+		
+		$scope.deleteMany = function(resource, obj, callback){
+			if(obj){
+				var r = resource || resourceName;
+				var url = H.SETTINGS.baseUrl + "/" + r + "/";
+				if(H.S.legacyMode) url = url + "delete/";
+				if(Array.isArray(obj)){
+					url = url + "?id=" + JSON.stringify(obj);
+				} else {
+					if(obj.id){
+						url = url + obj.id;	
+					}
+				}
+				if(H.S.legacyMode){
+					return $http.post(url, []).then(function(r){
+						if(callback){
+							callback(r.data);
+						}
+						return r.data;
+					}, function(e){
+						errorHandler(e);
+						if(callback){
+							callback(e.data);
+						}
+						return e.data;
+					});
+				} else {
+					return $http.delete(url).then(function(r){
+						if(callback){
+							callback(r.data);
+						}
+						return r.data;
+					}, function(e){
+						errorHandler(e);
+						if(callback){
+							callback(e.data);
+						}
+						return e.data;
+					});
+				}
+			}
+
+		}
 
 		//Save a record
 		$scope.save = function(obj, callback) {
@@ -209,32 +252,62 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 		};
 		
+		$scope.post = function(resource, arr, callback){
+			var r = resource || resourceName;
+			var url = H.SETTINGS.baseUrl + "/" + r;
+			if(arr){
+				if(H.SETTINGS.enableSaaS){
+					arr.map(function(p){
+						if(!p.secret) p.secret = $rootScope.currentUser.secret;
+					});
+				}
+				return $http.post(url, arr)
+				.then((function (data, status, headers, config) {
+					if (callback) {
+						callback(data.data);
+					}
+					return data.data;
+	            }), (function (e) {
+	            	errorHandler(e);
+					if (callback) {
+						callback(e.data);
+					}
+					return e.data;
+				}));					
+			}
+		
+		}
+		
 		$scope.update = function(obj, callback) {
 			var url = H.SETTINGS.baseUrl + "/" + resourceName;
 			
 			if(H.S.legacyMode){
-				$http.post(url + "/update", obj)
+				return $http.post(url + "/update", obj)
 				.then((function (data, status, headers, config) {
 					if (callback) {
-						callback(data);
+						callback(data.data);
 					}
+					return data.data;
 	            }), (function (e) {
 	            	errorHandler(e);
 					if (callback) {
-						callback(e);
+						callback(e.data);
 					}
+					return e.data;
 				}));
 			} else {
-				$http.put(url, obj)
+				return $http.put(url, obj)
 				.then((function (data, status, headers, config) {
 					if (callback) {
-						callback(data);
+						callback(data.data);
 					}
+					return data.data;
 	            }), (function (e) {
-	            	errorHandler(e);
+	            	errorHandler(e.data);
 					if (callback) {
-						callback(e);
+						callback(e.data);
 					}
+					return e.data;
 				}));
 				
 			}
@@ -342,15 +415,15 @@ function ControllerFactory(resourceName, options, extras) {
 				        $scope.update($scope.data.single, function(r){
 				            $scope.locked = true;
 				            
-				            if(r && r.data && r.data.error){
+				            if(r && r.error){
 				            	if($scope.onError){
-				            		$scope.onError(r.data.error, function(e){
+				            		$scope.onError(r.error, function(e){
 										if($scope.onErrorBase) $scope.onErrorBase(e);
 						            	return;
 				            		});
 				            		return;				            		
 				            	} else {
-					            	if($scope.onErrorBase) $scope.onErrorBase(r.data.error);
+					            	if($scope.onErrorBase) $scope.onErrorBase(r.error);
 					            	return;
 				            	}
 				            }
@@ -376,9 +449,9 @@ function ControllerFactory(resourceName, options, extras) {
 				        $scope.update($scope.data.single, function(r){
 				            $scope.locked = true;
 				            
-				            if(r && r.data && r.data.error){
+				            if(r && r.error){
 				            	if($scope.onError){
-				            		$scope.onError(r.data.error, function(e){
+				            		$scope.onError(r.error, function(e){
 										if($scope.onErrorBase) $scope.onErrorBase(e);
 						            	return;
 				            		});
@@ -423,9 +496,9 @@ function ControllerFactory(resourceName, options, extras) {
 				        $scope.save($scope.data.single, function(r){
 				            $scope.locked = true;
 				            
-				            if(r && r.data && r.data.error){
+				            if(r && r.error){
 				            	if($scope.onError){
-				            		$scope.onError(r.data.error, function(e){
+				            		$scope.onError(r.error, function(e){
 										if($scope.onErrorBase) $scope.onErrorBase(e);
 						            	return;
 				            		});
@@ -456,9 +529,9 @@ function ControllerFactory(resourceName, options, extras) {
 			        $scope.save($scope.data.single, function(r){
 			            $scope.locked = true;
 			            
-				            if(r && r.data && r.data.error){
+				            if(r && r.error){
 				            	if($scope.onError){
-				            		$scope.onError(r.data.error, function(e){
+				            		$scope.onError(r.error, function(e){
 										if($scope.onErrorBase) $scope.onErrorBase(e);
 						            	return;
 				            		});

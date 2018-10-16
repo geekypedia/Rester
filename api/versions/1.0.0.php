@@ -127,7 +127,20 @@ function check_simple_saas($exclude, $check_request_authenticity = false)
 		if(strpos(get_current_api_path(), "POST") > -1){
 		    $body = $resterController->getPostData();
 			if(empty($body['secret'])){
-				$resterController->showError(403, M('SECRET_FORBIDDEN'));
+				
+				$headers = getallheaders();
+				$secret = '';
+				foreach($headers as $k => $v){
+					if(in_array(strtolower($k), array('secret'))){
+						$secret = $v;
+					}
+				}
+				$secret = empty($secret) ? $_REQUEST['$secret'] : $secret;
+				
+				if(empty($secret)){
+					$resterController->showError(403, M('SECRET_FORBIDDEN'));	
+				}
+				
 			}
 		}
 		if($check_request_authenticity) check_request_authenticity();

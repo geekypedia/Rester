@@ -150,7 +150,8 @@ class ResterController {
 									if(!empty($parameters) && !empty($parameters[$key])){
 										$callbackParameters[1] = array($parameters[$key]);
 									} else {
-										$this->showError(422, "Missing parameter: $key");
+										$callbackParameters[1] = null;
+										//$this->showError(422, "Missing parameter: $key");
 									}
 									break;
 							}
@@ -206,11 +207,16 @@ class ResterController {
 									
 			}
 			
-			if($body == NULL) {
-				//not postbody and no post data... we create something...
-				ResterUtils::Log(">> CREATING BAREBONE 8======8");
-				$barebone = array();
-				$result = $this->insertObject($routeName, $barebone); //give all the post data	
+			
+			if($body == NULL || empty($body)) {
+				if(count($_FILES) > 0){
+					//not postbody and no post data... we create something...
+					ResterUtils::Log(">> CREATING BAREBONE 8======8");
+					$barebone = array();
+					$result = $this->insertObject($routeName, $barebone); //give all the post data	
+				} else {
+					$this->showError(400, "The request body is empty.");
+				}
 			} else {
 				//Create object from postbody
 				ResterUtils::Log(">> CREATING OBJECT FROM POSTBODY: *CREATE* - ".$routeName);
@@ -223,7 +229,15 @@ class ResterController {
 				if($existing) { //we got an id, let's update the values
 					$result = $this->updateObjectFromRoute($routeName, $body[$route->primaryKey->fieldName], $body);
 				} else {
-					$result = $this->insertObject($routeName, $body);
+					if(is_array($body) && count($body) > 0 && is_array($body[0])){
+						for ($i = 0; $i < count($body); $i++) {
+							 $b = $body[$i];
+							 $result[] = $this->insertObject($routeName, $b);
+						}
+					} else {
+						$result = $this->insertObject($routeName, $body);	
+					}
+					
 				}
 			}
 			
@@ -247,22 +261,49 @@ class ResterController {
 				$this->showError(400, "Invalid route name supplied.");
 			}
 			
+			
+	
 			if(!isset($routePath) || count($routePath) < 1) {
-				$this->showError(404);
-			}
+				//$this->showError(404);
+				$route = $this->getRoute($routeName);
+			    $key = $route->primaryKey->fieldName;
+			    $idstr = $_REQUEST[$key];
+			    if(empty($idstr)){
+			        $this->showError(422, "Missing parameter: $key");    
+			    }
+			    $ids = json_decode($idstr);
 
+			    if(!is_array($ids)){
+			        $ids = array($ids);
+			    }
+				
+			} else {
+			    $ids = array($routePath[0]);
+			}
+			
+			if(count($ids) == 1){
+				$id = $ids[0];
+			} else {
+				$id = $ids;
+			}
+			
 			//Register event hook
 			try{
 				$func = 'before_delete_' . $routeName;
 				if(function_exists($func)){
-					$func($routePath[0]);
+					$func($id);
 				}
 			} catch (Exception $ex){
 				
 			}
 			
-			$result = $this->deleteObjectFromRoute($routeName, $routePath[0]);
+			for ($i = 0; $i < count($ids); $i++) {
+				 $deleted = $this->deleteObjectFromRoute($routeName, $ids[$i]);
+				 if($deleted > 1) $success[]  = $deleted;
+				 else $failures[] = $ids[$i];
+			}
 			
+			$result = array("deleted" => empty($success) ? "None" : $success, "failed_to_delete" => empty($failures) ? "None" : $failures);
 			
 			//Register event hook
 			try{
@@ -274,11 +315,15 @@ class ResterController {
 				
 			}
 			
+			$passed = !empty($success)  && count($success) > 0;
+			$failed = !empty($failures)  && count($failures) > 0;
 			
-			if($result > 0) {
-				$this->showResult(ApiResponse::successResponse($result));
+			if($failed && !$passed) {
+				$this->showError(404, "Could not find the object you are trying to delete.", $result);
+			} else if ($failed && $passed){
+				$this->showError(409, "Partially deleted!", $result);
 			} else {
-				$this->showError(404, "Could not find the object you are trying to delete.");
+				$this->showResult(ApiResponse::successResponse($result));
 			}
 		
 		});
@@ -786,11 +831,11 @@ class ResterController {
 		if(in_array("createddate", $routeFieldNames)) {
 			$objectData["createddate"] = time() * 1000;
 		}
-			
+		
 		//Set the object ID
 		$insertID = $route->getInsertIDFromObject($objectData);
 		$objectData[$route->primaryKey->fieldName] = $insertID;
-	
+
 		//Insert the object into database
 		$result = $this->dbController->insertObjectToDB($route, $objectData);
 
@@ -1177,7 +1222,7 @@ class ResterController {
 	
 		$result = $this->dbController->Query($query, $ID);
 		
-		return empty($result) ? $result : array($key => $ID, "status" => "deleted");
+		return empty($result) ? $result : $ID;// array($key => $ID, "status" => "deleted");
 	}
 	
 	function update($route, $id, $object) {

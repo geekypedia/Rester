@@ -44,7 +44,7 @@
 <!--        </tbody>-->
 <!--</table>-->
 <!--</div>-->
-<div class="chip" id="peopleChips" ng-repeat="item in data.groupUsers track by $index" ng-if="data.groupUsers && data.groupUsers.length > 0">
+<div class="chip" id="peopleChips" ng-repeat="item in data.groupUsers" ng-if="data.groupUsers && data.groupUsers.length > 0">
     <img src="images/user.png">
     <span>{{item.user.username}} ({{item.user.email}}) - {{item.user.role}}</span>
     <i class="close material-icons" ng-click="removeGroupUser(item)" ng-hide="locked">close</i>

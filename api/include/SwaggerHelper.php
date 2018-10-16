@@ -16,6 +16,7 @@ class SwaggerHelper {
 			$apiCREATE["path"]="/".$route->routeName;
 			$apiCREATE["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", NULL, true), $route->routeName);
 			$apiCREATE["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "POST"), $route->routeName);
+			$apiCREATE["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "POSTBODY"), $route->routeName);
 			if(!LEGACY_MODE) {
 				$apiCREATE["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName);
 			} else {
@@ -151,6 +152,9 @@ class SwaggerHelper {
 					$parameters[] = SwaggerHelper::getIdParameter($route, true);
 				}
 			break;
+			case "POSTBODY":
+				$parameters[] = SwaggerHelper::getPostBodyParameterFromModel($route);
+			break;
 		}
 		
 		return $parameters;
@@ -200,6 +204,14 @@ class SwaggerHelper {
 					'required' => true,
 					'type' => $route->routeName,
 					'description' => $route->routeName." json representation. It can be an array to update multiple objects.");
+	}
+
+	public static function getPostBodyParameterFromModel($route) {
+		return array('name' => "body",
+					'paramType' => 'body',
+					'required' => true,
+					'type' => $route->routeName,
+					'description' => $route->routeName." json representation. It can be an array to create multiple objects.");
 	}
 	
 	public static function createOperation($method, $route, $parameters = null, $operationType, $custom = false, $customNotes = "") {

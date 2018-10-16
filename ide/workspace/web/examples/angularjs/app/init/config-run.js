@@ -24,6 +24,7 @@ app.factory('httpRequestInterceptor', function ($rootScope, $q) {
                         }
                     }
                     else{
+                        config.headers['secret'] = $rootScope.currentUser.secret;
                         config.data.secret = $rootScope.currentUser.secret;
                     }
                 }
