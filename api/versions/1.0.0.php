@@ -879,7 +879,10 @@ function load_stored_procedures(){
 			}
 		}
 		
-		$prestige->addRouteCommand(new RouteCommand("GET", "procedures", $pName, function($params=null){
+		$method = "POST";
+		$route = "procedures";
+		
+		$prestige->addRouteCommand(new RouteCommand($method, $route, $pName, function($params=null){
 			global $prestige;
 			
 			$pName = $prestige->getCurrentPath()[0];
@@ -905,6 +908,8 @@ function load_stored_procedures(){
 			$value = $prestige->query($query); //you can do any type of MySQL queries here.
 			$prestige->showResult($value);
 		}, $pFinal, "Call $pName"));
+			
+
 	}
 }
 load_stored_procedures();
