@@ -861,13 +861,31 @@ function enable_files_api(){
 function load_stored_procedures(){
 	global $prestige;
 	
-	$procedures = $prestige->query("select name, param_list from mysql.proc");
+	try{
+		$procedures = $prestige->query("select name, param_list from mysql.proc");
+	} catch (Exception $ex){
+		try{
+			$procedureInfos = $prestige->query("select SPECIFIC_NAME as 'name' from information_schema.routines where ROUTINE_TYPE = 'PROCEDURE'");
+			foreach($procedureInfos as $p){
+				$pi = array();
+				$pi["name"] = $proc_name = $p["name"];
+				$query = "select concat(PARAMETER_MODE, ' `', PARAMETER_NAME, '` ',DATA_TYPE, '(', CHARACTER_MAXIMUM_LENGTH, ')') as parameter from information_schema.parameters where SPECIFIC_NAME = '$proc_name' and ROUTINE_TYPE = 'PROCEDURE'";
+				$proc_params = $prestige->query($query);
+				$proc_params_list = array();
+				foreach($proc_params as $pp){
+					$proc_params_list[] = $pp["parameter"];
+				}
+				$pi["param_list"] = $proc_params_imploded = implode(",", $proc_params_list);
+				$procedures[] = $pi;
+			}
+		} catch(Exception $ex){
+		}
+	}
 	for ($i = 0; $i < count($procedures); $i++) {
 		$p = $procedures[$i];
 		$pName = $p['name'];
 		$pListSupplied = $p['param_list'];
 		$pFinal = array();
-		
 		if(!empty($pListSupplied)){
 			$pListSuppliedArray = explode(",", $pListSupplied);
 			for ($pi = 0; $pi < count($pListSuppliedArray); $pi++) {
@@ -905,7 +923,12 @@ function load_stored_procedures(){
 			
 			$query = "call $pName($pList)";
 			
-			$value = $prestige->query($query); //you can do any type of MySQL queries here.
+			try{
+				$value = $prestige->query($query);
+			} catch (Exception $ex){
+				$prestige->showError(500, $ex);
+			}
+
 			$prestige->showResult($value);
 		}, $pFinal, "Call $pName"));
 			
