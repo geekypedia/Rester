@@ -95,10 +95,18 @@ class DBController
 						case 'DESCRIBE':
 							return $result[$hash]->fetchAll();
 						case 'CALL':
-						    //$r = array();
-						    do {
-							$r[] = $result[$hash]->fetchAll();
-						    } while ($result[$hash]->nextRowset());
+						    $r = array();
+						    
+						    $r[] = $result[$hash]->fetchAll();
+						    
+						    try {
+							    while ($result[$hash]->nextRowset()) {
+								    $r[] = $result[$hash]->fetchAll();
+								}
+						    } catch (Exception $ex){
+						    	
+						    }
+						    
 						    return $r;							
 						
 					}

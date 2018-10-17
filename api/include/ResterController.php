@@ -1593,8 +1593,8 @@ function generateCryptoKey(){
 
 function diff($obj1, $obj2){
 	return get_diff_both($obj1, $obj2);
-}	
-	
+}
+
 } //END
 
 ?>
