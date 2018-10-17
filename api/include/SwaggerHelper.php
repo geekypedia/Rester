@@ -93,10 +93,26 @@ class SwaggerHelper {
 
 		if(isset($command->parameters) && count($command->parameters) > 0) {
 			if($command->method == "GET") $queryString = true;
-			foreach($command->parameters as $p) {
+			// foreach($command->parameters as $p) {
+			// 	$parameters[] = array('name' => $p,
+			// 						'type' => 'string',
+			// 						'paramType' => ($queryString) ? 'query' : 'form',
+			// 						//'required' => ($noRequired) ? false : $field->isRequired,
+			// 						'description' => $p." parameter");
+			// }
+			foreach($command->parameters as $k => $v) {
+				if(is_numeric($k)){
+					$p = $v;	
+					$r = false;
+				} else {
+					$p = $k;
+					$r = ($v == true) ? true : false;
+				}
+				
 				$parameters[] = array('name' => $p,
 									'type' => 'string',
 									'paramType' => ($queryString) ? 'query' : 'form',
+									'required' => $r,
 									//'required' => ($noRequired) ? false : $field->isRequired,
 									'description' => $p." parameter");
 			}

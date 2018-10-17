@@ -857,6 +857,58 @@ function enable_files_api(){
 	}
 }
 
+
+function load_stored_procedures(){
+	global $prestige;
+	
+	$procedures = $prestige->query("select name, param_list from mysql.proc");
+	for ($i = 0; $i < count($procedures); $i++) {
+		$p = $procedures[$i];
+		$pName = $p['name'];
+		$pListSupplied = $p['param_list'];
+		$pFinal = array();
+		
+		if(!empty($pListSupplied)){
+			$pListSuppliedArray = explode(",", $pListSupplied);
+			for ($pi = 0; $pi < count($pListSuppliedArray); $pi++) {
+				 $pSupplied = $pListSuppliedArray[$pi];
+				 $pSuppliedArray = explode("`", $pSupplied);
+				 if(count($pSuppliedArray) > 1){
+				 	$pFinal[$pSuppliedArray[1]] = true;
+				 }
+			}
+		}
+		
+		$prestige->addRouteCommand(new RouteCommand("GET", "procedures", $pName, function($params=null){
+			global $prestige;
+			
+			$pName = $prestige->getCurrentPath()[0];
+			$pList = "";
+			
+			
+			if(!empty($params)){
+				$props = array_keys($params);
+				$vals = array();
+				for ($j = 0; $j < count($props); $j++) {
+					 $k = $props[$j];
+					 if(!in_array(strtolower($k),array("api-key", "api_key"))){
+					 	$vals[] = "'" . $params[$k] . "'";
+					 }
+				}
+				if(!empty($props)){
+					$pList = implode(",",$vals);
+				}
+			}
+			
+			$query = "call $pName($pList)";
+			
+			$value = $prestige->query($query); //you can do any type of MySQL queries here.
+			$prestige->showResult($value);
+		}, $pFinal, "Call $pName"));
+	}
+}
+load_stored_procedures();
+
 //Custom API
 //$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
 //	$api = new ResterController();

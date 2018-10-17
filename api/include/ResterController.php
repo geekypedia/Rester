@@ -16,6 +16,8 @@ class ResterController {
 	
 	var $custom_routes = array();
 	
+	var $stored_procedures = array();
+	
 	var $dbController;
 	
 	var $requestProcessors = array();
@@ -64,6 +66,12 @@ class ResterController {
 				ResterUtils::Log("Returning apidoc");
 				$this->doResponse(SwaggerHelper::getDocFromRoute($this->getAvailableRoutes()[$routePath[0]], $this->getAvailableRoutes()));
 			}
+
+			if(isset($routeName) && $routeName == "api-doc-proc" && isset($routePath)) {
+				ResterUtils::Log("Returning procedures apidoc");
+				$this->doResponse(SwaggerHelper::getDocFromRoute($this->getAvailableProcRoutes()[$routePath[0]], $this->getAvailableCustomRoutes(), true));
+			}
+
 			
 			if(isset($routeName) && $routeName == "api-doc-custom" && isset($routePath)) {
 				ResterUtils::Log("Returning custom apidoc");
@@ -729,7 +737,7 @@ class ResterController {
 					    } else if(empty($route->primaryKey)) {
 					        $this->showError(422, "Could not find a primary key with autoincrement for API route /$callbackParameters[0]");
 					    }
-					}					
+					}
 					
 					if($requestMethod == "GET")
 						parse_str($_SERVER['QUERY_STRING'], $requestParameters);
@@ -1435,6 +1443,10 @@ class ResterController {
 	
 	function getAvailableCustomRoutes() {
 		return $this->custom_routes;
+	}
+
+	function getAvailableProcRoutes() {
+		return $this->stored_procedures;
 	}
 	
 	
