@@ -10,7 +10,7 @@ app.factory('httpRequestInterceptor', function ($rootScope, $q) {
                     if(config.method == "GET" || config.method == "DELETE" || config.method == "PUT"){
                     	var m = config.url.match(/\.[0-9a-z]+$/i);
                     	var bypassedKeywords = ['ui-grid'];
-                    	var bypassedKeywordsMatches = bypassedKeywords.filter(p => config.url.indexOf(p) > -1);
+                    	var bypassedKeywordsMatches = bypassedKeywords.filter(p => config.url.indexOf(p) > 0);
                         if((m && m.length > 0) || bypassedKeywordsMatches.length > -1){
                         }else{
                         	var idx = config.url.lastIndexOf("/");
