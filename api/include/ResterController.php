@@ -1503,7 +1503,7 @@ class ResterController {
 			$query = "SELECT REFERENCED_TABLE_NAME as parent, REFERENCED_COLUMN_NAME as parent_key, TABLE_NAME as children, COLUMN_NAME as reference_key FROM information_schema.KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME is not NULL";
 			 $result = $this->query($query);
 			 foreach($result as $r){
-			 	$this->nav_routes[$r["parent"]] = array($r["children"] => $r["reference_key"]);
+			 	$this->nav_routes[$r["parent"]][] = array($r["children"] => $r["reference_key"]);
 			 }
 			 //$this->nav_routes = $result;
 		}

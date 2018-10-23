@@ -18,21 +18,26 @@ class SwaggerHelper {
 			
 			global $resterController;
 			$nav_routes = $resterController->getNavRoute($route->routeName);
-			foreach($nav_routes as $k => $v){
-				$sub_route = $resterController->getRoute($k);
-                $sub_param[] =        array(
-                            "name"=> $route->routeName."Id",
-                            "paramType"=> "path",
-                            "type"=> "integer",
-                            "required"=> true,
-                            "description"=> "ID of " . $route->routeName
-                        );				
+				$apiNAVS = array();
+			foreach($nav_routes as $ka => $va){
+				foreach($va as $k=>$v){
+					$apiNAV = array();
+					$sub_param = array();
+					$sub_route = $resterController->getRoute($k);
+	                $sub_param[] =        array(
+	                            "name"=> $route->routeName."Id",
+	                            "paramType"=> "path",
+	                            "type"=> "integer",
+	                            "required"=> true,
+	                            "description"=> "ID of " . $route->routeName
+	                        );				
+					
+					$apiNAV["path"]="/". $route->routeName . "/{" . $route->routeName . "Id}/" . $k;
+					$apiNAV["operations"][]=SwaggerHelper::createOperation("GET", $sub_route, $sub_param, $sub_route->routeName);
+					$apiNAVS[] = $apiNAV;
+				}
 				
-				$apiNAV["path"]="/". $route->routeName . "/{" . $route->routeName . "Id}/" . $k;
-				$apiNAV["operations"][]=SwaggerHelper::createOperation("GET", $sub_route, $sub_param, $sub_route->routeName);
-				$apiNAVS[] = $apiNAV;
 			}
-			
 
 			$apiCREATE["path"]="/".$route->routeName;
 			$apiCREATE["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "POST"), $route->routeName);
