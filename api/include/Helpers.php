@@ -211,6 +211,17 @@ function uuid() {
 }
 
 
+function string_endswith($haystack, $needle)
+{
+    $length = strlen($needle);
+    if ($length == 0) {
+        return true;
+    }
+
+    $start  = $length * -1; //negative
+    return (substr($haystack, $start) === $needle);
+}
+
 function string_intersect($string_1, $string_2)
 {
     $string_1_length = strlen($string_1);
@@ -289,8 +300,6 @@ function array_search_where($array, $column_name, $where, $single=true, $return_
    }
    return $results;
 }
-
-
 
 function request_is_mobile(){
 	$useragent=$_SERVER['HTTP_USER_AGENT'];

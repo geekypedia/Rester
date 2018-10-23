@@ -349,6 +349,9 @@ class ResterController {
 			if(LEGACY_MODE){
 				$input = $this->getPostData();
 			}
+			
+			// echo "hello";
+			// echo $input;
 
 
 			if(empty($input)) {
@@ -1164,14 +1167,20 @@ class ResterController {
 							}
 						}
 						
-						$relationFieldName = str_replace("_id","",$rf->relation->field);
-						$relationFieldName = str_replace("id","",$relationFieldName);
-						$mainObject[$relationFieldName]=$relationObject;
 						
-						$mainObject[$rf->relation->field]=$relationObject["id"];
-
-
+						$relationFieldName = $rf->relation->field;
+						if(string_endswith($relationFieldName, "_id")) $relationFieldName = str_replace("_id","",$relationFieldName);
+						if(string_endswith($relationFieldName, "Id")) $relationFieldName = str_replace("Id","",$relationFieldName);
+						if(!empty($relationObject[$rf->relation->destinationField])) {
+							$mainObject[$relationFieldName]=$relationObject;
+						} else {
+							$mainObject[$relationFieldName] = null;
+						}
 						
+						if($relationFieldName != $rf->relation->field) { 
+							$mainObject[$rf->relation->field]=$relationObject[$rf->relation->destinationField]; 
+						}
+
 						//$mainObject[$rf->relation->destinationRoute]=$relationObject;
 
 					}
@@ -1250,6 +1259,7 @@ class ResterController {
 		}
 		
 		$currentRoute = $this->getAvailableRoutes()[$routeName];
+
 		
 		if(is_array($newData) === true) {
 			if(!empty($objectID) && $objectID > 0){
@@ -1260,6 +1270,21 @@ class ResterController {
 			} else{
 				$this->showError(400, "The request body is not in acceptable format.");
 			}
+			
+
+			$relations = $currentRoute->getRelationFields();
+			foreach($relations as $relation){
+				$relationFieldName = $relation->relation->field;
+				if(string_endswith($relationFieldName, "_id")) $relationFieldName = str_replace("_id","",$relationFieldName);
+				if(string_endswith($relationFieldName, "Id")) $relationFieldName = str_replace("Id","",$relationFieldName);
+				if($relationFieldName != $relation->relation->field){
+					echo $newData[$relationFieldName];
+					if(isset($newData[$relationFieldName])) {
+						unset($newData[$relationFieldName]);
+					}
+				}
+			}
+
 			$this->dbController->updateObjectOnDB($currentRoute, $objectID, $newData);
 			return $this->getObjectByID($routeName, $objectID);
 		} else {
