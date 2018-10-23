@@ -1278,10 +1278,9 @@ class ResterController {
 				if(string_endswith($relationFieldName, "_id")) $relationFieldName = str_replace("_id","",$relationFieldName);
 				if(string_endswith($relationFieldName, "Id")) $relationFieldName = str_replace("Id","",$relationFieldName);
 				if($relationFieldName != $relation->relation->field){
-					echo $newData[$relationFieldName];
-					if(isset($newData[$relationFieldName])) {
+					//if(isset($newData[$relationFieldName])) {
 						unset($newData[$relationFieldName]);
-					}
+					//}
 				}
 			}
 
