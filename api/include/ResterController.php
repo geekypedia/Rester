@@ -350,10 +350,6 @@ class ResterController {
 				$input = $this->getPostData();
 			}
 			
-			// echo "hello";
-			// echo $input;
-
-
 			if(empty($input)) {
 				ResterUtils::Log("Empty PUT request");
 				$this->showError(400, "The request body is empty.");
@@ -384,9 +380,11 @@ class ResterController {
 					foreach($putData as $updateObject) {
 						ResterUtils::Log("UPDATING OBJECT ".$routeName." ID: ".$updateObject[$route->primaryKey->fieldName]);
 						if(isset($updateObject[$route->primaryKey->fieldName])) {
-							$result = $this->updateObjectFromRoute($routeName, $updateObject[$route->primaryKey->fieldName], $updateObject);
+							$currentResult = $this->updateObjectFromRoute($routeName, $updateObject[$route->primaryKey->fieldName], $updateObject);
+							if(!empty($currentResult) && count($currentResult) == 1) $result[] = $currentResult[0];
 						}
 					}
+					
 					ResterUtils::Log("SUCCESS");
 					
 					//Register event hook
@@ -399,8 +397,8 @@ class ResterController {
 						
 					}
 					
-					
-					$this->doResponse(ApiResponse::successResponse());
+					$this->showResult($result);
+					//$this->doResponse(ApiResponse::successResponse());
 				} else {
 					ResterUtils::Log("UPDATING SINGLE OBJECT");
 					if(!isset($putData[$route->primaryKey->fieldName])) {
