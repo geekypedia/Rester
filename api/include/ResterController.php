@@ -92,8 +92,33 @@ class ResterController {
 					$callback = $this->customRoutes["GET"][$routeName][$command];
 					call_user_func($callback, $parameters);
 				} else {
-					$result = array_shift($this->getObjectByID($routeName, $command));
-					if(function_exists('check_response_authenticity')) check_response_authenticity($result);
+					if(count($routePath) == 2){
+						$route = $this->getRoute($routePath[1]);
+						if(!empty($route)){
+							
+							foreach($route->routeFields as $k=>$v){
+								if($v->isRelation){
+									if($v->relation->destinationRoute == $routeName){
+										
+										$relations[] = $v->relation->field;
+									}
+								}
+								
+							}
+							
+							$rel = array_shift($relations);
+							
+							$callback = $this->requestProcessors["GET"][0];
+							$p = array($rel => $routePath[0]);
+							call_user_func($callback, $routePath[1], null, $p);
+						} else {
+							$this->showError(404, "Requested route does not exist.");
+						}
+						
+					} else {
+						$result = array_shift($this->getObjectByID($routeName, $command));
+						if(function_exists('check_response_authenticity')) check_response_authenticity($result);
+					}
 					$this->showResult($result);
 				}								
 			} else {
