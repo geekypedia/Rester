@@ -1576,11 +1576,19 @@ function uuid() {
 }
 
 function intersectString($string_1, $string_2){
-	string_intersect($string_1, $string_2);
+	return string_intersect($string_1, $string_2);
+}
+
+function startsWith($str, $key){
+	return string_startswith($str, $key);	
+}
+
+function endsWith($str, $key){
+	return string_endswith($str, $key);	
 }
 
 function where($array, $column_name, $where, $single=true, $return_only_key = false) {
-	array_search_where($array, $column_name, $where, $single, $return_only_key);
+	return array_search_where($array, $column_name, $where, $single, $return_only_key);
 }
 
 function requestIsMobile(){

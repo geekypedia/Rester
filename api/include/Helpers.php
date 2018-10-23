@@ -222,6 +222,10 @@ function string_endswith($haystack, $needle)
     return (substr($haystack, $start) === $needle);
 }
 
+function string_startswith($haystack, $needle){
+    return (strncmp($haystack, $needle, strlen($needle)) === 0);
+}
+
 function string_intersect($string_1, $string_2)
 {
     $string_1_length = strlen($string_1);
