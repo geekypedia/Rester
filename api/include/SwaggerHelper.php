@@ -28,7 +28,7 @@ class SwaggerHelper {
                             "description"=> "ID of " . $route->routeName
                         );				
 				
-				$apiNAV["path"]="/".$route->routeName."/{".$route->routeName."Id}/".$k;
+				$apiNAV["path"]="/". $route->routeName . "/{" . $route->routeName . "Id}/" . $k;
 				$apiNAV["operations"][]=SwaggerHelper::createOperation("GET", $sub_route, $sub_param, $sub_route->routeName);
 				$apiNAVS[] = $apiNAV;
 			}
