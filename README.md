@@ -502,6 +502,14 @@ Returns a unique 32 characters identifier.
 
 Returns intersection between 2 strings.
 
+#### startsWith($str, $key)
+
+Returns true if the string in $str starts with the value in $key.
+
+#### endsWith($str, $key)
+
+Returns true if the string in $str ends with the value in $key.
+
 #### where($array, $property_name, $where, $single = true, $only_return_keys = false)
 
 Similar to SQL search. Find a matching record in an array where the provided value matches the value of the specified property of an object in an array.
