@@ -25,14 +25,14 @@ class SwaggerHelper {
 					$sub_param = array();
 					$sub_route = $resterController->getRoute($k);
 	                $sub_param[] =        array(
-	                            "name"=> $route->routeName."Id",
+	                            "name"=> $route->primaryKey->fieldName,
 	                            "paramType"=> "path",
 	                            "type"=> "integer",
 	                            "required"=> true,
 	                            "description"=> "ID of " . $route->routeName
 	                        );				
 					
-					$apiNAV["path"]="/". $route->routeName . "/{" . $route->routeName . "Id}/" . $k;
+					$apiNAV["path"]="/". $route->routeName . "/{" . $route->primaryKey->fieldName . "}/" . $k;
 					$apiNAV["operations"][]=SwaggerHelper::createOperation("GET", $sub_route, $sub_param, $sub_route->routeName);
 					$apiNAVS[] = $apiNAV;
 				}
@@ -49,14 +49,14 @@ class SwaggerHelper {
 				$apiPUT["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "PUT"), $route->routeName, false, "Update ");	
 			}
 			
-			$apiID["path"] = "/".$route->routeName."/{".$route->routeName."Id}";
+			$apiID["path"] = "/".$route->routeName."/{".$route->primaryKey->fieldName ."}";
 			$apiID["operations"][]=SwaggerHelper::createOperation("GET", $route, SwaggerHelper::getParametersFromRoute($route, "GET", "id"), $route->routeName);
 			
 			if(!$fileApi) {
 				if(!LEGACY_MODE) {
 					$apiID["operations"][]=SwaggerHelper::createOperation("PUT", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void");	
 				} else {
-					$apiPUTID["path"] = "/".$route->routeName ."/update". "/{".$route->routeName."Id}";
+					$apiPUTID["path"] = "/".$route->routeName ."/update". "/{".$route->primaryKey->fieldName."}";
 					$apiPUTID["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "PUT", "id"), "void", false, "Update ");	
 				}
 			}
@@ -64,7 +64,7 @@ class SwaggerHelper {
 			if(!LEGACY_MODE) {
 					$apiID["operations"][]=SwaggerHelper::createOperation("DELETE", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void");
 			} else {
-					$apiDELETEID["path"] = "/".$route->routeName ."/delete". "/{".$route->routeName."Id}";
+					$apiDELETEID["path"] = "/".$route->routeName ."/delete". "/{".$route->primaryKey->fieldName."}";
 					$apiDELETEID["operations"][]=SwaggerHelper::createOperation("POST", $route, SwaggerHelper::getParametersFromRoute($route, "DELETE", "id"), "void", false, "Delete ");
 			}
 			

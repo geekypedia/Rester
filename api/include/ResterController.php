@@ -111,8 +111,9 @@ class ResterController {
 							$rel = array_shift($relations);
 							
 							$callback = $this->requestProcessors["GET"][0];
-							$p = array($rel => $routePath[0]);
-							call_user_func($callback, $routePath[1], null, $p);
+							if(empty($parameters)) $parameters = array();
+							$parameters[$rel] = $routePath[0];
+							call_user_func($callback, $routePath[1], null, $parameters);
 						} else {
 							$this->showError(404, "Requested route does not exist.");
 						}
@@ -1148,7 +1149,7 @@ class ResterController {
 		
 			//Map objects to it's correct types
 			$mainObject = $route->mapObjectTypes($mainObject);
-						
+			
 			if(count($route->getRelationFields()) > 0) {
 				foreach($route->getRelationFields() as $rf) {				
 					if(($rf->relation->inverse && $route->routeName == $rf->relation->destinationRoute) 
@@ -1170,6 +1171,7 @@ class ResterController {
 							$relationObject[$fieldKey]=$row[$rName];
 						}
 						
+
 						$relationObject = $destinationRoute->mapObjectTypes($relationObject);
 
 						
@@ -1205,7 +1207,7 @@ class ResterController {
 						if($relationFieldName != $rf->relation->field) { 
 							$mainObject[$rf->relation->field]=$relationObject[$rf->relation->destinationField]; 
 						}
-
+						
 						//$mainObject[$rf->relation->destinationRoute]=$relationObject;
 
 					}
