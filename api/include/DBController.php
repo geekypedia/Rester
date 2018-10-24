@@ -255,6 +255,8 @@ class DBController
 	}
 	
 	function getObjectsFromDB($route, $filters, $availableRoutes, $orFilter = false) {
+		
+		
 		$selectFields = array();
 		$selectTables = array();
 		$joins = array();
@@ -288,6 +290,8 @@ class DBController
 		
 		//Add the main route fields
 		$selectFields = array_merge($selectFields, $route->getFieldNames(FALSE, TRUE));
+		
+
 		//Process relations
 		if(count($route->getRelationFields()) > 0) {
 			foreach($route->getRelationFields() as $rf) {
@@ -301,10 +305,12 @@ class DBController
 				}
 					
 				$destinationRoute = $availableRoutes[$rf->relation->destinationRoute];
-					
+				
+
 				foreach($destinationRoute->getRelationFieldNames($rf->relation) as $fieldKey => $rName) {
 						//if(!$rf->relation->inverse || $rf->relation->)
-						if($fieldKey != $rf->relation->field)
+						//Commenting the below if for cases where the foreign key and the reference have same name.
+						//if($fieldKey != $rf->relation->field)
 							$selectFields[] = $rf->relation->relationName.".".$fieldKey." as ".$rName;
 				}
 					
@@ -316,6 +322,8 @@ class DBController
 			}
 			
 		}
+		
+		
 		//Main Route Table
 		$selectTables[$route->routeName]=$route->routeName;
 		

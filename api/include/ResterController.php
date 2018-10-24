@@ -1146,9 +1146,11 @@ class ResterController {
 			//ResterUtils::Dump($row);
 			//Clean array values
 			$mainObject = ResterUtils::cleanArray($row, $route->getFieldNames(FALSE, FALSE));
+
 		
 			//Map objects to it's correct types
 			$mainObject = $route->mapObjectTypes($mainObject);
+			
 			
 			if(count($route->getRelationFields()) > 0) {
 				foreach($route->getRelationFields() as $rf) {				
