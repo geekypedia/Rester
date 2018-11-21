@@ -4,7 +4,9 @@ app.controller('homeController', function ($scope, $rootScope, H, R) {
 	// $controller('homeControllerBase', {
 	// 	$rootScope:$rootScope
 	// });
-	
+
+    $('.collapsible').collapsible();
+    
 	$scope.H = H;
 	$scope.M = H.M;
 
