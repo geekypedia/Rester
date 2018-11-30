@@ -862,7 +862,8 @@ function load_stored_procedures(){
 	global $prestige;
 	
 	try{
-		$procedures = $prestige->query("select name, param_list from mysql.proc");
+		$q = "select name, param_list from mysql.proc where db = '" . DBNAME . "'";
+		$procedures = $prestige->query($q);
 	} catch (Exception $ex){
 		try{
 			$procedureInfos = $prestige->query("select SPECIFIC_NAME as 'name' from information_schema.routines where ROUTINE_TYPE = 'PROCEDURE'");
