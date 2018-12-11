@@ -69,5 +69,7 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
     //     return ['is_active'];
     // }
 
+    // If you want to refresh the data loaded in grid, you can call the following method
+    // $scope.refreshData();
 
 });
