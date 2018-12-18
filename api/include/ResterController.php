@@ -1683,6 +1683,10 @@ function generateCryptoKey(){
 function diff($obj1, $obj2){
 	return get_diff_both($obj1, $obj2);
 }
+	
+function now(){
+	return date("Y-m-d H:i:s");
+}	
 
 } //END
 
