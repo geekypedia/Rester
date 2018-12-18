@@ -562,6 +562,11 @@ Generate key to be used in encryption and decryption.
 
 Generate diff between two objects. Can be useful for generating audit logs.
 
+#### now()
+
+Get a datetime object in a format that is compatible with MySQL.
+
+
 Events
 -----
 
