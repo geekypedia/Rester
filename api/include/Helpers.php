@@ -385,5 +385,9 @@ function now(){
 	return date("Y-m-d H:i:s");
 }	
 
+function today(){
+	return date("Y-m-d");
+}	
+
 
 ?>
