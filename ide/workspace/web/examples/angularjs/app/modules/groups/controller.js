@@ -46,7 +46,7 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
     
     $scope.removeGroupUser = function(user){
         
-        var justAdded = $scope.data.groupUsersAdd.filter(p => p.user_id == user.user_id && p.group_id == user.group_id);
+        var justAdded = $scope.data.groupUsersAdd.filter(function(p){return p.user_id == user.user_id && p.group_id == user.group_id });
         if(justAdded.length == 1){
             var justAddedIndex = $scope.data.groupUsersAdd.indexOf(justAdded[0]);
             if(justAddedIndex > -1){
@@ -78,9 +78,9 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
             ugl.group_id = $scope.data.single.id;
             ugl.user = user;
             
-            var notExistsInAdd = $scope.data.groupUsersAdd.filter(p => p.user_id == ug.user_id && p.group_id == ug.group_id).length == 0;
-            var notExistsInMain = $scope.data.groupUsers.filter(p => p.user_id == ug.user_id && p.group_id == ug.group_id).length == 0;
-            var removeMembers = $scope.data.groupUsersRemove.filter(p => p.user_id == ug.user_id && p.group_id == ug.group_id);
+            var notExistsInAdd = $scope.data.groupUsersAdd.filter(function(p) { return p.user_id == ug.user_id && p.group_id == ug.group_id}).length == 0;
+            var notExistsInMain = $scope.data.groupUsers.filter(function(p) { return p.user_id == ug.user_id && p.group_id == ug.group_id }).length == 0;
+            var removeMembers = $scope.data.groupUsersRemove.filter(function(p) { return p.user_id == ug.user_id && p.group_id == ug.group_id });
             var existsInRemove = removeMembers.length == 1;
             var notExistsInRemove = removeMembers.length == 0;
             
@@ -110,7 +110,7 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
             promises.push($scope.post('user_groups',$scope.data.groupUsersAdd));
         }
         if($scope.data.groupUsersRemove.length > 0){
-            var ids = $scope.data.groupUsersRemove.map(p => p.id);
+            var ids = $scope.data.groupUsersRemove.map(function(p){ return p.id });
             promises.push($scope.deleteMany('user_groups', ids));
         }
         if(promises.length > 0){
