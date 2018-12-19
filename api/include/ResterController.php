@@ -1705,7 +1705,11 @@ function now(){
 function today(){
 	return date("Y-m-d");
 }	
-	
+
+function toDate($datetime){
+	return date("Y-m-d", strtotime($datetime));
+}
+
 
 } //END
 
