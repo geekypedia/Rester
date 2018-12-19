@@ -602,11 +602,13 @@ Examples:
 ```php
 function before_post_users($data){
 	//Write code to check if $data['email'] contains prohibited domain names.
+	//Make note that $data could be an array if you are doing bulk operations
 }
 
 
 function on_post_users($result){
 	//Write code to send an email to $result['email'] using send_email_sparkpost() method
+	//Make note that $result could be an array if you are doing bulk operations	
 }
 ```
 
