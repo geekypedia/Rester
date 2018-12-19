@@ -438,7 +438,7 @@ class ResterController {
 					
 					//Register event hook
 					try{
-						$func = 'on_post_' . $routeName;
+						$func = 'on_put_' . $routeName;
 						if(function_exists($func)){
 							$func($result);
 						}
@@ -463,7 +463,7 @@ class ResterController {
 					
 					//Register event hook
 					try{
-						$func = 'on_post_' . $routeName;
+						$func = 'on_put_' . $routeName;
 						if(function_exists($func)){
 							$func($result);
 						}
