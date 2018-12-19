@@ -365,7 +365,7 @@ function ControllerFactory(resourceName, options, extras) {
 				    	$scope.data.listHeadersRaw = headers;
 				    	if(headers.indexOf("id") > -1) headers.splice(headers.indexOf("id"), 1);
 				    	if(headers.indexOf("secret") > -1) headers.splice(headers.indexOf("secret"), 1);
-				    	headers = headers.filter(p => (p.slice(-3) !== "_id"));
+				    	headers = headers.filter(function(p){ return (p.slice(-3) !== "_id")});
 				    	if($scope.removeListHeaders){
 				    		var removeHeaders = $scope.removeListHeaders();
 				    		for (var i = 0; i < removeHeaders.length; i++) {
@@ -374,7 +374,7 @@ function ControllerFactory(resourceName, options, extras) {
 				    		}
 				    	}
 				    	$scope.data.listKeys = headers;
-				    	headers = headers.map(p => H.toTitleCase(H.replaceAll(p, '_', ' ')));
+				    	headers = headers.map(function(p){ return H.toTitleCase(H.replaceAll(p, '_', ' '))});
 				    	$scope.setListHeaders(headers);
 			    	}
 			    	if($scope.onLoadAll) $scope.onLoadAll(r);
