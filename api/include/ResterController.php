@@ -1700,7 +1700,12 @@ function diff($obj1, $obj2){
 	
 function now(){
 	return date("Y-m-d H:i:s");
+}
+	
+function today(){
+	return date("Y-m-d");
 }	
+	
 
 } //END
 
