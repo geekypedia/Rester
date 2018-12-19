@@ -573,6 +573,10 @@ Get a datetime object in a format that is compatible with MySQL.
 
 Get a date object in a format that is compatible with MySQL.
 
+#### toDate($datetime)
+
+Convert a datetime object to a date object in a format that is compatible with MySQL.
+
 
 Events
 -----
