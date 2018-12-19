@@ -406,27 +406,30 @@ You can write any kind of PHP code here. You can also use the helper functions m
 
 #### query($queryString)
 
-200 OK with the result of executing the specified querystring against the database. It can be any kind of SQL statement such as SELECT, INSERT, UPDATE, DELETE or a CALL to any stored procedure, etc.
+Returns the result of executing the specified querystring against the database. It can be any kind of SQL statement such as SELECT, INSERT, UPDATE, DELETE or a CALL to any stored procedure, etc.
 
 #### find($route, $filters = NULL, $match_any = false)
 
-200 OK with the result of querying a particular REST API route by passing filter parameters. By default, all of the filter parameters will be matched. If you pass $match_any = true, then any of the filter parameter will be matched.
+Returns the result of querying a particular REST API route by passing filter parameters. By default, all of the filter parameters will be matched. If you pass $match_any = true, then any of the filter parameter will be matched.
 
 #### findOne($route, $id)
 
-200 OK with the result
+Finds a single object with specific id.
 
-#### create($route, $object)
+#### create($route, $object, $throw_exception = false)
 
-201 CREATED with the created object with id
+Returns the created object with the created object with id. returns null in case of error.
+If you set $throw_exception = true, then it will throw exception in case of error.
 
-#### update($route, $id, $object)
+#### update($route, $id, $object, $throw_exception = false)
 
-200 OK with the updated object
+Returns the updated object. returns null in case of error.
+If you set $throw_exception = true, then it will throw exception in case of error.
 
-#### delete($route, $id)
+#### delete($route, $id, $throw_exception = false)
 
-200 OK with the deleted object
+Returns the deleted object. returns null in case of error.
+If you set $throw_exception = true, then it will throw exception in case of error.
 
 #### showResult($value)
 
@@ -565,6 +568,10 @@ Generate diff between two objects. Can be useful for generating audit logs.
 #### now()
 
 Get a datetime object in a format that is compatible with MySQL.
+
+#### today()
+
+Get a date object in a format that is compatible with MySQL.
 
 
 Events
