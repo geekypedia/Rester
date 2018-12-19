@@ -21,7 +21,7 @@ app.service('H', function($location, md5, S, M, R) {
 		toMySQLDateTime: Helper.toMySQLDateTime,
 		checkLicenseValidity: Helper.checkLicenseValidity,
 		getOpenRoutes: function(){
-			var openRoutes = RegisterRoutes().customRoutes.filter(p => p.auth === false);
+			var openRoutes = RegisterRoutes().customRoutes.filter(function(p){ return p.auth === false});
 			var openRouteNames = [];
 			openRoutes.forEach(p => openRouteNames.push("/" + p.route));
 			return openRouteNames;
