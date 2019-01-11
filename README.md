@@ -473,11 +473,11 @@ $to = ["recepientsemail@theirdomain.com"];
 $subject = "SUBJECT GOES HERE";
 $body = "TEXT or HTML GOES HERE";
 $smtp = array(
-	"host": "smtp.yourdomain.com",
-	"username": "YOUR USERNAME",
-	"password": "YOUR PASSWORD",
-	"proto": "tls",
-	"port": 587
+	"host"=> "smtp.yourdomain.com",
+	"username"=> "YOUR USERNAME",
+	"password"=> "YOUR PASSWORD",
+	"proto"=> "tls",
+	"port"=> 587
 );
 $prestige->sendMail($from, $to, $subject, $body, $smtp);
 ```
