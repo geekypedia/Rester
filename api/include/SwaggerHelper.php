@@ -217,7 +217,7 @@ class SwaggerHelper {
 	}
 	
 	public static function getIdParameter($route, $required, $asForm = false, $queryString = false) {
-		return array('name' => ($asForm === true) ? $route->primaryKey->fieldName : ($queryString ? $route->primaryKey->fieldName : $route->routeName."Id"), 
+		return array('name' => ($asForm === true) ? $route->primaryKey->fieldName : ($queryString ? $route->primaryKey->fieldName : /*$route->routeName."Id"*/ $route->primaryKey->fieldName), 
 						'paramType' => ($asForm === true) ? 'form' : (($queryString == true) ? 'query' : 'path'),
 						'type' => ($route->primaryKey->fieldType) ? $route->primaryKey->fieldType : 'string',
 						'required' => $required,
