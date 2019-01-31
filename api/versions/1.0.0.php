@@ -858,6 +858,53 @@ function enable_files_api(){
 }
 
 
+function load_views(){
+	global $prestige;
+	try{
+		$views=$prestige->query("show full tables where Table_Type = 'VIEW'");
+	}
+	catch(Exception$ex){
+	}
+	for($i=0;
+	$i<count($views);
+	$i++){
+		$v=$views[$i];
+		$vName=$v['Tables_in_internal'];
+		$vFinal=array("secret");
+		$method="GET";
+		$route="views";
+		$prestige->addRouteCommand(new RouteCommand($method,$route,$vName,function ($params=null){
+			global $prestige;
+			$vName=$prestige->getCurrentPath()[0];
+			$vList="";
+			$query="select * from $vName";
+			if(isset($params['secret']))$query.=" where secret='".$params['secret']."'";
+			try{
+				$value=$prestige->query($query);
+			}
+			catch(Exception$ex){
+				if($ex->errorInfo[0]=="42S22"){
+					$query="select * from $vName";
+					try{
+						$value=$prestige->query($query);
+					}
+					catch(Exception $exi){
+						$prestige->showError(500,$exi);
+					}
+				} else {
+					$prestige->showError(500,$ex);
+				}
+			}
+			$prestige->showResult($value);
+		}
+		,$vFinal,"Get data from $vName"));
+	}
+}
+
+load_views();
+
+
+
 function load_stored_procedures(){
 	global $prestige;
 	
@@ -900,6 +947,8 @@ function load_stored_procedures(){
 		
 		$method = "POST";
 		$route = "procedures";
+		
+		$pFinal['secret'] = false;		
 		
 		$prestige->addRouteCommand(new RouteCommand($method, $route, $pName, function($params=null){
 			global $prestige;
