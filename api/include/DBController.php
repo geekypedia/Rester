@@ -512,7 +512,7 @@ class DBController
 		 	}
 		}
 		
-		$result = DBController::Query("SHOW TABLES");
+		$result = DBController::Query("SHOW FULL TABLES WHERE Table_Type != 'VIEW'");
 	
 		if ($result === false) {
 			exit(ApiResponse::errorResponse(404));
