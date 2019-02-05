@@ -1,0 +1,38 @@
+<form name="forms.usersForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container ng-if="data.single.role != 'superadmin'" class="md-block">
+    <label for="username" class="active">{{M.FIELD_USERNAME}}:</label>
+    <input id="username" name="username" type="text" class="validate" ng-model="data.single.username" required ng-disabled="locked">
+    <div ng-messages="forms.usersForm.username.$error" ng-show="forms.usersForm.username.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="email" class="active">{{M.FIELD_EMAIL}}:</label>
+    <input id="email" name="email" type="email" class="validate" ng-model="data.single.email" required ng-disabled="locked">
+    <div ng-messages="forms.usersForm.email.$error" ng-show="forms.usersForm.email.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+      <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
+    </div>
+  </md-input-container>
+  <md-input-container ng-if="data.single.role != 'superadmin'" class="md-block">
+    <label for="role" class="adtive">{{M.FIELD_ROLE}}:</label>
+    <md-select id="role" ng-model="data.single.role" ng-disabled="locked">
+      <md-option ng-repeat="u in [{key: 'user', value: 'User'}, {key: 'admin', value: 'Administrator'}]" ng-value="u.key">
+        {{u.value}}
+      </md-option>
+    </md-select>
+  </md-input-container>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

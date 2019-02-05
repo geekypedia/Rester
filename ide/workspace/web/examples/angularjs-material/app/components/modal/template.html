@@ -1,0 +1,10 @@
+<div id="mdmodal" class="modal">
+	<div class="modal-content">
+		<h4>{{options.header}}</h4>
+		<p>{{options.text}}</p>
+	</div>
+	<div class="modal-footer">
+		<a ng-if="options.showCancel" ng-click="options.onCancelClick()" class="modal-action modal-close waves-effect waves-green btn-flat">{{options.cancelText}}</a>
+		<a ng-if="options.showOk" ng-click="options.onOkClick()" class="modal-action modal-close waves-effect waves-green btn-flat">{{options.okText}}</a>
+	</div>
+</div>

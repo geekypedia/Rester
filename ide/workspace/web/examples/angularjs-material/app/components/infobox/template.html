@@ -1,0 +1,31 @@
+<!--<div class="col s12 m4">-->
+<!--	<div class="card darken-1 {{options.cssClass}}">-->
+<!--		<div class="card-image">-->
+<!--          <img src="images/background.png">-->
+<!--          <span class="card-title white-text">{{options.title}}</span>-->
+<!--        </div>-->
+<!--		<div class="card-content white-text middle-center">-->
+<!--			<span class=''>-->
+<!--				<i class='material-icons large'>{{options.icon}}</i>-->
+<!--				<h2>{{options.displayText}}</h2>-->
+<!--			</span>-->
+
+<!--		</div>-->
+<!--		<div class="card-action">-->
+<!--			<a href="#!{{options.actionRoute}}">{{options.actionText}}</a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+<div class="col s12 m4">
+	<div class="info-box {{options.background}} white-text">
+		<a href="#!{{options.action}}">
+			<div class="icon">
+				<i class="material-icons">{{options.icon}}</i>
+			</div>
+			<div class="content">
+				<div class="{{options.color}}">{{options.title}}</div>
+				<div class="number count-to {{options.color}}" options-from="0" options-to="{{options.value}}" options-speed="15" options-fresh-interval="20">{{options.value}}</div>
+			</div>
+		</a>
+	</div>
+</div>
