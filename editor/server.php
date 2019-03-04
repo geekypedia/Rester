@@ -32,12 +32,15 @@
 	    $key = md5( $md5_salt . $key ); //use an md5 so keys are not visible. not salted though...
    	if( !isset( $projects[ $key ]) ){
 		//$expected_key = "1629dee48cc4e53161f9b2be8614e062";   //hash of workspace //GET THIS FROM Codiad
-		$expected_key = "21232f297a57a5a743894a0e4a801fc3"; //has of admin //GET THIS FROM Codiad
+		//$expected_key = "21232f297a57a5a743894a0e4a801fc3"; //has of admin //GET THIS FROM Codiad
+		$expected_key = "21232f297a57a5a743894a0e4a801fc3";
 		if($key == $expected_key){
 			$projects[ $key ] = array(
 				"name" => "Default Workspace",
-				"folder" => "./workspace",
-				"play" => $_SERVER['REQUEST_URI'] . '/workspace' 
+				//"folder" => "./workspace",
+				"folder" => "../ide/workspace",
+				"play" => $_SERVER['REQUEST_URI'] . '../ide/workspace' 
+				//"play" => $_SERVER['REQUEST_URI'] . '/workspace' 
 			);
 		} else {
 			die('{"status":-1, "msg":"wrong key ' . $key . '"}');
