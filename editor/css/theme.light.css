@@ -6,7 +6,7 @@ div, p { margin: 0; padding: 0; box-sizing: border-box; }
 
 #container { position: relative; overflow: hidden; }
 #top { position: relative; overflow: hidden; width: 100%; height: calc( 100% - 30px ); border-bottom: 1px solid white; }
-#sidebar { width: 239px; height: 100%; position: absolute; left: 0; top: 0; border-right: 1px solid white; }
+#sidebar { width: 239px; height: 100%; position: absolute; left: 0; top: 0; border-right: 1px solid black; }
 #sidebar .header { overflow: hidden; width: 100%; height: 30px; position: absolute; left: 0; top: 0; background-color: white; line-height: 30px; white-space: nowrap; }
 #open-files, #folder-files { position: absolute; top: 30px; width: 100%; height: calc( 100% - 30px ); }
 #folder-files { display: none; overflow: auto; }
