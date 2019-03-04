@@ -33,8 +33,27 @@
    	if( !isset( $projects[ $key ]) ){
 		//$expected_key = "1629dee48cc4e53161f9b2be8614e062";   //hash of workspace //GET THIS FROM Codiad
 		//$expected_key = "21232f297a57a5a743894a0e4a801fc3"; //has of admin //GET THIS FROM Codiad
-		$expected_key = "21232f297a57a5a743894a0e4a801fc3";
-		if($key == $expected_key){
+
+//GET PASSWORD FROM Codiad Settings
+$users_file = '../ide/data/users.php';
+function get_password($users_file){
+	$data = file_get_contents($users_file);
+	$startpos = strpos($data, "[");
+	$endpos = strrpos($data, "]");
+	$len = $endpos - $startpos + 1;
+	$realdata = substr($data, $startpos, $len);
+	$obj = (array) json_decode($realdata, true);
+	$password = $obj[0]['password'];
+	return $password;	
+}
+function get_hash($algorithm, $string) {
+    return hash($algorithm, trim((string) $string));
+}
+
+$expected_key = get_password($users_file);
+$supplied_key = get_hash('sha1', $key);		
+		
+		if($supplied_key == $expected_key){
 			$projects[ $key ] = array(
 				"name" => "Default Workspace",
 				//"folder" => "./workspace",
