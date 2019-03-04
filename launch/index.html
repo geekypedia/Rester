@@ -13,7 +13,7 @@
 
     <!--Append / at the end of URL to load everything properly -->
     <script>
-        window.onload = function() {
+        window.onload = function () {
             var location = "" + window.location;
             if (location.charAt(location.length - 1) !== '/' && !location.endsWith('.html')) {
                 var newLocation = location + "/";
@@ -22,11 +22,12 @@
             //materialBackground.start();
         }
     </script>
-    
+
     <!--<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" id="bootstrap-css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+        id="bootstrap-css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- Loader CSS -->
@@ -53,6 +54,7 @@
             0% {
                 -webkit-transform: rotate(0deg);
             }
+
             100% {
                 -webkit-transform: rotate(360deg);
             }
@@ -62,6 +64,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -314,36 +317,34 @@
             box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
         }
     </style>
-    
+
     <style>
         .btn-sq-lg {
-          width: 150px !important;
-          height: 150px !important;
+            width: 150px !important;
+            height: 150px !important;
         }
-        
+
         .btn-sq {
-          width: 100px !important;
-          height: 100px !important;
-          font-size: 10px;
+            width: 100px !important;
+            height: 100px !important;
+            font-size: 10px;
         }
-        
+
         .btn-sq-sm {
-          width: 50px !important;
-          height: 50px !important;
-          font-size: 10px;
+            width: 50px !important;
+            height: 50px !important;
+            font-size: 10px;
         }
-        
+
         .btn-sq-xs {
-          width: 25px !important;
-          height: 25px !important;
-          padding:2px;
+            width: 25px !important;
+            height: 25px !important;
+            padding: 2px;
         }
-        
-        
     </style>
-    
-    
-    
+
+
+
     <style>
         .iconpanel {
             /*border: 16px solid #f3f3f3;*/
@@ -357,6 +358,7 @@
             position: absolute;
             z-index: 1000;
         }
+
         .pageheading {
             left: 50%;
             top: 5%;
@@ -365,58 +367,56 @@
         }
     </style>
     <script>
-    $(function(){
-        setTimeout(function(){
-            $('.loader').hide();
-            $('#main').show();
-            
-            $('.pageheading').css("margin-left", 0 - ($('.pageheading').width()/2));
-            
-            var width = 0;
-            var height = $('.iconpanel').height();
-    
-            $('.iconpanel > .row > .col-lg-12 > p').children().each(function () {
-                width += $(this).width() + 32;
-            });
-            
-            $('.iconpanel').css("margin-left", 0 - (width/4));
-            $('.iconpanel').css("margin-top", 0 - (height/2));
-            
-        }, 1000);
-    });
+        $(function () {
+            setTimeout(function () {
+                $('.loader').hide();
+                $('#main').show();
+
+                $('.pageheading').css("margin-left", 0 - ($('.pageheading').width() / 2));
+
+                var width = 0;
+                var height = $('.iconpanel').height();
+
+                $('.iconpanel > .row > .col-lg-12 > p').children().each(function () {
+                    width += $(this).width() + 32;
+                });
+
+                $('.iconpanel').css("margin-left", 0 - (width / 5.5));
+                $('.iconpanel').css("margin-top", 0 - (height / 3));
+
+            }, 1000);
+        });
     </script>
 </head>
 
 <body>
-    <div class="loader"></div> 
+    <div class="loader"></div>
     <!--<div id="material-background"></div>-->
     <div id="main" style="display:none;">
         <div class="pageheading">
-            <a href="https://prestigeframework.com" target="_blank"><img src="../ide/workspace/web/examples/images/logo.png" alt="pRESTige"></img></a>
+            <a href="https://prestigeframework.com" target="_blank"><img
+                    src="../ide/workspace/web/examples/images/logo.png" alt="pRESTige"></img></a>
         </div>
         <div class="container iconpanel">
             <div class="row">
                 <div class="col-lg-12">
                     <p>
-                        <a href="../ide/workspace/web/" target="_blank" class="btn btn-sq btn-primary" style="background:purple; border: purple;">
-                                <i class="fa fa-adn fa-5x"></i><br/>
-                                Your <br>Application
+                        <a href="../ide/workspace/web/" target="_blank" class="btn btn-sq btn-primary"
+                            style="background:purple; border: purple;">
+                            <i class="fa fa-adn fa-5x"></i><br />
+                            Your <br>Application
                         </a>
                         <a href="../ide/workspace/web/examples/" target="_blank" class="btn btn-sq btn-primary">
-                                <i class="fa fa-adn fa-5x"></i><br/>
-                                Example <br>Applications
+                            <i class="fa fa-adn fa-5x"></i><br />
+                            Example <br>Applications
                         </a>
                         <a href="../api/docs/" target="_blank" class="btn btn-sq btn-success">
-                              <i class="fa fa-file-text-o fa-5x"></i><br/>
-                              API <br>Documentation
+                            <i class="fa fa-file-text-o fa-5x"></i><br />
+                            API <br>Documentation
                         </a>
                         <a href="../api/test/" target="_blank" class="btn btn-sq btn-danger">
-                              <i class="fa fa-exchange fa-5x"></i><br/>
-                              API <br>Testing
-                        </a>
-                        <a href="../api/configure/" target="_blank" class="btn btn-sq btn-info">
-                              <i class="fa fa-gear fa-5x"></i><br/>
-                              API <br>Configuration
+                            <i class="fa fa-exchange fa-5x"></i><br />
+                            API <br>Testing
                         </a>
                     </p>
                 </div>
@@ -425,29 +425,46 @@
                 <div class="col-lg-12">
                     <p>
                         <a href="../builder/" target="_blank" class="btn btn-sq btn-danger">
-                              <i class="fa fa-html5 fa-5x"></i><br/>
-                              HTML5 <br>Builder
+                            <i class="fa fa-html5 fa-5x"></i><br />
+                            HTML5 <br>Builder
                         </a>
                         <a href="../ide/" target="_blank" class="btn btn-sq btn-info">
-                              <i class="fa fa-file-code-o fa-5x"></i><br/>
-                              Code <br>Editor
+                            <i class="fa fa-file-code-o fa-5x"></i><br />
+                            Code <br>Editor
+                        </a>
+                        <a href="../editor/" target="_blank" class="btn btn-sq btn-primary"
+                            style="background:brown; border: brown;">
+                            <i class="fa fa-file-code-o fa-5x"></i><br />
+                            New Code <br>Editor
                         </a>
                         <a href="../db/" target="_blank" class="btn btn-sq btn-primary">
-                              <i class="fa fa-database fa-5x"></i><br/>
-                              Database <br>Administration
-                        </a>
-                        <a href="../terminal/" target="_blank" class="btn btn-sq btn-success">
-                              <i class="fa fa-terminal fa-5x"></i><br/>
-                              Online <br>Terminal
-                        </a>
-                        <a href="https://github.com/geekypedia/pRESTige/blob/master/README.md#introduction" target="_blank" class="btn btn-sq btn-primary" style="background:purple; border:purple;">
-                              <i class="fa fa-book fa-5x"></i><br/>
-                              Online <br>Documentation
+                            <i class="fa fa-database fa-5x"></i><br />
+                            Database <br>Administration
                         </a>
                     </p>
                 </div>
             </div>
-        </div>        
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>
+                        <a href="../api/configure/" target="_blank" class="btn btn-sq btn-info">
+                            <i class="fa fa-gear fa-5x"></i><br />
+                            API <br>Configuration
+                        </a>
+                        <a href="../terminal/" target="_blank" class="btn btn-sq btn-success">
+                            <i class="fa fa-terminal fa-5x"></i><br />
+                            Online <br>Terminal
+                        </a>
+
+                        <a href="https://github.com/geekypedia/pRESTige/blob/master/README.md#introduction"
+                            target="_blank" class="btn btn-sq btn-primary" style="background:purple; border:purple;">
+                            <i class="fa fa-book fa-5x"></i><br />
+                            Online <br>Documentation
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
