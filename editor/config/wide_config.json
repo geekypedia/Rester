@@ -1,0 +1,9 @@
+{
+    "projects":{
+            "21232f297a57a5a743894a0e4a801fc3_old": {
+                    "name":"Workspace",
+                    "folder":"./workspace/",
+                    "play":"./workspace/"
+            }
+    }
+}

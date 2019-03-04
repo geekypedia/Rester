@@ -1,0 +1,72 @@
+html,body,#container { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #1e1e1e; font-family: Consolas, "Courier New", monospace; color: #d4d4d4; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track {  background-color: hsla(0,0%,29%,.4); }
+::-webkit-scrollbar-thumb { background-color: hsla(0,0%,59%,.4); }
+div, p { margin: 0; padding: 0; box-sizing: border-box; }
+
+#container { position: relative; overflow: hidden; }
+#top { position: relative; overflow: hidden; width: 100%; height: calc( 100% - 30px ); border-bottom: 1px solid black; }
+#sidebar { width: 239px; height: 100%; position: absolute; left: 0; top: 0; border-right: 1px solid #000; }
+#sidebar .header { overflow: hidden; width: 100%; height: 30px; position: absolute; left: 0; top: 0; background-color: #111; line-height: 30px; white-space: nowrap; }
+#open-files, #folder-files { position: absolute; top: 30px; width: 100%; height: calc( 100% - 30px ); }
+#folder-files { display: none; overflow: auto; }
+#folder-files.loading { }
+#code-area{ width: calc( 100% - 240px ); height: calc( 100% - 1px ); position: absolute; right: 1px; top: 0px; }
+#code-header{ width: 100%; height: 30px; color: #AAA; background-color: #111; line-height: 30px; padding-left: 10px; }
+#code-header .close { float: right; cursor: pointer; }
+#code-editor{ width: 100%; height: calc( 100% - 30px); }
+#folder-files p { padding: 10px; color: #999; }
+#folder-files input { margin-left: 17px; color: #AAA; background-color: #333; border: 1px solid #888; padding: 4px; }
+#folder-files .icon { fill: #777; width: 14px; height: 14px; padding: 1px; display: inline-block; }
+.folder .icon { fill: #5abd66 !important; opacity: 0.5; }
+.folder.current-folder .icon { fill: #DDD !important; opacity: 0.5; }
+.parent-folder .icon { fill: #729ad8 !important; }
+button:focus, input:focus { outline: 0; }
+.editor-wrapper { width: 100%; height: 100%; }
+.filename { color: #aaa; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.filename { padding: 0px 2px; }
+#open-files .filename:hover, #folder-files .filename:hover { color: #FFF !important; cursor: pointer; background-color: #222; }
+#open-files .filename:hover .icon, #folder-files .filename:hover .icon { fill: #FFF !important; }
+.filename.selected { background-color: #333; }
+.filename.modifyed { text-decoration: underline; }
+.filename.notloaded { opacity: 0.5; }
+.filename .number { opacity: 0.5; font-size: 0.6em; border-radius:2px; background-color:#333; border: 1px solid #444; margin-right: 4px; min-width: 1em; }
+.filename .close { float: right; opacity: 0.5; cursor: pointer; }
+.filename.folder { font-weight: bold; color: #5abd66; }
+.filename.parent-folder { font-weight: bold; color: #729ad8; }
+.filename.current-folder { font-weight: bold; color: #DDD; }
+.filename.new-file { opacity: 0.5; padding-left: 8px !important; margin-bottom: 10px; }
+.filename.blocked { opacity: 0.25; cursor: not-allowed !important;}
+.filename.new-file input { width: 100%; background-color: black; color: white; border: 0; padding: 4px; }
+.filename.open { border-right: 4px solid #445c5c; }
+span.size { opacity: 0.5; }
+#code-header .filename { color: #AAA;}
+#code-header .filename .slash { color: #f242f2; margin: 0px 2px; }
+#code-header .filename .last { color: white; }
+#sidebar .header button { background-color: black; margin-right: 2px; border: 0; color: #EEE; cursor: pointer; font-size: 0.8em; }
+#sidebar button .icon { fill: #83868a; width: 20px; height: 20px; padding: 2px; }
+#sidebar button:hover .icon { fill: white; }
+#sidebar button.selected { background-color: #444; }
+#sidebar button.selected .icon { fill: #DDD; }
+#sidebar .project-title { background-color: #404040; color: #b5b5b5; padding: 4px; padding-left: 10px; width: 100%; margin-bottom: 4px; }
+#sidebar .project-title .buttons { float: right; }
+#sidebar .project-title .buttons span { margin-right: 4px; cursor: pointer; }
+.saving  #code-header { background-color: #AAA !important; color: black !important; }
+.saving  #code-editor { outline: 1px solid #AAA !important; }
+
+#bottom { position: absolute; overflow: hidden; bottom: 0; width: 100%; height: 30px; background-color: black; color: #AAA; }
+#bottom .text-input { height: 30px; width: 100%; }
+#bottom .prompt { width: 14px; display: inline-block; }
+#bottom input { background-color: black; width: calc( 100% - 14px ); height: 100%; border: 0; color: white; font-size: 16px; font-family: "Courier New";}
+
+#console { width: 100%; background-color: black; color: #EEE; overflow: auto; }
+#container.show_console #top { height: 50%; }
+#container.show_console #console { display: block !important; height: calc( 100% - 30px ); }
+#container.show_console #bottom { height: 50%; }
+#console .msg { color: #888; padding-left: 5px; }
+#console .msg.me { color: white; padding-left: 5px; }
+#console .msg.warn { color: #ffde3a; }
+#console .msg.error { color: #f85d5d; }
+#console .msg.folder { color: #5abd66; }
+
+#loader { font-family: Arial Black; font-size: 150px; text-align: center; width: 100%; height: 100%; color: #222; }
