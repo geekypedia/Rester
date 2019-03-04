@@ -20,7 +20,7 @@ var WIDE = {
 	current_file: null,
 	visible_file: null,
 	current_folder: ".",
-	extensions_to_language: { "js":"javascript" },
+	extensions_to_language: { "js":"javascript", "py":"python", "php": "php", "cpp": "cpp", "go": "go", "java": "java", "sql" : "sql", "xml": "xml", "yaml": "yaml", "md": "markdown", "html": "html", "css": "css", "cs": "csharp", "hbs": "handlebars" },
 	buttons: [],
     console_open: false,
     files_list_open: false,
