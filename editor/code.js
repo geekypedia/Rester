@@ -115,7 +115,7 @@ var WIDE = {
         WIDE.loadSession();
     },
 
-	showCodeEditor: function( file_info, force_assign )
+	showCodeEditor: function( file_info, ext, force_assign )
 	{
 		if(!file_info)
 			return null;
@@ -143,14 +143,16 @@ var WIDE = {
 		file_info.editor_element = editor_element;
 
 		//a model is a file content
-		var model = monaco.editor.createModel("", "javascript");
+		//var model = monaco.editor.createModel("", "javascript");
+		var model = monaco.editor.createModel("", ext);
 		file_info.model = model;
 
 		//an editor is a view of a model
 		var editor = monaco.editor.create( editor_element, {
 			value: "",
 			model: model,
-			language: 'javascript',
+			//language: 'javascript',
+			language: ext,
 			//theme: 'vs-dark',
 			theme: 'vs-light',
 			folding: true
@@ -301,8 +303,21 @@ var WIDE = {
 			return;
 		}
 		this.current_file = file_info;
-		this.showCodeEditor( file_info );
+		
 
+		
+		var index = filename.lastIndexOf(".");
+		var ext = "text";
+		if(index != -1)
+			ext = filename.substr(index+1).toLowerCase();
+		if( this.extensions_to_language[ext] )
+			ext = this.extensions_to_language[ext];
+		
+		this.showCodeEditor( file_info, ext );
+				
+		monaco.editor.setModelLanguage( file_info.model, ext );
+		
+		
 		file_info.file_element.classList.add("selected");
 		var filename_pretty = filename.split("/").join("<span class='slash'>/</span>");
 		this.editor_header.innerHTML = "<span class='filename'>" + filename_pretty + "</span><span class='close'>&#10005;</span>";
@@ -310,13 +325,6 @@ var WIDE = {
 			WIDE.close();
 		});
 
-        var index = filename.lastIndexOf(".");
-        var ext = "text";
-        if(index != -1)
-            ext = filename.substr(index+1).toLowerCase();
-		if( this.extensions_to_language[ext] )
-			ext = this.extensions_to_language[ext];
-        monaco.editor.setModelLanguage( file_info.model, ext );
         
         if(focus)
 		    file_info.editor.focus();
