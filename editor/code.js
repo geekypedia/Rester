@@ -453,7 +453,7 @@ var WIDE = {
         if(!this.key)
         {
         	var container = document.querySelector("#folder-files");
-            container.innerHTML = "<p>Cannot access server, no key found.</p><p>Type your key to have access to the server.</p><p><input placeHolder='type key' type='password'/></p>";
+            container.innerHTML = "<p>Cannot access server, no key found.</p><p>Type your key to have access to the server.</p><p>Your key is basically your password from the old code editor (Codiad).</p><p><input placeHolder='type key' type='password'/></p>";
 			container.querySelector("input").addEventListener("keydown",function(e){
 				if(e.keyCode != 13)
 					return;
