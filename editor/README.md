@@ -4,8 +4,6 @@ WIDE is a Web IDE based in monaco-editor, it allows to edit remote files in your
 
 It allows to open several files, to browser remote folders, and the privileges are based in a config.json that you can store server side.
 
-![WIDE preview](wide_preview.PNG "WIDE preview")
-
 ## Features
 
 - Cool text editor with nice syntax highlighting (uses monaco-editor, the editor from VSCode).
@@ -113,9 +111,6 @@ sudo chmod -R ug+rw folder
 chown -R :www-data folder
 ```
 
-## Contact
-
-For any suggestions or comments, you can contact me at javi.agenjo@gmail.com
 
 
 
