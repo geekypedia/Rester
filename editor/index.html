@@ -4,6 +4,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>WIDE</title>
+	
+    <script type="text/javascript">
+    //append / at the end to load IDE properly
+    window.onload = function(){
+            var location = "" + window.location;
+                if(location.charAt(location.length-1) !== '/'){
+                  var docsLocation = location + "/";
+                  window.location = docsLocation;
+                }
+    }
+    </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="width:0;height:0;position:absolute;overflow:hidden;">
   <defs>
