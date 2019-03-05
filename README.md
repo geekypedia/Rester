@@ -551,15 +551,15 @@ POST users/login
 
 #### encrypt($text, $key)
 
-Encrypt text.
+Encrypt text. Only use generateCryptoKey() for generating $key. Don't use any random string as $key.
 
 #### decrypt($text, $key)
 
-Decrypt text.
+Decrypt text. Use the $key previously generated from generateCryptoKey(). It has to be the same $key that was used for encryption.
 
 #### generateCryptoKey()
 
-Generate key to be used in encryption and decryption.
+Generate key to be used in encryption and decryption. Everytime you call this method, a new key will be generated. So ideal way is to generate a key, store it somewhere safe, and use it for encryption and decryption. If you pass any random key to encrypt/decrypt functions, it will generate error.
 
 #### diff($obj1, $obj2)
 
