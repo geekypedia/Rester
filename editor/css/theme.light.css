@@ -1,4 +1,4 @@
-html,body,#container { width: 100%; height: 100%; margin: 0; padding: 0; background-color: white; font-family: Consolas, "Courier New", monospace; color: #d4d4d4; }
+html,body,#container { width: 100%; height: 100%; margin: 0; padding: 0; background-color: white; font-family: Consolas, "Courier New", monospace; color: black; }
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track {  background-color: hsla(0,0%,29%,.4); }
 ::-webkit-scrollbar-thumb { background-color: hsla(0,0%,59%,.4); }
@@ -18,12 +18,12 @@ div, p { margin: 0; padding: 0; box-sizing: border-box; }
 #folder-files p { padding: 10px; color: #999; }
 #folder-files input { margin-left: 17px; color: #AAA; background-color: white; border: 1px solid #888; padding: 4px; }
 #folder-files .icon { fill: #777; width: 14px; height: 14px; padding: 1px; display: inline-block; }
-.folder .icon { fill: #5abd66 !important; opacity: 0.5; }
-.folder.current-folder .icon { fill: #DDD !important; opacity: 0.5; }
+.folder .icon { fill: #5abd66 !important; opacity: 0.75; }
+.folder.current-folder .icon { fill: black !important; opacity: 0.75; }
 .parent-folder .icon { fill: #729ad8 !important; }
 button:focus, input:focus { outline: 0; }
 .editor-wrapper { width: 100%; height: 100%; }
-.filename { color: #aaa; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.filename { color: black; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .filename { padding: 0px 2px; }
 #open-files .filename:hover, #folder-files .filename:hover { color: #FFF !important; cursor: pointer; background-color: #222; }
 #open-files .filename:hover .icon, #folder-files .filename:hover .icon { fill: #FFF !important; }
@@ -34,8 +34,8 @@ button:focus, input:focus { outline: 0; }
 .filename .close { float: right; opacity: 0.5; cursor: pointer; }
 .filename.folder { font-weight: bold; color: #5abd66; }
 .filename.parent-folder { font-weight: bold; color: #729ad8; }
-.filename.current-folder { font-weight: bold; color: #DDD; }
-.filename.new-file { opacity: 0.5; padding-left: 8px !important; margin-bottom: 0px; }
+.filename.current-folder { font-weight: bold; color: gray; }
+.filename.new-file { opacity: 0.75; padding-left: 8px !important; margin-bottom: 0px; }
 .filename.blocked { opacity: 0.25; cursor: not-allowed !important;}
 .filename.new-file input { width: 100%; background-color: black; color: white; border: 0; padding: 4px; }
 .filename.open { border-right: 4px solid #445c5c; }
