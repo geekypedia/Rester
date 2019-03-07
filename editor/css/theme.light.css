@@ -15,7 +15,7 @@ div, p { margin: 0; padding: 0; box-sizing: border-box; }
 #code-header{ width: 100%; height: 30px; color: #AAA; background-color: white; line-height: 30px; padding-left: 10px; }
 #code-header .close { float: right; cursor: pointer; }
 #code-editor{ width: 100%; height: calc( 100% - 30px); }
-#folder-files p { padding: 10px; color: #999; }
+#folder-files p { padding: 10px; color: red; }
 #folder-files input { margin-left: 17px; color: #AAA; background-color: white; border: 1px solid #888; padding: 4px; }
 #folder-files .icon { fill: #777; width: 14px; height: 14px; padding: 1px; display: inline-block; }
 .folder .icon { fill: #5abd66 !important; opacity: 0.75; }
