@@ -1,5 +1,9 @@
-//WIDE.js Coded by Javi Agenjo (@tamat) 2018
+//WIDE.js extended, added new features by Om Talsania 2019
+//WIDE.js Originaly Coded by Javi Agenjo (@tamat) 2018
 "use strict"
+
+
+
 
 //main class
 var WIDE = {
@@ -320,9 +324,20 @@ var WIDE = {
 		
 		file_info.file_element.classList.add("selected");
 		var filename_pretty = filename.split("/").join("<span class='slash'>/</span>");
-		this.editor_header.innerHTML = "<span class='filename'>" + filename_pretty + "</span><span class='close'>&#10005;</span>";
+		this.editor_header.innerHTML = "<span id='editor_header_span' class='filename'>" + filename_pretty + "</span><span class='close'>&#10005;</span>";
+		var editor_header_span = document.getElementById('editor_header_span');
+		editor_header_span.dataset['currentOpenFilePath'] = filename;
 		this.editor_header.querySelector(".close").addEventListener("click",function(e){
 			WIDE.close();
+			var editor_header_span = document.getElementById('editor_header_span');
+			var current_file_path = editor_header_span.dataset['currentOpenFilePath'];
+			var current_file_key = current_file_path.split("/").join("_");
+			if(current_file_key.startsWith('_')) current_file_key = current_file_key.substr(1);
+			editor_header_span.innerHTML = "";
+			var closingFile = document.getElementById(current_file_key);
+			closingFile.parentNode.removeChild(closingFile);
+			delete WIDE.openFiles[current_file_key];
+			
 		});
 
         
@@ -844,6 +859,11 @@ var WIDE = {
 								return;
 						}
 						WIDE.load( "/" + this.dataset["fullpath"], null, true );
+
+
+
+						WIDE.addOpenFiles(this.dataset, true);
+
 					}
 				});
 		}
@@ -901,6 +921,33 @@ var WIDE = {
 			});
 		});
 		container.appendChild( element );		
+
+		//separator
+		var separator = '<hr/>';
+		var element = document.createElement("div");
+		element.className = "filename new-file";
+		element.innerHTML = separator;
+		container.appendChild( element );
+
+		//open files
+		
+		//var open_files_text = '<svg class="icon"><use xlink:href="#si-'+"bootstrap-file"+'" /></svg> ' + "Open Files";
+		var open_files_text = "";
+		var element = document.createElement("div");
+		element.id = 'openFilesContainer';
+		//element.className = "filename new-file";
+		element.innerHTML = open_files_text;
+		// element.addEventListener("click", function(e){
+		// });		
+		container.appendChild( element );		
+
+		
+		for(var i in  WIDE.openFiles){
+			WIDE.addOpenFiles(WIDE.openFiles[i]);
+		}
+		
+
+
 	},
 
     onFileSaved: function( filename )
@@ -1017,7 +1064,45 @@ var WIDE = {
             console.log("settings modifyed");
         }
         this.open("settings.json",true);
-    }
+	},
+	
+	//CUSTOMIZED
+
+	openFiles: {},
+	addOpenFiles: function (dataset, push){
+		var file_key = dataset["fullpath"].split("/").join("_");
+
+		var openFilesContainer = document.getElementById("openFilesContainer");
+		var file_name = dataset["filename"];
+		var full_path = dataset["fullpath"];
+		var file_name_pretty = full_path.split("/").join("<span class='slash'>/</span>");
+
+		var open_files_text = '<svg class="icon"><use xlink:href="#si-'+"bootstrap-file"+'" /></svg> ' + full_path;
+		var element = document.createElement("div");
+		element.id = file_key;
+		//element.className = "filename new-file";
+		element.innerHTML = open_files_text;
+		element.dataset['filename'] = dataset['filename'];
+		element.dataset['fullpath'] = dataset['fullpath'];
+		element.addEventListener("click", function(e){							
+			WIDE.load( "/" + dataset["fullpath"], null, true );
+		});		
+		
+		if(push){
+			
+			
+			if(!WIDE.openFiles[file_key]){
+				WIDE.openFiles[file_key] = dataset;	
+				openFilesContainer.appendChild( element );
+			}
+			
+		} else {
+			openFilesContainer.appendChild( element );			
+		}
+
+		
+	}
+
 };
 
 // Bridge between client and server, you can create your own if you do not want to use server.php
