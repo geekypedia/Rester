@@ -24,7 +24,7 @@ var WIDE = {
 	current_file: null,
 	visible_file: null,
 	current_folder: ".",
-	extensions_to_language: { "js":"javascript", "py":"python", "md": "markdown", "cs": "csharp", "hbs": "handlebars" },
+	extensions_to_language: { "js":"javascript", "ts": "typescript", "py":"python", "cs": "csharp", "cshtml": "razor","md": "markdown", "hbs": "handlebars", "ps1" : "powershell", "vue": "html" },
 	buttons: [],
     console_open: false,
     files_list_open: false,
