@@ -63,7 +63,7 @@ function api_get_current_route(){
 }
 
 function excluded_routes(){
-	return array(
+	$excluded_routes = array(
 				"POST users/login", 
 				"POST users/forgot-password", 
 				"POST users/set-password", 
@@ -72,6 +72,17 @@ function excluded_routes(){
 				"POST organizations/register", 
 				"GET hello/world"
 				);
+	
+	
+	if(!empty(EXCLUDED_ROUTES)){
+		$decoded_excluded_routes = json_decode(EXCLUDED_ROUTES);
+		if(is_array($decoded_excluded_routes)){
+			$excluded_routes = array_merge($excluded_routes, $decoded_excluded_routes);
+		}
+	}
+	
+	
+	return $excluded_routes;
 }
 
 //$exclude = array("GET hello/world", "POST users/login");

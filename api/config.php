@@ -37,7 +37,7 @@ define('DBPASSWORD', $config->password);
 
 //The path where the uploads are saved. Must be writtable by the webserver
 define('FILE_UPLOAD_PATH', 'uploads');
-define('DEFAULT_FILE_API', false);
+define('DEFAULT_FILE_API', empty($config->file_mode) ? false : true);
 
 //Enables API Cache. For now only APC is implemented
 define('CACHE_ENABLED', true);
@@ -46,13 +46,17 @@ define('CACHE_ENABLED', true);
 define('ENABLE_OAUTH', false);
 
 //Enable simple login API
-define('DEFAULT_LOGIN_API', false);
+define('DEFAULT_LOGIN_API', empty($config->auth_mode) ? false : true);
 
 //Enable simple SaaS Mode
-define('DEFAULT_SAAS_MODE', false);
+define('DEFAULT_SAAS_MODE', empty($config->saas_mode) ? false : true);
 
 //Enable open registrations
-define('ENABLE_OPEN_REGISTRATIONS', false);
+define('ENABLE_OPEN_REGISTRATIONS', empty($config->open_registrations) ? false : true);
+
+
+//Excluded Routes
+define('EXCLUDED_ROUTES', empty($config->excluded_routes) ? json_encode(array()) : json_encode($config->excluded_routes));
 
 //Enable deep nested queries
 define('ENABLE_DEEP_QUERY', true);
