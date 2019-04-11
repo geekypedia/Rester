@@ -2,8 +2,8 @@
 
 //GET PASSWORD FROM Codiad Settings
 
-//define("REL_PATH", ".."); //prod
-define("REL_PATH_THIS", "../../.."); //dev
+define("REL_PATH_THIS", ".."); //prod
+//define("REL_PATH_THIS", "../../.."); //dev
 
 
 function authenticate($relative_path = "./"){

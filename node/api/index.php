@@ -5,14 +5,15 @@
  * MIT License
  */
 
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
+error_reporting(0);
 
-set_time_limit(120);
+set_time_limit(180);
 
 $echolog[] = "";
 
-//define("REL_PATH", ".."); //prod
-define("REL_PATH", "../../../.."); //dev
+define("REL_PATH", ".."); //prod
+//define("REL_PATH", "../../../.."); //dev
 
 include('../index-auth.php');
 $auth_val = authenticate('../');
