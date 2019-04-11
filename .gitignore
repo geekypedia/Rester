@@ -4,3 +4,7 @@ api/uploads
 ide/workspace
 ide/data
 ide/config.php
+node/api/.npm
+node/api/logs
+node/api/node.pid.config
+node/node

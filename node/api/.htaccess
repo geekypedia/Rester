@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/?path=$1 [L]
+</IfModule>
+<Limit GET POST PUT DELETE>
+  Allow from all
+</Limit>
+<Files ~ "\.config$">
+Order allow,deny
+Deny from all
+</Files>
+<Files ~ "\.key$">
+Order allow,deny
+Deny from all
+</Files>
