@@ -74,7 +74,7 @@ You can use the following endpoints to use the system.
 
 |Component						| URL									|
 |-------------------------------|---------------------------------------|
-|Dashboard							| <a href="http://localhost:8080/" target="_blank">http://localhost:8080</a> |
+|Launcher							| <a href="http://localhost:8080/launch/" target="_blank">http://localhost:8080/launch</a> |
 |API Configuration				| <a href="http://localhost:8080/api/configure/" target="_blank">http://localhost:8080/api/configure</a> |
 |API							| <a href="http://localhost:8080/api/" target="_blank">http://localhost:8080/api</a> |
 |API Documentation				| <a href="http://localhost:8080/api/docs/" target="_blank">http://localhost:8080/api/docs</a> |
