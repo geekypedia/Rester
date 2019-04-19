@@ -270,7 +270,7 @@ if(!$auth){
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-info round-btn-med round-btn" onclick="act('npm')">EXECUTE NPM COMMAND</button>	
+			    	<button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('npm')">EXECUTE NPM COMMAND</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
@@ -287,7 +287,7 @@ if(!$auth){
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
-			    	<a href="../api" target="_blank" class="btn btn-info round-btn-med round-btn">LAUNCH</a>	
+			    	<button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('npmstart')">NPM START</button>	
 			    </div>
 			    <!--<div class="form-group col-md-3">-->
 			    <!--	<button type="button" class="btn btn-info round-btn-med round-btn" onclick="act('npmstart')">NPM START</button>	-->
@@ -295,6 +295,22 @@ if(!$auth){
 			    <div class="form-group col-md-1">
 			    </div>
 			</div>
+			<div class="row row-margin">
+			    <div class="form-group col-md-3">
+			    	<a href="../api" target="_blank" class="btn btn-info round-btn-med round-btn">LAUNCH</a>	
+			    </div>
+			    <div class="form-group col-md-1">
+			    </div>
+			    <div class="form-group col-md-3">
+			    	<a href="../api/logs" target="_blank" class="btn btn-info round-btn-med round-btn">LOGS</a>	
+			    </div>
+			    <div class="form-group col-md-1">
+			    </div>
+			    <div class="form-group col-md-3">
+			    </div>
+			    <div class="form-group col-md-1">
+			    </div>
+			</div>			
 		  </form>
 		  
 		 
