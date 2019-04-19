@@ -12,7 +12,7 @@ set_time_limit(180);
 
 $echolog[] = "";
 
-define("REL_PATH", ".."); //prod
+define("REL_PATH", "../.."); //prod
 //define("REL_PATH", "../../../.."); //dev
 
 include('../index-auth.php');
