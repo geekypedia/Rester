@@ -8,6 +8,8 @@ pRESTige is basically a RAD (Rapid Application Development) toolset that allows 
 
 It mainly comprises of an API engine that projects your MySQL database as a fully working collection of RESTful APIs which are compliant with OpenAPI Specifications (Swagger). You can just plug-in your existing database by providing a connection string, and immediately you will get fully featured RESTful APIs, along with documentation generated in Swagger. It supports OpenAuth and also provides a token based mechanism for securing your APIs. It also provides built-in login APIs to authenticate and generate token. It provides built-in file upload APIs. It provides embedded IDE, DB Management Tool and terminal and you can run all of these from browser. 
 
+NEW ADDITIONS - A New Code Editor similar to Visual Studio Code with autocomplete for many languages. A Node.JS manager which allows you to run Node.JS applications even if your shared hosting provider only allows PHP. Yes, it is indeed magical!
+
 Best part of this is, it has got a very simple architecture, so it is compatible to be hosted as-is on shared hosting environments, even on the free ones like FreeHosting.com, GoogieHost and 000webhost. We have also tried it on cheaper hosts like HostBudget.com, BingLoft, Flaunt7, KatyaWeb. So, all you need is your grandpa's laptop, a browser and internet.
 
 This is your silver bullet for Rapid Application Development in web browser. 
@@ -23,7 +25,9 @@ Features
 + Test your APIs without having to install any plug-ins in your browser.
 + Embedded light-weight database management directly from your browser. You can make changes in the tables without having to reply on any desktop tool.
 + Embedded code editor. Develop your application directly from your browser. See live preview.
++ A new embedded code editor, similar to Visual Studio Code, with code autocomplete.
 + Embedded terminal. Run linux commands directly from your browser.
++ Embedded Node.JS manager. Run your nodejs programs even if the hosting only allows for PHP.
 + Built-in authentication and token generation APIs
 + Built-in file upload APIs
 + Support for OAuth
@@ -77,8 +81,10 @@ You can use the following endpoints to use the system.
 |API Testing Tool				| <a href="http://localhost:8080/api/test/" target="_blank">http://localhost:8080/api/test</a> |
 |Database Administration		| <a href="http://localhost:8080/db/" target="_blank">http://localhost:8080/db</a> |
 |Code Editor					| <a href="http://localhost:8080/ide/" target="_blank">http://localhost:8080/ide</a> |
-|Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
+|New Code Editor					| <a href="http://localhost:8080/editor/" target="_blank">http://localhost:8080/editor</a> |
 |HTML5 Builder						| <a href="http://localhost:8080/builder/" target="_blank">http://localhost:8080/builder</a> |
+|Node.JS Manager						| <a href="http://localhost:8080/node/" target="_blank">http://localhost:8080/node</a> |
+|Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
 
 
 Prerequisites
