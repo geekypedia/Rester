@@ -158,8 +158,13 @@ define('MAX_UPLOAD_SIZE', '2048');
 //--- EDIT BELOW CAREFULLY OR DO NOT EDIT AT ALL
 
 // private key and session name to store to the session
+$script_url = $_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'];
+$base_url = str_replace("/fm/index.php", "", $script_url);
+$replaced_url = preg_replace("![^a-z0-9]+!i", "_", $base_url);
+$fm_session_id_custom = 'filemanager' . '_' . $replaced_url;
 if ( !defined( 'FM_SESSION_ID')) {
-    define('FM_SESSION_ID', 'filemanager');
+    //define('FM_SESSION_ID', 'filemanager');
+    define('FM_SESSION_ID', $fm_session_id_custom);
 }
 
 // Configuration
