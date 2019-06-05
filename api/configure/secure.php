@@ -150,7 +150,7 @@ if(file_exists($configPath)){
 				 			$('#excluded_routes').val(excluded_routes_raw);
 				 		} 
 				 		
-				 		$.get('seed.sql', null, function(r){
+				 		$.get('seed.sql.txt', null, function(r){
 				 			$('#sql_query').val(r);
 				 		});
 				 		
