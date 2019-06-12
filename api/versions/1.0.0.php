@@ -873,6 +873,15 @@ function load_views(){
 	global $prestige;
 	try{
 		$views=$prestige->query("show full tables where Table_Type = 'VIEW'");
+		
+		$vProperty = "Tables_in_";
+		$current_db_name_result = $prestige->query("SELECT DATABASE() FROM DUAL;");
+		$current_db_name = "";
+		if(!empty($current_db_name_result) && count($current_db_name_result) > 0){
+			$current_db_name = $current_db_name_result[0]['DATABASE()'];
+		}
+		$vProperty = $vProperty . $current_db_name;
+		
 	}
 	catch(Exception$ex){
 	}
@@ -880,7 +889,7 @@ function load_views(){
 	$i<count($views);
 	$i++){
 		$v=$views[$i];
-		$vName=$v['Tables_in_internal'];
+		$vName=$v[$vProperty];
 		$vFinal=array("secret");
 		$method="GET";
 		$route="views";
