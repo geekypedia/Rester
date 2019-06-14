@@ -36,6 +36,26 @@
 
 //GET PASSWORD FROM Codiad Settings
 $users_file = '../ide/data/users.php';
+function read_passwords($users_file){
+    $userdb = array();
+	$data = file_get_contents($users_file);
+	$startpos = strpos($data, "[");
+	$endpos = strrpos($data, "]");
+	$len = $endpos - $startpos + 1;
+	$realdata = substr($data, $startpos, $len);
+	$obj = (array) json_decode($realdata, true);
+	for($i = 0; $i < count($obj) ; $i++){
+	    $user = $obj[$i]['username'];   
+	    $password = $obj[$i]['password'];
+	    $userdb[$user] = $password;
+	    
+	}
+	return $userdb;	
+}
+
+$auth_users = read_passwords($users_file);
+		
+/*		
 function get_password($users_file){
 	$data = file_get_contents($users_file);
 	$startpos = strpos($data, "[");
@@ -46,14 +66,18 @@ function get_password($users_file){
 	$password = $obj[0]['password'];
 	return $password;	
 }
+*/
+		
 function get_hash($algorithm, $string) {
     return hash($algorithm, trim((string) $string));
 }
 
-$expected_key = get_password($users_file);
+//$expected_key = get_password($users_file);
+$expected_keys = array_values($auth_users);		
 $supplied_key = get_hash('sha1', $key);		
 		
-		if($supplied_key == $expected_key){
+		if(in_array($supplied_key, $expected_keys)){
+		//if($supplied_key == $expected_key){
 			$projects[ $key ] = array(
 				"name" => "Default Workspace",
 				//"folder" => "./workspace",
