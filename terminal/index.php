@@ -31,7 +31,23 @@ $PASSWORD = get_password($users_file);
 
 // Multi-user credentials
 // Example: $ACCOUNTS = array('user1' => 'password1', 'user2' => 'password2');
-$ACCOUNTS = array();
+//$ACCOUNTS = array();
+function read_passwords($users_file){
+    $auth_pwds = array();
+	$data = file_get_contents($users_file);
+	$startpos = strpos($data, "[");
+	$endpos = strrpos($data, "]");
+	$len = $endpos - $startpos + 1;
+	$realdata = substr($data, $startpos, $len);
+	$obj = (array) json_decode($realdata, true);
+	for($i = 0; $i < count($obj) ; $i++){
+	    $user = $obj[$i]['username'];   
+	    $password = $obj[$i]['password'];
+	    $auth_pwds[$user] = $password;
+	}
+	return $auth_pwds;	
+}
+$ACCOUNTS = read_passwords($users_file);
 
 // Password hash algorithm (password must be hashed)
 // Example: $PASSWORD_HASH_ALGORITHM = 'md5';
