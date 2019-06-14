@@ -16,6 +16,7 @@ $PASSWORD = 'admin';
 
 //GET PASSWORD FROM Codiad Settings
 $users_file = '../ide/data/users.php';
+/*
 function get_password($users_file){
 	$data = file_get_contents($users_file);
 	$startpos = strpos($data, "[");
@@ -27,6 +28,7 @@ function get_password($users_file){
 	return $password;	
 }
 $PASSWORD = get_password($users_file);
+*/
 
 
 // Multi-user credentials
@@ -48,6 +50,7 @@ function read_passwords($users_file){
 	return $auth_pwds;	
 }
 $ACCOUNTS = read_passwords($users_file);
+$PASSWORD = $ACCOUNTS[$USER];
 
 // Password hash algorithm (password must be hashed)
 // Example: $PASSWORD_HASH_ALGORITHM = 'md5';
