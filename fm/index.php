@@ -116,7 +116,8 @@ $ip_blacklist = array(
 
 // user specific directories
 // array('Username' => 'Directory path', 'Username2' => 'Directory path', ...)
-$directories_users = array();
+//$directories_users = array();
+$directories_users = array('superadmin' => __DIR__.'/..');
 
 // Enable highlight.js (https://highlightjs.org/) on view's page
 $use_highlightjs = true;
