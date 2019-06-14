@@ -147,6 +147,19 @@ if(file_exists($configPath)){
 				 		$.get('seed.sql.txt', null, function(r){
 				 			$('#sql_query').val(r);
 				 		});
+
+						 var current_user = '<?php echo ($SUPPLIED_USERNAME) ?>';
+						 if(current_user == "user"){
+						 	$('input').attr('disabled', 'disabled');
+						 	$('button').attr('disabled', 'disabled');
+						 	$('textarea').attr('disabled', 'disabled');
+						 	$('#tokenuser').val('user@example.com');
+						 	$('#tokenpassword').val('user');
+						 	if(config.auth_mode){
+						 		$('.user-mode > div > input').attr('disabled',false);
+							 	$('.user-mode > div > button').attr('disabled',false);
+						 	}
+						 }						
 				 		
 				 	}
 			 	} catch (e){
@@ -266,7 +279,7 @@ if(file_exists($configPath)){
 			    <div id="executionStatus" name="executionStatus" style="font-size: smaller; padding: 0px; margin: 5px;"></div>
 		    </div>
 		  <hr/>
-		    <div>
+		    <div class="user-mode">
 		    	<div class="form-group col-md-12">
 		    		<label>Get latest token needed to run APIs in Auth Mode:</label>
 		    	</div>
