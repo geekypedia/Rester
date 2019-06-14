@@ -1,7 +1,8 @@
 <?php
 // Web Console v0.9.7 (2016-11-05)
 //
-// Author: Nickolay Kovalev (http://nickola.ru)
+// Modified by Author: Om Talsania (https://geekypedia.net)
+// Original Author: Nickolay Kovalev (http://nickola.ru)
 // GitHub: https://github.com/nickola/web-console
 // URL: http://web-console.org
 
