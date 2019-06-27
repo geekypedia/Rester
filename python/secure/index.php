@@ -202,6 +202,15 @@ if(!$auth){
 		
 		refreshStatus();
 		
+		function restartAct(){
+			act('start', function(r){
+				actionHandler(r);
+				act('stop', function(s){
+					actionHandler(s);
+				});
+			});
+		}
+		
 
 		function actionHandler(r){		
 			//console.log($('#actionlogs').val());
@@ -352,6 +361,7 @@ if(!$auth){
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
+					 <button type="button" class="btn btn-warning round-btn-med round-btn" onclick="restartAct()">RESTART</button>	 
 					<!-- <button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('pipinstall', actionHandler)">EXECUTE PIP COMMAND</button>	 -->
 			    </div>
 			    <!--<div class="form-group col-md-3">-->
