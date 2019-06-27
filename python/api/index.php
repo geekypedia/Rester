@@ -96,30 +96,31 @@ function python_install() {
 	
 	if(file_exists(__DIR__ . "/python")){
 	} else {
-		passthru("mkdir python", $ret0);
+		exec("mkdir python", $out0, $ret0);
 	}
 
 	//if(file_exists(__DIR__.'/'."pypy" . PYTHON_VER . "-linux-" . PYTHON_ARCH . "-portable"))
-	passthru("tar -xjvf " . PYTHON_FILE . " -C python 2>&1", $ret1);
+	exec("tar -xjvf " . PYTHON_FILE . " -C python 2>&1", $out1,$ret1);
 	if($ret1 === 0){
+		$echolog[] = $out1;
 	} else {
 		$echolog[] = "Could not complete extracting the bundle.";
 	}
 	//$extracted_dir = "/pypy" . PYTHON_VER . "-linux-" . PYTHON_ARCH . "-portable";
 	$extracted_dir = "/python/py*";
 	$cmd2 = "mv " . __DIR__ . $extracted_dir  . " " . PYTHON_DIR;	
-	passthru($cmd2, $ret2);
+	exec($cmd2, $out2, $ret2);
 	if($ret2 === 0){
-		passthru("touch " . PYTHON_PID, $ret);		
-		$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
+		exec("touch " . PYTHON_PID, $out3, $ret);		
+		$echolog[] = $ret === 0 ? $out2 : "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
 	} else {
 		$echolog[] = "Could not move the bundle to desired location." . "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
 	}
 
 	$cmd4 = PYTHON_DIR . "/bin/pypy -m ensurepip";
-	passthru($cmd4, $ret4);
+	exec($cmd4, $out4, $ret4);
 	if($ret4 === 0){
-
+		$echolog[] = $out4;
 	} else {
 		$echolog[] = "Could not install pip. Please use the web terminal and execute python/bin/pypy -m ensurepip";
 	}
@@ -137,10 +138,14 @@ function python_uninstall() {
 		return;
 	}
 	$echolog[] = "Unnstalling Python:";
-	passthru("rm -rfv " . PYTHON_DIR . " " . PYTHON_PID . "", $ret);
-	passthru("rm -rfv python_modules", $ret);
-	passthru("rm -rfv .pip", $ret);
-	passthru("rm -rfv ". PYTHON_OUT ."", $ret);
+	exec("rm -rfv " . PYTHON_DIR . " " . PYTHON_PID . "", $out1, $ret);
+	$echolog[] = $out1;
+	exec("rm -rfv python_modules", $out2, $ret);
+	$echolog[] = $out2;	
+	exec("rm -rfv .pip", $out3, $ret);
+	$echolog[] = $out3;	
+	exec("rm -rfv ". PYTHON_OUT ."", $out4, $ret);
+	$echolog[] = $out4;	
 	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret";
 }
 
@@ -192,9 +197,9 @@ function python_stop() {
 	}
 	$echolog[] = "Stopping Python with PID=$python_pid";
 	$ret = -1;
-	passthru("kill $python_pid", $ret);
+	exec("kill $python_pid", $out, $ret);
 	if($ret === 0){
-		$echolog[] = "Done";
+		$echolog[] = $out;
 	} else {
 		python_error();
 		//$echolog[] = "Failed. Error: $ret";
