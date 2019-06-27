@@ -273,6 +273,12 @@ function python_serve($path = "") {
                 curl_setopt($curl, CURLOPT_POST, 1);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($_POST));
         }
+        if($_SERVER["REQUEST_METHOD"] === "PUT") {
+		$putData = @file_get_contents('php://input');
+		//curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($putData));
+	}
+	
  	$resp = curl_exec($curl);
 
 	if($resp === false) {
