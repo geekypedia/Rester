@@ -1,5 +1,5 @@
 <head>
-  <title>Node.JS Administration</title>
+  <title>Python Administration</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   		<!--Append / at the end of URL to load everything properly -->
@@ -49,7 +49,7 @@
 </head>
 <body>
 <div class="panel panel-primary main-container">
-  <div class="panel-heading center-text">Node.JS Administration - Authenticate yourself!</div>
+  <div class="panel-heading center-text">Python Administration - Authenticate yourself!</div>
   <div class="panel-body">
       <form id='configForm' action="./secure/" method="post">
         <div class="form-group">
