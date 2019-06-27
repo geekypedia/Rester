@@ -203,9 +203,9 @@ if(!$auth){
 		refreshStatus();
 		
 		function restartAct(){
-			act('start', function(r){
+			act('stop', function(r){
 				actionHandler(r);
-				act('stop', function(s){
+				act('start', function(s){
 					actionHandler(s);
 				});
 			});
