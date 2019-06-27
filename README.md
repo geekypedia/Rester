@@ -86,6 +86,8 @@ You can use the following endpoints to use the system.
 |New Code Editor					| <a href="http://localhost:8080/editor/" target="_blank">http://localhost:8080/editor</a> |
 |HTML5 Builder						| <a href="http://localhost:8080/builder/" target="_blank">http://localhost:8080/builder</a> |
 |Node.JS Manager						| <a href="http://localhost:8080/node/" target="_blank">http://localhost:8080/node</a> |
+|Python Manager						| <a href="http://localhost:8080/python/" target="_blank">http://localhost:8080/python</a> |
+|File Manager						| <a href="http://localhost:8080/fm/" target="_blank">http://localhost:8080/fm</a> |
 |Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
 
 
