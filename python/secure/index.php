@@ -395,7 +395,7 @@ if(!$auth){
 			    	<button type="button" class="btn btn-success round-btn-med round-btn" id="manual_file_submit" name="manual_file_submit" onclick="uploadFile()">UPLOAD</button>	
 			</div>
 			<div class="form-group col-md-12">
-				<p>You can download PyPy portalable from <a href="https://bitbucket.org/squeaky/portable-pypy/downloads/">here</a>, and upload it using the uploader above, or goto the <a href="../../fm">File Manager</a>, login using your superadmin credentials, and upload it to {{PRESTIGE_HOME}}/python/api, and then press the install button above.</p>
+				<p>You can download PyPy portalable from <a href="https://bitbucket.org/squeaky/portable-pypy/downloads/" target=”_blank”>here</a>, and upload it using the uploader above, or goto the <a href="../../fm" target=”_blank”>File Manager</a>, login using your superadmin credentials, and upload it to {{PRESTIGE_HOME}}/python/api, and then press the install button above.</p>
 			</div>
 
 		  </form>
