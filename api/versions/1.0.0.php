@@ -75,6 +75,7 @@ function excluded_routes(){
 	
 	
 	if(!(EXCLUDED_ROUTES)){
+	}else{
 		$decoded_excluded_routes = json_decode(EXCLUDED_ROUTES);
 		if(is_array($decoded_excluded_routes)){
 			$excluded_routes = array_merge($excluded_routes, $decoded_excluded_routes);
