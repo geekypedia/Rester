@@ -157,7 +157,10 @@ if(!$auth){
 				password: password
 			}
 			payload[command] = '.';
-			if(command == 'start') payload[command] = $('#prefix').val();
+			if(command == 'start') {
+				payload[command] = $('#prefix').val();
+				payload['port'] =   ($('#port').val());
+			}
 			if(command == 'pip') {
 				payload[command] = $('#pip').val();
 				payload['prefix'] = $('#prefix').val();
