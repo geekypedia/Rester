@@ -23,13 +23,14 @@ Features
 + Changes in the database are immediately reflected in APIs, without having to restart the process.
 + Changes in the APIs are immediately reflected in API documentation without having to regenerate anything.
 + Test your APIs without having to install any plug-ins in your browser.
-+ Embedded light-weight database management directly from your browser. You can make changes in the tables without having to reply on any desktop tool.
++ Embedded light-weight database management directly from your browser. You can make changes in the tables without having to rely on any desktop tool.
 + Embedded code editor. Develop your application directly from your browser. See live preview.
 + A new embedded code editor, similar to Visual Studio Code, with code autocomplete.
 + Embedded File Manager. Easily upload bunch of files to your workspace.
 + Embedded terminal. Run linux commands directly from your browser.
 + Embedded Node.JS manager. Run your nodejs programs even if the hosting only allows for PHP.
 + Embedded Python manager. Run your Python programs even if the hosting only allows for PHP.
++ Embedded Lua manager. Run your Lua programs even if the hosting only allows for PHP.
 + Built-in authentication and token generation APIs
 + Built-in file upload APIs
 + Support for OAuth
@@ -87,6 +88,7 @@ You can use the following endpoints to use the system.
 |HTML5 Builder						| <a href="http://localhost:8080/builder/" target="_blank">http://localhost:8080/builder</a> |
 |Node.JS Manager						| <a href="http://localhost:8080/node/" target="_blank">http://localhost:8080/node</a> |
 |Python Manager						| <a href="http://localhost:8080/python/" target="_blank">http://localhost:8080/python</a> |
+|Lua Manager						| <a href="http://localhost:8080/lua/" target="_blank">http://localhost:8080/lua</a> |
 |File Manager						| <a href="http://localhost:8080/fm/" target="_blank">http://localhost:8080/fm</a> |
 |Terminal						| <a href="http://localhost:8080/terminal/" target="_blank">http://localhost:8080/terminal</a> |
 
@@ -263,7 +265,15 @@ Please note that `GET` calls accept the following query string variables:
 
 How do I enable authentication?
 -----
+#### FROM UI
+1. Open the launch dahboard.
+2. Go to API Configuration
+3. Provide the credentials (Default - admin/admin unless you have changed it from the Codiad editor)
+4. You will find an option to enable Auth mode.
+5. Save the settings.
+Node: You will also find a text area to define any custom APIs you want to bypass.
 
+#### FROM CODE
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
@@ -279,10 +289,18 @@ enable_simple_auth($excluded, $enable_open_user_registrations);
 
 How do I generate token after enabling authentication?
 -----
+#### FROM UI
+1. Open the launch dahboard.
+2. Go to API Configuration
+3. Provide the credentials (Default - admin/admin unless you have changed it from the Codiad editor)
+4. You will find a button to generate token on the page.
+
+#### FROM CODE
 1. You need to have a username/email and password that matches a record in 'users' table in the database.
 2. Open web based API Testing Tool: <a href="http://localhost:8080/api/test" target="_blank">http://localhost:8080/api/test</a> 
 3. Make a POST request to 'http://localhost:8080/api/users/login'. Provide either username or email as parameter. Provide password as parameter.
 4. On successful request, you will get a users object. The object should have a token. The token expires every 24 hour. Everyday at 00:00 hour, the old token will not work and you will need to call this API again to generate a new token.
+
 
 What other users API are available after enabling authentication?
 -----
@@ -314,7 +332,15 @@ Once you login using the default users/login api, you will get both 'api_key' an
 
 How do I enable SaaS Mode?
 -----
+#### FROM UI
+1. Open the launch dahboard.
+2. Go to API Configuration
+3. Provide the credentials (Default - admin/admin unless you have changed it from the Codiad editor)
+4. You will find an option to enable SaaS mode.
+5. Save the settings.
+Node: You will also find a text area to define any custom APIs you want to bypass.
 
+#### FROM CODE
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
@@ -360,6 +386,14 @@ How can I create an API that can upload files to the server?
 -----
 You don't need to. There is a built in API for the same.
 
+#### FROM UI
+1. Open the launch dahboard.
+2. Go to API Configuration
+3. Provide the credentials (Default - admin/admin unless you have changed it from the Codiad editor)
+4. You will find an option to enable default Files API.
+5. Save the settings.
+
+#### FROM CODE
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
@@ -370,6 +404,7 @@ You don't need to. There is a built in API for the same.
 ```php
 enable_files_api();
 ```
+
 
 How do I create a custom API?
 -----
