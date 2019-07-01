@@ -292,7 +292,7 @@ if(!$auth){
 		      <label for="host">Host:</label>
 		      <input type="text" class="form-control" id="host" placeholder="Enter hostname" name="host" value="localhost">
 		    </div>
-		    <div class="form-group col-md-23">
+		    <div class="form-group col-md-3">
 		      <label for="port">Port:</label>
 		      <input type="text" class="form-control" id="port" placeholder="Enter port" name="port" required value="49999">
 		    </div>
