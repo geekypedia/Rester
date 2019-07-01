@@ -145,7 +145,7 @@ function lua_install() {
 	if($ret4 === 0){
 		$echolog[] = $out4;
 	} else {
-		$echolog[] = "Could not install luarocks. Please use the web terminal, go to lua/bin/ and execute url -L https://github.com/luvit/lit/raw/master/get-lit.sh | sh";
+		$echolog[] = "Could not install luvit. Please use the web terminal, go to lua/bin/ and execute curl -L https://github.com/luvit/lit/raw/master/get-lit.sh | sh";
 	}
 	
 //passthru("rm -f " . LUA_FILE, $ret);
