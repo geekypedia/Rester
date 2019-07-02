@@ -8,7 +8,54 @@
 //error_reporting(E_ALL);
 error_reporting(0);
 
-set_time_limit(600);
+set_time_limit(0);
+
+function download_zip_extract($url, $filename){
+    $echolog[] = "";
+
+    $os =  substr(strtoupper(PHP_OS), 0, 3);
+    $slash = $os == "WIN" ? "\\" : "/";
+
+    $output_file_path = __DIR__ . $slash . $filename;
+    $output_dir = __DIR__;
+    $fp = fopen ($output_file_path, 'w+');//This is the file where we save the zip file
+    
+    $echolog[] = "Initializing settings ...";
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_FILE, $fp); // write curl response to file
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    
+    $echolog[] = "Starting download ...";
+    curl_exec($ch); // get curl response
+    curl_close($ch);
+    fclose($fp);
+    
+    $echolog[] =  "Starting to extract ...";
+    if (file_exists($output_file_path)){
+        $zip = new ZipArchive;
+        $res = $zip->open($output_file_path);
+        if ($res === TRUE)
+        {
+            $zip->extractTo($output_dir);
+            $zip->close();
+            $echolog[] =   'Completed extracting ...';
+        }
+        else
+        {
+            $echolog[] =  'There was a problem opening the zip file: '.$res;
+        }
+    }
+    else{
+        $echolog[] = "There was an error downloading, writing or accessing the zip file.";
+    }
+
+    array_shift($echolog);
+
+    return $echolog;
+}
 
 $echolog[] = "";
 
@@ -132,7 +179,7 @@ function lua_install() {
 
 		//CURL
 		
-		$fp = fopen(LUA_FILE, "w");
+		$fp = fopen(LUA_FILE, "w+");
 		flock($fp, LOCK_EX);
 		$curl = curl_init(LUA_URL);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
