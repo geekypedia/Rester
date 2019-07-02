@@ -271,8 +271,8 @@ function lua_install() {
 
 	$cmd4 = "cd .." . SLASH . "lua" . SLASH . BINROOT . " && " . "curl -L https://github.com/luvit/lit/raw/master/get-lit.sh | sh";
 	exec($cmd4, $out4, $ret4);
-	if($ret4 === 0){
 		$echolog[] = $out4;
+	if($ret4 === 0){
 	} else {
 		$echolog[] = "Could not install luvit. Please use the web terminal, go to lua/bin/ and execute curl -L https://github.com/luvit/lit/raw/master/get-lit.sh | sh";
 	}
