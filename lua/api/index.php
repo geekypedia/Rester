@@ -10,6 +10,34 @@ error_reporting(0);
 
 set_time_limit(0);
 
+function download_zip($url, $filename){
+    $echolog[] = "";
+
+    $os =  substr(strtoupper(PHP_OS), 0, 3);
+    $slash = $os == "WIN" ? "\\" : "/";
+
+    $output_file_path = __DIR__ . $slash . $filename;
+    $output_dir = __DIR__;
+    $fp = fopen ($output_file_path, 'w+');//This is the file where we save the zip file
+    
+    $echolog[] = "Initializing settings ...";
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_FILE, $fp); // write curl response to file
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    
+    $echolog[] = "Starting download ...";
+    curl_exec($ch); // get curl response
+    curl_close($ch);
+    fclose($fp);
+    $echolog[] = "Completed request ...";
+
+    return $echolog;
+}
+
+
 function download_zip_extract($url, $filename){
     $echolog[] = "";
 
