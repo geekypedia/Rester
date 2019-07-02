@@ -90,9 +90,6 @@ define("PYTHON_FILE", $python_file);
 //$url = 'https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-7.1.1-linux_x86_64-portable.tar.bz2';
 //$url = 'https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v7.1.1-osx64.tar.bz2';
 define("PYTHON_URL", PYTHON_URL_PREFIX . PYTHON_FILE);
-echo PYTHON_URL;
-exit();
-
 
 define("PYTHON_DIR", __DIR__."/../python");
 
