@@ -297,13 +297,13 @@ function python_install() {
 	$cmd4 = PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " -m ensurepip";
 	
 	exec($cmd4, $out4, $ret4);
+	$echolog[] = $out4;
 	if($ret4 === 0){
-		$echolog[] = $out4;
 	} else {
 		$echolog[] = "Could not install pip. Please use the web terminal and execute python/bin/pypy -m ensurepip";
 	}
 	
-//passthru("rm -f " . PYTHON_FILE, $ret);
+	//passthru("rm -f " . PYTHON_FILE, $ret);
 	
 
 }
