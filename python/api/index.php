@@ -31,13 +31,58 @@ $pypy_ver = !empty($_POST["pypy_version"]) ? $_POST["pypy_version"] : ( !empty($
 
 define("PYTHON_VER", $python_ver . "-" . $pypy_ver);
 
-//define("PYTHON_ARCH", "x" . substr(php_uname("m"), -2)); //x86 or x64
-define("PYTHON_ARCH", "x86_64"); //x86 or x64
+$python_url_prefix = "https://bitbucket.org/squeaky/portable-pypy/downloads/";
+$python_os = "linux";
+$python_arch = "x86_64";
+$python_os_arch_separator = "_";
+$python_file_ext = "-portable.tar.bz2";
 
-define("PYTHON_FILE", "pypy" . PYTHON_VER . "-linux_" . PYTHON_ARCH . "-portable.tar.bz2");
+switch (PHP_OS) {
+	case 'Win':
+		$python_url_prefix = "https://bitbucket.org/pypy/pypy/downloads/";				
+		$python_os = "win";
+		$python_arch = "32";
+		$python_os_arch_separator = "";
+		$python_file_ext = ".zip";
+		break;
+	case 'Darwin':
+		$python_url_prefix = "https://bitbucket.org/pypy/pypy/downloads/";		
+		$python_os = "osx";
+		$python_arch = "64";
+		$python_os_arch_separator = "";
+		$python_file_ext = ".tar.bz2";
+		break;
+	case 'Linux':
+		$python_url_prefix = "https://bitbucket.org/squeaky/portable-pypy/downloads/";
+		$python_os = "linux";
+		$python_arch = "x86_64";
+		$python_os_arch_separator = "_";
+		$python_file_ext = "-portable.tar.bz2";
+		break;
+	default:
+		$python_url_prefix = "https://bitbucket.org/squeaky/portable-pypy/downloads/";
+		$python_os = "linux";
+		$python_arch = "x86_64";
+		$python_os_arch_separator = "_";
+		$python_file_ext = "-portable.tar.bz2";
+		break;
+}
+
+
+define("PYTHON_URL_PREFIX", $python_url_prefix);
+define("PYTHON_OS", $python_os);
+
+//define("PYTHON_ARCH", "x" . substr(php_uname("m"), -2)); //x86 or x64
+define("PYTHON_ARCH", $python_arch); //x86 or x64
+
+define("PYTHON_OS_ARCH_SEPARATOR", $python_os_arch_separator);
+define("PYTHON_FILE_EXT", $python_file_ext)
+
+define("PYTHON_FILE", "pypy" . PYTHON_VER . "-" . PYTHON_OS . PYTHON_OS_ARCH_SEPARATOR . PYTHON_ARCH . PYTHON_FILE_EXT);
 
 //$url = 'https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-7.1.1-linux_x86_64-portable.tar.bz2';
-define("PYTHON_URL", "https://bitbucket.org/squeaky/portable-pypy/downloads/" .PYTHON_FILE);
+//$url = 'https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v7.1.1-osx64.tar.bz2';
+define("PYTHON_URL", PYTHON_URL_PREFIX . PYTHON_FILE);
 
 define("PYTHON_DIR", __DIR__."/../python");
 
