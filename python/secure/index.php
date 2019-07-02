@@ -306,7 +306,7 @@ if(!$auth){
 		    </div>
 		    <div class="form-group col-md-2">
 		      <label for="version">PyPy Version:</label>
-		      <input type="text" class="form-control" id="version" placeholder="Enter PyPy version" name="pypy_version" required value="7.1.1-beta">
+		      <input type="text" class="form-control" id="pypy_version" placeholder="Enter PyPy version" name="pypy_version" required value="7.1.1-beta">
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="prefix">Project Path:</label>
