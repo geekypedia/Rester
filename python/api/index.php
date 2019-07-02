@@ -105,6 +105,7 @@ function python_install() {
 		return;
 	}
 	
+	/*
 	if(PYTHON_OS == 'win'){
 		$zf = __DIR__.'/unzip.exe';
 		$zurl = 'http://stahlworks.com/dev/unzip.exe';
@@ -126,6 +127,7 @@ function python_install() {
 		$echolog[] = $zresp === true ? "Downloaded unzip utility for windows" : "Failed. Error: curl_error($curl)";		
 		
 	}
+	*/
 
 	if(!file_exists(__DIR__.'/'.PYTHON_FILE)) {		
 		$echolog[] = "Downloading Python from " . PYTHON_URL . ":";
@@ -176,7 +178,7 @@ function python_install() {
 
 	$cmd1 = "tar -xjvf " . PYTHON_FILE . " -C python 2>&1";
 	if(PYTHON_OS == 'win'){
-		$cmd1 = __DIR__. "/unzip.exe " . PYTHON_FILE . "";
+		$cmd1 = __DIR__. "/unzip.bat " . PYTHON_FILE . "";
 	}
 	
 	exec($cmd1, $out1,$ret1);
