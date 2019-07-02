@@ -28,7 +28,7 @@ if(!$auth){
 
 ?>
 <head>
-  <title>Node.JS Administration</title>
+  <title>Node.js Administration</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   		<!--Append / at the end of URL to load everything properly -->
@@ -156,8 +156,16 @@ if(!$auth){
 				username: username,
 				password: password
 			}
+			payload['host'] =   ($('#host').val());				
+			payload['port'] =   ($('#port').val());
 			payload[command] = '.';
-			if(command == 'start') payload[command] = $('#prefix').val();
+			if( command == 'install'){
+				payload['version'] =   ($('#version').val());
+				payload['pypy_version'] =   ($('#pypy_version').val());
+			}			
+			if(command == 'start') {
+				payload[command] = $('#prefix').val();
+			}
 			if(command == 'npm') {
 				payload[command] = $('#npm').val();
 				payload['prefix'] = $('#prefix').val();
@@ -201,13 +209,89 @@ if(!$auth){
 		}
 		
 		refreshStatus();
+		
+		function restartAct(){
+			act('stop', function(r){
+				actionHandler(r);
+				act('start', function(s){
+					actionHandler(s);
+				});
+			});
+		}
+		
+
+		function actionHandler(r){		
+			//console.log($('#actionlogs').val());
+			if(Array.isArray(r)){
+				for(i in r){
+					if(JSON.stringify(r[i]) != "" && JSON.stringify(r[i]) != '""' && JSON.stringify(r[i]) != "''"){
+						if(typeof r[i] == "string"){
+							$('#actionlogs').val($('#actionlogs').val() + '\r\n' + r[i]);
+						} else if (Array.isArray(r[i])){
+							for(j in r[i]){
+								$('#actionlogs').val($('#actionlogs').val() + '\r\n' + r[i][j]);
+							}
+						} else {
+							$('#actionlogs').val($('#actionlogs').val() + '\r\n' + JSON.stringify(r[i]));
+						}
+					}
+					
+				}	
+			} else {
+				$('#actionlogs').val($('#actionlogs').val() + '\r\n' + JSON.stringify(r));
+			}
+			
+		}
+
+		function clearActions(r){		
+			//console.log($('#actionlogs').val());
+			$('#actionlogs').val("");
+		}
+
+
+		function uploadFile(){
+			var username = "<?php echo $auth['username'] ?>";
+			var password = "<?php echo $auth['password'] ?>";
+			var payload = {
+				username: username,
+				password: password
+			}
+
+			var data = new FormData();
+			jQuery.each(jQuery('#manual_file')[0].files, function(i, file) {
+				data.append('file-'+i, file);
+			});
+			data.append('username', username);
+			data.append('password', password);
+			
+
+			jQuery.ajax({
+				url: '../api',
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				method: 'POST',
+				type: 'POST', // For jQuery < 1.9
+				success: function(data){
+					alert(data);
+				}
+			});
+
+		}
+
+		function openLink(){
+		    var url = '../api?port=' + $('#port').val();
+	            var tab = window.open(url, '_blank');
+        	    tab.focus();
+		}
 			
 		
 	</script>  
 </head>
 <body>
 <div class="panel panel-primary main-container">
-  <div class="panel-heading center-text">Node.JS Administration</div>
+  <div class="panel-heading center-text">Node.js Administration</div>
   <div class="panel-body">
   		
 		<form id='configForm' action="generate-config.php" method="post">
@@ -223,8 +307,8 @@ if(!$auth){
 		      <input type="text" class="form-control" id="port" placeholder="Enter port" name="port" required value="49999">
 		    </div>
 		    <div class="form-group col-md-3">
-		      <label for="version">NodeJS Version:</label>
-		      <input type="text" class="form-control" id="version" placeholder="Enter nodejs version" name="version" required value="v10.15.3">
+		      <label for="version">Node Version:</label>
+		      <input type="text" class="form-control" id="version" placeholder="Enter Node version" name="version" required value="v10.16.0">
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="prefix">Project Path:</label>
@@ -238,7 +322,7 @@ if(!$auth){
 				<label class="head-label">STATUS</label>
 			</div>
 		    <div class="form-group col-md-2">
-		    	<label class="">Node.JS: </label>
+		    	<label class="">Node: </label>
 		    </div>
 		    <div class="form-group col-md-1">
 		    	<span class="dot" id="installationStatus"></span>
@@ -260,34 +344,35 @@ if(!$auth){
 			</div>
 			<div class="row row-margin">
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-success round-btn-med round-btn" onclick="act('install')">INSTALL</button>	
+			    	<button type="button" class="btn btn-success round-btn-med round-btn" onclick="act('install',actionHandler)">INSTALL</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-danger round-btn-med round-btn" onclick="act('uninstall')">UNINSTALL</button>	
+			    	<button type="button" class="btn btn-danger round-btn-med round-btn" onclick="act('uninstall', actionHandler)">UNINSTALL</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('npm')">EXECUTE NPM COMMAND</button>	
+			    	<button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('npm', actionHandler)">EXECUTE NPM COMMAND</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
 			</div>
 			<div class="row row-margin">
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-success round-btn-med round-btn" onclick="act('start')">START</button>	
+			    	<button type="button" class="btn btn-success round-btn-med round-btn" onclick="act('start', actionHandler)">START</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-danger round-btn-med round-btn" onclick="act('stop')">STOP</button>	
+			    	<button type="button" class="btn btn-danger round-btn-med round-btn" onclick="act('stop', actionHandler)">STOP</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
-			    	<button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('npmstart')">NPM START</button>	
+					 <button type="button" class="btn btn-warning round-btn-med round-btn" onclick="restartAct()">RESTART</button>	 
+					<!-- <button type="button" class="btn btn-warning round-btn-med round-btn" onclick="act('npminstall', actionHandler)">EXECUTE NPM COMMAND</button>	 -->
 			    </div>
 			    <!--<div class="form-group col-md-3">-->
 			    <!--	<button type="button" class="btn btn-info round-btn-med round-btn" onclick="act('npmstart')">NPM START</button>	-->
@@ -297,7 +382,7 @@ if(!$auth){
 			</div>
 			<div class="row row-margin">
 			    <div class="form-group col-md-3">
-			    	<a href="../api" target="_blank" class="btn btn-info round-btn-med round-btn">LAUNCH</a>	
+			    	<a href="" target="_blank" class="btn btn-info round-btn-med round-btn" onclick="openLink()">LAUNCH</a>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
@@ -307,13 +392,34 @@ if(!$auth){
 			    <div class="form-group col-md-1">
 			    </div>
 			    <div class="form-group col-md-3">
+					<button type="button" class="btn btn-info round-btn-med round-btn" onclick="clearActions()">CLEAR</button>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
+			</div>
+			<div class="row row-margin">
+			    <div class="form-group col-md-12">
+					<textarea  class="form-control" id="actionlogs" placeholder="Action Logs ..." name="actionlogs" style="height: 200px" rows=10 wrap="hard" ></textarea>
+			    </div>
 			</div>			
+			<div class="form-group col-md-12">
+				<label class="head-label">MANUAL UPLOAD:</label>
+			</div>
+		    <div class="form-group col-md-4">
+		      <label for="host">Node Linux Portale Bundle:</label>		      
+		    </div>
+		    <div class="form-group col-md-4">
+				<input type="file" class="form-control" id="manual_file" placeholder="Upload node portal bundle for linux manually" name="manual_file" >
+			</div>
+			<div class="form-group col-md-2">
+			    	<button type="button" class="btn btn-success round-btn-med round-btn" id="manual_file_submit" name="manual_file_submit" onclick="uploadFile()">UPLOAD</button>	
+			</div>
+			<div class="form-group col-md-12">
+				<p>You can download node portalable from <a href="https://nodejs.org/dist/" target=”_blank”>here</a>, and upload it using the uploader above, or goto the <a href="../../fm" target=”_blank”>File Manager</a>, login using your superadmin credentials, and upload it to {{PRESTIGE_HOME}}/node/api, and then press the install button above.</p>
+			</div>
+
 		  </form>
-		  
-		 
+		  		 
 		    
   </div>
 </div>
