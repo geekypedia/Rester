@@ -157,8 +157,13 @@ if(!$auth){
 				password: password
 			}
 			payload[command] = '.';
+			if( command == 'install'){
+				payload['version'] =   ($('#version').val());
+				payload['pypy_version'] =   ($('#pypy_version').val());
+			}			
 			if(command == 'start') {
 				payload[command] = $('#prefix').val();
+				payload['host'] =   ($('#host').val());				
 				payload['port'] =   ($('#port').val());
 			}
 			if(command == 'pip') {
@@ -301,7 +306,7 @@ if(!$auth){
 		    </div>
 		    <div class="form-group col-md-2">
 		      <label for="version">PyPy Version:</label>
-		      <input type="text" class="form-control" id="version" placeholder="Enter Python version" name="version" required value="7.1.1-beta">
+		      <input type="text" class="form-control" id="version" placeholder="Enter PyPy version" name="pypy_version" required value="7.1.1-beta">
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="prefix">Project Path:</label>
