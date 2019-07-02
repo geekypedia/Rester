@@ -381,9 +381,9 @@ function python_start($file) {
 	//$python_pid = exec("PORT=" . PYTHON_PORT . " " . PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " $file >" . PYTHON_OUT . " 2>&1 & echo $!");
 	$SETVAR = (PYTHON_OS == 'win') ? "set " : "";
 	$SETSEP = (PYTHON_OS == 'win') ? "&& " : " ";
-	$LINTRAIL = " > 2>&1 & echo $!";
+	$LINTRAIL = " 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
-	$startcmd = $SETVAR ."PORT=" . PYTHON_PORT . $SETSEP . PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " $file" . PYTHON_OUT . $LINTRAIL;
+	$startcmd = $SETVAR ."PORT=" . PYTHON_PORT . $SETSEP . PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " $file > " . PYTHON_OUT . $LINTRAIL;
 	$python_pid = exec($startcmd);
 	
 	if($python_pid > 0){ 
