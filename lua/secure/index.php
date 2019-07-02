@@ -157,9 +157,17 @@ if(!$auth){
 				password: password
 			}
 			payload[command] = '.';
-			if(command == 'start') payload[command] = $('#prefix').val();
+			if( command == 'install'){
+				payload['version'] =   ($('#version').val());
+			}						
+			if(command == 'start') {
+				payload[command] = $('#prefix').val();
+				payload['host'] =   ($('#host').val());				
+				payload['port'] =   ($('#port').val());
+			}
 			if(command == 'luvitstart') {
 				payload[command] = $('#prefix').val();
+				payload['host'] =   ($('#host').val());				
 				payload['port'] =   ($('#port').val());
 			}
 			if(command == 'luarocks') {
