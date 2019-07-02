@@ -121,6 +121,8 @@ function python_install() {
 		curl_setopt($curl, CURLOPT_HEADER, true);
 		curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);		
 		curl_setopt($curl, CURLOPT_FILE, $fp);
 
 		$resp = curl_exec($curl);
@@ -137,13 +139,14 @@ function python_install() {
 		if($resp === 0){
 		} else {
 			if(file_exists(__DIR__.'/'.PYTHON_FILE)){
-				unlink(__DIR__.'/'.PYTHON_FILE);
+				//unlink(__DIR__.'/'.PYTHON_FILE);
 			}
 		}
 		
 		
 	
 	}
+
 	$echolog[] = "Installing Python:";
 	
 	if(file_exists(__DIR__ . "/python")){
