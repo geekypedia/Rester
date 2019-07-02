@@ -107,7 +107,7 @@ $pip_exe = "pip3";
 
 $python_ver = !empty($_POST["version"]) ? $_POST["version"] : ( !empty($_REQUEST["version"]) ? $_REQUEST["version"] : "3.6" );
 if($python_ver == "2.7") {
-	$python_ver = "";
+	$python_ver = in_array(substr(strtoupper(PHP_OS),0,3), array("WIN", "DAR"))  ?  "2.7" : "";
 	$pypy_exe = "pypy";
 	$pip_exe = "pip";
 }
