@@ -178,7 +178,7 @@ function python_install() {
 
 	$cmd1 = "tar -xjvf " . PYTHON_FILE . " -C python 2>&1";
 	if(PYTHON_OS == 'win'){
-		$cmd1 = __DIR__. "/unzip.bat " . PYTHON_FILE . "";
+		$cmd1 = __DIR__. "\\unzip.bat " . __DIR__. "\\" . PYTHON_FILE . "";
 	}
 	
 	exec($cmd1, $out1,$ret1);
