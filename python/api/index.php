@@ -38,6 +38,9 @@ $python_file_ext = "-portable.tar.bz2";
 
 switch (PHP_OS) {
 	case 'Win':
+	case 'WinNT':
+	case 'WIN':
+	case 'WINNT':		
 		$python_url_prefix = "https://bitbucket.org/pypy/pypy/downloads/";				
 		$python_os = "win";
 		$python_arch = "32";
@@ -54,13 +57,6 @@ switch (PHP_OS) {
 		$pypy_ver = "v" . $pypy_ver;		
 		break;
 	case 'Linux':
-		$python_url_prefix = "https://bitbucket.org/squeaky/portable-pypy/downloads/";
-		$python_os = "linux";
-		$python_arch = "x86_64";
-		$python_os_arch_separator = "_";
-		$python_file_ext = "-portable.tar.bz2";
-		$pypy_ver = $pypy_ver . "-beta";		
-		break;
 	default:
 		$python_url_prefix = "https://bitbucket.org/squeaky/portable-pypy/downloads/";
 		$python_os = "linux";
@@ -107,6 +103,25 @@ function python_install() {
 		python_error(405);
 		$echolog[] = "Python is already installed.";
 		return;
+	}
+	
+	if(PYTHON_OS == 'win'){
+		$zf = __DIR__.'/unzip.exe';
+		$zfp = fopen(PYTHON_FILE, "w");
+		flock($zfp, LOCK_EX);
+		$zcurl = curl_init(PYTHON_URL);
+		curl_setopt($zcurl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($zcurl, CURLOPT_HEADER, true);
+		curl_setopt($zcurl, CURLOPT_BINARYTRANSFER, true);
+		curl_setopt($zcurl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($zcurl, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($zcurl, CURLOPT_SSL_VERIFYPEER, 0);		
+		curl_setopt($zcurl, CURLOPT_FILE, $fp);
+
+		$zresp = curl_exec($zcurl);
+		curl_close($zcurl);
+		flock($zfp, LOCK_UN);
+		fclose($zfp);		
 	}
 
 	if(!file_exists(__DIR__.'/'.PYTHON_FILE)) {		
