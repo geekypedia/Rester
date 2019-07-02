@@ -34,6 +34,9 @@ $lua_arch = "x86_64";
 
 switch (PHP_OS) {
 	case 'Win':
+	case 'WinNT':
+	case 'WIN':
+	case 'WINNT':
 		$lua_os = "Windows";
 		$lua_arch = "x86";
 		break;
@@ -81,6 +84,26 @@ function lua_install() {
 		$echolog[] = "Lua is already installed.";
 		return;
 	}
+	
+	if(PYTHON_OS == 'Windows'){
+		$zf = __DIR__.'/unzip.exe';
+		$zurl = 'http://stahlworks.com/dev/unzip.exe';
+		$zfp = fopen($zf, "w");
+		flock($zfp, LOCK_EX);
+		$zcurl = curl_init($zurl);
+		curl_setopt($zcurl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($zcurl, CURLOPT_HEADER, true);
+		curl_setopt($zcurl, CURLOPT_BINARYTRANSFER, true);
+		curl_setopt($zcurl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($zcurl, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($zcurl, CURLOPT_SSL_VERIFYPEER, 0);		
+		curl_setopt($zcurl, CURLOPT_FILE, $fp);
+
+		$zresp = curl_exec($zcurl);
+		curl_close($zcurl);
+		flock($zfp, LOCK_UN);
+		fclose($zfp);		
+	}	
 
 	if(!file_exists(__DIR__.'/'.LUA_FILE)) {		
 		$echolog[] = "Downloading Lua from " . LUA_URL . ":";
