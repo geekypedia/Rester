@@ -25,6 +25,11 @@ define("ADMIN_MODE", $auth); //set to true to allow unsafe operations, set back 
 define("LUA_OUT", "logs");
 define("LUA_PID", "lua.pid.config");
 
+$binroot = "bin";
+$bin = "bin";
+$lua_exe = "lua";
+$luarocks_exe = "luarocks";
+
 $lua_ver = !empty($_POST["version"]) ? $_POST["version"] : ( !empty($_REQUEST["version"]) ? $_REQUEST["version"] : "0.9.8" );
 
 define("LUA_VER", $lua_ver);
@@ -42,6 +47,10 @@ switch (PHP_OS) {
 		$lua_os = "Windows";
 		$lua_arch = "x86";
 		$slash = "\\";
+		$binroot = ".";
+		$bin = "bin";
+		$lua_exe = $lua_exe . ".exe";
+		$luarocks_exe = $luarocks_exe . ".exe";
 		break;
 	case 'Darwin':
 		$lua_os = "Darwin";
@@ -58,6 +67,11 @@ switch (PHP_OS) {
 }
 
 define("SLASH", $slash);
+define("BINROOT", $binroot);
+define("BIN", $bin);
+define("LUA", $lua_exe);
+define("LUAROCKS", $luarocks_exe);
+
 
 define("LUA_OS", $lua_os);
 
@@ -113,7 +127,7 @@ function lua_install() {
 	}
 	*/
 
-	if(!file_exists(__DIR__.'/'.LUA_FILE)) {		
+	if(!file_exists(__DIR__. SLASH .LUA_FILE)) {		
 		$echolog[] = "Downloading Lua from " . LUA_URL . ":";
 
 		//CURL
@@ -150,7 +164,7 @@ function lua_install() {
 	}
 	$echolog[] = "Installing Lua:";
 	
-	if(file_exists(__DIR__ . "/lua")){
+	if(file_exists(__DIR__ . SLASH . "lua")){
 	} else {
 		exec("mkdir lua", $out0, $ret0);
 	}
@@ -187,7 +201,7 @@ function lua_install() {
 		$echolog[] = "Could not move the bundle to desired location." . "Failed. Error: $ret. Try putting lua folder via (S)FTP, so that " . __DIR__ . "/lua/bin/lua exists.";
 	}
 
-	$cmd4 = "cd ../lua/bin && curl -L https://github.com/luvit/lit/raw/master/get-lit.sh | sh";
+	$cmd4 = "cd .." . SLASH . "lua" . SLASH . BINROOT . " && " . "curl -L https://github.com/luvit/lit/raw/master/get-lit.sh | sh";
 	exec($cmd4, $out4, $ret4);
 	if($ret4 === 0){
 		$echolog[] = $out4;
@@ -239,7 +253,7 @@ function lua_start($file) {
 	$sub = substr($file, $pos + $startlen);
 	$displayFile = "{{WORKSPACE}}" . $sub;
 	$echolog[] = "Starting: lua $displayFile";
-	$cmd_exec = "PORT=" . LUA_PORT . " " . LUA_DIR . "/bin/lua $file >" . LUA_OUT . " 2>&1 & echo $!";
+	$cmd_exec = "PORT=" . LUA_PORT . " " . LUA_DIR  . SLASH . BINROOT . SLASH . LUA . " $file >" . LUA_OUT . " 2>&1 & echo $!";
 	//$echolog[] = $cmd_exec;
 	$lua_pid = exec($cmd_exec);
 	if($lua_pid > 0){ 
@@ -325,14 +339,14 @@ function lua_luarocks($cmd, $prefix) {
 		return;
 	}
 	
-	$prefixbase = " --prefix " . __DIR__ . "/" . REL_PATH . "/ide/workspace/";
+	$prefixbase = " --prefix " . __DIR__ . SLASH . REL_PATH . SLASH . "ide" . SLASH . "workspace" . SLASH;
 	
 	if($prefix) {
 		$prefixpassed = $prefix;
 		if(endsWith($prefix, ".py")){
 			$exp = explode("/", $prefix);
 			array_pop($exp);
-			$stripped = implode("/", $exp);
+			$stripped = implode(SLASH, $exp);
 			$prefixpassed = $stripped;
 		}
 		$prefixcmd = $prefixbase . $prefixpassed;	
@@ -340,7 +354,7 @@ function lua_luarocks($cmd, $prefix) {
 		$prefixcmd = $prefixbase . "lua";
 	}
 	
-	$cmd = escapeshellcmd(LUA_DIR . "/bin/luarocks " /* . $prefixcmd */  . " -- $cmd");
+	$cmd = escapeshellcmd(LUA_DIR . SLASH . BIN . SLASH . LUAROCKS . " " /* . $prefixcmd */  . " -- $cmd");
 	
 	$echolog[] = "Running: $cmd";
 	$ret = -1;
