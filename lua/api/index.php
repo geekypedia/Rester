@@ -169,16 +169,20 @@ function lua_install() {
 	}
 	$extracted_dir = SLASH . "lua" . SLASH . "Bina*";
 	
-	$cmd2prefix = "mv";
+	$moveCommand = "mv";
+	$touchCommand = "touch";
 	if(LUA_OS == 'Windows'){
-		$cmd2prefix = "move";
+		$moveCommand = "move";
+		$touchCommand = "type nul >";
 	}
 	
-	$cmd2 = $cmd2prefix . " " . __DIR__ . $extracted_dir  . " " . LUA_DIR;	
+	$cmd2 = $moveCommand . " " . __DIR__ . $extracted_dir  . " " . LUA_DIR;	
 	exec($cmd2, $out2, $ret2);
 	if($ret2 === 0){
-		exec("touch " . LUA_PID, $out3, $ret);		
-		$echolog[] = $ret === 0 ? $out2 : "Failed. Error: $ret. Try putting lua folder via (S)FTP, so that " . __DIR__ . "/lua/bin/lua exists.";
+		$echolog[] = "Moved the bundle to desired location."; 
+		$echolog[] = $out2;	
+		exec($touchCommand . " " . LUA_PID, $out3, $ret3);		
+		$echolog[] = $ret3 === 0 ? $out3 : "Failed. Error: $ret. Try putting lua folder via (S)FTP, so that " . __DIR__ . "/lua/bin/lua exists.";
 	} else {
 		$echolog[] = "Could not move the bundle to desired location." . "Failed. Error: $ret. Try putting lua folder via (S)FTP, so that " . __DIR__ . "/lua/bin/lua exists.";
 	}
