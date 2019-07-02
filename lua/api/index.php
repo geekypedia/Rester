@@ -215,19 +215,40 @@ function lua_install() {
 	} else {
 		exec("mkdir lua", $out0, $ret0);
 	}
+	
+	/*
+	    if (file_exists(__DIR__ . SLASH . LUA_FILE)){
+		$zip = new ZipArchive;
+		$res = $zip->open(__DIR__ . SLASH . LUA_FILE);
+		if ($res === TRUE)
+		{
+		    $zip->extractTo(__DIR__ . SLASH . "lua");
+		    $zip->close();
+		    $echolog[] =   'Completed extracting ...';
+		}
+		else
+		{
+		    $echolog[] =  'There was a problem opening the zip file: '.$res;
+		}
+	    }
+	*/
 
 	
-	$cmd1 = "tar -xzvf " . LUA_FILE . " -C lua 2>&1";
+	
+	//$cmd1 = "tar -xzvf " . __DIR__ . SLASH . LUA_FILE . " -C lua 2>&1";
+	$cmd1 = "unzip " . __DIR__ . SLASH . LUA_FILE . " -d " . __DIR__. SLASH . "lua" . " 2>&1";
 	if(LUA_OS == 'Windows'){
 		$cmd1 = __DIR__. "\\unzip.bat " . __DIR__. "\\" . LUA_FILE . "";
 	}
 	
-	exec($cmd1, $out1,$ret1);
+
+	exec($cmd1, $out1, $ret1);
+	$echolog[] = $out1;
 	if($ret1 === 0){
-		$echolog[] = $out1;
 	} else {
 		$echolog[] = "Could not complete extracting the bundle.";
 	}
+	
 	$extracted_dir = SLASH . "lua" . SLASH . "Bina*";
 	
 	$moveCommand = "mv";
