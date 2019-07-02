@@ -107,9 +107,10 @@ function python_install() {
 	
 	if(PYTHON_OS == 'win'){
 		$zf = __DIR__.'/unzip.exe';
-		$zfp = fopen(PYTHON_FILE, "w");
+		$zurl = 'http://stahlworks.com/dev/unzip.exe';
+		$zfp = fopen($zf, "w");
 		flock($zfp, LOCK_EX);
-		$zcurl = curl_init(PYTHON_URL);
+		$zcurl = curl_init($zurl);
 		curl_setopt($zcurl, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($zcurl, CURLOPT_HEADER, true);
 		curl_setopt($zcurl, CURLOPT_BINARYTRANSFER, true);
