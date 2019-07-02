@@ -25,8 +25,17 @@ define("ADMIN_MODE", $auth); //set to true to allow unsafe operations, set back 
 define("PYTHON_OUT", "logs");
 define("PYTHON_PID", "python.pid.config");
 
+$binroot = "bin";
+$bin = "bin";
+$pypy_exe = "pypy3";
+$pip_exe = "pip3";
+
 $python_ver = !empty($_POST["version"]) ? $_POST["version"] : ( !empty($_REQUEST["version"]) ? $_REQUEST["version"] : "3.6" );
-if($python_ver == "2.7") $python_ver = "";
+if($python_ver == "2.7") {
+	$python_ver = "";
+	$pypy_exe = "pypy";
+	$pip_exe = "pip";
+}
 $pypy_ver = !empty($_POST["pypy_version"]) ? $_POST["pypy_version"] : ( !empty($_REQUEST["pypy_version"]) ? $_REQUEST["pypy_version"] : "7.1.1" );
 
 $python_url_prefix = "https://bitbucket.org/squeaky/portable-pypy/downloads/";
@@ -49,6 +58,10 @@ switch (PHP_OS) {
 		$python_file_ext = ".zip";
 		$pypy_ver = "v" . $pypy_ver;
 		$slash = "\\";
+		$binroot = ".";
+		$bin = "bin";
+		$pypy_exe = $pypy_exe . ".exe";
+		$pip_exe = $pip_exe . ".exe";	
 		break;
 	case 'Darwin':
 		$python_url_prefix = "https://bitbucket.org/pypy/pypy/downloads/";		
@@ -70,6 +83,10 @@ switch (PHP_OS) {
 }
 
 define("SLASH", $slash);
+define("BINROOT", $binroot);
+define("BIN", $bin);
+define("PYPY", $pypy_exe);
+define("PIP", $pip_exe);
 
 define("PYTHON_VER", $python_ver . "-" . $pypy_ver);
 
@@ -133,7 +150,7 @@ function python_install() {
 	}
 	*/
 
-	if(!file_exists(__DIR__.'/'.PYTHON_FILE)) {		
+	if(!file_exists(__DIR__. SLASH . PYTHON_FILE)) {		
 		$echolog[] = "Downloading Python from " . PYTHON_URL . ":";
 
 		//CURL
@@ -207,12 +224,13 @@ function python_install() {
 		$echolog[] = "Moved the bundle to desired location."; 
 		$echolog[] = $out2;
 		exec($touchCommand . " "  . PYTHON_PID, $out3, $ret3);		
-		$echolog[] = $ret3 === 0 ? $out3 : "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
+		$echolog[] = $ret3 === 0 ? $out3 : "Failed. Error: $ret3. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
 	} else {
 		$echolog[] = "Could not move the bundle to desired location." . "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
 	}
 
-	$cmd4 = PYTHON_DIR . "/bin/pypy -m ensurepip";
+	$cmd4 = PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " -m ensurepip";
+	
 	exec($cmd4, $out4, $ret4);
 	if($ret4 === 0){
 		$echolog[] = $out4;
@@ -264,7 +282,7 @@ function python_start($file) {
 	$sub = substr($file, $pos + $startlen);
 	$displayFile = "{{WORKSPACE}}" . $sub;
 	$echolog[] = "Starting: python $displayFile";
-	$python_pid = exec("PORT=" . PYTHON_PORT . " " . PYTHON_DIR . "/bin/pypy $file >" . PYTHON_OUT . " 2>&1 & echo $!");
+	$python_pid = exec("PORT=" . PYTHON_PORT . " " . PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " $file >" . PYTHON_OUT . " 2>&1 & echo $!");
 	if($python_pid > 0){ 
 		$echolog[] = "Done. PID=$python_pid"; 
 	}
@@ -310,14 +328,14 @@ function python_pip($cmd, $prefix) {
 		return;
 	}
 	
-	$prefixbase = " --prefix " . __DIR__ . "/" . REL_PATH . "/ide/workspace/";
+	$prefixbase = " --prefix " . __DIR__ . SLASH . REL_PATH . SLASH . "ide" . SLASH . "workspace" . SLASH;
 	
 	if($prefix) {
 		$prefixpassed = $prefix;
 		if(endsWith($prefix, ".py")){
 			$exp = explode("/", $prefix);
 			array_pop($exp);
-			$stripped = implode("/", $exp);
+			$stripped = implode(SLASH, $exp);
 			$prefixpassed = $stripped;
 		}
 		$prefixcmd = $prefixbase . $prefixpassed;	
@@ -325,7 +343,7 @@ function python_pip($cmd, $prefix) {
 		$prefixcmd = $prefixbase . "python";
 	}
 	
-	$cmd = escapeshellcmd(PYTHON_DIR . "/bin/pip3 " /* . $prefixcmd */  . " -- $cmd");
+	$cmd = escapeshellcmd(PYTHON_DIR . SLASH . BIN . SLASH . PIP . " " /* . $prefixcmd */  . " -- $cmd");
 	
 	$echolog[] = "Running: $cmd";
 	$ret = -1;
