@@ -151,7 +151,7 @@ function lua_install() {
 	
 	$cmd1 = "tar -xzvf " . LUA_FILE . " -C lua 2>&1";
 	if(LUA_OS == 'Windows'){
-		$cmd1 = __DIR__. "unzip.exe " . LUA_FILE . "";
+		$cmd1 = __DIR__. "/unzip.exe " . LUA_FILE . "";
 	}
 	
 	exec($cmd1, $out1,$ret1);
