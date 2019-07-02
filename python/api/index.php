@@ -243,6 +243,23 @@ function python_install() {
 	}
 
 	//if(file_exists(__DIR__.'/'."pypy" . PYTHON_VER . "-linux-" . PYTHON_ARCH . "-portable"))
+	
+	/*
+	    if (file_exists(__DIR__ . SLASH . PYTHON_FILE)){
+		$zip = new ZipArchive;
+		$res = $zip->open(__DIR__ . SLASH . PYTHON_FILE);
+		if ($res === TRUE)
+		{
+		    $zip->extractTo(__DIR__ . SLASH . "python");
+		    $zip->close();
+		    $echolog[] =   'Completed extracting ...';
+		}
+		else
+		{
+		    $echolog[] =  'There was a problem opening the zip file: '.$res;
+		}
+	    }
+	*/	
 
 	$cmd1 = "tar -xjvf " . PYTHON_FILE . " -C python 2>&1";
 	if(PYTHON_OS == 'win'){
@@ -250,6 +267,7 @@ function python_install() {
 	}
 	
 	exec($cmd1, $out1,$ret1);
+	$echolog[] = $out1;	
 	if($ret1 === 0){
 		$echolog[] = $out1;
 	} else {
