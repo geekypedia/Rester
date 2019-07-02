@@ -32,6 +32,8 @@ define("LUA_VER", $lua_ver);
 $lua_os = "Linux";
 $lua_arch = "x86_64";
 
+$slash = "/";
+
 switch (PHP_OS) {
 	case 'Win':
 	case 'WinNT':
@@ -39,6 +41,7 @@ switch (PHP_OS) {
 	case 'WINNT':
 		$lua_os = "Windows";
 		$lua_arch = "x86";
+		$slash = "\\";
 		break;
 	case 'Darwin':
 		$lua_os = "Darwin";
@@ -54,6 +57,8 @@ switch (PHP_OS) {
 		break;
 }
 
+define("SLASH", $slash);
+
 define("LUA_OS", $lua_os);
 
 //define("LUA_ARCH", "x" . substr(php_uname("m"), -2)); //x86 or x64
@@ -67,7 +72,7 @@ define("LUA_FILE", $lua_file);
 //$url = "https://github.com/LuaDist/Binaries/archive/LuaDist-batteries-0.9.8-Linux-x86_64.zip";
 define("LUA_URL", "https://github.com/LuaDist/Binaries/archive/" .LUA_FILE_IN_URL);
 
-define("LUA_DIR", __DIR__."/../lua");
+define("LUA_DIR", __DIR__. SLASH . ".." . SLASH . "lua");
 
 $lua_host = !empty($_POST["host"]) ? $_POST["host"] : ( !empty($_REQUEST["host"]) ? $_REQUEST["host"] :  "localhost");
 $lua_port = (int)(!empty($_POST["port"]) ? $_POST["port"] : ( !empty($_REQUEST["port"]) ? $_REQUEST["port"] :  "49999"));
@@ -135,7 +140,7 @@ function lua_install() {
 
 		if($resp === 0){
 		} else {
-			if(file_exists(__DIR__.'/'.LUA_FILE)){
+			if(file_exists(__DIR__. SLASH . LUA_FILE)){
 				//unlink(__DIR__.'/'.LUA_FILE);
 			}
 		}
@@ -162,8 +167,14 @@ function lua_install() {
 	} else {
 		$echolog[] = "Could not complete extracting the bundle.";
 	}
-	$extracted_dir = "/lua/Bina*";
-	$cmd2 = "mv " . __DIR__ . $extracted_dir  . " " . LUA_DIR;	
+	$extracted_dir = SLASH . "lua" . SLASH . "Bina*";
+	
+	$cmd2prefix = "mv";
+	if(LUA_OS == 'Windows'){
+		$cmd2prefix = "move";
+	}
+	
+	$cmd2 = $cmd2prefix . " " . __DIR__ . $extracted_dir  . " " . LUA_DIR;	
 	exec($cmd2, $out2, $ret2);
 	if($ret2 === 0){
 		exec("touch " . LUA_PID, $out3, $ret);		
