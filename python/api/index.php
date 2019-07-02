@@ -76,7 +76,7 @@ define("PYTHON_OS", $python_os);
 define("PYTHON_ARCH", $python_arch); //x86 or x64
 
 define("PYTHON_OS_ARCH_SEPARATOR", $python_os_arch_separator);
-define("PYTHON_FILE_EXT", $python_file_ext)
+define("PYTHON_FILE_EXT", $python_file_ext);
 
 define("PYTHON_FILE", "pypy" . PYTHON_VER . "-" . PYTHON_OS . PYTHON_OS_ARCH_SEPARATOR . PYTHON_ARCH . PYTHON_FILE_EXT);
 
