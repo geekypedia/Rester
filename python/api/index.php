@@ -117,12 +117,14 @@ function python_install() {
 		curl_setopt($zcurl, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($zcurl, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($zcurl, CURLOPT_SSL_VERIFYPEER, 0);		
-		curl_setopt($zcurl, CURLOPT_FILE, $fp);
+		curl_setopt($zcurl, CURLOPT_FILE, $zfp);
 
 		$zresp = curl_exec($zcurl);
 		curl_close($zcurl);
 		flock($zfp, LOCK_UN);
-		fclose($zfp);		
+		fclose($zfp);	
+		$echolog[] = $zresp === true ? "Downloaded unzip utility for windows" : "Failed. Error: curl_error($curl)";		
+		
 	}
 
 	if(!file_exists(__DIR__.'/'.PYTHON_FILE)) {		
@@ -171,7 +173,13 @@ function python_install() {
 	}
 
 	//if(file_exists(__DIR__.'/'."pypy" . PYTHON_VER . "-linux-" . PYTHON_ARCH . "-portable"))
-	exec("tar -xjvf " . PYTHON_FILE . " -C python 2>&1", $out1,$ret1);
+
+	$cmd1 = "tar -xjvf " . PYTHON_FILE . " -C python 2>&1";
+	if(PYTHON_OS == 'win'){
+		$cmd1 = __DIR__. "unzip.exe " . PYTHON_FILE . "";
+	}
+	
+	exec($cmd1, $out1,$ret1);
 	if($ret1 === 0){
 		$echolog[] = $out1;
 	} else {
