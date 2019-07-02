@@ -35,6 +35,7 @@ $python_arch = "x86_64";
 $python_os_arch_separator = "_";
 $python_file_ext = "-portable.tar.bz2";
 
+$slash = "/";
 
 switch (PHP_OS) {
 	case 'Win':
@@ -47,6 +48,7 @@ switch (PHP_OS) {
 		$python_os_arch_separator = "";
 		$python_file_ext = ".zip";
 		$pypy_ver = "v" . $pypy_ver;
+		$slash = "\\";
 		break;
 	case 'Darwin':
 		$python_url_prefix = "https://bitbucket.org/pypy/pypy/downloads/";		
@@ -66,6 +68,8 @@ switch (PHP_OS) {
 		$pypy_ver = $pypy_ver . "-beta";				
 		break;
 }
+
+define("SLASH", $slash);
 
 define("PYTHON_VER", $python_ver . "-" . $pypy_ver);
 
@@ -87,7 +91,7 @@ define("PYTHON_FILE", $python_file);
 //$url = 'https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v7.1.1-osx64.tar.bz2';
 define("PYTHON_URL", PYTHON_URL_PREFIX . PYTHON_FILE);
 
-define("PYTHON_DIR", __DIR__."/../python");
+define("PYTHON_DIR", __DIR__. SLASH . ".." . SLASH . "python");
 
 $python_host = !empty($_POST["host"]) ? $_POST["host"] : ( !empty($_REQUEST["host"]) ? $_REQUEST["host"] :  "localhost");
 $python_port = (int)(!empty($_POST["port"]) ? $_POST["port"] : ( !empty($_REQUEST["port"]) ? $_REQUEST["port"] :  "49999"));
@@ -158,7 +162,7 @@ function python_install() {
 
 		if($resp === 0){
 		} else {
-			if(file_exists(__DIR__.'/'.PYTHON_FILE)){
+			if(file_exists(__DIR__. SLASH . PYTHON_FILE)){
 				//unlink(__DIR__.'/'.PYTHON_FILE);
 			}
 		}
@@ -169,7 +173,7 @@ function python_install() {
 
 	$echolog[] = "Installing Python:";
 	
-	if(file_exists(__DIR__ . "/python")){
+	if(file_exists(__DIR__ . SLASH . "python")){
 	} else {
 		exec("mkdir python", $out0, $ret0);
 	}
@@ -188,12 +192,22 @@ function python_install() {
 		$echolog[] = "Could not complete extracting the bundle.";
 	}
 	//$extracted_dir = "/pypy" . PYTHON_VER . "-linux-" . PYTHON_ARCH . "-portable";
-	$extracted_dir = "/python/py*";
-	$cmd2 = "mv " . __DIR__ . $extracted_dir  . " " . PYTHON_DIR;	
+	$extracted_dir = SLASH . "python" . SLASH . "py*";
+	
+	$moveCommand = "mv";
+	$touchCommand = "touch";
+	if(PYTHON_OS == 'win'){
+		$moveCommand = "move";
+		$touchCommand = "type nul >";
+	}
+	$cmd2 = $moveCommand .  " " . __DIR__ . $extracted_dir  . " " . PYTHON_DIR;	
+	
 	exec($cmd2, $out2, $ret2);
 	if($ret2 === 0){
-		exec("touch " . PYTHON_PID, $out3, $ret);		
-		$echolog[] = $ret === 0 ? $out2 : "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
+		$echolog[] = "Moved the bundle to desired location."; 
+		$echolog[] = $out2;
+		exec($touchCommand . " "  . PYTHON_PID, $out3, $ret3);		
+		$echolog[] = $ret3 === 0 ? $out3 : "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
 	} else {
 		$echolog[] = "Could not move the bundle to desired location." . "Failed. Error: $ret. Try putting python folder via (S)FTP, so that " . __DIR__ . "/python/bin/pypy exists.";
 	}
