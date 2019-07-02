@@ -399,12 +399,12 @@ function luvit_start($file) {
 	
 	if($lua_pid > 0){ 
 		$echolog[] = "Done. PID=$lua_pid"; 
-		$echolog[] = $out; 
+		//$echolog[] = $out; 
 	}
 	else {
 		lua_error();
 		$echolog[] = "Failed.";
-		$echolog[] = $out;
+		//$echolog[] = $out;
 	}
 	file_put_contents(LUA_PID, $lua_pid, LOCK_EX);
 	sleep(3); //Wait for lua to spin up
