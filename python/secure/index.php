@@ -279,7 +279,13 @@ if(!$auth){
 			});
 
 		}
-			
+
+		function openLink(){
+		    var url = '../api?port=' + $('#port').val();
+	            var tab = window.open(url, '_blank');
+        	    tab.focus();
+		}
+		
 		
 	</script>  
 </head>
@@ -380,7 +386,7 @@ if(!$auth){
 			</div>
 			<div class="row row-margin">
 			    <div class="form-group col-md-3">
-			    	<a href="../api" target="_blank" class="btn btn-info round-btn-med round-btn">LAUNCH</a>	
+			    	<a href="../api" target="_blank" class="btn btn-info round-btn-med round-btn" onclick="openLink()">LAUNCH</a>	
 			    </div>
 			    <div class="form-group col-md-1">
 			    </div>
