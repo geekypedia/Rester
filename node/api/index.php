@@ -8,7 +8,84 @@
 //error_reporting(E_ALL);
 error_reporting(0);
 
-set_time_limit(180);
+set_time_limit(0);
+
+function download_zip($url, $filename){
+    $echolog[] = "";
+
+    $os =  substr(strtoupper(PHP_OS), 0, 3);
+    $slash = $os == "WIN" ? "\\" : "/";
+
+    $output_file_path = __DIR__ . $slash . $filename;
+    $output_dir = __DIR__;
+    $fp = fopen ($output_file_path, 'w+');//This is the file where we save the zip file
+    
+    $echolog[] = "Initializing settings ...";
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_FILE, $fp); // write curl response to file
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    
+    $echolog[] = "Starting download ...";
+    curl_exec($ch); // get curl response
+    curl_close($ch);
+    fclose($fp);
+    $echolog[] = "Completed request ...";
+
+    return $echolog;
+}
+
+
+function download_zip_extract($url, $filename){
+    $echolog[] = "";
+
+    $os =  substr(strtoupper(PHP_OS), 0, 3);
+    $slash = $os == "WIN" ? "\\" : "/";
+
+    $output_file_path = __DIR__ . $slash . $filename;
+    $output_dir = __DIR__;
+    $fp = fopen ($output_file_path, 'w+');//This is the file where we save the zip file
+    
+    $echolog[] = "Initializing settings ...";
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_FILE, $fp); // write curl response to file
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    
+    $echolog[] = "Starting download ...";
+    curl_exec($ch); // get curl response
+    curl_close($ch);
+    fclose($fp);
+    
+    $echolog[] =  "Starting to extract ...";
+    if (file_exists($output_file_path)){
+        $zip = new ZipArchive;
+        $res = $zip->open($output_file_path);
+        if ($res === TRUE)
+        {
+            $zip->extractTo($output_dir);
+            $zip->close();
+            $echolog[] =   'Completed extracting ...';
+        }
+        else
+        {
+            $echolog[] =  'There was a problem opening the zip file: '.$res;
+        }
+    }
+    else{
+        $echolog[] = "There was an error downloading, writing or accessing the zip file.";
+    }
+
+    array_shift($echolog);
+
+    return $echolog;
+}
+
+
 
 $echolog[] = "";
 
@@ -30,11 +107,54 @@ define("NODE_VER", $node_ver);
 
 define("NODE_ARCH", "x" . substr(php_uname("m"), -2)); //x86 or x64
 
-define("NODE_FILE", "node-" . NODE_VER . "-linux-" . NODE_ARCH . ".tar.gz");
+$node_url_prefix = "http://nodejs.org/dist/";
+$node_os = "linux";
+$node_arch = "x64";
+$node_os_arch_separator = "-";
+$node_file_ext = ".tar.gz";
+$node_exe = "node";
+$npm_exe = "npm";
+$bin = "bin";
+$binroot = "bin";
 
-define("NODE_URL", "http://nodejs.org/dist/" . NODE_VER . "/" . NODE_FILE);
+$slash = "/";
 
-define("NODE_DIR", __DIR__."/../node");
+switch (PHP_OS) {
+	case 'Win':
+	case 'WinNT':
+	case 'WIN':
+	case 'WINNT':		
+		$node_os = "win";
+		$binroot = ".";
+		$slash = "\\";
+		$node_exe = $node_exe . ".exe";
+		$npm_exe = $npm_exe . ".exe";	
+		break;
+	case 'Darwin':
+		$node_os = "darwin";
+		break;
+	case 'Linux':
+	default:
+		$node_os = "linux";
+		break;
+}
+
+define("SLASH", $slash);
+define("BINROOT", $binroot);
+define("BIN", $bin);
+define("NODE", $node_exe);
+define("NPM", $npm_exe);
+define("NODE_OS", $node_os);
+define("NODE_URL_PREFIX", $node_url_prefix);
+
+$node_file = "node-" . NODE_VER . $node_os_arch_separator . NODE_OS . $node_os_arch_separator . NODE_ARCH;
+
+define("NODE_FILE_WOEXT", $node_file);
+define("NODE_FILE", $node_file . $node_file_ext);
+
+define("NODE_URL", NODE_URL_PREFIX . NODE_VER . "/" . NODE_FILE);
+
+define("NODE_DIR", __DIR__. SLASH . ".." . SLASH . "node");
 
 $node_host = !empty($_POST["host"]) ? $_POST["host"] : ( !empty($_REQUEST["host"]) ? $_REQUEST["host"] :  "localhost");
 $node_port = (int)(!empty($_POST["port"]) ? $_POST["port"] : ( !empty($_REQUEST["port"]) ? $_REQUEST["port"] :  "49999"));
@@ -51,9 +171,12 @@ function node_install() {
 		$echolog[] = "Node.js is already installed.";
 		return;
 	}
+
 	if(!file_exists(NODE_FILE)) {
 		$echolog[] = "Downloading Node.js from " . NODE_URL . ":";
-		$fp = fopen(NODE_FILE, "w");
+
+		/*
+		$fp = fopen(NODE_FILE, "w+");
 		flock($fp, LOCK_EX);
 		$curl = curl_init(NODE_URL);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -63,9 +186,22 @@ function node_install() {
 		flock($fp, LOCK_UN);
 		fclose($fp);
 		$echolog[] = $resp === true ? "Done." : "Failed. Error: curl_error($curl)";
+		*/
+
+		$echolog[] = download_zip(NODE_URL, NODE_FILE);
 	}
 	$echolog[] = "Installing Node.js:";
-	passthru("tar -xzf " . NODE_FILE . " 2>&1 && mv node-" . NODE_VER . "-linux-" . NODE_ARCH . " " . NODE_DIR . " && touch " . NODE_PID . " && rm -f " . NODE_FILE, $ret);
+
+	$unzipCommand = NODE_OS == "win" ? __DIR__ . SLASH .  "unzip.bat" : "tar -xzf";
+	$moveCommand = NODE_OS == "win" ? "move" : "mv";
+	$touchCommand = NODE_OS == "win" ? "type nul >" : "touch";
+	$linuxPostfix = NODE_OS == "win" ? "" : " 2>&1";
+
+	$cmd1 = $unzipCommand . " " . NODE_FILE . $linuxPostfix;
+	$cmd2 = $moveCommand . " " . NODE_FILE_WOEXT . " " . NODE_DIR;
+	$cmd3 = $touchCommand . " " . NODE_PID;
+	exec($cmd1 . " && " . $cmd2 . " && " . $cmd3, $out, $ret);
+	$echolog[] = $out;
 	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret. Try putting node folder via (S)FTP, so that " . __DIR__ . "/node/bin/node exists.";
 }
 
@@ -98,8 +234,23 @@ function node_start($file) {
 		return;
 	}
 	$file = escapeshellarg($file);
-	$echolog[] = "Starting: node $file";
-	$node_pid = exec("PORT=" . NODE_PORT . " " . NODE_DIR . "/bin/node $file >" . NODE_OUT . " 2>&1 & echo $!");
+	$start = '/workspace';
+	$startlen = strlen($start);
+	$pos = strpos($file, '/workspace');
+	$sub = substr($file, $pos + $startlen);
+	$displayFile = "{{WORKSPACE}}" . $sub;
+
+	$echolog[] = "Starting: node $displayFile";
+
+	//$node_pid = exec("PORT=" . NODE_PORT . " " . NODE_DIR . "/bin/node $file >" . NODE_OUT . " 2>&1 & echo $!");
+	$SETVAR = (NODE_OS == 'win') ? "set " : "";
+	$SETSEP = (NODE_OS == 'win') ? "&& " : " ";
+	$LINTRAIL = (NODE_OS == 'win') ? "" : " 2>&1 & echo $!";
+	$file = str_replace("/", SLASH, $file);
+	$startcmd = $SETVAR ."PORT=" . NODE_PORT . $SETSEP . NODE_DIR . SLASH . BINROOT . SLASH . NODE . " $file > " . NODE_OUT . $LINTRAIL;
+	$node_pid = exec($startcmd);
+
+
 	if($node_pid > 0){ 
 		$echolog[] = "Done. PID=$node_pid"; 
 	}
@@ -145,14 +296,14 @@ function node_npm($cmd, $prefix) {
 		return;
 	}
 	
-	$prefixbase = " --prefix " . __DIR__ . "/" . REL_PATH . "/ide/workspace/";
+	$prefixbase = " --prefix " . __DIR__ . SLASH . REL_PATH . SLASH . "ide" . SLASH . "workspace" . SLASH;
 	
 	if($prefix) {
 		$prefixpassed = $prefix;
 		if(endsWith($prefix, ".js")){
 			$exp = explode("/", $prefix);
 			array_pop($exp);
-			$stripped = implode("/", $exp);
+			$stripped = implode(SLASH, $exp);
 			$prefixpassed = $stripped;
 		}
 		$prefixcmd = $prefixbase . $prefixpassed;	
@@ -160,12 +311,14 @@ function node_npm($cmd, $prefix) {
 		$prefixcmd = $prefixbase . "node";
 	}
 	
-	$cmd = escapeshellcmd(NODE_DIR . "/bin/npm --cache ./.npm ". $prefixcmd  ." -- $cmd");
+	$cmd = escapeshellcmd(NODE_DIR . SLASH . BIN . SLASH . NPM . " --cache ./.npm ". $prefixcmd  ." -- $cmd");
 	
 	$echolog[] = "Running: $cmd";
 	$ret = -1;
-	passthru($cmd, $ret);
+	exec($cmd, $out, $ret);
+	$echolog[] = $out;
 	if($ret === 0){
+		$echolog[] = $out;
 		$echolog[] = "Done";
 	} else {
 		node_error();
