@@ -464,8 +464,8 @@ function lua_luarocks($cmd, $prefix) {
 	$echolog[] = "Running: $cmd";
 	$ret = -1;
 	exec($cmd, $out, $ret);
+	$echolog[] = $out;
 	if($ret === 0){
-		$echolog[] = $out;
 		$echolog[] = "Done";
 	} else {
 		lua_error();
