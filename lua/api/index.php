@@ -384,10 +384,19 @@ function luvit_start($file) {
 	$sub = substr($file, $pos + $startlen);
 	$displayFile = "{{WORKSPACE}}" . $sub;
 	$echolog[] = "Starting: luvit $displayFile";
-	$cmd_exec = "PORT=" . LUA_PORT . " " . LUA_DIR . "/bin/luvit $file >" . LUA_OUT . " 2>&1 & echo $!";
-	$echolog[] = $cmd_exec;
+	
+	//$cmd_exec = "PORT=" . LUA_PORT . " " . LUA_DIR . "/bin/luvit $file >" . LUA_OUT . " 2>&1 & echo $!";
+	//$echolog[] = $cmd_exec;
+	//$lua_pid = exec($cmd_exec, $out); //" 2>&1 & echo $!");
 
-	$lua_pid = exec($cmd_exec, $out); //" 2>&1 & echo $!");
+	$SETVAR = (LUA_OS == 'Windows') ? "set " : "";
+	$SETSEP = (LUA_OS == 'Windows') ? "&& " : " ";
+	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " 2>&1 & echo $!";
+	$file = str_replace("/", SLASH, $file);
+	$startcmd = $SETVAR ."PORT=" . LUA_PORT . $SETSEP . LUA_DIR . SLASH . BINROOT . SLASH . "luvit" . " $file > " . LUA_OUT . $LINTRAIL;
+	$lua_pid = exec($startcmd);
+		
+	
 	if($lua_pid > 0){ 
 		$echolog[] = "Done. PID=$lua_pid"; 
 		$echolog[] = $out; 
