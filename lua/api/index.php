@@ -85,6 +85,7 @@ function lua_install() {
 		return;
 	}
 	
+	/*
 	if(LUA_OS == 'Windows'){
 		$zf = __DIR__.'/unzip.exe';
 		$zurl = 'http://stahlworks.com/dev/unzip.exe';
@@ -104,7 +105,8 @@ function lua_install() {
 		flock($zfp, LOCK_UN);
 		fclose($zfp);		
 		$echolog[] = $zresp === true ? "Downloaded unzip utility for windows" : "Failed. Error: curl_error($curl)";		
-	}	
+	}
+	*/
 
 	if(!file_exists(__DIR__.'/'.LUA_FILE)) {		
 		$echolog[] = "Downloading Lua from " . LUA_URL . ":";
@@ -151,7 +153,7 @@ function lua_install() {
 	
 	$cmd1 = "tar -xzvf " . LUA_FILE . " -C lua 2>&1";
 	if(LUA_OS == 'Windows'){
-		$cmd1 = __DIR__. "/unzip.exe " . LUA_FILE . "";
+		$cmd1 = __DIR__. "/unzip.bat " . LUA_FILE . "";
 	}
 	
 	exec($cmd1, $out1,$ret1);
