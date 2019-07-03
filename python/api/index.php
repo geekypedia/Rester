@@ -456,7 +456,8 @@ function python_pip($cmd, $prefix) {
 		$echolog[] = "Done";
 	} else {
 		python_error();
-		$echolog[] = "Failed. Error: $ret. See <a href=\"pip-debug.log\">pip-debug.log</a>";
+		$echolog[] = "Failed";
+		//$echolog[] = "Failed. Error: $ret. See <a href=\"pip-debug.log\">pip-debug.log</a>";
 	}
 	return;
 
