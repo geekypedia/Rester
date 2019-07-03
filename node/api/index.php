@@ -318,11 +318,11 @@ function node_npm($cmd, $prefix) {
 	exec($cmd, $out, $ret);
 	$echolog[] = $out;
 	if($ret === 0){
-		$echolog[] = $out;
 		$echolog[] = "Done";
 	} else {
 		node_error();
-		$echolog[] = "Failed. Error: $ret. See <a href=\"npm-debug.log\">npm-debug.log</a>";
+		$echolog[] = "Failed";
+		//$echolog[] = "Failed. Error: $ret. See <a href=\"npm-debug.log\">npm-debug.log</a>";
 	}
 
 }
