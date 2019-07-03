@@ -469,7 +469,8 @@ function lua_luarocks($cmd, $prefix) {
 		$echolog[] = "Done";
 	} else {
 		lua_error();
-		$echolog[] = "Failed. Error: $ret. \r\n " . json_encode($out) ." \r\n See <a href=\"luarocks-debug.log\">luarocks-debug.log</a>";
+		$echolog[] = "Failed";
+//		$echolog[] = "Failed. Error: $ret. \r\n " . json_encode($out) ." \r\n See <a href=\"luarocks-debug.log\">luarocks-debug.log</a>";
 	}
 	return;
 
