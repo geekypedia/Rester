@@ -311,7 +311,7 @@ function node_npm($cmd, $prefix) {
 		$prefixcmd = $prefixbase . "node";
 	}
 	
-	$cmd = escapeshellcmd(NODE_DIR . SLASH . BIN . SLASH . NPM . " --cache ./.npm ". $prefixcmd  ." -- $cmd");
+	$cmd = escapeshellcmd(NODE_DIR . SLASH . BIN . SLASH . NODE . " " . NODE_DIR . SLASH . BIN . SLASH . NPM . " --cache ." .SLASH. ".npm ". $prefixcmd  ." $cmd");
 	
 	$echolog[] = "Running: $cmd";
 	$ret = -1;
