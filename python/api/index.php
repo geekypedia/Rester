@@ -424,6 +424,12 @@ function python_start($file) {
 	$echolog[] = file_get_contents(PYTHON_OUT);
 }
 
+function python_get_logs(){
+	global $echolog;
+	$echolog[] = file_get_contents(PYTHON_OUT);
+}
+
+
 function python_stop() {
 	global $echolog;	
 	if(!file_exists(PYTHON_DIR)) {
@@ -643,6 +649,8 @@ function python_dispatch() {
 			python_start($serve_path);
 		} elseif($stop = isset($_GET['stop']) ? ($_GET['stop']) : (isset($_POST['stop']) ? ($_POST['stop']) :  false)) {
 			python_stop();
+		} elseif($stop = isset($_GET['logs']) ? ($_GET['logs']) : (isset($_POST['logs']) ? ($_POST['logs']) :  false)) {
+			python_get_logs();			
 		} elseif($pip = isset($_GET['pip']) ? ($_GET['pip']) : (isset($_POST['pip']) ? ($_POST['pip']) :  false)) {
 			$prefix = isset($_GET['prefix']) ? ($_GET['prefix']) : (isset($_POST['prefix']) ? ($_POST['prefix']) :  false);
 			python_pip($pip, $prefix);
