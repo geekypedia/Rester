@@ -127,6 +127,7 @@ switch (PHP_OS) {
 		$node_os = "win";
 		$binroot = ".";
 		$slash = "\\";
+		$node_file_ext = ".zip";
 		$node_exe = $node_exe . ".exe";
 		$npm_exe = $npm_exe . ".exe";	
 		break;
@@ -197,12 +198,18 @@ function node_install() {
 	$touchCommand = NODE_OS == "win" ? "type nul >" : "touch";
 	$linuxPostfix = NODE_OS == "win" ? "" : " 2>&1";
 
-	$cmd1 = $unzipCommand . " " . NODE_FILE . $linuxPostfix;
+	$cmd1 = $unzipCommand . " " . __DIR__ . SLASH . NODE_FILE . $linuxPostfix;
 	$cmd2 = $moveCommand . " " . NODE_FILE_WOEXT . " " . NODE_DIR;
 	$cmd3 = $touchCommand . " " . NODE_PID;
-	exec($cmd1 . " && " . $cmd2 . " && " . $cmd3, $out, $ret);
-	$echolog[] = $out;
-	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret. Try putting node folder via (S)FTP, so that " . __DIR__ . "/node/bin/node exists.";
+	exec($cmd1, $out1, $ret1);
+	$echolog[] = $out1;
+	$echolog[] = $ret1 === 0 ? "Extraction Done." : "Extraction Failed. Error: $ret1";
+	exec($cmd2, $out2, $ret2);
+	$echolog[] = $out2;
+	$echolog[] = $ret2 === 0 ? "Moved folder to desired location." : "Could not move folder to desired location. Error: $ret1";
+	exec($cmd3, $out3, $ret3);
+	$echolog[] = $out3;
+	$echolog[] = $ret3 === 0 ? "Done." : "Failed. Error: $ret. Try putting node folder via (S)FTP or File Manager, so that " . __DIR__ . SLASH . "node" . SLASH . BIN . SLASH . NODE . " exists.";
 }
 
 function node_uninstall() {
