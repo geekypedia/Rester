@@ -328,25 +328,25 @@ function lua_uninstall() {
 	}
 	$echolog[] = "Uninstalling Lua:";
 	if((substr(strtoupper(PHP_OS), 0, 3) == "WIN")){
-		exec("del /s /q " . LUA_DIR . "", $out, $ret);
-		$echolog[] = $out;
-		exec("rd /s /q " . LUA_DIR . "", $out, $ret);
-		$echolog[] = $out;
-		exec("del /s /q " . __DIR__ . SLASH . LUA_PID . "", $out, $ret);	
-		$echolog[] = $out;
-		exec("del /s /q " .  __DIR__ . SLASH . LUA_OUT . "", $out, $ret);	
-		$echolog[] = $out;
+		exec("del /s /q " . LUA_DIR . "", $out1, $ret);
+		$echolog[] = $out1;
+		exec("rd /s /q " . LUA_DIR . "", $out2, $ret);
+		$echolog[] = $out2;
+		exec("del /s /q " . __DIR__ . SLASH . LUA_PID . "", $out3, $ret);	
+		$echolog[] = $out3;
+		exec("del /s /q " .  __DIR__ . SLASH . LUA_OUT . "", $out4, $ret);	
+		$echolog[] = $out4;
 // 		exec("del /s /q " . __DIR__ . SLASH . ".luarocks", $out, $ret);
 // 		$echolog[] = $out;
 // 		exec("rd /s /q " . __DIR__ . SLASH . ".luarocks", $out, $ret);
 // 		$echolog[] = $out;
 	} else {
-		exec("rm -rfv " . LUA_DIR . "", $out, $ret);
-		$echolog[] = $out;
-		exec("rm -rfv " . __DIR__ . SLASH . LUA_PID . "", $out, $ret);	
-		$echolog[] = $out;
-		exec("rm -rfv " .  __DIR__ . SLASH . LUA_OUT . "", $out, $ret);	
-		$echolog[] = $out;
+		exec("rm -rfv " . LUA_DIR . "", $out1, $ret);
+		$echolog[] = $out1;
+		exec("rm -rfv " . __DIR__ . SLASH . LUA_PID . "", $out2, $ret);	
+		$echolog[] = $out2;
+		exec("rm -rfv " .  __DIR__ . SLASH . LUA_OUT . "", $out3, $ret);	
+		$echolog[] = $out3;
 // 		exec("rm -rfv " . __DIR__ . SLASH . ".luarocks", $out, $ret);
 // 		$echolog[] = $out;
 // 		exec("rm -rfv node_modules", $out, $ret);
