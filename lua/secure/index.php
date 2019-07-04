@@ -191,7 +191,7 @@ if(!$auth){
 				if(cb) cb(err);
 			});
 			
-			if(command == 'start') {
+			if(command == 'start' || command == 'luvitstart') {
 				setTimeout(function() {
 					act('logs', function(r){
 						actionHandler(r);
