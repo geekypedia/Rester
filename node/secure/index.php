@@ -186,6 +186,15 @@ if(!$auth){
 				var err = e.responseJSON;
 				if(cb) cb(err);
 			});
+			
+			if(command == 'start') {
+				setTimeout(function() {
+					act('logs', function(r){
+						actionHandler(r);
+					})					
+				}, 5000);
+			}
+			
 		}
 		
 		function refreshStatus(){
