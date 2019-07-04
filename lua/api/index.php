@@ -441,6 +441,12 @@ function luvit_start($file) {
 	$echolog[] = file_get_contents(LUA_OUT);
 }
 
+function lua_get_logs(){
+	global $echolog;
+	$echolog[] = file_get_contents(LUA_OUT);
+}
+
+
 function lua_stop() {
 	global $echolog;	
 	if(!file_exists(LUA_DIR)) {
@@ -658,11 +664,13 @@ function lua_dispatch() {
 		} elseif($start = isset($_GET['start']) ? ($_GET['start']) : (isset($_POST['start']) ? ($_POST['start']) :  false)) {
 			$serve_path = __DIR__ . '/' . REL_PATH . '/ide/workspace/' . $start;
 			lua_start($serve_path);
-		} elseif($start = isset($_GET['luvitstart']) ? ($_GET['luvitstart']) : (isset($_POST['luvitstart']) ? ($_POST['luvitstart']) :  false)) {
-			$serve_path = __DIR__ . '/' . REL_PATH . '/ide/workspace/' . $start;
+		} elseif($luvitstart = isset($_GET['luvitstart']) ? ($_GET['luvitstart']) : (isset($_POST['luvitstart']) ? ($_POST['luvitstart']) :  false)) {
+			$serve_path = __DIR__ . '/' . REL_PATH . '/ide/workspace/' . $luvitstart;
 			luvit_start($serve_path);
 		} elseif($stop = isset($_GET['stop']) ? ($_GET['stop']) : (isset($_POST['stop']) ? ($_POST['stop']) :  false)) {
 			lua_stop();
+		} elseif($logs = isset($_GET['logs']) ? ($_GET['logs']) : (isset($_POST['logs']) ? ($_POST['logs']) :  false)) {
+			lua_get_logs();			
 		} elseif($luarocks = isset($_GET['luarocks']) ? ($_GET['luarocks']) : (isset($_POST['luarocks']) ? ($_POST['luarocks']) :  false)) {
 			$prefix = isset($_GET['prefix']) ? ($_GET['prefix']) : (isset($_POST['prefix']) ? ($_POST['prefix']) :  false);
 			lua_luarocks($luarocks, $prefix);
