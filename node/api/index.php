@@ -237,7 +237,6 @@ function node_uninstall() {
 	$echolog[] = "Uninstalling Node.js:";
 
 	if((substr(strtoupper(PHP_OS), 0, 3) == "WIN")){
-		$echolog[] = "del /s /q " . NODE_DIR . "";
 		exec("del /s /q " . NODE_DIR . "", $out, $ret);
 		$echolog[] = $out;
 		exec("rd /s /q " . NODE_DIR . "", $out, $ret);
