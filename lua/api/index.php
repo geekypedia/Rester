@@ -380,7 +380,7 @@ function lua_start($file) {
 	//$lua_pid = exec($cmd_exec);
 	$SETVAR = (LUA_OS == 'Windows') ? "set " : "";
 	$SETSEP = (LUA_OS == 'Windows') ? "&& " : " ";
-	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " > /dev/null 2>&1 & echo $!";
+	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " /dev/null 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
 	$startcmd = $SETVAR ."PORT=" . LUA_PORT . $SETSEP . LUA_DIR . SLASH . BINROOT . SLASH . LUA . " $file > " . LUA_OUT . $LINTRAIL;
 	$lua_pid = exec_bg($startcmd, $out, $ret);
@@ -424,7 +424,7 @@ function luvit_start($file) {
 
 	$SETVAR = (LUA_OS == 'Windows') ? "set " : "";
 	$SETSEP = (LUA_OS == 'Windows') ? "&& " : " ";
-	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " > /dev/null 2>&1 & echo $!";
+	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " /dev/null 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
 	$startcmd = $SETVAR ."PORT=" . LUA_PORT . $SETSEP . LUA_DIR . SLASH . BINROOT . SLASH . "luvit" . " $file > " . LUA_OUT . $LINTRAIL;
 	$lua_pid = exec_bg($startcmd, $out, $ret);
