@@ -146,6 +146,10 @@ if(!$auth){
 			 	var that = $(this);
 			 	//that.css('height', that.css('width'));
 			 });
+			
+			 var version = <?php echo (substr(strtoupper(PHP_OS), 0, 3)) == 'DAR' ? 2.7 : 3.6 ?>;
+			 $('#version').val(version);
+			
 
 		});
 		
