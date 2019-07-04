@@ -237,30 +237,30 @@ function node_uninstall() {
 	$echolog[] = "Uninstalling Node.js:";
 
 	if((substr(strtoupper(PHP_OS), 0, 3) == "WIN")){
-		exec("del /s /q " . NODE_DIR . "", $out, $ret);
-		$echolog[] = $out;
-		exec("rd /s /q " . NODE_DIR . "", $out, $ret);
-		$echolog[] = $out;
-		exec("del /s /q " . __DIR__ . SLASH . NODE_PID . "", $out, $ret);	
-		$echolog[] = $out;
-		exec("del /s /q " .  __DIR__ . SLASH . NODE_OUT . "", $out, $ret);	
-		$echolog[] = $out;
-		exec("del /s /q " . __DIR__ . SLASH . ".npm", $out, $ret);
-		$echolog[] = $out;
-		exec("rd /s /q " . __DIR__ . SLASH . ".npm", $out, $ret);
-		$echolog[] = $out;
+		exec("del /s /q " . NODE_DIR . "", $out1, $ret);
+		$echolog[] = $out1;
+		exec("rd /s /q " . NODE_DIR . "", $out2, $ret);
+		$echolog[] = $out2;
+		exec("del /s /q " . __DIR__ . SLASH . NODE_PID . "", $out3, $ret);	
+		$echolog[] = $out3;
+		exec("del /s /q " .  __DIR__ . SLASH . NODE_OUT . "", $out4, $ret);	
+		$echolog[] = $out4;
+		exec("del /s /q " . __DIR__ . SLASH . ".npm", $out5, $ret);
+		$echolog[] = $out5;
+		exec("rd /s /q " . __DIR__ . SLASH . ".npm", $out6, $ret);
+		$echolog[] = $out6;
 
 	} else {
-		exec("rm -rfv " . NODE_DIR . "", $out, $ret);
-		$echolog[] = $out;
-		exec("rm -rfv " . __DIR__ . SLASH . NODE_PID . "", $out, $ret);	
-		$echolog[] = $out;
-		exec("rm -rfv " .  __DIR__ . SLASH . NODE_OUT . "", $out, $ret);	
-		$echolog[] = $out;
-		exec("rm -rfv " . __DIR__ . SLASH . ".npm", $out, $ret);
-		$echolog[] = $out;
-		exec("rm -rfv node_modules", $out, $ret);
-		$echolog[] = $out;
+		exec("rm -rfv " . NODE_DIR . "", $out1, $ret);
+		$echolog[] = $out1;
+		exec("rm -rfv " . __DIR__ . SLASH . NODE_PID . "", $out2, $ret);	
+		$echolog[] = $out2;
+		exec("rm -rfv " .  __DIR__ . SLASH . NODE_OUT . "", $out3, $ret);	
+		$echolog[] = $out3;
+		exec("rm -rfv " . __DIR__ . SLASH . ".npm", $out4, $ret);
+		$echolog[] = $out4;
+		exec("rm -rfv node_modules", $out5, $ret);
+		$echolog[] = $out5;
 	}
 	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret";
 }
