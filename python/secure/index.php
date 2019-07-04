@@ -172,10 +172,12 @@ if(!$auth){
 			}
 			if(command == 'pip') {
 				payload[command] = $('#pip').val();
+				payload['version'] =   ($('#version').val());
 				payload['prefix'] = $('#prefix').val();
 			}
 			if(command == 'pipstart') {
 				payload['pip'] = 'start';
+				payload['version'] =   ($('#version').val());
 				payload['prefix'] = $('#prefix').val();
 			}
 			
