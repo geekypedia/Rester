@@ -10,4 +10,4 @@ http.createServer(function (req, res)
   res:finish(body)
 end):listen(port, '127.0.0.1')
 
-print('Server running at ' .. port)
+print('Luvit API server started at : http://localhost:' .. port)
