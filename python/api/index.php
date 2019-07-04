@@ -85,6 +85,15 @@ function download_zip_extract($url, $filename){
     return $echolog;
 }
 
+function exec_bg($cmd, &$out, &$ret) {
+	if(substr(strtoupper(php_uname()), 0, 3) == "WIN"){
+	 return pclose(popen("start /B ". $cmd, "r")); 
+	}else {
+	 //return exec($cmd . " > /dev/null &"); 
+	 return exec($cmd, $out, $ret); 
+	}
+}
+
 $echolog[] = "";
 
 define("REL_PATH", "../.."); //prod
@@ -381,10 +390,10 @@ function python_start($file) {
 	//$python_pid = exec("PORT=" . PYTHON_PORT . " " . PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " $file >" . PYTHON_OUT . " 2>&1 & echo $!");
 	$SETVAR = (PYTHON_OS == 'win') ? "set " : "";
 	$SETSEP = (PYTHON_OS == 'win') ? "&& " : " ";
-	$LINTRAIL = (PYTHON_OS == 'win') ? "" : " 2>&1 & echo $!";
+	$LINTRAIL = (PYTHON_OS == 'win') ? "" : " > /dev/null 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
 	$startcmd = $SETVAR ."PORT=" . PYTHON_PORT . $SETSEP . PYTHON_DIR . SLASH . BINROOT . SLASH . PYPY . " $file > " . PYTHON_OUT . $LINTRAIL;
-	$python_pid = exec($startcmd);
+	$python_pid = exec_bg($startcmd, $out, $ret);
 	
 	if($python_pid > 0){ 
 		$echolog[] = "Done. PID=$python_pid"; 
@@ -394,7 +403,7 @@ function python_start($file) {
 		$echolog[] = "Failed.";
 	}
 	file_put_contents(PYTHON_PID, $python_pid, LOCK_EX);
-	sleep(1); //Wait for python to spin up
+	sleep(2); //Wait for python to spin up
 	$echolog[] = file_get_contents(PYTHON_OUT);
 }
 
@@ -412,13 +421,13 @@ function python_stop() {
 		return;
 	}
 	$echolog[] = "Stopping Python with PID=$python_pid";
-	$ret = -1;
-	exec("kill $python_pid", $out, $ret);
+	exec("kill $python_pid > /dev/null 2>&1 & echo $!", $out, $ret);
+	//$echolog[] = $out;
 	if($ret === 0){
-		$echolog[] = $out;
+		$echolog[] = "Done";
 	} else {
 		python_error();
-		//$echolog[] = "Failed. Error: $ret";
+		$echolog[] = "Failed. Error: $ret";
 	}
 	file_put_contents(PYTHON_PID, '', LOCK_EX);
 }
