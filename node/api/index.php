@@ -290,7 +290,7 @@ function node_start($file) {
 	//$node_pid = exec("PORT=" . NODE_PORT . " " . NODE_DIR . "/bin/node $file >" . NODE_OUT . " 2>&1 & echo $!");
 	$SETVAR = (NODE_OS == 'win') ? "set " : "";
 	$SETSEP = (NODE_OS == 'win') ? "&& " : " ";
-	$LINTRAIL = (NODE_OS == 'win') ? "" : " > /dev/null 2>&1 & echo $!";
+	$LINTRAIL = (NODE_OS == 'win') ? "" : " /dev/null 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
 	$startcmd = $SETVAR ."PORT=" . NODE_PORT . $SETSEP . NODE_DIR . SLASH . BINROOT . SLASH . NODE . " $file > " . NODE_OUT . $LINTRAIL;
 	$node_pid = exec_bg($startcmd, $out, $ret);
