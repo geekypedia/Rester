@@ -85,6 +85,14 @@ function download_zip_extract($url, $filename){
     return $echolog;
 }
 
+function exec_bg($cmd, &$out, &$ret) {
+	if(substr(strtoupper(php_uname()), 0, 3) == "WIN"){
+	 return pclose(popen("start /B ". $cmd, "r")); 
+	}else {
+	 //return exec($cmd . " > /dev/null &"); 
+	 return exec($cmd, $out, $ret); 
+	}
+}
 
 
 $echolog[] = "";
@@ -283,11 +291,10 @@ function node_start($file) {
 	//$node_pid = exec("PORT=" . NODE_PORT . " " . NODE_DIR . "/bin/node $file >" . NODE_OUT . " 2>&1 & echo $!");
 	$SETVAR = (NODE_OS == 'win') ? "set " : "";
 	$SETSEP = (NODE_OS == 'win') ? "&& " : " ";
-	$LINTRAIL = (NODE_OS == 'win') ? "" : " 2>&1 & echo $!";
+	$LINTRAIL = (NODE_OS == 'win') ? "" : " > /dev/null 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
 	$startcmd = $SETVAR ."PORT=" . NODE_PORT . $SETSEP . NODE_DIR . SLASH . BINROOT . SLASH . NODE . " $file > " . NODE_OUT . $LINTRAIL;
-	$node_pid = exec($startcmd);
-
+	$node_pid = exec_bg($startcmd, $out, $ret);
 
 	if($node_pid > 0){ 
 		$echolog[] = "Done. PID=$node_pid"; 
@@ -315,8 +322,8 @@ function node_stop() {
 		return;
 	}
 	$echolog[] = "Stopping Node.js with PID=$node_pid";
-	$ret = -1;
-	passthru("kill $node_pid", $ret);
+	exec("kill $node_pid > /dev/null 2>&1 & echo $!", $out, $ret);
+	//$echolog[] = $out;
 	if($ret === 0){
 		$echolog[] = "Done";
 	} else {
