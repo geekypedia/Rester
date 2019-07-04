@@ -222,9 +222,11 @@ if(!$auth){
 		function restartAct(){
 			act('stop', function(r){
 				actionHandler(r);
-				act('start', function(s){
-					actionHandler(s);
-				});
+				setTimeout(function(){
+					act('start', function(s){
+						actionHandler(s);
+					});
+				}, 2000);
 			});
 		}
 		
