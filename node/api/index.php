@@ -220,11 +220,35 @@ function node_uninstall() {
 		$echolog[] = "Node.js is not yet installed. Please go to Administration panel to install it.";
 		return;
 	}
-	$echolog[] = "Unnstalling Node.js:";
-	passthru("rm -rfv " . NODE_DIR . " " . NODE_PID . "", $ret);
-	passthru("rm -rfv node_modules", $ret);
-	passthru("rm -rfv .npm", $ret);
-	passthru("rm -rfv ". NODE_OUT ."", $ret);
+	$echolog[] = "Uninstalling Node.js:";
+
+	if((substr(strtoupper(PHP_OS), 0, 3) == "WIN")){
+		$echolog[] = "del /s /q " . NODE_DIR . "";
+		exec("del /s /q " . NODE_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("rd /s /q " . NODE_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("del /s /q " . __DIR__ . SLASH . NODE_PID . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("del /s /q " .  __DIR__ . SLASH . NODE_OUT . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("del /s /q " . __DIR__ . SLASH . ".npm", $out, $ret);
+		$echolog[] = $out;
+		exec("rd /s /q " . __DIR__ . SLASH . ".npm", $out, $ret);
+		$echolog[] = $out;
+
+	} else {
+		exec("rm -rfv " . NODE_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("rm -rfv " . __DIR__ . SLASH . NODE_PID . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("rm -rfv " .  __DIR__ . SLASH . NODE_OUT . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("rm -rfv " . __DIR__ . SLASH . ".npm", $out, $ret);
+		$echolog[] = $out;
+		exec("rm -rfv node_modules", $out, $ret);
+		$echolog[] = $out;
+	}
 	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret";
 }
 
