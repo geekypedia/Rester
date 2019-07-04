@@ -126,10 +126,11 @@ switch (PHP_OS) {
 	case 'WINNT':		
 		$node_os = "win";
 		$binroot = ".";
+		$bin = ".";
 		$slash = "\\";
 		$node_file_ext = ".zip";
 		$node_exe = $node_exe . ".exe";
-		$npm_exe = $npm_exe . ".exe";	
+		$npm_exe = $npm_exe . ".cmd";	
 		break;
 	case 'Darwin':
 		$node_os = "darwin";
@@ -196,10 +197,10 @@ function node_install() {
 	$unzipCommand = NODE_OS == "win" ? __DIR__ . SLASH .  "unzip.bat" : "tar -xzf";
 	$moveCommand = NODE_OS == "win" ? "move" : "mv";
 	$touchCommand = NODE_OS == "win" ? "type nul >" : "touch";
-	$linuxPostfix = NODE_OS == "win" ? "" : " 2>&1";
+	$linuxPostfix = NODE_OS == "win" ? "" : " -c node 2>&1";
 
 	$cmd1 = $unzipCommand . " " . __DIR__ . SLASH . NODE_FILE . $linuxPostfix;
-	$cmd2 = $moveCommand . " " . NODE_FILE_WOEXT . " " . NODE_DIR;
+	$cmd2 = $moveCommand . " " . __DIR__ . SLASH . "node" . SLASH . NODE_FILE_WOEXT . " " . NODE_DIR;
 	$cmd3 = $touchCommand . " " . NODE_PID;
 	exec($cmd1, $out1, $ret1);
 	$echolog[] = $out1;
@@ -318,7 +319,8 @@ function node_npm($cmd, $prefix) {
 		$prefixcmd = $prefixbase . "node";
 	}
 	
-	$cmd = escapeshellcmd(NODE_DIR . SLASH . BIN . SLASH . NODE . " " . NODE_DIR . SLASH . BIN . SLASH . NPM . " --cache ." .SLASH. ".npm ". $prefixcmd  ." $cmd");
+	$npm_cmd = (substr(strtoupper(PHP_OS), 0, 3) == "WIN") ? NODE_DIR . SLASH . BIN . SLASH . NPM : NODE_DIR . SLASH . BIN . SLASH . NODE . " " . NODE_DIR . SLASH . BIN . SLASH . NPM;
+	$cmd = escapeshellcmd($npm_cmd . " --cache ." .SLASH. ".npm ". $prefixcmd  ." $cmd");
 	
 	$echolog[] = "Running: $cmd";
 	$ret = -1;
