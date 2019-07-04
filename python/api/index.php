@@ -354,15 +354,32 @@ function python_uninstall() {
 		$echolog[] = "Python is not yet installed. Please go to Administration panel to install it.";
 		return;
 	}
-	$echolog[] = "Unnstalling Python:";
-	exec("rm -rfv " . PYTHON_DIR . " " . PYTHON_PID . "", $out1, $ret);
-	$echolog[] = $out1;
-	exec("rm -rfv python_modules", $out2, $ret);
-	$echolog[] = $out2;	
-	exec("rm -rfv .pip", $out3, $ret);
-	$echolog[] = $out3;	
-	exec("rm -rfv ". PYTHON_OUT ."", $out4, $ret);
-	$echolog[] = $out4;	
+	$echolog[] = "Uninstalling Python:";
+	if((substr(strtoupper(PHP_OS), 0, 3) == "WIN")){
+		exec("del /s /q " . PYTHON_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("rd /s /q " . PYTHON_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("del /s /q " . __DIR__ . SLASH . PYTHON_PID . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("del /s /q " .  __DIR__ . SLASH . PYTHON_OUT . "", $out, $ret);	
+		$echolog[] = $out;
+// 		exec("del /s /q " . __DIR__ . SLASH . ".pip", $out, $ret);
+// 		$echolog[] = $out;
+// 		exec("rd /s /q " . __DIR__ . SLASH . ".pip", $out, $ret);
+// 		$echolog[] = $out;
+	} else {
+		exec("rm -rfv " . PYTHON_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("rm -rfv " . __DIR__ . SLASH . PYTHON_PID . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("rm -rfv " .  __DIR__ . SLASH . PYTHON_OUT . "", $out, $ret);	
+		$echolog[] = $out;
+// 		exec("rm -rfv " . __DIR__ . SLASH . ".pip", $out, $ret);
+// 		$echolog[] = $out;
+// 		exec("rm -rfv node_modules", $out, $ret);
+// 		$echolog[] = $out;
+	}
 	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret";
 }
 
