@@ -169,15 +169,16 @@ if(!$auth){
 				payload[command] = $('#prefix').val();
 				payload['host'] =   ($('#host').val());				
 				payload['port'] =   ($('#port').val());
+				payload['version'] = ($('#version').val());				
 			}
 			if(command == 'pip') {
 				payload[command] = $('#pip').val();
-				payload['version'] =   ($('#version').val());
+				payload['version'] = ($('#version').val());
 				payload['prefix'] = $('#prefix').val();
 			}
 			if(command == 'pipstart') {
 				payload['pip'] = 'start';
-				payload['version'] =   ($('#version').val());
+				payload['version'] = ($('#version').val());
 				payload['prefix'] = $('#prefix').val();
 			}
 			
