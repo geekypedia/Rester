@@ -307,6 +307,12 @@ function node_start($file) {
 	$echolog[] = file_get_contents(NODE_OUT);
 }
 
+function node_get_logs(){
+	global $echolog;
+	$echolog[] = file_get_contents(NODE_OUT);
+}
+
+
 function node_stop() {
 	global $echolog;	
 	if(!file_exists(NODE_DIR)) {
@@ -509,6 +515,8 @@ function node_dispatch() {
 			node_start($serve_path);
 		} elseif($stop = isset($_GET['stop']) ? ($_GET['stop']) : (isset($_POST['stop']) ? ($_POST['stop']) :  false)) {
 			node_stop();
+		} elseif($stop = isset($_GET['logs']) ? ($_GET['logs']) : (isset($_POST['logs']) ? ($_POST['logs']) :  false)) {
+			node_get_logs();			
 		} elseif($npm = isset($_GET['npm']) ? ($_GET['npm']) : (isset($_POST['npm']) ? ($_POST['npm']) :  false)) {
 			$prefix = isset($_GET['prefix']) ? ($_GET['prefix']) : (isset($_POST['prefix']) ? ($_POST['prefix']) :  false);
 			node_npm($npm, $prefix);
