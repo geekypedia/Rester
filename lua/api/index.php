@@ -326,15 +326,32 @@ function lua_uninstall() {
 		$echolog[] = "Lua is not yet installed. Please go to Administration panel to install it.";
 		return;
 	}
-	$echolog[] = "Unnstalling Lua:";
-	exec("rm -rfv " . LUA_DIR . " " . LUA_PID . "", $out1, $ret);
-	$echolog[] = $out1;
-	exec("rm -rfv lua_modules", $out2, $ret);
-	$echolog[] = $out2;	
-	exec("rm -rfv .luarocks", $out3, $ret);
-	$echolog[] = $out3;	
-	exec("rm -rfv ". LUA_OUT ."", $out4, $ret);
-	$echolog[] = $out4;	
+	$echolog[] = "Uninstalling Lua:";
+	if((substr(strtoupper(PHP_OS), 0, 3) == "WIN")){
+		exec("del /s /q " . LUA_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("rd /s /q " . LUA_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("del /s /q " . __DIR__ . SLASH . LUA_PID . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("del /s /q " .  __DIR__ . SLASH . LUA_OUT . "", $out, $ret);	
+		$echolog[] = $out;
+// 		exec("del /s /q " . __DIR__ . SLASH . ".luarocks", $out, $ret);
+// 		$echolog[] = $out;
+// 		exec("rd /s /q " . __DIR__ . SLASH . ".luarocks", $out, $ret);
+// 		$echolog[] = $out;
+	} else {
+		exec("rm -rfv " . LUA_DIR . "", $out, $ret);
+		$echolog[] = $out;
+		exec("rm -rfv " . __DIR__ . SLASH . LUA_PID . "", $out, $ret);	
+		$echolog[] = $out;
+		exec("rm -rfv " .  __DIR__ . SLASH . LUA_OUT . "", $out, $ret);	
+		$echolog[] = $out;
+// 		exec("rm -rfv " . __DIR__ . SLASH . ".luarocks", $out, $ret);
+// 		$echolog[] = $out;
+// 		exec("rm -rfv node_modules", $out, $ret);
+// 		$echolog[] = $out;
+	}		
 	$echolog[] = $ret === 0 ? "Done." : "Failed. Error: $ret";
 }
 
