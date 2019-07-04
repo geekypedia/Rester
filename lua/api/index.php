@@ -85,6 +85,15 @@ function download_zip_extract($url, $filename){
     return $echolog;
 }
 
+function exec_bg($cmd, &$out, &$ret) {
+	if(substr(strtoupper(php_uname()), 0, 3) == "WIN"){
+	 return pclose(popen("start /B ". $cmd, "r")); 
+	}else {
+	 //return exec($cmd . " > /dev/null &"); 
+	 return exec($cmd, $out, $ret); 
+	}
+}
+
 $echolog[] = "";
 
 define("REL_PATH", "../.."); //prod
@@ -349,9 +358,16 @@ function lua_start($file) {
 	$sub = substr($file, $pos + $startlen);
 	$displayFile = "{{WORKSPACE}}" . $sub;
 	$echolog[] = "Starting: lua $displayFile";
-	$cmd_exec = "PORT=" . LUA_PORT . " " . LUA_DIR  . SLASH . BINROOT . SLASH . LUA . " $file >" . LUA_OUT . " 2>&1 & echo $!";
+	//$cmd_exec = "PORT=" . LUA_PORT . " " . LUA_DIR  . SLASH . BINROOT . SLASH . LUA . " $file >" . LUA_OUT . " 2>&1 & echo $!";
 	//$echolog[] = $cmd_exec;
-	$lua_pid = exec($cmd_exec);
+	//$lua_pid = exec($cmd_exec);
+	$SETVAR = (LUA_OS == 'Windows') ? "set " : "";
+	$SETSEP = (LUA_OS == 'Windows') ? "&& " : " ";
+	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " > /dev/null 2>&1 & echo $!";
+	$file = str_replace("/", SLASH, $file);
+	$startcmd = $SETVAR ."PORT=" . LUA_PORT . $SETSEP . LUA_DIR . SLASH . BINROOT . SLASH . LUA . " $file > " . LUA_OUT . $LINTRAIL;
+	$lua_pid = exec_bg($startcmd, $out, $ret);
+	
 	if($lua_pid > 0){ 
 		$echolog[] = "Done. PID=$lua_pid"; 
 	}
@@ -391,23 +407,20 @@ function luvit_start($file) {
 
 	$SETVAR = (LUA_OS == 'Windows') ? "set " : "";
 	$SETSEP = (LUA_OS == 'Windows') ? "&& " : " ";
-	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " 2>&1 & echo $!";
+	$LINTRAIL = (LUA_OS == 'Windows') ? "" : " > /dev/null 2>&1 & echo $!";
 	$file = str_replace("/", SLASH, $file);
 	$startcmd = $SETVAR ."PORT=" . LUA_PORT . $SETSEP . LUA_DIR . SLASH . BINROOT . SLASH . "luvit" . " $file > " . LUA_OUT . $LINTRAIL;
-	$lua_pid = exec($startcmd);
-		
+	$lua_pid = exec_bg($startcmd, $out, $ret);
 	
 	if($lua_pid > 0){ 
 		$echolog[] = "Done. PID=$lua_pid"; 
-		//$echolog[] = $out; 
 	}
 	else {
 		lua_error();
 		$echolog[] = "Failed.";
-		//$echolog[] = $out;
 	}
 	file_put_contents(LUA_PID, $lua_pid, LOCK_EX);
-	sleep(3); //Wait for lua to spin up
+	sleep(2); //Wait for lua to spin up
 	$echolog[] = file_get_contents(LUA_OUT);
 }
 
@@ -425,13 +438,13 @@ function lua_stop() {
 		return;
 	}
 	$echolog[] = "Stopping Lua with PID=$lua_pid";
-	$ret = -1;
-	exec("kill $lua_pid", $out, $ret);
+	exec("kill $lua_pid > /dev/null 2>&1 & echo $!", $out, $ret);
+	//$echolog[] = $out;
 	if($ret === 0){
-		$echolog[] = $out;
+		$echolog[] = "Done";
 	} else {
 		lua_error();
-		//$echolog[] = "Failed. Error: $ret";
+		$echolog[] = "Failed. Error: $ret";
 	}
 	file_put_contents(LUA_PID, '', LOCK_EX);
 }
