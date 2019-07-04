@@ -197,7 +197,13 @@ function node_install() {
 	$unzipCommand = NODE_OS == "win" ? __DIR__ . SLASH .  "unzip.bat" : "tar -xzf";
 	$moveCommand = NODE_OS == "win" ? "move" : "mv";
 	$touchCommand = NODE_OS == "win" ? "type nul >" : "touch";
-	$linuxPostfix = NODE_OS == "win" ? "" : " -c node 2>&1";
+	$linuxPostfix = NODE_OS == "win" ? "" : " -C node 2>&1";
+
+
+	if(!file_exists(__DIR__ . SLASH . "node")){
+		exec("mkdir " . __DIR__ . SLASH . "node", $out, $ret);
+		$echolog[] = $out;
+	}
 
 	$cmd1 = $unzipCommand . " " . __DIR__ . SLASH . NODE_FILE . $linuxPostfix;
 	$cmd2 = $moveCommand . " " . __DIR__ . SLASH . "node" . SLASH . NODE_FILE_WOEXT . " " . NODE_DIR;
