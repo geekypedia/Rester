@@ -96,9 +96,19 @@ You can use the following endpoints to use the system.
 Prerequisites
 -----
 
-You need PHP 5.4+ to run the application. You will also need the have the access to a MySQL server database. You can run the following commands to make sure all php dependencies are taken care of. The following commands use PHP 7.0. You can modify them to match your version.
+You need PHP 5.4+ to run the application. You will also need the have the access to a MySQL server database. You can run the following commands to make sure all php dependencies are taken care of. 
 
-`sudo apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-zip php7.0-curl`
+Make sure your APT cache is upto date
+`sudo apt-get update`
+
+Install the defaults
+`sudo apt-get install -y php php-cli php-common php-mbstring php-gd php-intl php-xml php-mysql php-zip php-curl php-mcrypt`
+
+OR Install using specific version. For example, the below commands target PHP 7.0. You can modify them to match your version.
+
+`sudo apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-zip php7.0-curl php7.0-mcrypt`
+
+If you are getting any error in any of the packages, make sure you correct them before proceeding.
 
 If you wish to deploy it to Apache server, then you need to make sure that you run the follwing commands.
 
