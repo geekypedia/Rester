@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
 
     <style type="text/css">
+        /* FLEX */
         body,
         html {
             width: 100%;
@@ -29,7 +30,7 @@
             padding: 0;
         }
 
-
+        /* DRAG DROP */
         .c-clickable {
             cursor: pointer;
         }
@@ -37,6 +38,154 @@
         .c-draggable {
             cursor: move;
         }
+
+        /* FONT PANEL */
+
+        body {
+            /* font-size: 22px; */
+        }
+
+        .sm-icons {
+            padding: 0;
+            margin-left: -2px;
+            list-style-type: none;
+        }
+
+        /* Clearfix */
+        .sm-icons:before,
+        .sm-icons:after {
+            display: table;
+            content: " ";
+        }
+
+        .sm-icons:after {
+            clear: both
+        }
+
+        .sm-icons li {
+            float: left;
+            margin-left: 2px;
+        }
+
+        .fa-custom {
+            display: inline-block;
+            overflow: hidden;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            font-size: 36px;
+            /* line-height: 28px; */
+        }
+
+        .fa-custom-blank {
+            display: inline-block;
+            overflow: hidden;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            color: black;
+            background-color: white;
+            position: relative;
+            font-size: 36px;
+            /* line-height: 28px; */
+        }
+
+
+        .bg-black {
+            background-color: black;
+        }
+
+        .bg-grey {
+            background-color: grey;
+        }
+
+        .bg-red {
+            background-color: #C92228;
+        }
+
+        .bg-blue {
+            background-color: #3b5998;
+        }
+
+        .bg-purple {
+            background-color: purple;
+        }
+
+        .bg-green {
+            background-color: green;
+        }
+
+        .bg-violet {
+            background-color: violet;
+        }
+
+        .bg-orange {
+            background-color: orangered;
+        }
+
+        .bg-darkblue {
+            background-color: darkblue;
+        }
+
+        .bg-grey {
+            background-color: darkgrey;
+        }
+
+        .bg-maroon {
+            background-color: maroon;
+        }
+
+        .bg-darkgreen {
+            background-color: darkgreen;
+        }
+
+        .bg-darkcyan {
+            background-color: darkcyan;
+        }
+
+        .bg-darkslateblue {
+            background-color: darkslateblue;
+        }
+
+        .bg-darkslategray {
+            background-color: darkslategray;
+        }
+
+        .bg-darkslategrey {
+            background-color: darkslategrey;
+        }
+
+        .bg-fb {
+            background-color: #3b5998;
+        }
+
+        .bg-tw {
+            background-color: #00a0d1;
+        }
+
+        .bg-li {
+            background-color: #4875B4;
+        }
+
+        .bg-insta {
+            background-color: #3F729B;
+            /*background-color: #517fa4;*/
+        }
+
+        .bg-yt {
+            background-color: #c4302b;
+        }
+
+        .bg-gp {
+            background-color: #d34836;
+        }
+
+        .bg-sk {
+            background-color: #12A5F4;
+        }
+
 
 
         /* FLOATING SIDE MENU */
@@ -50,7 +199,8 @@
             top: 0px;
             left: 0px;
             text-align: center;
-            padding: 8px 8px 8px 8px;
+            /* padding: 8px 8px 8px 8px; */
+            padding: 2px 2px 2px 2px;
             background-color: white;
             /* CORNER ROUNDING */
             -moz-border-radius: 0px 0px 0px 0px;
@@ -58,7 +208,7 @@
             border-radius: 0px 0px 0px 0px;
             /* BORDER */
             border: solid #000000;
-            border-width: 1px 1px 1px 1px;
+            border-width: 0px 0px 0px 0px;
             /* NOTE: BORDERs ABOVE ARE | top | right | bottom | left */
         }
 
@@ -88,7 +238,11 @@
         /***************
 		END Media Queries
         ***************/
+
+
+        .menuitem {}
     </style>
+
 
 
     <!-- <script type="text/javascript" src="floating-j-menu/jquery-1.11.3.min.js"></script> -->
@@ -99,7 +253,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
         integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
     <!-- <link rel="stylesheet" href="floating-j-menu/floating-j-menu.css" type="text/css"> -->
     <!-- <script type="text/javascript" src="floating-j-menu/floating-j-menu.js"></script> -->
@@ -115,11 +270,11 @@
                     $('.menuitem').hide();
                     if (hvStatus === false) {
                         $('#menuJF').css('width', '40');
-                    }                    
+                    }
                     toggleStatus = false;
                 } else {
                     if (hvStatus === false) {
-                        $('#menuJF').css('width', '650');
+                        $('#menuJF').css('width', '800');
                     }
                     $('.menuitem').show();
                     toggleStatus = true;
@@ -130,7 +285,7 @@
 
         hv = function () {
             if (hvStatus === true) {
-                $('#menuJF').css('width', '650');
+                $('#menuJF').css('width', '800');
                 $('#menuJFhv > i').removeClass('fa-arrows-alt-h');
                 $('#menuJFhv > i').addClass('fa-arrows-alt-v');
                 hvStatus = false;
@@ -196,7 +351,14 @@
                 e.preventDefault();
                 $(this).toggleClass('hover_effect');
             });
-        });        
+        });       
+        
+        
+
+        $(function(){
+            $('#menuJFtoggle').click();
+            $('#menuJFhv').click();
+        });
     </script>
 
 </head>
@@ -207,63 +369,67 @@
     <div class="row-container">
         <div id="menuJF" class="printhide">
             <div id="menu-HT">
+               
                 <a id="menuJFtoggle" onclick="toggle()" class="c-clickable">
-                    <i class="fas fa-bars fa-2x"></i>
+                    <i class="fas fa-bars fa-custom-blank fa-2x"></i>
                 </a>
                 <a id="menuJFheader" class="c-draggable menuitem">
-                    <i class="fas fa-arrows-alt fa-2x"></i>
+                    <i class="fas fa-arrows-alt fa-custom-blank fa-2x"></i>
                 </a>
+
                 <a id="menuJFhv" onclick="hv()" class="c-clickable menuitem">
-                    <i class="fas fa-arrows-alt-h fa-2x"></i>
+                    <i class="fas fa-arrows-alt-h fa-custom-blank fa-2x"></i>
                 </a>
 
                 <a href="../ide/workspace/web/" target="frameContainer" class="menuitem" title="Your Application">
-                    <i class="fab fa-angular fa-2x"></i>
+                    <i class="fab fa-angular fa-custom bg-red fa-2x"></i>
                 </a>
+
                 <a href="../ide/workspace/web/examples/" target="frameContainer" class="menuitem" title="Examples">
-                    <i class="fab fa-app-store fa-2x"></i>
+                    <i class="fab fa-app-store fa-custom bg-blue fa-2x"></i>
                 </a>
+
                 <a href="../api/docs/" target="_blank" class="menuitem" class="success" title="API Documentation">
-                    <i class="fas fa-book fa-2x"></i>
+                    <i class="fas fa-book fa-custom bg-green fa-2x"></i>
                 </a>
                 <a href="../api/test/" target="frameContainer" class="menuitem" title="API Testing">
-                    <i class="fas fa-exchange-alt fa-2x"></i>
+                    <i class="fas fa-exchange-alt fa-custom bg-orange fa-2x"></i>
                 </a>
                 <a href="../api/configure/" target="frameContainer" class="menuitem" title="API Configuration">
-                    <i class="fas fa-cog fa-2x"></i>
+                    <i class="fas fa-cog fa-custom bg-darkslategray fa-2x"></i>
                 </a>
 
                 <a href="../ide/" target="frameContainer" class="menuitem" title="Codiad Web IDE">
-                    <i class="fas fa-laptop-code fa-2x"></i>
+                    <i class="fas fa-laptop-code fa-custom bg-black fa-2x"></i>
                 </a>
                 <a href="../editor/" target="frameContainer" class="menuitem" title="Code Web IDE">
-                    <i class="fas fa-code fa-2x"></i>
+                    <i class="fas fa-code fa-custom bg-purple fa-2x"></i>
                 </a>
                 <a href="../fm/" target="frameContainer" class="menuitem" title="File Manager">
-                    <i class="fas fa-folder-open fa-2x"></i>
+                    <i class="fas fa-folder-open fa-custom bg-tw fa-2x"></i>
                 </a>
                 <a href="../db/" target="_blank" class="menuitem" title="DB Manager">
-                    <i class="fas fa-database fa-2x"></i>
+                    <i class="fas fa-database fa-custom bg-darkslateblue fa-2x"></i>
                 </a>
                 <a href="../builder/" target="frameContainer" class="menuitem" title="UI Builder">
-                    <i class="fab fa-html5 fa-2x"></i>
+                    <i class="fab fa-html5 fa-custom bg-orange fa-2x"></i>
                 </a>
 
                 <a href="../node/" target="frameContainer" class="menuitem" title="Node.JS Administration">
-                    <i class="fab fa-node fa-2x"></i>
+                    <i class="fab fa-node fa-custom bg-darkgreen fa-2x"></i>
                 </a>
                 <a href="../python/" target="frameContainer" class="menuitem" title="Python Administration">
-                    <i class="fab fa-python fa-2x"></i>
+                    <i class="fab fa-python fa-custom bg-darkblue fa-2x"></i>
                 </a>
                 <a href="../lua/" target="frameContainer" class="menuitem" title="Lua Administration">
-                    <i class="fas fa-cogs fa-2x"></i>
+                    <i class="fas fa-cogs fa-custom bg-red fa-2x"></i>
                 </a>
                 <a href="../terminal/" target="frameContainer" class="menuitem" title="Web based Terminal">
-                    <i class="fas fa-terminal fa-2x"></i>
+                    <i class="fas fa-terminal fa-custom bg-black fa-2x"></i>
                 </a>
                 <a href="https://github.com/geekypedia/pRESTige/blob/master/README.md#introduction" target="_blank"
                     class="menuitem" title="Online Documentation">
-                    <i class="fas fa-book fa-2x"></i>
+                    <i class="fas fa-book fa-custom bg-blue fa-2x"></i>
                 </a>
             </div>
         </div>
