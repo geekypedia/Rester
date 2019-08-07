@@ -12,7 +12,7 @@ $failure = array("status" => "failed");
 try{
     $db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
     
-    $query = file_get_contents("seed.sql");
+    $query = file_get_contents("seed.sql.txt");
     
     $stmt = $db->prepare($query);
     
