@@ -104,15 +104,15 @@ Make sure your APT cache is upto date
 Install the defaults
 `sudo apt-get install -y php php-cli php-common php-mbstring php-gd php-intl php-xml php-mysql php-zip php-curl php-mcrypt`
 
-OR Install using specific version. For example, the below commands target PHP 7.0. You can modify them to match your version.
+OR Install using specific version. For example, the below commands target PHP 7.2. You can modify them to match your version.
 
-`sudo apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-zip php7.0-curl php7.0-mcrypt`
+`sudo apt-get install -y php7.2 php7.2-cli php7.2-common php7.2-mbstring php7.2-gd php7.2-intl php7.2-xml php7.2-mysql php7.2-zip php7.2-curl php7.2-mcrypt`
 
 If you are getting any error in any of the packages, make sure you correct them before proceeding.
 
 If you wish to deploy it to Apache server, then you need to make sure that you run the follwing commands.
 
-`sudo apt-get install -y libapache2-mod-php7.0 `
+`sudo apt-get install -y libapache2-mod-php7.2 `
 
 How do I use pRESTige?
 -----
