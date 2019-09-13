@@ -15,7 +15,7 @@ if (!function_exists('getallheaders')) {
 }
 
 //Custom Functions
-function url_get($url, $params = null, $headers = null){
+function url_get($url, $params = null, $headers = null, $unsafe = false){
     if(function_exists('curl_init')){
     	$ch = curl_init();
     
@@ -23,7 +23,11 @@ function url_get($url, $params = null, $headers = null){
     	if($params != null) curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($params));
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    
+        if($unsafe){
+	    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    	}
+
     	$server_output = curl_exec ($ch);
 
     	if(empty($server_output)){
@@ -40,7 +44,7 @@ function url_get($url, $params = null, $headers = null){
 	return $server_output;
 }
 
-function url_post($url, $payload = null, $headers = null){
+function url_post($url, $payload = null, $headers = null, $unsafe = false){
     if(function_exists('curl_init')){
 
     	$ch = curl_init();
@@ -50,6 +54,10 @@ function url_post($url, $payload = null, $headers = null){
     	if($payload != null) curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     	if($headers != null) curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        if($unsafe){
+	    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    	}
 
     	$server_output = curl_exec ($ch);
 
