@@ -1612,12 +1612,12 @@ class ResterController {
 
 //Helper Functions
 
-function getURL($url, $params = null, $headers = null){
-	return url_get($url, $params, $headers);
+function getURL($url, $params = null, $headers = null, $unsafe = false){
+	return url_get($url, $params, $headers, $unsafe);
 }
 
-function postURL($url, $payload = null, $headers = null){
-	return url_post($url, $payload, $headers);
+function postURL($url, $payload = null, $headers = null, $unsafe = false){
+	return url_post($url, $payload, $headers, $unsafe);
 }
 
 function prepareMail($template, $data){
