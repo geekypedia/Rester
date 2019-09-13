@@ -494,13 +494,13 @@ If you set $throw_exception = true, then it will throw exception in case of erro
 
 HTTP_ERROR. Exmaple 400, 404, 405, 422, 500. With optional message.
 
-#### getURL($url, $params = null, $headers = null)
+#### getURL($url, $params = null, $headers = null, $unsafe = false)
 
-Get response from any 3rd party URL. Useful for integrating with various 3rd party platforms.
+Get response from any 3rd party URL. Useful for integrating with various 3rd party platforms. Set $unsafe to true if you wish to call APIs with self-signed certificate. If you are calling an API and want to parse the result as an object, use json_decode($return_value, true).
 
-#### postURL($url, $payload = null, $headers = null)
+#### postURL($url, $payload = null, $headers = null, $unsafe = false)
 
-Post data to any 3rd party URL. Useful for integrating with various 3rd party platforms.
+Post data to any 3rd party URL. Useful for integrating with various 3rd party platforms. Set $unsafe to true if you wish to call APIs with self-signed certificate. If you are calling an API and want to parse the result as an object, use json_decode($return_value, true).
 
 #### prepareMail($template, $data)
 
