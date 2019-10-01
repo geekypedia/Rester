@@ -1,6 +1,18 @@
 Setup
 -----
 
+####From UI
+1. Open the Launcher: <a href="http://localhost:8080/launch" target="_blank">http://localhost:8080/launch</a> 
+2. Click on 'API Configuration'
+3. Provide username and password (Default - admin/admin. It can be changed by logging into 'Code Editor' from the Launcher).
+4. Fill in Database Connection information. i.e. Host, User, Password and Database
+5. Tick the following options - 'Default File API', 'Enable Authentication' and 'Enable SaaS Mode'. Hit Submit Button
+6. Go to the API configuration again and find a section named 'Database changes needed to run Auth and SaaS mode, and File APIs:'. Hit Execute button.
+If you get any error while executing the button, then you will need to follow step 5-8 from the 'From Code (Manual)' section below.
+7. Right-click the 'examples' folder in the IDE and click on 'preview' OR directy hit the following URL in your browser: <a href="http://localhost:8080/ide/workspace/web/examples" target="_blank">http://localhost:8080/ide/workspace/web/examples</a> 
+
+
+####From Code (Manual)
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
