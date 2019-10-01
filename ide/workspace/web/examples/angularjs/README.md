@@ -1,7 +1,8 @@
 Setup
 -----
 
-####From UI
+#### From UI
+
 1. Open the Launcher: <a href="http://localhost:8080/launch" target="_blank">http://localhost:8080/launch</a> 
 2. Click on 'API Configuration'
 3. Provide username and password (Default - admin/admin. It can be changed by logging into 'Code Editor' from the Launcher).
@@ -12,7 +13,8 @@ If you get any error while executing the button, then you will need to follow st
 7. Right-click the 'examples' folder in the IDE and click on 'preview' OR directy hit the following URL in your browser: <a href="http://localhost:8080/ide/workspace/web/examples" target="_blank">http://localhost:8080/ide/workspace/web/examples</a> 
 
 
-####From Code (Manual)
+#### From Code (Manual)
+
 1. Open web based code editor: <a href="http://localhost:8080/ide" target="_blank">http://localhost:8080/ide</a> 
 2. Load 'api' project
 3. Open 'index.php'
