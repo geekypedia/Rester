@@ -423,6 +423,8 @@ How do I create a custom API?
 3. Create a .php file under this project. You can keep it anywhere (direcly in project root folder or within a subfolder).
 4. Register a new custom API as shown in the example below.
 
+Note: It is mandatory to write any custom APIs with pRESTige specific code in 'api' project inside the Code Editor. It is designed that way. pRESTige automatically picks up any custom API written inside the 'api' project. So be careful in what you write to avoid 500 Internal Server Errors. It doesn't matter what name you give to your PHP file or whether you put it in a subfolder inside the 'api' project. This gives you flexibility of arranging your code. For some reason, you need to write a RAW PHP file to do something outside the scope of pRESTige, create another project inside the Code Editor and then put your PHP files there. Do not use the 'api' project for any non pRESTige code, otherwise you might get Internal Server Error while calling your APIs.
+
 ```php
 $prestige->register("GET", "hello", "world", function($params=null){
 	global $prestige;
@@ -438,6 +440,8 @@ You can access GET or POST parameters with $params['parameter_name'].
 $prestige Operations
 -----
 $prestige is a global variable that references the core API engine. You can use it to write middleware, interceptors and custom REST APIs. It has got some useful methods available for routine operations.
+
+Note: These operations will only work under the 'api' project in the Code Editor.
 
 #### register($method, $route, $path, $handler, $required_parameters, $description)
 
