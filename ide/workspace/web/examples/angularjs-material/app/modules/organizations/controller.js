@@ -11,7 +11,7 @@ app.controller('organizationsControllerExtension', function($scope, $controller,
         //$scope.newSingle(function(){
             $scope.data.single.org_secret = H.getUUID();  
             $scope.data.single.license = 'basic';
-            $scope.data.single.validity = '0000-00-00 00:00:00';
+            $scope.data.single.validity = '0000-01-01 00:00:00';
         //})
     };
     
