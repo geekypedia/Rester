@@ -26,9 +26,17 @@
     <!--<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour-standalone.js" 
+            integrity="sha256-1oQqWoYRKhIK87UIfRmlDObEHrO1rj2E3lv7cCSV4y0=" 
+            crossorigin="anonymous"
+            ></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
         id="bootstrap-css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour-standalone.css" 
+            integrity="sha256-OdRIC3/VFxsszf6c8mx8eFrhtR3Ct8sxVXxZwonSUdg=" 
+            crossorigin="anonymous"
+            />
 
     <!-- Loader CSS -->
     <style>
@@ -365,6 +373,23 @@
             position: absolute;
             z-index: 1000;
         }
+
+        .floating-button{
+            width:80px;
+            height: 80px;
+            font-size: x-small;
+            font-weight: bold;
+            background: cornflowerblue;
+            color:#FFF;
+            padding:5px;
+            margin: 50px;
+            text-align:center;            
+            right:0;
+            bottom:0;
+            position:fixed; 
+            float:right;
+            border-radius: 50%;
+        }
     </style>
     <script>
         $(function () {
@@ -384,6 +409,95 @@
                 $('.iconpanel').css("margin-left", 0 - (width / 6));
                 $('.iconpanel').css("margin-top", 0 - (height / 3));
 
+                if(localStorage.getItem('tour_end') == "yes"){
+                    $('#relaunch-tour').show();
+                }
+
+                // Instance the tour
+                tour = new Tour({
+                steps: [
+                {
+                    element: "#db-manager",
+                    title: "Step #1: Database Administration - Create a MySQL Database",
+                    content: "If you have a MySQL server installed in your environment, you can manage everything from this Database Administration tool. <br/> <br/>You can create a database, user, tables, views, stored procedures etc. This is a light weight utility and will be very handy throughout the course of your project. <br/> <br/><b>If you already have an existing connection string to your database, please directly proceed with the next step - API Configuration.</b>"
+                },
+                {
+                    element: "#api-config",
+                    title: "Step #2: API Configuration - Connect this instance of pRESTige to your database",
+                    content: "pRESTige does its magic by automatically transforming your database into a full-fledged backend server. <br/> <br/>So now it's time to connect it to the database that you created in Step #1.<br/> <br/>You will be asked for your Administrative username and password.<br/> <br/>Default is <b>admin/admin</b>, but you can change it by going to the <i>Code Editor</i> and change it from the <i>Account -> Password</i> section in the sidebar on the right hand side in the Code Editor."
+                },
+                {
+                    element: "#api-docs",
+                    title: "Step #3: API Documentation - Experience the Magic!",
+                    content: "See your database tables (along with its foreign key references) get turned into a full-fledged RESTful API server. And not just the tables, also views and stored procedures! <br/> <br/>All of these RESTful APIs are conforming to the Open API standards with full documentation automatically generated! <br/> <br/><b>O M G!</b><br/><br/><i>Note:<br/>Of course, if you created an empty database in Step #1, then you won't see much, so go back to the Database Administration tool, add a few tables and come back here!</i>"
+                },
+                {
+                    element: "#code-editor",
+                    title: "A full-fledged Code Editor right within your browser!",
+                    content: "Now that you have your backend ready probably just withing 5 minutes, and you are already happy! Get ready for the next surprise. <br/><br/>Launch the Code Editor with the default credentials <b>admin/admin</b>, and start building awesome applications right from your browser!<br/><br/>Yes, you can use AngularJS, VueJS, Plain old BootStrap and jQuery, anything that you like!"
+                },
+                {
+                    element: "#code-editor-new",
+                    title: "Auto-complete experience similar to Visual Studio Code right within your browser!",
+                    content: "And if you are married to Visual Studio Code, don't get disheartened by the previous code editor! This new editor is like running your favorite VSCode right within the browser!"
+                },
+                {
+                    element: "#html-builder",
+                    title: "HTML5 Builder",
+                    content: "Don't know how to design HTML? No worries! Drag and Drop UI Builder right at your doorstep!"
+                },
+                {
+                    element: "#online-terminal",
+                    title: "Online Terminal",
+                    content: "Experience the flexibility of managing your environment using your beloved linux terminal! Right in the browser!"
+                },
+                {
+                    element: "#file-manager",
+                    title: "File Manager",
+                    content: "Do the advanced file management in your environment, from the browser!"
+                },
+                {
+                    element: "#api-test",
+                    title: "API Testing",
+                    content: "Advanced API Testing, if you are not satisfied with the testing capabilities built-in the API Documentation section!"
+                },
+                {
+                    element: "#node-config",
+                    title: "Node.JS in Shared Hosting",
+                    content: "You haven't seen anything like this so far! Even if your shared hosting provider only allows PHP and does not allow Node.JS, you can still run Node.JS! <br/><br/><b>Say, O M G!</b>"
+                },
+                {
+                    element: "#python-config",
+                    title: "Python in Shared Hosting",
+                    content: "You haven't seen anything like this so far! Even if your shared hosting provider only allows PHP and does not allow Python, you can still run Python! <br/><br/><b>Say, O M G again!</b>"
+                },
+                {
+                    element: "#example-apps",
+                    title: "Some front-end examples",
+                    content: "To understand how easily you can utilize the full potentioal of pRESTige magical backend. You can access the source code from the <b>Code Editor</b>"
+                },
+                {
+                    element: "#online-docs",
+                    title: "Thank You!",
+                    content: "Thank you for coming this far! If you wish to study pRESTige magic tricks in-depth, visit the online documentation."
+                }
+
+                ],
+                onEnd: function(){
+                    $('#relaunch-tour').show();
+                }});
+
+                // Initialize the tour
+                tour.init();
+
+                // Start the tour
+                tour.start();
+
+                relaunchTour = function(){
+                    $('#relaunch-tour').hide();
+                    tour.restart();
+                };
+
             }, 1000);
         });
     </script>
@@ -401,26 +515,26 @@
             <div class="row">
                 <div class="col-lg-12">
                     <p>
-                        <a href="../ide/workspace/web/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="your-app" href="../ide/workspace/web/" target="_blank" class="btn btn-sq btn-primary"
                             >
                             <i class="fa fa-adn fa-5x"></i><br />
                             Your <br>Application
                         </a>
-                        <a href="../ide/workspace/web/examples/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="example-apps" href="../ide/workspace/web/examples/" target="_blank" class="btn btn-sq btn-primary"
                             style="background:chocolate; border: chocolate;"
                             >
                             <i class="fa fa-adn fa-5x"></i><br />
                             Example <br>Applications
                         </a>
-                        <a href="../api/docs/" target="_blank" class="btn btn-sq btn-success">
+                        <a id="api-docs" href="../api/docs/" target="_blank" class="btn btn-sq btn-success">
                             <i class="fa fa-file-text-o fa-5x"></i><br />
                             API <br>Documentation
                         </a>
-                        <a href="../api/test/" target="_blank" class="btn btn-sq btn-danger">
+                        <a id="api-test" href="../api/test/" target="_blank" class="btn btn-sq btn-danger">
                             <i class="fa fa-exchange fa-5x"></i><br />
                             API <br>Testing
                         </a>
-                        <a href="../api/configure/" target="_blank" class="btn btn-sq btn-danger"
+                        <a id="api-config" href="../api/configure/" target="_blank" class="btn btn-sq btn-danger"
                             style="background:grey; border:grey;">
                             <i class="fa fa-gear fa-5x"></i><br />
                             API <br>Configuration
@@ -431,27 +545,27 @@
             <div class="row">
                 <div class="col-lg-12">
                     <p>
-                        <a href="../builder/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="html-builder" href="../builder/" target="_blank" class="btn btn-sq btn-primary"
                             style="background:orangered; border: orangered;">
                             <i class="fa fa-html5 fa-5x"></i><br />
                             HTML5 <br>Builder
                         </a>
-                        <a href="../ide/" target="_blank" class="btn btn-sq btn-danger"
+                        <a id="code-editor" href="../ide/" target="_blank" class="btn btn-sq btn-danger"
                             style="background:black; border:black;">
                             <i class="fa fa-file-code-o fa-5x"></i><br />
                             Code <br>Editor
                         </a>
-                        <a href="../editor/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="code-editor-new" href="../editor/" target="_blank" class="btn btn-sq btn-primary"
                             style="background:purple; border:purple;">
                             <i class="fa fa-file-code-o fa-5x"></i><br />
                             New Code <br>Editor
                         </a>
-                        <a href="../db/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="db-manager" href="../db/" target="_blank" class="btn btn-sq btn-primary"
                             style="background:blue; border: blue;">
                             <i class="fa fa-database fa-5x"></i><br />
                             Database <br>Administration
                         </a>
-                        <a href="../fm/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="file-manager" href="../fm/" target="_blank" class="btn btn-sq btn-primary"
                             style="background:teal; border: teal;">
                             <i class="fa fa-files-o fa-5x"></i><br />
                             File <br>Manager
@@ -463,27 +577,27 @@
                 <div class="col-lg-12">
                     <p>
 
-                        <a href="../node/" target="_blank" class="btn btn-sq btn-danger"
+                        <a id="node-config" href="../node/" target="_blank" class="btn btn-sq btn-danger"
                             style="background:darkgreen; border:darkgreen;">
                             <i class="fa fa-gear fa-5x"></i><br />
                             Node.JS <br>Administration
                         </a>
-                        <a href="../python/" target="_blank" class="btn btn-sq btn-danger"
+                        <a id="python-config" href="../python/" target="_blank" class="btn btn-sq btn-danger"
                             style="background:darkslateblue; border:darkslateblue;">
                             <i class="fa fa-gear fa-5x"></i><br />
                             Python <br>Administration
                         </a>
-                        <a href="../lua/" target="_blank" class="btn btn-sq btn-danger"
+                        <a id="lua-config" href="../lua/" target="_blank" class="btn btn-sq btn-danger"
                             style="background:darkblue; border:darkblue;">
                             <i class="fa fa-gear fa-5x"></i><br />
                             Lua <br>Administration
                         </a>
-                        <a href="../terminal/" target="_blank" class="btn btn-sq btn-primary"
+                        <a id="online-terminal" href="../terminal/" target="_blank" class="btn btn-sq btn-primary"
                             style="background:darkslategray; border:darkslategray;">
                             <i class="fa fa-terminal fa-5x"></i><br />
                             Online <br>Terminal
                         </a>
-                        <a href="https://github.com/geekypedia/pRESTige/blob/master/README.md#introduction"
+                        <a id="online-docs" href="https://github.com/geekypedia/pRESTige/blob/master/README.md#introduction"
                             target="_blank" class="btn btn-sq btn-primary"
                             style="background:brown; border:brown;">
                             <i class="fa fa-book fa-5x"></i><br />
@@ -493,6 +607,10 @@
                 </div>
             </div>
         </div>
+        <div>
+                <button type="button" id="relaunch-tour" style="display: none; z-index: 10000;" class="floating-button" onclick="relaunchTour()">RELAUNCH TOUR</button>
+        </div>
+
     </div>
 
 </body>
