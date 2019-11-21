@@ -50,5 +50,5 @@ file_put_contents($keyFile,$key);
 //For debugging purpose
 //file_put_contents($configFile . ".json",$config);
 
-header("Location: ../");
+header("Location: ./");
 ?>

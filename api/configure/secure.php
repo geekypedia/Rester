@@ -85,9 +85,19 @@ if(file_exists($configPath)){
 		
 		</script>
 		
+  <!-- <link rel="shortcut icon" href="../../ide/workspace/web/examples/angularjs/images/favicon.ico" />     -->
+  <link rel="shortcut icon" href="./favicon.ico" />    
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour-standalone.js" 
+            integrity="sha256-1oQqWoYRKhIK87UIfRmlDObEHrO1rj2E3lv7cCSV4y0=" 
+            crossorigin="anonymous"
+            ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour-standalone.css" 
+            integrity="sha256-OdRIC3/VFxsszf6c8mx8eFrhtR3Ct8sxVXxZwonSUdg=" 
+            crossorigin="anonymous"
+            />
 		
 		
 		<style type="text/css">
@@ -116,6 +126,23 @@ if(file_exists($configPath)){
             .head-label{
             	text-decoration: underline;
             }
+
+			.floating-button{
+            width:80px;
+            height: 80px;
+            font-size: x-small;
+            font-weight: bold;
+            background: #337ab7;
+            color:#FFF;
+            padding:5px;
+            margin: 50px;
+            text-align:center;            
+            right:0;
+            bottom:0;
+            position:fixed; 
+            float:right;
+            border-radius: 50%;
+        	}			
             
 		</style>
 
@@ -167,6 +194,50 @@ if(file_exists($configPath)){
 			 	}
 			 }
 			 
+
+			 if(localStorage.getItem('tour_api_config_end') == "yes"){
+                    $('#relaunch-tour').show();
+                }
+
+			tour_api_config = new Tour({
+				name: "tour_api_config",
+                steps: [
+                {
+                    element: "#mysql-config",
+                    title: "Step #2.1: Provide connection to MySQL Database",
+                    content: "The most important step for pRESTige! <b>Without this step, there is no magic!</b> <br/><br/>Make sure you have access to a MySQL server/database and you have credentials for accessing the DB. Provide these credentials and the name of your database here."
+                },
+                {
+                    element: "#api-config",
+                    title: "Step #2.2: API Configuration",
+                    content: "pRESTige provides a lot of default APIs, such as the APIs for managing users, organizations. APIs for authentication (login), APIs for uploading file, etc. You can control these options from here."
+                },
+                {
+                    element: "#seed-config",
+                    title: "Before Step #2.2: API Configuration Prerequisites",
+                    content: "If you are enabling any modes in Step #2.2, do not forget to execute the following script"
+                },
+                {
+                    element: "#token-config",
+                    title: "After Step #2.2: Quick way to generate tokens/api_keys",
+                    content: "If you have enabled Auth/SaaS mode, you won't be able to explore APIs openly. You have to provide the api_key while even browsing the API documents, because with Auth mode, the APIs are secure. You can use the token generated below to use as the api_key."
+                }
+
+                ],
+                onEnd: function(){
+                    $('#relaunch-tour').show();
+                }});
+
+                // Initialize the tour
+                tour_api_config.init();
+
+                // Start the tour
+                tour_api_config.start();
+
+                relaunchTour = function(){
+                    $('#relaunch-tour').hide();
+                    tour_api_config.restart();
+                };
 			 
 
 		});
@@ -176,7 +247,7 @@ if(file_exists($configPath)){
 				 	if(config){
 				 		$.post('execute.php', config, function(r){
 				 				//$('#executionStatus').val(r.status);
-				 				$('#executionStatus').val("The script has been executed successfully! You will be able to use Auth Mode, SaaS mode and File APIs");
+				 				$('#executionStatus').html("The script has been executed successfully! You will be able to use Auth Mode, SaaS mode and File APIs");
 				 				$('#executionStatus').css("color", "green");
 				 		}).fail(function(r){
 				 			//$('#executionStatus').html(r.responseJSON.status);
@@ -209,7 +280,7 @@ if(file_exists($configPath)){
   <div class="panel-body">
   		
 		<form id='configForm' action="generate-config.php" method="post">
-			<div class="form-group col-md-12">
+			<div class="form-group col-md-12" id="mysql-config">
 				<label class="head-label">MySQL CONFIGURATION</label>
 			</div>
 		    <div class="form-group col-md-6">
@@ -228,8 +299,11 @@ if(file_exists($configPath)){
 		      <label for="database">Database:</label>
 		      <input type="text" class="form-control" id="database" placeholder="Enter database name" name="database" required>
 		    </div>
-		    
-			<div class="form-group col-md-12">
+		    <div class="form-group col-md-12">
+		    	<button type="submit" class="btn btn-primary">Submit</button>	
+		    </div>
+			<hr/>		    
+			<div class="form-group col-md-12" id="api-config">
 				<label class="head-label">API CONFIGURATION</label>
 			</div>
 		    <div class="form-group col-md-6">
@@ -268,7 +342,7 @@ if(file_exists($configPath)){
 		  </form>
 		  
 		  <hr/>
-		    <div class="form-group col-md-12">
+		    <div class="form-group col-md-12"  id="seed-config">
 		      <label for="sql_query">Database changes needed to run Auth and SaaS mode, and  File APIs:</label>
 		      <p>Make sure you run this script in your database.</p>
 		      <textarea type="text" columns=80 rows=10 class="form-control" id="sql_query" placeholder="" name="sql_query" disabled=disabled>
@@ -280,7 +354,7 @@ if(file_exists($configPath)){
 		    </div>
 		  <hr/>
 		    <div class="user-mode">
-		    	<div class="form-group col-md-12">
+		    	<div class="form-group col-md-12"  id="token-config">
 		    		<label>Get latest token needed to run APIs in Auth Mode:</label>
 		    	</div>
 		    	<div class="form-group col-md-6">
@@ -302,6 +376,9 @@ if(file_exists($configPath)){
 		    </div>
 		    
   </div>
+	<div>
+  		<button type="button" id="relaunch-tour" style="display: none; z-index: 10000;" class="floating-button" onclick="relaunchTour()">RELAUNCH TOUR</button>
+	</div>
 </div>
 </body>
 </html>
