@@ -792,6 +792,62 @@ Yes you can.
 
 Now you will be able to open files by just tapping on the filename on the explorer on the left hand side.
 
+Some more use cases / recipes
+-----
+Let's see some more use cases and recipes by example.
+
+#### Whenever someone submits their contacts details on my website, I want store it in the database. I also want to send an e-mail to that contact person, thanking him for visiting our site.
+
+1. Launch the pRESTige dashboard.
+2. Open the Database Administration tool, login with your DB credentials and create a table named contacts.
+```sql
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+```
+3. Open the Code Editor, and open the *api* project.
+4. Create a new php file named contacts_middleware.php and paste the following code. Modify the username, password and e-mail, etc.
+```php
+<?php
+
+// on means after. post means the POST API. contacts means the table named contacts. Meaning, whenever you call the POST api/contacts to create a new contact, pRESTige will automatically save that record in the contacts table. Once the record is saved, pRESTige will call the following method, where you can do operations such as sending e-mail, etc.
+function on_post_contacts2($data){
+	//refer to the global pRESTige object. This is the most important step.
+	global $prestige;
+	
+	//subject of the e-mail
+	$subject = "Thank you for contacting us!";
+	
+	//The template of the body of the e-mail that you are trying to send.
+	$template = "Hi <b>{{name}}</b>,<br/><br/>Thank you for showing interest in our product. One of our representative will get back to you shortly.<br/><br/>Regards,<br/>Product Support Team";
+	$body = $prestige->prepareMail($template, $data);
+	
+	//array of recepients. Don't forget, it is an array. So you can send the same e-mail to multiple people.
+	$to = [$data['email']];
+	
+	//from e-mail
+	$from = "YOUR E-MAIL";
+	
+	//smtp configuration
+	$smtp = array(
+			"host"=> "smtp.yourdomain.com",
+			"username"=> "YOUR USERNAME",
+			"password"=> "YOUR PASSWORD",
+			"proto"=> "tls", //you can use ssl, tls or empty string
+			"port"=> 587
+	);
+	
+	//send e-mail
+	$prestige->sendMail($from, $to, $subject, $body, $smtp);
+}
+
+?>
+```
+5. Now, go to the API Documentation, and find the POST /contacts API. Fill in the form, and Try out the API. Check your mailbox. Enjoy!
 
 Examples
 -----
