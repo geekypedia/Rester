@@ -852,7 +852,7 @@ function on_post_contacts($data){
 ### I would like to build an API to use with a form for accepting online job applications. But I would like to prevent applications being submitted from a mobile browser.
 
 1. Launch the pRESTige dashboard.
-2. Open the Database Administration tool, login with your DB credentials and create a table named contacts.
+2. Open the Database Administration tool, login with your DB credentials and create a table named applications.
 ```sql
 CREATE TABLE `applications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
