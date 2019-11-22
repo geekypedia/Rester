@@ -815,7 +815,7 @@ CREATE TABLE `contacts` (
 <?php
 
 // on means after. post means the POST API. contacts means the table named contacts. Meaning, whenever you call the POST api/contacts to create a new contact, pRESTige will automatically save that record in the contacts table. Once the record is saved, pRESTige will call the following method, where you can do operations such as sending e-mail, etc.
-function on_post_contacts2($data){
+function on_post_contacts($data){
 	//refer to the global pRESTige object. This is the most important step.
 	global $prestige;
 	
