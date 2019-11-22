@@ -796,7 +796,7 @@ Some more use cases / recipes
 -----
 Let's see some more use cases and recipes by example.
 
-#### Whenever someone submits their contacts details on my website, I want store it in the database. I also want to send an e-mail to that contact person, thanking him for visiting our site.
+### Whenever someone submits their contacts details on my website, I want store it in the database. I also want to send an e-mail to that contact person, thanking him for visiting our site.
 
 1. Launch the pRESTige dashboard.
 2. Open the Database Administration tool, login with your DB credentials and create a table named contacts.
@@ -848,6 +848,44 @@ function on_post_contacts($data){
 ?>
 ```
 5. Now, go to the API Documentation, and find the POST /contacts API. Fill in the form, and Try out the API. Check your mailbox. Enjoy!
+
+### I would like to build an API to use with a form for accepting online job applications. But I would like to prevent applications being submitted from a mobile browser.
+
+1. Launch the pRESTige dashboard.
+2. Open the Database Administration tool, login with your DB credentials and create a table named contacts.
+```sql
+CREATE TABLE `applications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `position_applied` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `total_experience` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+```
+3. Open the Code Editor, and open the *api* project.
+4. Create a new php file named applications_middleware.php and paste the following code. 
+```php
+<?php
+// function starts with before. post means the POST API. applications means the table named applications. Meaning, whenever you call the POST api/applications to create a new applications, pRESTige will automatically save that record in the applications table. But, before making the database entry, the following code will be executed. You can use it to check if the request is coming from mobile browser, and throw error.
+function before_post_applications($data){
+	//refer to the global pRESTige object. This is the most important step.
+	global $prestige;
+	
+	//Check if the request is from mobile device
+	if($prestige->requestIsMobile()){
+		//Generate an API error, with HTTP Status Code 403. 403 stands for 'Forbidden'. Meaning, you are not allowed.
+		$prestige->showError(403, "This request was generated from a mobile device, hence this operation is not permitted");
+	}
+	
+	//If you have reached here, you are running a desktop device, hence you can proceed. No need to write anything further. pRESTige will go ahead and save the record.
+}
+?>
+```
+5. Now, go to the API Documentation, and find the POST /applications API. Fill in the form, and Try out the API. Note down the full URL. It will be something like http://yourdomain/api/applications Try this URL again from your mobile browser. Experience the magic!
+
 
 Examples
 -----
