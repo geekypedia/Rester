@@ -1,0 +1,24 @@
+<div ng-init="newSingle()"></div>
+<h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
+<hr/>
+<div ng-include src="getTemplate('single-header')"></div>
+<section class="demo-container md-whiteframe-z1">
+      <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
+        <div class="md-toolbar-tools">
+          <h3 class="ng-binding ng-isolate-scope"><a class="docs-anchor ng-scope">{{M.TITLE_ADD_PREFIX}} {{getTitle('single')}}</a></h3>
+          <span flex="" class="flex"></span>
+        </div>
+      </md-toolbar>
+      <md-content layout-padding class="layout-padding _md">
+        <div ng-include src="getTemplate('new')"></div>
+        <div>
+            <button class="btn" ng-if="!data.single.id" ng-click="saveSingle()">{{M.BTN_SAVE}}</button>    
+            <button class="btn" ng-if="data.single.id" ng-click="goToEdit()">{{M.BTN_EDIT}}</button>    
+            &nbsp;<spinner/>
+        </div>
+      </md-content>
+</section>
+<div class="fixed-action-btn ">
+      <a class="btn-floating btn-large yellow darken-4" ng-href="{{currentRouteHref}}"><i class="material-icons">arrow_back</i></a>
+</div>
+<div ng-include src="getTemplate('single-footer')"></div>

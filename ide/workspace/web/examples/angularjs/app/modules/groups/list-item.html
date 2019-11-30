@@ -1,0 +1,5 @@
+<td><a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')" href="#!/{{currentRoute}}/{{item.id}}">{{item.title}}</a><span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.title}}</span></td>
+<td><span>{{item.is_active == 1 ? 'Yes' : 'No'}}</span></td>
+<td>
+    <a href="#!/{{currentRoute}}/{{item.id}}">View</a>
+</td>

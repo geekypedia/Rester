@@ -1,0 +1,50 @@
+<div ng-init="init()"></div>
+<h6>{{M.TITLE_SETTINGS}}&nbsp;<spinner/></h6>
+<hr/>
+<section class="demo-container md-whiteframe-z1">
+    <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
+        <div class="md-toolbar-tools">
+            <h3 class="ng-binding ng-isolate-scope"><a class="docs-anchor ng-scope">{{currentUser.organization.name}}</a></h3>
+            <span flex="" class="flex"></span>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding class="layout-padding _md">
+        <form name="forms.settingsForm" ng-submit="save()">
+            <h7>{{M.TITLE_ORGANIZATION_SETTINGS}}</h7>
+            <hr/>
+            <md-input-container class="md-block">
+              <label for="organization_name" class="active">{{M.FIELD_ORGANIZATION}}:</label>
+              <input id="organization_name" name="organization_name" type="text" class="validate" ng-model="data.single.name" required ng-disabled="true">
+              <div ng-messages="forms.settingsForm.organization_name.$error" ng-show="forms.settingsForm.organization_name.$dirty">
+                <div ng-message="required">{{M.REQUIRED}}</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label for="organization_email" class="active">Email:</label>
+              <input id="organization_email" name="organization_email" type="email" class="validate" ng-model="data.single.email" required ng-disabled="true">
+              <div ng-messages="forms.settingsForm.organization_email.$error" ng-show="forms.settingsForm.organization_email.$dirty">
+                <div ng-message="required">{{M.REQUIRED}}</div>
+                <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
+              </div>
+            </md-input-container>
+             <div layout-gt-sm="row">
+                <md-input-container flex=50>
+                        <label for="organization_validity" class="active">{{M.FIELD_VALIDITY}}:</label>
+                        <input id="organization_validity" name="organization_validity" type="text" class="validate" ng-model="data.single.validity" required ng-disabled="true">   
+                </md-input-container>
+                <md-input-container flex=50>
+                        <label for="organization_license" class="active">{{M.FIELD_LICENSE}}:</label>
+                        <input id="organization_license" name="organization_license" type="text" class="validate" ng-model="data.single.license" required ng-disabled="true">   
+                </md-input-container>
+             </div>
+            <div>
+                <button type="button" ng-click="unlock()" class="btn" ng-show="locked">{{M.BTN_EDIT}}</button>
+                <button type="submit" class="btn" ng-show="!locked">{{M.BTN_UPDATE}}</button>
+                &nbsp;<spinner/>
+            </div>
+        </form>
+    </md-content>
+</section>
+<div class="fixed-action-btn ">
+    <a class="btn-floating btn-large blue" href="#!"><i class="material-icons">home</i></a>
+</div>

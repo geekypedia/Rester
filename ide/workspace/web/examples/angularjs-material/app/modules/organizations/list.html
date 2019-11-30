@@ -1,0 +1,56 @@
+<div style="visibility: hidden">
+<div class="md-dialog-container" id="activationDialog">
+  <md-dialog layout-padding>
+    <h4>{{getTitle('single') | titleCase}} {{M.TITLE_LICENSE | titleCase}}</h4>
+    <form ng-submit="activate(currentOrganization, newOrganizationValues)">
+    <md-datepicker ng-model="newOrganizationValues.validity" md-placeholder="{{M.FIELD_VALIDITY}}:"></md-datepicker>
+    <md-input-container>
+      <label for="role" class="active">{{M.FIELD_LICENSE}}:</label>
+      <md-select id="role" ng-model="newOrganizationValues.license">
+        <md-option ng-repeat="u in [{key: 'basic', value: 'Basic'}, {key: 'standard', value: 'Standard'}, {key: 'pro', value: 'Professional'}]" ng-value="u.key">
+          {{u.value}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <div>
+        <button type="submit" class="btn md-raised md-primary">{{M.BTN_SAVE}}</button>
+        <button type="button" ng-click="hideActivationDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
+        &nbsp;<spinner/>
+    </div>
+    <div ng-if="newOrganizationValues.error">
+        <p style="color: red; font-weight: small">{{newOrganizationValues.error}}</p>
+    </div>
+    </form>    
+  </md-dialog>
+</div>
+<div class="md-dialog-container" id="setPasswordDialog">
+  <md-dialog layout-padding>
+    <h4>{{M.BTN_SET_PASSWORD}}</h4>
+    <form ng-submit="setPassword(currentOrganization, newUserValues)">
+    <div flex="100" class="flex flex-col">
+     <md-input-container>
+      <label for="admin_password">{{M.FIELD_SUPERADMIN_PASSWORD}}</label>
+      <input required name="admin_password" ng-model="newUserValues.admin_password" type="password" required>
+    </md-input-container>
+     <md-input-container>
+      <label for="password">{{M.FIELD_PASSWORD}}</label>
+      <input required name="password" ng-model="newUserValues.password" type="password" required>
+    </md-input-container>
+     <md-input-container>
+      <label for="confirm_password">{{M.FIELD_CONFIRM_PASSWORD}}</label>
+      <input required name="confirm_password" ng-model="newUserValues.confirm_password" type="password" required>
+    </md-input-container>
+    </div>
+    <div>
+        <button type="submit" class="btn md-raised md-primary">{{M.BTN_SAVE}}</button>
+        <button type="button" ng-click="hideSetPasswordDialog()" class="btn md-raised md-primary grey">{{M.BTN_CANCEL}}</button>
+        &nbsp;<spinner/>
+    </div>
+    <div>
+        <p style="color:red;font-size:smaller;">{{newUserValues.error}}</p>
+    </div>
+    </form>
+  </md-dialog>
+</div>
+
+</div>    

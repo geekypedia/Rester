@@ -1,0 +1,6 @@
+<nav aria-label="breadcrumb" class="breadcrumb-nav" ng-controller="breadCrumbController">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item {{i.active}}" ng-repeat="i in data"><a ng-if="i.link" ng-href="{{i.link}}">{{i.text}}</a><span ng-if="!i.link">{{i.text}}</span>&nbsp;</li>
+    <li><span><spinner></spinner></span></li>
+  </ol>
+</nav>

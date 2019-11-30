@@ -1,0 +1,326 @@
+@import url(style.css);
+body {
+  background-color: white;
+}
+.underlined{
+	text-decoration: underline;
+}
+.italic{
+  font-style:italic;
+}
+.bold{
+  font-weight: bold;  
+}
+.float-right{
+	float: right;
+}
+.small{
+	font-size:small;
+}
+.x-small{
+	font-size:x-small;
+}
+.xx-small{
+	font-size:xx-small;
+}
+.large{
+	font-size:large;
+}
+.x-large{
+	font-size:x-large;
+}
+.xx-large{
+	font-size:xx-large;
+}
+.medium{
+	font-size:medium;
+}
+.huge{
+	font-size:48px;
+}
+
+.middle-center{
+	vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+}
+.circle {
+    border-radius: 40px;
+    height: 40px;
+    width: 40px;
+    display: table;
+    margin: 5px auto;
+}
+.circle span {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+}
+
+.panel{
+	 border:1px solid gray;  
+   margin-top:10px; 
+}
+.panel h7{
+	float: right;
+	color: white;
+	font-weight: bold;
+    background: dimgray;
+}
+.fill-width{
+	width: 100%;
+}
+.md-datepicker-input-container{
+	width: 80%;
+	border-bottom: 0px;
+}
+.mda-datepicker-input{
+	border-bottom: 0px;
+}
+.mda-datepicker-input input input:focus input:focus:not{
+	border-bottom: 0px;
+}
+.materialize-textarea{
+	border-bottom: 0px;
+}
+.tbl{
+
+
+    height: 100px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+
+}
+.add-btn{
+    margin-top: -57px !important;
+    margin-left: 849px !important;
+}
+
+.add-btn-mul-col{
+    margin-top: -47px !important;
+    margin-left: 395px !important;
+}
+.add-formula-btn{
+    /* margin-top: -47px !important; */
+    /* float: right !important;
+    margin-right: -46px !important; */
+}
+
+/* style for formula */
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+  
+  .expandcollapse-item {
+    overflow: hidden;
+    border-top:1px solid blue;
+  }
+  
+  .expandcollapse-heading-collapsed {
+    /* cursor: pointer; */
+    padding: 5px 20px;
+    position: relative;
+    z-index: 100000000;
+    color: black; 
+    background-color: white;
+    
+  }
+  
+  .expandcollapse-item:first-of-type {
+    border-top:0px;
+  }
+  
+  
+  .expandcollapse-heading-collapsed p{
+    font-size: 16px;
+    font-weight: normal;
+    margin:0px;
+  }
+  
+  
+  
+  .expandcollapse-heading-expanded {
+    cursor: pointer;
+    z-index: 100000000;
+    padding: 5px 20px;
+    position: relative;
+    color: white; 
+    background-color: black;
+    border: 1px solid blue;
+  }
+  
+  .expandcollapse-heading-expanded p{
+    font-size: 16px;
+    font-weight: bold;
+    margin:0px;
+  }
+  
+  .expandcollapse-heading-collapsed > span,
+  .expandcollapse-heading-expanded > span {
+    position:absolute;
+    top: 25px;
+    right: 15px;
+    font-size: 20px;
+    line-height: 0px;
+  }
+  
+  /* .expand-collapse-content {
+    padding: 20px;
+  } */
+  
+  
+  /*
+  animation:*/
+  
+  .slideDown.ng-hide {
+    height:0;
+    transition:height 0.35s ease;
+    overflow:hidden;
+    position:relative;
+  }
+  
+  .slideDown {
+    height:141px;
+    transition:height 0.35s ease;
+    overflow:hidden;
+    position:relative;
+  }
+/*   
+  .slideDown.ng-hide-remove,
+  .slideDown.ng-hide-add { */
+    /* remember, the .hg-hide class is added to element
+    when the active class is added causing it to appear
+    as hidden. Therefore set the styling to display=block
+    so that the hide animation is visible */
+    /* display:block!important;
+  } */
+  
+  
+  /* .slideDown.ng-hide-add {
+    animation-name: hide;
+    -webkit-animation-name: hide;  
+  
+    animation-duration: .5s; 
+    -webkit-animation-duration: .5s;
+  
+    animation-timing-function: ease-in;  
+    -webkit-animation-timing-function: ease-in;  
+  } */
+  
+  
+  
+  /* .slideDown.ng-hide-remove {
+    animation-name: show;
+    -webkit-animation-name: show;  
+  
+    animation-duration: .5s; 
+    -webkit-animation-duration: .5s;
+  
+    animation-timing-function: ease-out;  
+    -webkit-animation-timing-function: ease-out;  
+  } */
+  
+  
+/*Override MaterializeCSS*/  
+.input-field {
+  margin-bottom: 0em;
+}
+
+/*.input-field>label{*/
+/*  color: black;*/
+/*  font-size: 1.2rem;*/
+/*  font-weight: bolder;*/
+/*}  */
+  
+  
+.md-calendar-scroll-mask{
+	width: 340px;
+}
+.md-datepicker-calendar {
+	width: 340px;
+}
+.md-calendar{
+	width: auto;
+}
+
+.md-icon-button + .md-datepicker-input-container {
+  float: left;
+}
+
+/*.md-input-container>label {*/
+/*  color: black;*/
+/*  font-size: 1.2rem;*/
+/*  font-weight: bolder;*/
+/*}  */
+
+.demo-container{
+  margin: 20px;
+}
+
+.main-container {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+
+.no-margin{
+  margin: 0;
+}
+
+.top-margin-20{
+  margin-top: 20px;
+}

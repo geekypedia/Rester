@@ -1,0 +1,32 @@
+<!--This is the template that will be used in new/edit screens. It should be in <form></form> tag. The name of the form should be matching the name of your API route, prefixed with 'froms.' and suffixed by 'Form'. e.g. in this case, it would be 'forms.contactsForm'-->
+<!--Example-->
+<form name="forms.contactsForm" id="forms.contactsForm">
+	<div class="form-group row">
+		<label for="contact_title" class="col-md-4 col-form-label text-md-right">Name:</label>
+		<div class="col-md-6">
+			<input id="contact_title" name="contact_title" type="text" class="form-control" ng-model="data.single.name" required ng-disabled="locked" autofocus>
+		</div>
+		<div ng-messages="forms.contactsForm.contact_title.$error" ng-show="forms.contactsForm.contact_title.$dirty">
+			<div ng-message="required">{{M.REQUIRED}}</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="contact_title" class="col-md-4 col-form-label text-md-right">{{M.FIELD_EMAIL}}:</label>
+		<div class="col-md-6">
+			<input id="email" name="email" type="text" class="form-control" ng-model="data.single.email" required ng-disabled="locked" autofocus>
+		</div>
+		<div ng-messages="forms.contactsForm.email.$error" ng-show="forms.contactsForm.email.$dirty">
+			<div ng-message="required">{{M.REQUIRED}}</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="contact_title" class="col-md-4 col-form-label text-md-right">Phone:</label>
+		<div class="col-md-6">
+			<input id="password" name="password" type="text" class="form-control" ng-model="data.single.phone" required ng-disabled="locked" autofocus>
+		</div>
+		<div ng-messages="forms.contactsForm.password.$error" ng-show="forms.contactsForm.password.$dirty">
+			<div ng-message="required">{{M.REQUIRED}}</div>
+		</div>
+	</div>
+
+</form>

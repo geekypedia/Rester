@@ -1,0 +1,85 @@
+<div class="section">
+<main class="login-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <!--<div class="col-md-8">-->
+        	<div class="">
+                <div class="card login-card">
+                    <div class="card-header">{{M.HEADING_REGISTER}}</div>
+                    <div class="card-body">
+                        <form name="forms.registerForm" ng-submit="register()" method="POST">
+                            <div class="form-group row" ng-if="S.enableSaaS">
+                                <label for="organization" class="col-md-4 col-form-label text-md-right">{{M.FIELD_ORGANIZATION}}:</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="organization" class="form-control" name="organization" ng-model="data.organization" required autofocus>
+                                </div>
+				              <div class="col-md-2 small col-red" ng-messages="forms.registerForm.organization.$error" ng-show="forms.registerForm.organization.$dirty">
+				                <div ng-message="required">{{M.REQUIRED}}</div>
+				              </div>
+                            </div>
+
+                            <div class="form-group row" ng-if="!S.enableSaaS">
+                                <label for="username" class="col-md-4 col-form-label text-md-right">{{M.FIELD_USERNAME}}:</label>
+                                <div class="col-md-6">
+                                    <input type="email" id="username" class="form-control" name="username" ng-model="data.email" required autofocus>
+                                </div>
+				              <div class="col-md-2 small col-red" ng-messages="forms.registerForm.username.$error" ng-show="forms.registerForm.username.$dirty">
+				                <div ng-message="required">{{M.REQUIRED}}</div>
+				              </div>
+                            </div>
+
+                            <div class="form-group row" >
+                                <label for="email" class="col-md-4 col-form-label text-md-right">{{M.FIELD_EMAIL_ENTER}}:</label>
+                                <div class="col-md-6">
+                                    <input type="email" id="email" class="form-control" name="email" ng-model="data.email" required autofocus>
+                                </div>
+				              <div class="col-md-2 small col-red" ng-messages="forms.registerForm.email.$error" ng-show="forms.registerForm.email.$dirty">
+				                <div ng-message="required">{{M.REQUIRED}}</div>
+				                <div ng-message="email">{{M.INVALID_EMAIL}}</div>
+				              </div>
+                            </div>
+
+                            <div class="form-group row" ng-if="!S.enableSaaS">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{M.FIELD_PASSWORD}}:</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="password" class="form-control" name="password" ng-model="data.password" required>
+                                </div>
+				              <div class="col-md-2 small col-red" ng-messages="forms.registerForm.password.$error" ng-show="forms.registerForm.password.$dirty">
+				                <div ng-message="required">{{M.REQUIRED}}</div>
+				              </div>
+                                
+                            </div>
+                            
+                            <div class="form-group row" ng-if="!S.enableSaaS">
+                                <label for="confirmPassword" class="col-md-4 col-form-label text-md-right">{{M.FIELD_CONFIRM_PASSWORD}}:</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" ng-model="data.confirmPassword" required>
+                                </div>
+				              <div class="col-md-2 small col-red" ng-messages="forms.registerForm.confirmPassword.$error" ng-show="forms.registerForm.confirmPassword.$dirty">
+				                <div ng-message="required">{{M.REQUIRED}}</div>
+				              </div>
+                                
+                            </div>                            
+
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{M.BTN_REGISTER}}
+                                </button>
+                                <a href="#!sign-in" class="btn btn-link">
+                                    {{M.LNK_BACK_TO_LOGIN}}
+                                </a>
+                            </div>
+				            <div class='col-md-6 offset-md-4'>
+				              <p class="small col-red" ng-if="error">{{error}}</p>
+				            </div>
+                            
+	                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+</div>
+

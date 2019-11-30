@@ -1,0 +1,64 @@
+<div ng-init="init()"></div>
+<bread-crumb args='ADMINISTRATION, {{M.TITLE_SETTINGS}}' ></bread-crumb>
+
+<section class="row justify-content-center">
+<section class="form-card">
+    <div class="card">
+    	<div class="card-header">{{M.TITLE_ORGANIZATION_SETTINGS}}</div>
+    	<div class="card-body">
+        <form name="forms.settingsForm" ng-submit="save()">
+            <div class="form-group row">
+              <label for="organization_name" class="col-md-4 col-form-label text-md-right">{{M.FIELD_ORGANIZATION}}:</label>
+            	<div class="col-md-6">
+            		<input id="organization_name" name="organization_name" type="text" class="form-control" ng-model="data.single.name" required ng-disabled="locked">
+            	</div>
+	              <div ng-messages="forms.settingsForm.organization_name.$error" ng-show="forms.settingsForm.organization_name.$dirty">
+	                <div ng-message="required">{{M.REQUIRED}}</div>
+	              </div>
+            </div>
+             <div class="form-group row">
+              <label for="organization_email" class="col-md-4 col-form-label text-md-right">Email:</label>
+              <div class="col-md-6">
+            		<input id="organization_email" name="organization_email" type="email" class="form-control" ng-model="data.single.email" required ng-disabled="true">
+            	</div>
+              <div ng-messages="forms.settingsForm.organization_email.$error" ng-show="forms.settingsForm.organization_email.$dirty">
+                <div ng-message="required">{{M.REQUIRED}}</div>
+                <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
+              </div>
+            </div>
+             <div class="form-group row">
+                
+                        <label for="organization_validity" class="col-md-4 col-form-label text-md-right">{{M.FIELD_VALIDITY}}:</label>
+                        <div class="col-md-6">
+                        	<input id="organization_validity" name="organization_validity" type="text" class="form-control" ng-model="data.single.validity" required ng-disabled="true">   
+                        </div>
+              </div>
+             <div class="form-group row">
+                        <label for="organization_license" class="col-md-4 col-form-label text-md-right">{{M.FIELD_LICENSE}}:</label>
+                        <div class="col-md-6">
+                        	<input id="organization_license" name="organization_license" type="text" class="form-control" ng-model="data.single.license" required ng-disabled="true">   
+	                	</div>
+             </div>
+             
+            <div class="col-md-6 offset-md-4">
+                <button type="button" class="btn btn-primary" ng-show="locked" ng-click="unlock()">
+                    {{M.BTN_EDIT}}
+                </button>
+                <button type="submit" class="btn btn-primary" ng-show="!locked">
+                    {{M.BTN_UPDATE}}
+                </button>
+                <spinner></spinner>
+            </div>
+            <div class='col-md-6 offset-md-4'>
+              <p class="small col-red" ng-if="error">{{error}}</p>
+            </div>
+            <div>
+            	<br/>
+            </div>	
+            
+        </form>
+        </div>
+    </div>
+
+</section>
+</section>

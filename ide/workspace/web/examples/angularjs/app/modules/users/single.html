@@ -1,0 +1,52 @@
+<form name="forms.usersForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div ng-if="data.single.role != 'superadmin'" class="form-group row">
+    <label for="username" class="col-md-4 col-form-label text-md-right">{{M.FIELD_USERNAME}}:</label>
+    <div class="col-md-6">
+	    <input id="username" name="username" type="text" class="form-control" ng-model="data.single.username" required ng-disabled="locked">
+	</div>
+    <div ng-messages="forms.usersForm.username.$error" ng-show="forms.usersForm.username.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="email" class="col-md-4 col-form-label text-md-right">{{M.FIELD_EMAIL}}:</label>
+    <div class="col-md-6">
+	    <input id="email" name="email" type="email" class="form-control" ng-model="data.single.email" required ng-disabled="locked">
+	</div>
+    <div ng-messages="forms.usersForm.email.$error" ng-show="forms.usersForm.email.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+      <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
+    </div>
+  </div>
+  <div ng-if="data.single.role != 'superadmin'" class="form-group row">
+    <label for="role" class="col-md-4 col-form-label text-md-right">{{M.FIELD_ROLE}}:</label>
+	<div class="col-md-6">
+		<div class="dropdown">
+		  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
+		    {{data.single.role}}
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		    <a class="dropdown-item" ng-repeat="u in data.roles"  href="" ng-click="data.single.role = u.id;">{{u.title}}</a>
+		  </div>
+		</div>			
+	</div>    
+    <!--<md-select id="role" ng-model="data.single.role" ng-disabled="locked">-->
+    <!--  <md-option ng-repeat="u in [{key: 'user', value: 'User'}, {key: 'admin', value: 'Administrator'}]" ng-value="u.key">-->
+    <!--    {{u.value}}-->
+    <!--  </md-option>-->
+    <!--</md-select>-->
+  </div>
+</form>
+
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

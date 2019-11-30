@@ -1,0 +1,14 @@
+<!--This is a template for the list screen. It should only contain the template for each column. i.e. <td></td> tags only-->
+<!--Example-->
+
+<!--The following code repeats through all the columns available in a record-->
+<td ng-repeat="key in data.listKeys">
+    <span ng-if="!(['is_active', 'category'].indexOf(key) > -1)">{{item[key]}}</span>
+    <span ng-if="key == 'is_active'">{{item[key] == 1 ? 'Yes' : 'No'}}</span>
+    <span ng-if="key == 'category'">{{item[key].title == null ? 'None' : item[key].title}}</span>
+</td>
+
+<!--The following code creates a link to view detailed record. You can use 'currentRoute' to represent the current base route that matches your API. e.g. 'tasks' in this case.-->
+<td>
+    <a href="#!/{{currentRoute}}/{{item.id}}">View</a>
+</td>

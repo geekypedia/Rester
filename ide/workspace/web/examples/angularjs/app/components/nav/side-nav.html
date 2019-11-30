@@ -1,0 +1,75 @@
+		<nav id="main-nav" class="all-nav">
+            <ul class="profile-nav">
+				<li class="profile-nav-item">
+					<div ng-controller="authController">
+						<a href="#!profile" class="bg-{{ currentUser.profile.theme_bg || currentUser.organization.theme_bg || S.theme.background || 'light'}}  col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}">
+							<img class="circle logo80" ng-src="{{H.getAbsolutePath(currentUser.profile.image) ||  'images/user.png'}}">
+							<br/>
+							<span class="" ng-if="currentUser.profile && (currentUser.profile.first_name || currentUser.profile.last_name)">{{currentUser.profile.first_name + ' ' + currentUser.profile.last_name}}</span>
+							<span class="" ng-if="!currentUser.profile || !(currentUser.profile.first_name && currentUser.profile.last_name)">{{currentUser.username}}</span>
+							<br/>
+							<span class="">{{currentUser.email}}</span>
+							<br/>
+							<button ng-click="logout()" class="btn btn-lnk underline col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}">Sign out</button>
+						</a>
+						<!--<a href="" ng-click="logout()"><span class="white-text font-underline email sidenav-close">Sign out</span></a>-->
+					</div>
+				</li>
+            </ul>
+
+			<ul ng-repeat="i in data" ng-if="!i.showHeader">
+				<li ng-if="i.allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in i.items'>
+					<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}  menu-icon">{{item.icon}}</i>{{item.text}}</a>
+					<a ng-if="(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}} menu-icon">{{item.icon}}</i>{{item.text}}</a>
+					<ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+				        <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}} menu-icon">{{i.icon}}</i>{{i.text}}</a></li>
+					</ul>
+				</li>
+			</ul>          	
+			<ul>
+				<li ng-repeat="i in data" ng-if="i.showHeader && i.allowedRoles.indexOf(currentUser.role) > -1">
+					<a href="">{{i.header}}</a>
+					<ul>
+				  		<li ng-if="i.allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in i.items'>
+				            <a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}  menu-icon">{{item.icon}}</i>{{item.text}}</a>
+				            <a ng-if="(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}} menu-icon">{{item.icon}}</i>{{item.text}}</a>
+				            <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+				                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}} menu-icon">{{i.icon}}</i>{{i.text}}</a></li>
+				            </ul>
+				  		</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		
+		<a class="all-nav toggle col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}" style="margin-left: 10px; margin-top: -5px;">
+			<i class="material-icons col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}} menu-icon xx-large">menu</i>
+			<span style="display: none"></span>
+		</a>
+		
+		
+<!--	
+	<section>
+			<div class="content-none" style="display:none">
+	            <div class="actions position">
+	              <div><a href="#" data-demo="{position:'left'}" class="button active">Left</a></div>
+	              <div><a href="#" data-demo="{position:'right'}" class="button">Right</a></div>
+	              <div><a href="#" data-demo="{position:'top'}" class="button">Top</a></div>
+	              <div><a href="#" data-demo="{position:'bottom'}" class="button">Bottom</a></div>
+	            </div>
+	            <div class="actions levels">
+	              <div><a href="#" data-demo="{levelOpen:'overlap', levelSpacing:40}" class="button active">Overlap levels</a></div>
+	              <div><a href="#" data-demo="{levelOpen:'expand', levelSpacing:25}" class="button">Expand levels</a></div>
+	              <div><a href="#" data-demo="{levelOpen:false, levelSpacing:25}" class="button">Unfolded levels</a></div>
+	            </div>
+	            <div class="actions checkboxes">
+	              <div><label><input type="checkbox" data-demo="{closeOnClick:true}" checked><span></span>Close on click</label></div>
+	              <div><label><input type="checkbox" data-demo="{disableBody:true}" checked><span></span>Disable body</label></div>
+	              <div><label><input type="checkbox" data-demo="{pushContent:'#container'}" checked><span></span>Push content</label></div>
+	              <div><label><input type="checkbox" data-demo="{navTitle: 'All Categories', levelTitles:true}" checked><span></span>Main nav and level titles</label></div>
+	              <div><label><input type="checkbox" data-demo="{insertClose:true, insertBack:true}" checked><span></span>Close and back buttons</label></div>
+	            </div>
+			</div>
+	</section>
+-->			
+		

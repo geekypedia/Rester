@@ -1,0 +1,35 @@
+<!--This is the template that will be used in new/edit screens. It should be in <form></form> tag. The name of the form should be matching the name of your API route, prefixed with 'froms.' and suffixed by 'Form'. e.g. in this case, it would be 'forms.categoriesForm'-->
+<!--Example-->
+<form name="forms.categoriesForm" id="forms.categoriesForm">
+	<div class="form-group row">
+		<label for="category_title" class="col-md-4 col-form-label text-md-right">{{M.FIELD_TITLE}}:</label>
+		<div class="col-md-6">
+			<input id="category_title" name="category_title" type="text" class="form-control" ng-model="data.single.title" required ng-disabled="locked">
+		</div>
+		<div ng-messages="forms.categoriesForm.category_title.$error" ng-show="forms.categoriesForm.category_title.$dirty">
+			<div ng-message="required">{{M.REQUIRED}}</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="category_is_active" class="col-md-4 col-form-label text-md-right">{{M.FIELD_ACTIVE}}:</label>
+		<div class="col-md-6">
+			<div class="custom-control custom-switch form-switch">
+				<input class="custom-control-input" type="checkbox" id="category_is_active" name="category_is_active" ng-disabled="locked" ng-true-value="1" ng-false-value="0" ng-model="data.single.is_active">
+				<label class="custom-control-label" for="category_is_active"></label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="category_is_active" class="col-md-4 col-form-label text-md-right">{{M.FIELD_PARENT_CATEGORY}}:</label>
+		<div class="col-md-6">
+			<div class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
+			    {{data.single.category.title}}
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			    <a class="dropdown-item" ng-repeat="c in data.categories track by $index"  href="" ng-click="data.single.category_id = c.id; data.single.category = c">{{c.title}}</a>
+			  </div>
+			</div>			
+		</div>
+	</div>
+</form>

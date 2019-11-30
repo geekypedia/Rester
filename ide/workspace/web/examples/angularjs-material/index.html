@@ -1,0 +1,197 @@
+<!doctype html>
+<html ng-app='app'>
+<head>
+	<!--Append / at the end of URL to load everything properly -->
+	<script>
+		window.onload = function() {
+			var location = "" + window.location;
+			if (location.charAt(location.length - 1) !== '/') {
+				var newLocation = location + "/";
+				window.location = newLocation;
+			}
+		}
+	</script>
+
+	<!-- JQuery & Angular  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-route.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.7.2/angular-resource.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-cookies.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-animate.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-messages.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-md5/0.1.10/angular-md5.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+	 <!-- Angular UI Grid -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.6.3/ui-grid.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.6.3/ui-grid.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+	<!-- Metrial Design -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Angular Material -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+	
+	
+	<!-- Other Libraries -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zingchart/2.8.0/zingchart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zingchart-angularjs/1.2.0/zingchart-angularjs.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-datepicker/2.1.23/angular-datepicker.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-datepicker/2.1.23/angular-datepicker.css" />
+
+
+	<!-- Application scripts -->
+	<!--<script src="app/index.js"></script>-->
+	<script src="app/index.php" type='text/javascript'></script>
+	<link rel="stylesheet" href="styles/index.css" />
+	
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	
+	<!--Title-->
+	<title ng-controller="titleController">{{title}}</title>
+</head>
+
+<body>
+	<!--Main Container-->
+	<div>
+		
+		<nav class="blue" style="margin-top:-15px">
+			<div class="nav-wrapper">
+				<a ng-show="currentUser" href="" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+				<p style="text-align:center;">
+					<a href="#!">
+						<span style="font-size:xx-large;font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
+							<span style="color:cyan;"></span><span style="color:orange;  font-style:italic"></span>
+						</span>
+					</a>
+				</p>
+			</div>
+		</nav>
+		
+		<ul id="slide-out" class="sidenav" ng-show="currentUser" ng-controller="navController">
+			<li>
+				<div class="user-view" ng-controller="authController">
+					<div class="background">
+						<img src="images/background.png" width="100%">
+					</div>
+					<a href="#!profile"><img class="circle sidenav-close" src="images/user.png"></a>
+					<a href="#!profile"><span class="white-text name  sidenav-close">{{currentUser.first_name + ' ' + currentUser.last_name}}</span></a>
+					<a href="#!profile"><span class="white-text name sidenav-close" style="margin-top:0;">{{currentUser.email}}</span></a>
+					<a href="" ng-click="logout()"><span class="white-text font-underline email sidenav-close">Sign out</span></a>
+				</div>
+			</li>
+			
+			<li ng-if="data[0].allowedRoles.indexOf(currentUser.role) > -1 && data[0].showSeparator">
+				<div class="divider"></div>
+			</li>
+			<li ng-if="data[0].allowedRoles.indexOf(currentUser.role) > -1 && data[0].showHeader" ><a class="subheader">{{data[0].header}}</a></li>
+			<li ng-if="data[0].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[0].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
+
+			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1 && data[1].showSeparator">
+				<div class="divider"></div>
+			</li>
+			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1 && data[1].showHeader" ><a class="subheader">{{data[1].header}}</a></li>
+			<li ng-if="data[1].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[1].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
+
+			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1 && data[2].showSeparator">
+				<div class="divider"></div>
+			</li>
+			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1 && data[2].showHeader" ><a class="subheader">{{data[2].header}}</a></li>
+			<li ng-if="data[2].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[2].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
+
+			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1 && data[3].showSeparator">
+				<div class="divider"></div>
+			</li>
+			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1 && data[3].showHeader" ><a class="subheader">{{data[3].header}}</a></li>
+			<li ng-if="data[3].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[3].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
+
+			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1 && data[4].showSeparator">
+				<div class="divider"></div>
+			</li>
+			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1 && data[4].showHeader" ><a class="subheader">{{data[4].header}}</a></li>
+			<li ng-if="data[4].allowedRoles.indexOf(currentUser.role) > -1" ng-repeat='item in data[4].items'>
+				<a ng-if="!(item.items && item.items.length > 0)" ng-href="{{item.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		        <ul ng-if="(item.items && item.items.length > 0)" class="collapsible collapsible-accordion" style="margin-left: 15px">
+		          <li>
+		          	<a ng-href="{{item.action}}" class="collapsible-header"><i class="material-icons {{item.color}}">{{item.icon}}</i>{{item.text}}</a>
+		            <div class="collapsible-body">
+		              <ul>
+		                <li ng-repeat="i in item.items"><a ng-href="{{i.action}}" class="sidenav-close"><i class="material-icons {{item.color}}">{{i.icon}}</i>{{i.text}}</a></li>
+		              </ul>
+		            </div>
+		          </li>
+		        </ul>
+			</li>
+
+		</ul>
+
+		<div class="container">
+			<!-- CONTENT -->
+			<div ng-view></div>
+		</div>
+	</div>
+	<div>
+		<br>
+		<br>
+		<br>
+	</div>
+</body>
+
+</html>

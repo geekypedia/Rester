@@ -1,0 +1,28 @@
+<div ng-init="listAll()"></div>
+<h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
+<hr/>
+<div ng-include src="getTemplate('list-header')"></div>
+<div style="overflow:auto">
+<table class="striped responsive-table">
+        <thead>
+          <tr>
+              <th ng-repeat="h in data.listHeaders">{{h}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in data.list" ng-include src="getTemplate('list-item')">
+          </tr>
+        </tbody>
+</table>
+</div>
+<div ng-if="data.records" class="float-right small italic bold">{{data.records}} record{{data.records == 1 ? '' : 's'}}</div>
+<ul class="pagination center-align">
+    <!--<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
+    <li class="{{setActive(i)}}" ng-repeat="i in data.pages"><a ng-click="listAll(i)">{{i}}</a></li>
+    <!--<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>-->
+</ul>
+<div class="fixed-action-btn ">
+      <a class="btn-floating btn-large blue" href="{{newRouteHref}}"><i class="material-icons">add</i></a>
+</div>
+<div ng-include src="getTemplate('list-footer')"></div>
+<div ng-include src="getTemplate('list')"></div>

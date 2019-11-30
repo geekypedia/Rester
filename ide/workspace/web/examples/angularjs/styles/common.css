@@ -1,0 +1,154 @@
+.underline{
+	text-decoration: underline;
+}
+.italic{
+  font-style:italic;
+}
+.bold{
+  font-weight: bold;  
+}
+.float-right{
+	float: right;
+}
+.small{
+	font-size:small;
+}
+.x-small{
+	font-size:x-small;
+}
+.xx-small{
+	font-size:xx-small;
+}
+.large{
+	font-size:large;
+}
+.x-large{
+	font-size:x-large;
+}
+.xx-large{
+	font-size:xx-large;
+}
+.medium{
+	font-size:medium;
+}
+.huge{
+	font-size:48px;
+}
+.x-huge{
+	font-size:60px;
+}
+.xx-huge{
+	font-size:72px;
+}
+.bloated{
+	font-size:96px;
+}
+
+.middle-center{
+	vertical-align: middle;
+    text-align: center;
+}
+
+.middle-center-cell{
+	vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+}
+
+.text-align-center{
+	text-align: center !important;
+}
+
+.vertical-align-middle{
+	vertical-align: middle;
+}
+
+.vertical-align-baseline{
+	vertical-align: baseline;
+}
+
+.circle {
+    /*border-radius: 40px;*/
+    /*height: 40px;*/
+    /*width: 40px;*/
+    border-radius: 50%;
+    /*display: table;*/
+    /*margin: 5px auto;*/
+}
+.circle span {
+    vertical-align: middle;
+    text-align: center;
+    /*display: table-cell;*/
+}
+.full-width{
+	width: 100%;
+}
+
+.logo16{
+	width: 16px;
+	height: 16px;
+}
+.logo20{
+	width: 20px;
+	height: 20px;
+}
+.logo30{
+	width: 30px;
+	height: 30px;
+}
+.logo32{
+	width: 32px;
+	height: 32px;
+}
+.logo40{
+	width: 40px;
+	height: 40px;
+}
+.logo64{
+	width: 64px;
+	height: 64px;
+}
+.logo80{
+	width: 100px;
+	height: 100px;
+}
+.logo100{
+	width: 100px;
+	height: 100px;
+}
+.logo128{
+	width: 128px;
+	height: 128px;
+}
+.logo150{
+	width: 150px;
+	height: 150px;
+}
+.logo200{
+	width: 200px;
+	height: 200px;
+}
+.logo250{
+	width: 250px;
+	height: 250px;
+}
+.logo256{
+	width: 256px;
+	height: 256px;
+}
+.logo300{
+	width: 300px;
+	height: 300px;
+}
+.logo400{
+	width: 400px;
+	height: 400px;
+}
+.logo500{
+	width: 500px;
+	height: 500px;
+}
+.logo512{
+	width: 512px;
+	height: 512px;
+}

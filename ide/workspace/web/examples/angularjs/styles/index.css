@@ -1,0 +1,107 @@
+@import url(../lib/hc-off-canvas/index.css); 
+@import url(./colors.css); 
+@import url(./common.css); 
+
+body{
+	zoom: 0.95;
+}
+
+.menu-icon{
+	vertical-align: bottom;
+	margin-right: 5px;
+}
+
+.navbar-brand , .nav-link, .my-form, .login-form
+{
+    font-family: Raleway, sans-serif;
+}
+
+.navbar-title{
+	margin-left:calc(3%);
+}
+
+
+.no-container{
+	margin-left:calc(3%);
+}
+
+.navbar-user-logo{
+	margin-top: -20px;
+	margin-bottom: -20px;
+}
+
+
+nav.breadcrumb-nav{
+	margin: -10px;
+}
+
+ol.breadcrumb{
+	/*background: white;*/
+	padding: 5px 5px 5px 10px;
+}
+
+.login-card {
+  width: 850px;
+  position: absolute;
+  /*text-align: center;*/
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-card {
+	width: 66%;
+}
+
+.wide-card {
+	width: 96%;
+}
+
+.form-switch {
+	margin-top: 8px;
+}
+
+.content {
+	padding: 5px;
+	margin: 5px;
+}
+
+.info-box{
+	padding: 5px;
+	margin: 5px;
+	width: 240px;
+	text-align: center;
+}
+
+.info-box-icon{
+	float: left;
+	padding: 5px;
+	/*margin: 5px;*/
+}
+.info-box-content{
+	/*float: right;*/
+}
+
+.custom-modal-content{
+	margin: 5px;
+	padding: 5px;
+}
+
+.profile-nav-item{
+	text-align: center !important;
+}
+
+.panel{
+	 border:1px solid gray;  
+   margin-top:10px; 
+}
+.panel h7{
+	float: right;
+	color: white;
+	font-weight: bold;
+    background: dimgray;
+}
+
+.inner-container{
+	padding: 20px;
+}

@@ -1,0 +1,24 @@
+<form name="forms.organizationsForm">
+    <md-input-container class="md-block">
+      <label for="organization_name" class="active">{{M.FIELD_ORGANIZATION}}:</label>
+      <input id="organization_name" name="organization_name" type="text" class="validate" ng-model="data.single.name" required ng-disabled="locked">
+      <div ng-messages="forms.organizationsForm.organization_name.$error" ng-show="forms.organizationsForm.organization_name.$dirty">
+        <div ng-message="required">{{M.REQUIRED}}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <label for="organization_email" class="active">Email:</label>
+      <input id="organization_email" name="organization_email" type="email" class="validate" ng-model="data.single.email" required ng-disabled="locked">
+      <div ng-messages="forms.organizationsForm.organization_email.$error" ng-show="forms.organizationsForm.organization_email.$dirty">
+        <div ng-message="required">{{M.REQUIRED}}</div>
+        <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label for="client_secret" class="active">{{M.FIELD_CLIENT_SECRET}}:</label>
+        <input id="client_secret" name="client_secret" type="text" class="validate" ng-model="data.single.org_secret" disabled>
+    </md-input-container>
+  </div>
+</form>
+
+

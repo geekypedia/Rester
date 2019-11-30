@@ -1,0 +1,20 @@
+<td><a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')" href="#!/{{currentRoute}}/{{item.id}}">{{item.username}}</a><span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.username}}</span></td>
+<td>
+    <span>{{item.email}}</span>
+</td>
+<td>
+    <span>{{item.lease}}</span>
+</td>
+<td>
+    <span>{{item.role}}</span>
+</td>
+<td>
+    <div layout="row" flex>
+    <md-button ng-if="((['admin', 'superadmin'].indexOf(currentUser.role)  > -1) && item.role != 'superadmin') || (item.role == 'superadmin' && currentUser.role == 'superadmin') " class="btn md-raised md-primary green" ng-click="showSetPasswordDialog($event, item)" >
+        {{M.BTN_SET_PASSWORD}}
+    </md-button>
+    </div>
+    <md-button ng-if="item.role == 'superadmin' && currentUser.role !== 'superadmin'" class="btn md-raised md-primary blue darken-4" >
+        {{M.NA}}
+    </md-button>
+</td>

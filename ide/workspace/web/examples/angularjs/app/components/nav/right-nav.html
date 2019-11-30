@@ -1,0 +1,13 @@
+			<ul class="navbar-nav ml-auto all-nav" ng-controller="authController">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="navbar-user-logo circle logo40" ng-src="{{H.getAbsolutePath(currentUser.profile.image) ||  'images/user.png'}}"></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a href="#!profile" class="dropdown-item">Profile</a>
+						<a href="" ng-click="logout()" class="dropdown-item"><span class="">Sign out</span></a>
+					</div>
+				</li>
+				<li class="nav-item">
+						<span class="nav-link" ng-if="currentUser.profile && (currentUser.profile.first_name || currentUser.profile.last_name)" style="width: calc({{(currentUser.profile.first_name + ' ' + currentUser.profile.last_name).length * 0.66}}em">{{currentUser.profile.first_name + ' ' + currentUser.profile.last_name}}</span>
+						<span class="nav-link" ng-if="!currentUser.profile || !(currentUser.profile.first_name && currentUser.profile.last_name)" style="width: calc({{(currentUser.username).length * 0.66}}em">{{currentUser.username}}</span>
+				</li>
+			</ul>

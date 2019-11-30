@@ -1,0 +1,25 @@
+  		<nav class="navbar navbar-expand bg-{{ currentUser.profile.theme_bg || currentUser.organization.theme_bg || S.theme.background || 'light'}} col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}">
+		    <div class="{{currentUser ? 'container' : 'no-container'}}" ng-controller="titleController">
+		    <!--<div class="container" ng-controller="titleController">-->
+		        <a class="navbar-brand navbar-title col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}" href="#">{{title}}</a>
+		        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+		        <!--    <span class="navbar-toggler-icon"></span>-->
+		        <!--</button>-->
+		
+		        <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+		        <!--    <ul class="navbar-nav ml-auto">-->
+		        <!--        <li class="nav-item">-->
+		        <!--            <a class="nav-link" href="#">Login</a>-->
+		        <!--        </li>-->
+		        <!--        <li class="nav-item">-->
+		        <!--            <a class="nav-link" href="#">Register</a>-->
+		        <!--        </li>-->
+		        <!--    </ul>-->
+		        <!--</div>-->
+		    </div>
+		    
+		    <div right-nav></div>
+
+				        
+		    
+		</nav>

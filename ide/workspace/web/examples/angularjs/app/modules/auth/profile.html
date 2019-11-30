@@ -1,0 +1,189 @@
+<div ng-init="newSingle()"></div>
+<bread-crumb args='{{M.TITLE_MY_PROFILE}}' ></bread-crumb>
+
+
+<section>
+</section>
+
+<section class="row justify-content-center">
+<section class="wide-card">
+	<div class="card">
+  <div class="row">
+    <div class="col-sm card inner-container {{lockedClass}}">
+        <div class="{{editingClass}}  text-align-center" >
+            <img src="{{H.getAbsoluteUrl(currentUser.profile.image) ||  'images/user.png'}}" alt="{{currentUser.username}}" class="logo200" >
+            <h3>{{currentUser.profile.first_name + ' ' + currentUser.profile.last_name}}</h3>
+            <h5>{{currentUser.email}}</h5>
+            <p class="title">{{currentUser.role}} <i>of</i> {{currentUser.organization.name}}</p>
+            <!--<div style="margin: 24px 0;">-->
+            <!--    <a ng-if="currentUser.profile.dribble" href="{{currentUser.profile.dribble}}"><i class="fa fa-dribbble"></i></a>-->
+            <!--    <a ng-if="currentUser.profile.twitter" href="{{currentUser.profile.twitter}}"><i class="fa fa-twitter"></i></a>-->
+            <!--    <a ng-if="currentUser.profile.linkedin" href="{{currentUser.profile.linkedin}}"><i class="fa fa-linkedin"></i></a>-->
+            <!--    <a ng-if="currentUser.profile.facebook" href="{{currentUser.profile.facebook}"><i class="fa fa-facebook"></i></a>-->
+            <!--</div>-->
+            <p><button class="btn btn-dark" ng-show="locked" ng-click="edit()">Edit</button></p>
+            <p><button class="btn btn-dark" ng-show="!locked" ng-click="disableEdit()">Cancel</button></p>
+        </div>
+    </div>
+    <div class="col-sm card inner-container" ng-if="!locked">
+        <form name="usersForm" ng-submit="save()" class="{{lockedClass}}">
+            <div ng-if="currentUser.role != 'superadmin'" class="form-group row">
+                <label for="username" class="col-form-label">{{M.FIELD_USERNAME}}:</label>
+                <input id="username" name="username" type="text" class="form-control" ng-model="userData.username" required ng-disabled="locked">
+                <div ng-messages="forms.usersForm.username.$error" ng-show="forms.usersForm.username.$dirty">
+                    <div ng-message="required">{{M.REQUIRED}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-form-label">{{M.FIELD_EMAIL}}:</label>
+                <input id="email" name="email" type="email" class="form-control" ng-model="userData.email" required ng-disabled="locked">
+                <div ng-messages="forms.usersForm.email.$error" ng-show="forms.usersForm.email.$dirty">
+                    <div ng-message="required">{{M.REQUIRED}}</div>
+                    <div ng-message="email">{{M.INVALID_EMAIL}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="role" class="col-form-label">{{M.FIELD_ROLE}}:</label>
+				<div class="dropdown">
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
+				    {{userData.role}}
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				    <a class="dropdown-item" ng-repeat="u in data.roles"  href="" ng-click="userData.role = u.id;">{{u.title}}</a>
+				  </div>
+				</div>			
+                
+<!--<md-select id="role" ng-model="userData.role" ng-disabled="locked">-->
+<!--    <md-option ng-repeat="u in [{key: 'user', value: 'User'}, {key: 'admin', value: 'Administrator'}]" ng-value="u.key">-->
+<!--        {{u.value}}-->
+<!--    </md-option>-->
+<!--</md-select>-->
+			</div>
+            <div>
+                <button type="submit" class="btn btn-success" ng-show="!locked">{{M.BTN_UPDATE}}</button>
+                &nbsp;<spinner></spinner>
+            </div>
+            <div ng-if="userData.message">
+                <p>{{userData.message}}</p>
+            </div>
+            <div ng-if="userData.error" class="small col-red">
+                <p>{{userData.error}}</p>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm card inner-container" ng-if="!locked">
+        <form name="passwordForm" ng-submit="changePassword()" class="{{lockedClass}}">
+            <div class="form-group row">
+                <label for="password" class="col-form-label">{{M.FIELD_PASSWORD}}:</label>
+                <input id="password" name="password" type="password" class="form-control" ng-model="passwordData.password" required ng-disabled="locked">
+                <div ng-messages="forms.passwordForm.password.$error" ng-show="forms.passwordForm.password.$dirty">
+                    <div ng-message="required">{{M.REQUIRED}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="newPassword" class="col-form-label">{{M.FIELD_NEW_PASSWORD}}:</label>
+                <input id="newPassword" name="newPassword" type="password" class="form-control" ng-model="passwordData.newPassword" required ng-disabled="locked">
+                <div ng-messages="forms.passwordForm.newPassword.$error" ng-show="forms.passwordForm.newPassword.$dirty">
+                    <div ng-message="required">{{M.REQUIRED}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="confirmPassword" class="col-form-label">{{M.FIELD_CONFIRM_PASSWORD}}:</label>
+                <input id="confirmPassword" name="confirmPassword" type="password" class="form-control" ng-model="passwordData.confirmPassword" required ng-disabled="locked">
+                <div ng-messages="forms.passwordForm.confirmPassword.$error" ng-show="forms.passwordForm.confirmPassword.$dirty">
+                    <div ng-message="required">{{M.REQUIRED}}</div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success" ng-show="!locked">{{M.BTN_UPDATE}}</button>
+                &nbsp;<spinner></spinner>
+            </div>
+            <div ng-if="passwordData.message">
+                <p>{{passwordData.message}}</p>
+            </div>
+            <div ng-if="passwordData.error" class="small col-red">
+                <p>{{passwordData.error}}</p>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+	
+</section>
+</section>
+<!--<div class="fixed-action-btn ">-->
+<!--    <a class="btn-floating btn-large blue" href="#!"><i class="material-icons">home</i></a>-->
+<!--</div>-->
+<!--
+<style type="text/css">
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .float-left {
+        float: left;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .visible {
+        display: block;
+    }
+
+    .formClass {
+        width: 500px;
+    }
+
+    .button-block {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .button-black {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+    }
+
+    button:hover,
+    a:hover {
+        opacity: 0.7;
+    }
+</style>
+-->

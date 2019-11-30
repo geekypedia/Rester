@@ -1,0 +1,12 @@
+<div ng-init="init()"></div>
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{{M.TITLE_DASHBOARD}}&nbsp; <spinner></spinner></li>
+  </ol>
+  
+</nav>
+
+
+<div class="row"> 
+	<info-box options='v' ng-if="v.allowedRoles==null || v.allowedRoles.indexOf(currentUser.role) > -1" ng-repeat="(k, v) in data.counters"></info-box>
+</div>

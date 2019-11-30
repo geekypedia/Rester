@@ -1,0 +1,42 @@
+<div ng-init="loadSingle()"></div>
+<!--<nav aria-label="breadcrumb" class="breadcrumb-nav">-->
+<!--  <ol class="breadcrumb">-->
+<!--  	<li class="breadcrumb-item"><a href="{{currentRouteHref}}">{{getTitle('list')}}</a></li>-->
+<!--    <li class="breadcrumb-item active" aria-current="page">{{M.TITLE_EDIT_PREFIX}}&nbsp;<spinner></spinner></li>-->
+<!--  </ol>-->
+<!--</nav>-->
+<bread-crumb args='[{ "text": "{{getTitle("list")}}", "link": "{{currentRouteHref}}"}, { "text": "{{M.TITLE_EDIT_PREFIX}}"}]' ></bread-crumb>
+
+<section class="row justify-content-center">
+<section class="form-card">
+    <div class="card">
+    	<div class="card-header"><span class="large">{{M.TITLE_EDIT_PREFIX}} {{getTitle('single')}}</span>
+	    	<div class="float-right">
+            	<a href="{{currentRouteHref}}">
+	                <button type="button" class="btn btn-dark btn-sm">
+	                    {{M.TITLE_BACK}}
+	                </button>
+            	</a>
+			</div>
+    	</div>
+    	<div class="card-body">
+    		<div ng-include src="getTemplate('single-header')"></div>
+    		<div ng-include src="getTemplate('edit')"></div>
+            <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-success" ng-if="!locked" ng-click="updateSingle()" form="forms.{{resourceName}}Form">
+                    {{M.BTN_UPDATE}}
+                </button>
+                <button type="button" class="btn btn-dark" ng-if="locked"  ng-click="toggleLock()">
+                    {{M.BTN_EDIT}}
+                </button>
+                &nbsp;<spinner></spinner>
+            </div>
+            <div class='col-md-6 offset-md-4'>
+              <p class="small col-red" ng-if="error">{{error}}</p>
+            </div>    		
+			<div class="alerts-container"></div>
+            <div ng-include src="getTemplate('single-footer')"></div>
+    	</div>
+    </div>
+</section>
+</section>
