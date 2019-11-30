@@ -346,10 +346,45 @@ $loginFunction = function($params = NULL) {
 												"email" => $organizations[0]["email"],
 												"secret" => $organizations[0]["org_secret"],
 												"license" => $organizations[0]["license"],
-												"validity" => $organizations[0]["validity"]
+												"validity" => $organizations[0]["validity"],
+												"logo" => $organizations[0]["logo"],
+												"theme_bg" => $organizations[0]["theme_bg"],
+												"theme_col" => $organizations[0]["theme_col"]
 											);
 				} else {
-					$user[organization] = array("name" => $organizations[0]["name"]);
+					$user[organization] = array("name" => $organizations[0]["name"],
+												"logo" => $organizations[0]["logo"],
+												"theme_bg" => $organizations[0]["theme_bg"],
+												"theme_col" => $organizations[0]["theme_col"]
+					                        );
+				}
+			}
+		} catch (Exception $ex){
+			
+		}
+		
+		try{
+			$profile_filter["user_id"] = $user["id"];
+			$profiles = $api->getObjectsFromRouteName("profiles", $profile_filter);
+			if(!empty($profiles)) {
+				if(in_array($user['role'], array("superadmin"))){
+					$user[profile] = $profiles[0];
+				} else if(in_array($user['role'], array("admin"))){
+					$user[profile] = array(
+												"first_name" => $profiles[0]["first_name"],
+												"last_name" => $profiles[0]["last_name"],
+												"image" => $profiles[0]["image"],
+												"theme_bg" => $profiles[0]["theme_bg"],
+												"theme_col" => $profiles[0]["theme_col"]
+											);
+				} else {
+					$user[profile] = array("name" => $organizations[0]["name"],
+												"first_name" => $profiles[0]["first_name"],
+												"last_name" => $profiles[0]["last_name"],
+												"image" => $profiles[0]["image"],
+												"theme_bg" => $profiles[0]["theme_bg"],
+												"theme_col" => $profiles[0]["theme_col"]
+												);
 				}
 			}
 		} catch (Exception $ex){
