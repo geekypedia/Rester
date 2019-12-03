@@ -26,6 +26,7 @@ app.service('Popup', function($uibModal) {
 			//	spinner: false //(optional) true - If you want to show progress while making http calls
 			// 	body: "<p>Something</p>",
 			// 	data: $scope.your_data (optional),
+			//  watch: [{target:'data.variable', callback: function(newObj, oldObj){}}] (optional)
 			// 	scope: $scope //(optional),
 			//  close: function(data){}
 			// }
@@ -77,6 +78,14 @@ app.service('Popup', function($uibModal) {
 	        		$uibModalInstance.close(btn);
 	        	}
 	        	
+	        	
+	        	if(options.watch){
+	        		for(i in options.watch){
+	        			var w = options.watch[i];
+	        			$scope.$watch(w.target, w.callback);	
+	        		}
+	        	}
+
 			},
 			scope : options.scope
     		});	
