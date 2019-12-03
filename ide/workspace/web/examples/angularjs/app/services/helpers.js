@@ -139,7 +139,7 @@ class Helper {
 			var projY = currentY + offsetY;
 			
 			dt = new Date(projY, projM, projD, projH, projMN, 0);
-			console.log(dt);
+			//console.log(dt);
 			
 			
 			//dt = new Date(dt + (new Date()).getTimezoneOffset());
