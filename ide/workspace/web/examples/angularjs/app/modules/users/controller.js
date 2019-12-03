@@ -70,7 +70,7 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
 	                
 			}
 			
-			if(callback) callback(btn);
+			//if(callback) callback(btn);
 			
 			
 
