@@ -2,7 +2,10 @@
 app.controller('profileController', function($scope, $rootScope, $http, $cookies, H, M){
 	$scope.H = H;
 	$scope.M = H.M;
-	
+
+	$scope.roleLocked = $rootScope.currentUser.organization.email == $rootScope.currentUser.email;
+	$scope.currentUser = $rootScope.currentUser;
+
 	$scope.locked = true;
 	$scope.lockedClass = "hidden";
 	$scope.editingClass = "";
@@ -10,6 +13,7 @@ app.controller('profileController', function($scope, $rootScope, $http, $cookies
 	$scope.forms = {};
 	$scope.userData = {};
 	$scope.passwordData = {};
+	$scope.roles = [{id: 'user', title: 'User'}, {id: 'admin', title: 'Administrator'}];
 
 	$scope.disableEdit = function(){
 		$scope.locked = true;
@@ -35,6 +39,12 @@ app.controller('profileController', function($scope, $rootScope, $http, $cookies
 				$rootScope.currentUser = user;
 				$cookies.putObject(H.getCookieKey(), JSON.stringify($rootScope.currentUser));
 	}
+	
+	$scope.$watch('userData.email', function(newObj, oldObj){
+		if($scope.userData && $scope.userData.username && $scope.userData.username.indexOf('@') > -1){
+			$scope.userData.username = newObj;
+		}
+	});
 	
 	$scope.save = function(){
 		$scope.userData.error = "";
