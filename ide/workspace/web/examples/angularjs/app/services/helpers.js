@@ -19,6 +19,7 @@ app.service('H', function($location, md5, S, M, R) {
 		getUUID: Helper.getUUID,
 		toDateTime: Helper.toDateTime,
 		toMySQLDateTime: Helper.toMySQLDateTime,
+		toMySQLDate: Helper.toMySQLDate,
 		checkLicenseValidity: Helper.checkLicenseValidity,
 		getOpenRoutes: function(){
 			var openRoutes = RegisterRoutes().customRoutes.filter(function(p){ return p.auth === false});
@@ -92,6 +93,60 @@ class Helper {
 	static toMySQLDateTime(dt){
 		return dt.getUTCFullYear() + "-" + Helper.twoDigits(1 + dt.getUTCMonth()) + "-" + Helper.twoDigits(dt.getUTCDate()) + " " + Helper.twoDigits(dt.getUTCHours()) + ":" + Helper.twoDigits(dt.getUTCMinutes()) + ":" + Helper.twoDigits(dt.getUTCSeconds());
 	}
+
+
+	static toMySQLDate(dt, offset){
+		if(offset){
+			
+			var offsetNum = (0 - (new Date()).getTimezoneOffset()) * 2;
+			var offsetH = Math.floor(offsetNum / 60);
+			var offsetMN = offsetNum % 60;
+			var offsetD = 0;
+			var offsetM = 0;
+			var offsetY = 0;
+			var currentH = dt.getHours();
+			var currentMN = dt.getMinutes();
+			var currentD = dt.getDate();
+			var currentM = dt.getMonth();
+			var currentY = dt.getFullYear();
+			
+			var maxDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+			if(currentY % 4 == 0) maxDays[1] = 29;
+			
+			var projMN = currentMN + (offsetMN);
+			if (projMN >= 60) {
+				projMN -= 60;
+				offsetH += 1;
+			}
+			var projH = currentH + (offsetH);
+			if(projH >= 24){
+				projH -= 24;
+				offsetD += 1;
+			}
+			
+			var projD = currentD + offsetD;
+			if(projD > maxDays[currentM]){
+				projD -= maxDays[currentM];
+				offsetM += 1;
+			}
+			
+			var projM = currentM + offsetM;
+			if(projM > 12){
+				projM -= 12;
+				offsetY += 1;
+			}
+			
+			var projY = currentY + offsetY;
+			
+			dt = new Date(projY, projM, projD, projH, projMN, 0);
+			console.log(dt);
+			
+			
+			//dt = new Date(dt + (new Date()).getTimezoneOffset());
+		}
+		return dt.getUTCFullYear() + "-" + Helper.twoDigits(1 + dt.getUTCMonth()) + "-" + Helper.twoDigits(dt.getUTCDate());
+	}
+
 	
 	static twoDigits(d) {
 	    if(0 <= d && d < 10) return "0" + d.toString();
