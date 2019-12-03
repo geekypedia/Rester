@@ -83,7 +83,9 @@
 .full-width{
 	width: 100%;
 }
-
+.no-border{
+	border: none;
+}
 .logo16{
 	width: 16px;
 	height: 16px;
