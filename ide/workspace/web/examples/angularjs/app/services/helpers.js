@@ -27,7 +27,8 @@ app.service('H', function($location, md5, S, M, R) {
 			return openRouteNames;
 		},
 		toTitleCase: Helper.toTitleCase,
-		replaceAll: Helper.replaceAll
+		replaceAll: Helper.replaceAll,
+		deepCopy: Helper.deepCopy
 	};
 });
 
@@ -110,6 +111,10 @@ class Helper {
 	static replaceAll(input, search, replacement){
 		input = input || '';
 		return input.replace(new RegExp(search, 'g'), replacement);
+	}
+	
+	static deepCopy(input){
+		return JSON.parse(JSON.stringify(input));
 	}
 
 }
