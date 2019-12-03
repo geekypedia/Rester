@@ -17,7 +17,7 @@ CREATE TABLE `users` (
   `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-);
+) ENGINE=InnoDB;
 #end
 
 ## Insert 3 default users
@@ -37,6 +37,24 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `r
 (3,	'user@example.com',	'user',	'ee11cbb19052e40b07aac0ca060c23ee',	'1',	'0000-01-01 00:00:00',	'user', 1, '206b2dbe-ecc9-490b-b81b-83767288bc5e');
 #end
 
+## SQL Script for attaching profile with users
+
+DROP TABLE IF EXISTS `profiles`;
+CREATE TABLE `profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `theme_bg` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `theme_col` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `secret` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB;
+
+
 ## SQL Script for creating organizations table that can be used to associate secret key with each unique organization
 
 #begin
@@ -50,12 +68,15 @@ CREATE TABLE `organizations` (
   `email` varchar(100) NOT NULL,
   `license` varchar(15) NOT NULL DEFAULT 'basic',
   `validity` datetime NOT NULL,  
+  `logo` varchar(255) DEFAULT NULL,
+  `theme_bg` varchar(20) DEFAULT NULL,
+  `theme_col` varchar(20) DEFAULT NULL,  
   `is_active` tinyint(1) NOT NULL DEFAULT '0',  
   `org_secret` varchar(50) NOT NULL,
   `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e',
   PRIMARY KEY (`id`),
   UNIQUE KEY `org_secret` (`org_secret`)
-);
+) ENGINE=InnoDB;
 #end
 
 ## Insert a default organization
