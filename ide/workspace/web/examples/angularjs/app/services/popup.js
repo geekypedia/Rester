@@ -25,6 +25,7 @@ app.service('Popup', function($uibModal) {
 			//  buttonPosition: "" // (optional) default, top,
 			//	spinner: false //(optional) true - If you want to show progress while making http calls
 			// 	body: "<p>Something</p>",
+			// 	data: $scope.your_data (optional),
 			// 	scope: $scope //(optional),
 			//  close: function(data){}
 			// }
@@ -61,8 +62,8 @@ app.service('Popup', function($uibModal) {
 			//templateUrl: "app/services/popup.html",
 			controller: function ($scope, $uibModalInstance, H, M, S, $rootScope) {
 	      		$scope.options = options;
-	        	$scope.data={}
-
+	        	$scope.data = options.data || {}
+	        	
 	        	$scope.close = function () {
 	        		$uibModalInstance.dismiss($scope.data);
 	        	};
