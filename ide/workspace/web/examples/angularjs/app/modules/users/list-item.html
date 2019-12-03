@@ -10,11 +10,11 @@
 </td>
 <td>
     <div layout="row" flex>
-    <button ng-if="((['admin', 'superadmin'].indexOf(currentUser.role)  > -1) && item.role != 'superadmin') || (item.role == 'superadmin' && currentUser.role == 'superadmin') " class="btn btn-link" ng-click="showSetPasswordDialog($event, item)" >
+    <button ng-if="((['admin', 'superadmin'].indexOf(currentUser.role)  > -1) && item.role != 'superadmin') || (item.role == 'superadmin' && currentUser.role == 'superadmin') " class="btn-link no-border" ng-click="showSetPasswordDialog($event, item)" >
         {{M.BTN_SET_PASSWORD}}
     </button>
     </div>
-    <button ng-if="item.role == 'superadmin' && currentUser.role !== 'superadmin'" class="btn btn-link" >
+    <button ng-if="item.role == 'superadmin' && currentUser.role !== 'superadmin'" class="btn-link no-border" >
         {{M.NA}}
     </button>
 </td>
