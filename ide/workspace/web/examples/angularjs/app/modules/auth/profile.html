@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-sm card inner-container {{lockedClass}}">
         <div class="{{editingClass}}  text-align-center" >
-            <img src="{{H.getAbsoluteUrl(currentUser.profile.image) ||  'images/user.png'}}" alt="{{currentUser.username}}" class="logo200" >
+            <img ng-src="{{H.getAbsolutePath(currentUser.profile.image) ||  'images/user.png'}}" alt="{{currentUser.username}}" class="logo200" >
             <h3>{{currentUser.profile.first_name + ' ' + currentUser.profile.last_name}}</h3>
             <h5>{{currentUser.email}}</h5>
             <p class="title">{{currentUser.role}} <i>of</i> {{currentUser.organization.name}}</p>
@@ -29,7 +29,7 @@
         <form name="usersForm" ng-submit="save()" class="{{lockedClass}}">
             <div ng-if="currentUser.role != 'superadmin'" class="form-group row">
                 <label for="username" class="col-form-label">{{M.FIELD_USERNAME}}:</label>
-                <input id="username" name="username" type="text" class="form-control" ng-model="userData.username" required ng-disabled="locked">
+                <input id="username" name="username" type="text" class="form-control" ng-model="userData.username" required disabled>
                 <div ng-messages="forms.usersForm.username.$error" ng-show="forms.usersForm.username.$dirty">
                     <div ng-message="required">{{M.REQUIRED}}</div>
                 </div>
@@ -45,11 +45,11 @@
             <div class="form-group row">
                 <label for="role" class="col-form-label">{{M.FIELD_ROLE}}:</label>
 				<div class="dropdown">
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked || roleLocked">
 				    {{userData.role}}
 				  </button>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" ng-repeat="u in data.roles"  href="" ng-click="userData.role = u.id;">{{u.title}}</a>
+				    <a class="dropdown-item" ng-repeat="u in roles"  href="" ng-click="userData.role = u.id;">{{u.title}}</a>
 				  </div>
 				</div>			
                 
@@ -111,79 +111,3 @@
 	
 </section>
 </section>
-<!--<div class="fixed-action-btn ">-->
-<!--    <a class="btn-floating btn-large blue" href="#!"><i class="material-icons">home</i></a>-->
-<!--</div>-->
-<!--
-<style type="text/css">
-    .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        max-width: 400px;
-        margin: auto;
-        text-align: center;
-        font-family: arial;
-    }
-
-    .float-left {
-        float: left;
-    }
-
-    .float-right {
-        float: right;
-    }
-
-    .title {
-        color: grey;
-        font-size: 18px;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .visible {
-        display: block;
-    }
-
-    .formClass {
-        width: 500px;
-    }
-
-    .button-block {
-        border: none;
-        outline: 0;
-        display: inline-block;
-        padding: 8px;
-        color: white;
-        background-color: #000;
-        text-align: center;
-        cursor: pointer;
-        width: 100%;
-        font-size: 18px;
-    }
-
-    .button-black {
-        border: none;
-        outline: 0;
-        display: inline-block;
-        padding: 8px;
-        color: white;
-        background-color: #000;
-        text-align: center;
-        cursor: pointer;
-        width: 100%;
-        font-size: 18px;
-    }
-
-    a {
-        text-decoration: none;
-        font-size: 22px;
-        color: black;
-    }
-
-    button:hover,
-    a:hover {
-        opacity: 0.7;
-    }
-</style>
--->
