@@ -4,7 +4,8 @@
 <section class="row justify-content-center">
 <section class="form-card">
     <div class="card">
-    	<div class="card-header">{{M.TITLE_ORGANIZATION_SETTINGS}}</div>
+    	<div class="card-header"><span class="large">{{M.TITLE_ORGANIZATION_SETTINGS}}</span>
+    	</div>
     	<div class="card-body">
         <form name="forms.settingsForm" ng-submit="save()">
             <div class="form-group row">
@@ -40,7 +41,7 @@
 	                	</div>
              </div>
              
-            <div class="col-md-6 offset-md-4">
+            <div class="col-md-6 offset-md-4" ng-if="$rootScope.currentUser.organization.id">
                 <button type="button" class="btn btn-primary" ng-show="locked" ng-click="unlock()">
                     {{M.BTN_EDIT}}
                 </button>
@@ -49,9 +50,13 @@
                 </button>
                 <spinner></spinner>
             </div>
-            <div class='col-md-6 offset-md-4'>
-              <p class="small col-red" ng-if="error">{{error}}</p>
+            <div class="form-group row">
+	            <div class='col-md-6 offset-md-4'>
+	              <p class="small col-red" ng-if="error">{{error}}</p>
+	              <div class="alerts-container"></div>
+	            </div>
             </div>
+			
             <div>
             	<br/>
             </div>	
