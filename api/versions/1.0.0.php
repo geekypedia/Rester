@@ -342,6 +342,7 @@ $loginFunction = function($params = NULL) {
 					$user[organization] = $organizations[0];
 				} else if(in_array($user['role'], array("admin"))){
 					$user[organization] = array(
+												"id" => $organizations[0]["id"],						
 												"name" => $organizations[0]["name"],
 												"email" => $organizations[0]["email"],
 												"secret" => $organizations[0]["org_secret"],
