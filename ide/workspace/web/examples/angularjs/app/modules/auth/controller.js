@@ -18,6 +18,9 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 
 	$scope.login = function(){
 		//$scope.loading = true;
+		$('.menu-loading').show();
+		$('.menu-static').hide();
+		
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
 			.then(function(r){
 				$scope.error = "";
@@ -94,6 +97,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
 		$('.all-nav').hide(); //CUSTOM
+		$('.menu-static').show();
 		$location.path('/sign-in');
 	};
 });
