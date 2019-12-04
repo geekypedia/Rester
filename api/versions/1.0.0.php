@@ -70,6 +70,7 @@ function excluded_routes(){
 				"POST users/change-password", 
 				"POST users/register", 
 				"POST organizations/register", 
+				"GET metadata/table"		
 				"GET hello/world"
 				);
 	
