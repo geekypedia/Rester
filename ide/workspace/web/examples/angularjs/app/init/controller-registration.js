@@ -1,7 +1,7 @@
 /*global app, ControllerFactory, RegisterRoutes, RegisterData*/
 function RegisterEasyController(route, headers, controller, auto=false){
 	app.controller(route + 'ControllerBase', ControllerFactory(route));
-	
+
 	app.controller(route + 'Controller', function($scope, $controller, H) {
 		//Copy all scope variables from Base Controller
 		$controller(route + 'ControllerBase', {
@@ -30,7 +30,7 @@ function RegisterEasyController(route, headers, controller, auto=false){
 
 //Register Easy Routes
 (function(){
-    var easyRoutes = RegisterRoutes().easyRoutes;
+    var easyRoutes = RegisterRoutes().easyRoutes || [];
     //var data = RegisterData();
     
     for (var i = 0; i < easyRoutes.length; i++) {
@@ -40,7 +40,7 @@ function RegisterEasyController(route, headers, controller, auto=false){
 
 //Register Auto Routes
 (function(){
-    var autoRoutes = RegisterRoutes().autoRoutes;
+    var autoRoutes = RegisterRoutes().autoRoutes || [];
     //var data = RegisterData();
     
     for (var i = 0; i < autoRoutes.length; i++) {
