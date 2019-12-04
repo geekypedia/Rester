@@ -2,6 +2,7 @@
 //JQuery
 SideNavStatus = false;
 
+
 GLOBALS = {}
 
 BuildSideNav = function(cb, mode) {
@@ -15,12 +16,13 @@ BuildSideNavInternal = function(cb, mode = "expand") {
 	$('.all-nav').show(); //CUSTOM
 	$('#main-nav').hide();
 	$('.side-nav-div').css('display', 'none');
-    
 
 	for (var x = navCount; x >= 0; x--) {
 		$('.all-nav').removeClass('hc-nav-' + x);
 		$('nav.hc-nav-' + x).remove();
 	}
+	
+	
 
 	setTimeout(function(cb) {
 
@@ -103,6 +105,7 @@ BuildSideNavInternal = function(cb, mode = "expand") {
 			}
 		});
 
+		$('.menu-loading').hide();
 		$('.side-nav-div').css('display', 'inherit');
 		$('#main-nav').hide();
 
@@ -126,7 +129,7 @@ $(function() {
 
 	// $('select').formSelect();
 
-
+	
 
 
 	function htmlbodyHeightUpdate() {
