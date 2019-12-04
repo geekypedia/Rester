@@ -1,6 +1,7 @@
 /*global app*/
-app.service('S', function($http) {
-	return {
+class Settings{
+	static get(){
+		return {
 		"baseUrl": "../../../../../api",
 		"productName": "pRESTige",
 		"supportEmail": "support@prestigeframework.com",
@@ -11,6 +12,12 @@ app.service('S', function($http) {
 			background: "primary",
 			color: "white"
 		},
-		"menu": "expand" //expand or overlap
+		"menu": "expand", //expand or overlap,
+		"autoMasters": false,
+		"showMastersMenu": true
+		}
 	}
+}
+app.service('S', function() {
+	return Settings.get();
 });
