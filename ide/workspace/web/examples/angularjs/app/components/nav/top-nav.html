@@ -1,6 +1,10 @@
   		<nav class="navbar navbar-expand bg-{{ currentUser.profile.theme_bg || currentUser.organization.theme_bg || S.theme.background || 'light'}} col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}">
+          	<i class="menu-loading material-icons col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}} menu-icon xx-large" style="display: none;">more_horiz</i>
+          	<i class="menu-static material-icons col-{{ currentUser.profile.theme_bg || currentUser.organization.theme_bg || S.theme.background || 'light'}} menu-icon xx-large">more_horiz</i>
+			
 		    <div class="{{currentUser ? 'container' : 'no-container'}}" ng-controller="titleController">
 		    <!--<div class="container" ng-controller="titleController">-->
+		    
 		        <a class="navbar-brand navbar-title col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}" href="#">{{title}}</a>
 		        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
 		        <!--    <span class="navbar-toggler-icon"></span>-->
@@ -19,7 +23,4 @@
 		    </div>
 		    
 		    <div right-nav></div>
-
-				        
-		    
 		</nav>
