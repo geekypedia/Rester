@@ -1044,6 +1044,15 @@ function load_stored_procedures(){
 }
 load_stored_procedures();
 
+//API for METADATA
+$prestige->register("GET", "metadata", "table", function($params=null){
+	global $prestige;
+	$id = $params['id'];
+	$value = $prestige->query("show columns from $id"); //you can do any type of MySQL queries here.
+	$prestige->showResult($value);
+}, array(id => true, "secret"), "API to fetch table metadata");
+
+
 //Custom API
 //$helloWorldApi = new RouteCommand("GET", "hello", "world", function($params=null){
 //	$api = new ResterController();
