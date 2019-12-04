@@ -13,6 +13,9 @@ BuildSideNav = function(cb, mode) {
 
 BuildSideNavInternal = function(cb, mode = "expand") {
 	$('.all-nav').show(); //CUSTOM
+	$('#main-nav').hide();
+	$('.side-nav-div').css('display', 'none');
+    
 
 	for (var x = navCount; x >= 0; x--) {
 		$('.all-nav').removeClass('hc-nav-' + x);
@@ -100,6 +103,7 @@ BuildSideNavInternal = function(cb, mode = "expand") {
 			}
 		});
 
+		$('.side-nav-div').css('display', 'inherit');
 		$('#main-nav').hide();
 
 		SideNavStatus = true;
