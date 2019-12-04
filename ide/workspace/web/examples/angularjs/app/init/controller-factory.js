@@ -6,6 +6,12 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.resourceName = resourceName;
 		var Resource = H.R.get(resourceName);
 
+		$http.get(S.baseUrl + '/metadata/table?id=' + resourceName).then(function(r){
+			$scope.metadata = r.data;
+			$scope.buildSingleHeaders();
+		}, function(e){
+		});
+
 		//Scope variables
 		$scope.data = {};
 		$scope.data.single = new Resource();
@@ -84,6 +90,7 @@ function ControllerFactory(resourceName, options, extras) {
 		//Initializa new single objetc
 		$scope.initSingle = function() {
 			$scope.data.single = new Resource();
+			//$scope.buildSingleHeaders();
 		};
 
 		//Get all rows from your API/table. Provide a query filter in case you want reduced dataset.
@@ -132,6 +139,7 @@ function ControllerFactory(resourceName, options, extras) {
 				id: id
 			}, function(result) {
 				$scope.data.single = result;
+				//$scope.buildSingleHeaders();
 				if (callback) {
 					callback(result);
 				}
@@ -718,6 +726,30 @@ function ControllerFactory(resourceName, options, extras) {
 				$scope.data.listHeaders[$scope.data.listHeaders.indexOf(header)] = replacement;
 			}
 		};
+		
+		$scope.buildSingleHeaders = function(){
+				$scope.data.singleKeys = [] //Object.getOwnPropertyNames($scope.data.single).filter(function(p){ return !(p.startsWith('$') || p == 'secret'); });
+				$scope.data.singleKeysInfo = {};
+				for(i in $scope.metadata){
+					var o = $scope.metadata[i];
+					var k = o.Field;
+					if(k == "secret") continue;
+					$scope.data.singleKeys.push(k);
+					var type = "text";
+					var title = H.toTitleCase(H.replaceAll(k, '_', ' '));
+					if(k.endsWith("email")){
+						type = "email";
+					} else if(k.indexOf("password") > -1){
+						type = "password";
+					} else if(k.startsWith("is_") || o.Type == "tinyint(1)"){
+						type = "bool";
+					} else if(o.Type.startsWith("int") || o.Type.startsWith("bigint") || o.Type.startsWith("mediumint") || o.Type.startsWith("smallint") || o.Type.startsWith("float") || o.Type.startsWith("double")){
+						type = "number";
+					}
+					$scope.data.singleKeysInfo[k] = {type: type, title: title};	
+				}
+
+		}
 		
 		 $scope.showDialog = function(ev, title, content, okText = "OK", cancelText = "Cancel", okHandler, cancelHandler) {
 		 	Popup.show({
