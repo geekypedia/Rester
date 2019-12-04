@@ -66,8 +66,7 @@ app.provider('customRoutes', function() {
 });
 
 
-app.config(async
-	function($routeProvider, $resourceProvider, $httpProvider, $controllerProvider, customRoutesProvider) {
+app.config(async function($routeProvider, $resourceProvider, $httpProvider, $controllerProvider, customRoutesProvider) {
 		var routes = customRoutesProvider.routes.customRoutes;
 		var existingRoutes = routes.map(function(p) {
 			return p.route;
