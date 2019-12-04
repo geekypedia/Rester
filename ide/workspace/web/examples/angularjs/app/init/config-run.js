@@ -259,6 +259,11 @@ app.run(function($rootScope, $location, $cookies, H) {
 	});
 
 	$rootScope.$on("buildMenu", function(event, next, current) {
+		setTimeout(function(){
+			$('.menu-static').hide();
+			$('.menu-loading').show();
+		}, 1000);
+		
 		var timeout = 2500;
 		if (Settings.get().autoMasters) {
 			timeout = 2500;
