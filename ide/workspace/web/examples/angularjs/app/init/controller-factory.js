@@ -371,20 +371,22 @@ function ControllerFactory(resourceName, options, extras) {
 			    $scope.query(dataQuery, function(r) {
 			    	$scope.loading = false;
 			    	if(r && r.length > 0){
-				    	var headers = Object.getOwnPropertyNames(r[0]);
-				    	$scope.data.listHeadersRaw = headers;
-				    	if(headers.indexOf("id") > -1) headers.splice(headers.indexOf("id"), 1);
-				    	if(headers.indexOf("secret") > -1) headers.splice(headers.indexOf("secret"), 1);
-				    	headers = headers.filter(function(p){ return (p.slice(-3) !== "_id")});
-				    	if($scope.removeListHeaders){
-				    		var removeHeaders = $scope.removeListHeaders();
-				    		for (var i = 0; i < removeHeaders.length; i++) {
-				    			var h = removeHeaders[i];
-				    			if(headers.indexOf(h) > -1) headers.splice(headers.indexOf(h), 1);
-				    		}
-				    	}
-				    	$scope.data.listKeys = headers;
-				    	headers = headers.map(function(p){ return H.toTitleCase(H.replaceAll(p, '_', ' '))});
+				    	// var headers = Object.getOwnPropertyNames(r[0]);
+				    	// $scope.data.listHeadersRaw = headers;
+				    	// if(headers.indexOf("id") > -1) headers.splice(headers.indexOf("id"), 1);
+				    	// if(headers.indexOf("secret") > -1) headers.splice(headers.indexOf("secret"), 1);
+				    	// headers = headers.filter(function(p){ return (p.slice(-3) !== "_id")});
+				    	// if($scope.removeListHeaders){
+				    	// 	var removeHeaders = $scope.removeListHeaders();
+				    	// 	for (var i = 0; i < removeHeaders.length; i++) {
+				    	// 		var h = removeHeaders[i];
+				    	// 		if(headers.indexOf(h) > -1) headers.splice(headers.indexOf(h), 1);
+				    	// 	}
+				    	// }
+				    	// $scope.data.listKeys = headers;
+				    	// headers = headers.map(function(p){ return H.toTitleCase(H.replaceAll(p, '_', ' '))});
+				    	$scope.data.listKeys = $scope.data.singleKeys;
+				    	var headers = $scope.data.singleKeys.map(function(p){ return $scope.data.singleKeysInfo[p].title; });
 				    	$scope.setListHeaders(headers);
 			    	}
 			    	if($scope.onLoadAll) $scope.onLoadAll(r);
