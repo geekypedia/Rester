@@ -1048,7 +1048,8 @@ load_stored_procedures();
 $prestige->register("GET", "metadata", "table", function($params=null){
 	global $prestige;
 	$id = $params['id'];
-	$value = $prestige->query("show columns from $id"); //you can do any type of MySQL queries here.
+	if($id) $value = $prestige->query("show columns from $id"); //you can do any type of MySQL queries here.
+		else $value = $prestige->query("show tables");
 	$prestige->showResult($value);
 }, array(id => true, "secret"), "API to fetch table metadata");
 
