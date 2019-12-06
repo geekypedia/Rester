@@ -2,8 +2,8 @@
 <!--Example-->
 <form name="forms.{{resourceName}}Form" id="forms.{{resourceName}}Form">
      <div ng-repeat="i in data.singleKeys">
-     	<div class="form-group row"  ng-if="data.singleKeysInfo[i].type != 'bool' && i != 'id'">
-			<label for="{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+     	<div class="form-group row"  ng-if="!(['bool', 'fkey'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id'">
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
 				<input id="{{i}}" name="{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" required ng-disabled="locked" autofocus>
 			</div>
@@ -12,7 +12,7 @@
 			</div>
      	</div>
      	<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'bool'">
-			<label for="{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
 			<div class="custom-control custom-switch form-switch">
 				<input class="custom-control-input" type="checkbox" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" ng-disabled="locked" ng-true-value="1"  ng-false-value="0" ng-model="data.single[i]"> 
@@ -20,5 +20,18 @@
 			</div>
 			</div>
      	</div>
+		<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'fkey'">
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<div class="col-md-6">
+				<div class="dropdown">
+				  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
+				    {{data.selectedForeignKeys[i].title || data.selectedForeignKeys[i].display_name || data.selectedForeignKeys[i].name || (data.selectedForeignKeys[i].first_name ? data.selectedForeignKeys[i].first_name + ' ' + data.selectedForeignKeys[i].last_name : null) || data.selectedForeignKeys[i].email || data.selectedForeignKeys[i].id || data.single[i] }}
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_{{i}}">
+				    <a class="dropdown-item" ng-repeat="r in data.foreignKeys[data.singleKeysInfo[i].title.toLowerCase() + 's']"  href="" ng-click="data.single[i] = r.id;data.selectedForeignKeys[i] = r;">{{ r.title || r.display_name || r.name || (r.first_name ? r.first_name + ' ' + r.last_name : null) || r.email || r.id }}</a>
+				  </div>
+				</div>			
+			</div>    
+		</div>     	
      </div>
 </form>
