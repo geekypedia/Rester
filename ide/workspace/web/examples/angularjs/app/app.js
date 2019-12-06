@@ -11,7 +11,7 @@ var app = angular.module('app', [
 							'ui.grid.exporter', 
 							'ui.grid.autoResize',
 							'ui.bootstrap',
-							// 'ngMaterial', 
+							'ui.calendar',    
 							'ngMessages',
 							'angular-md5',
 							'zingchart-angularjs',
