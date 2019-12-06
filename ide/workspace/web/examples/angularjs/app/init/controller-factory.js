@@ -737,25 +737,39 @@ function ControllerFactory(resourceName, options, extras) {
 
 		$scope.buildSingleHeaders = function() {
 			$scope.data.singleKeys = [] //Object.getOwnPropertyNames($scope.data.single).filter(function(p){ return !(p.startsWith('$') || p == 'secret'); });
+			$scope.data.foreignKeys = {};
+			$scope.data.foreignKeysResources = {};
 			$scope.data.singleKeysInfo = {};
 			for (i in $scope.metadata) {
-				var o = $scope.metadata[i];
+				var o = JSON.parse(JSON.stringify($scope.metadata[i]));
 				var k = o.Field;
 				if (k == "secret") continue;
 				$scope.data.singleKeys.push(k);
 				var type = "text";
 				var required = o.Null == 'NO';
 				var title = H.toTitleCase(H.replaceAll(k, '_', ' '));
-				if (k.endsWith("email")) {
+				if(title.endsWith(' Id')) title = title.substring(0,title.length - 3);
+				if (o.Key == "MUL"){
+					type = "fkey";
+					fkeyTable = title.toLowerCase() + 's';
+					$scope.data.foreignKeysResources[fkeyTable] = R.get(fkeyTable);
+					
+					(function(fkeyTable){
+						$scope.data.foreignKeysResources[fkeyTable].query({}, function(r){
+							$scope.data.foreignKeys[fkeyTable] = r;
+						}, function(e){
+						});
+					})(fkeyTable);
+				} else if (k.startsWith("is_") || o.Type == "tinyint(1)") {
+					type = "bool";
+				} else if (k.endsWith("email")) {
 					type = "email";
 				} else if (k.indexOf("password") > -1) {
 					type = "password";
-				} else if (k.startsWith("is_") || o.Type == "tinyint(1)") {
-					type = "bool";
 				} else if (o.Type.startsWith("int") || o.Type.startsWith("bigint") || o.Type.startsWith("mediumint") || o.Type.startsWith("smallint") || o.Type.startsWith("float") || o.Type.startsWith("double")) {
 					type = "number";
-				} else if (o.Key == "MUL"){
-					type = "fkey";
+				} else {
+					type = "text";
 				}
 				$scope.data.singleKeysInfo[k] = {
 					type: type,
