@@ -1,3 +1,39 @@
+/* Bootstrap Colors */
+
+.col-primary {
+	color: #007bff !important;
+}
+
+.col-secondary {
+	color: #6c757d !important;
+}
+
+.col-success {
+	color: #28a745 !important;
+}
+
+.col-info {
+	color: #17a2b8 !important;
+}
+
+.col-warning {
+	color: #ffc107 !important;
+}
+
+.col-danger {
+	color: #dc3545 !important;
+}
+
+.col-light {
+	color: #f8f9fa !important;
+}
+
+.col-dark {
+	color: #343a40 !important;
+}
+  
+/* CSS Colors */
+
 .col-indianred {
 	color: indianred !important;
 }
@@ -569,6 +605,8 @@
 .col-black {
 	color: black !important;
 }
+
+/* CSS Background Colors */
 
 .bg-indianred {
 	background: indianred !important;
