@@ -744,6 +744,7 @@ function ControllerFactory(resourceName, options, extras) {
 				if (k == "secret") continue;
 				$scope.data.singleKeys.push(k);
 				var type = "text";
+				var required = o.Null == 'NO';
 				var title = H.toTitleCase(H.replaceAll(k, '_', ' '));
 				if (k.endsWith("email")) {
 					type = "email";
@@ -753,10 +754,13 @@ function ControllerFactory(resourceName, options, extras) {
 					type = "bool";
 				} else if (o.Type.startsWith("int") || o.Type.startsWith("bigint") || o.Type.startsWith("mediumint") || o.Type.startsWith("smallint") || o.Type.startsWith("float") || o.Type.startsWith("double")) {
 					type = "number";
+				} else if (o.Key == "MUL"){
+					type = "fkey";
 				}
 				$scope.data.singleKeysInfo[k] = {
 					type: type,
-					title: title
+					title: title,
+					required: required
 				};
 			}
 
