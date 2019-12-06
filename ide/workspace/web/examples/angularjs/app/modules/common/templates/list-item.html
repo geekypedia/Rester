@@ -3,7 +3,8 @@
 
 <!--The following code repeats through all the columns available in a record-->
 <td ng-repeat="key in data.listKeys">
-    <span ng-if="!(['is_active'].indexOf(key) > -1)">{{item[key]}}</span>
+    <span ng-if="!(['is_active'].indexOf(key) > -1) && !key.endsWith('_id')">{{item[key]}}</span>
+    <span ng-if="key.endsWith('_id')"><a ng-href="{{ '#!' + key.substring(0, key.length - 3) + 's/' + item[key] }}">{{ item[key] }}</a></span>
     <span ng-if="key == 'is_active'">{{item[key] == 1 ? 'Yes' : 'No'}}</span>
 </td>
 
