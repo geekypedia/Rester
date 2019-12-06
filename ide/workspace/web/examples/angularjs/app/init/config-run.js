@@ -250,6 +250,7 @@ app.run(function($rootScope, $location, $cookies, H) {
 		SideNavStatus = false;
 		$('.all-nav').hide(); //CUSTOM
 		$('.menu-static').show();
+        $('.menu-loading').hide();        
         
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
