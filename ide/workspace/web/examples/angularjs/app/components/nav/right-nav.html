@@ -7,7 +7,7 @@
 					</div>
 				</li>
 				<li class="nav-item">
-						<span class="nav-link" ng-if="currentUser.profile && (currentUser.profile.first_name || currentUser.profile.last_name)" style="width: calc({{(currentUser.profile.first_name + ' ' + currentUser.profile.last_name).length * 0.66}}em">{{currentUser.profile.first_name + ' ' + currentUser.profile.last_name}}</span>
-						<span class="nav-link" ng-if="!currentUser.profile || !(currentUser.profile.first_name && currentUser.profile.last_name)" style="width: calc({{(currentUser.username).length * 0.66}}em">{{currentUser.username}}</span>
+						<span class="nav-link" ng-if="currentUser.profile && (currentUser.profile.first_name || currentUser.profile.last_name)" style="width: calc({{(currentUser.profile.first_name + ' ' + currentUser.profile.last_name).length * 0.66}}em">{{(currentUser.profile.first_name || '') + ' ' + (currentUser.profile.last_name || '')}}</span>
+						<span class="nav-link" ng-if="!currentUser.profile || !(currentUser.profile.first_name || currentUser.profile.last_name)" style="width: calc({{(currentUser.username).length * 0.66}}em">{{currentUser.username}}</span>
 				</li>
 			</ul>
