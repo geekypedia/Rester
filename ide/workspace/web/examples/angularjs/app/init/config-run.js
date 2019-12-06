@@ -247,6 +247,10 @@ app.run(function($rootScope, $location, $cookies, H) {
 	});
 
 	$rootScope.$on("loginRequired", function(event, next, current) {
+		SideNavStatus = false;
+		$('.all-nav').hide(); //CUSTOM
+		$('.menu-static').show();
+        
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
 		$location.path('/sign-in');
