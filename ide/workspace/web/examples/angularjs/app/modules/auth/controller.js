@@ -94,10 +94,12 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	
 	$scope.logout = function(){
 		SideNavStatus = false;
-		$cookies.remove(H.getCookieKey());
-		delete $rootScope.currentUser;
 		$('.all-nav').hide(); //CUSTOM
 		$('.menu-static').show();
+		$('.menu-loading').hide();		
+		
+		$cookies.remove(H.getCookieKey());
+		delete $rootScope.currentUser;
 		$location.path('/sign-in');
 	};
 });
