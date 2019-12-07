@@ -5,10 +5,10 @@
      	<div class="form-group row"  ng-if="!(['bool', 'fkey'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id'">
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
-				<input id="{{i}}" name="{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" required ng-disabled="locked" autofocus>
+				<input id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" required ng-disabled="locked" autofocus>
 			</div>
-			<div ng-messages="forms[resourceName + 'Form'][i].$error" ng-show="forms[resourceName + 'Form'][i].$dirty">
-				<div ng-message="required">{{M.REQUIRED}}</div>
+			<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">
+				<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>
 			</div>
      	</div>
      	<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'bool'">
