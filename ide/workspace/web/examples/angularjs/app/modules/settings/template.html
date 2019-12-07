@@ -14,7 +14,7 @@
             		<input id="organization_name" name="organization_name" type="text" class="form-control" ng-model="data.single.name" required ng-disabled="locked">
             	</div>
 	              <div ng-messages="forms.settingsForm.organization_name.$error" ng-show="forms.settingsForm.organization_name.$dirty">
-	                <div ng-message="required">{{M.REQUIRED}}</div>
+	                <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
 	              </div>
             </div>
              <div class="form-group row">
@@ -23,8 +23,8 @@
             		<input id="organization_email" name="organization_email" type="email" class="form-control" ng-model="data.single.email" required ng-disabled="true">
             	</div>
               <div ng-messages="forms.settingsForm.organization_email.$error" ng-show="forms.settingsForm.organization_email.$dirty">
-                <div ng-message="required">{{M.REQUIRED}}</div>
-                <div ng-message="email">{{M.INVALID_EMAIL}}</div>        
+                <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
+                <div class="small col-red" ng-message="email">{{M.INVALID_EMAIL}}</div>        
               </div>
             </div>
              <div class="form-group row">
@@ -56,7 +56,6 @@
 	              <div class="alerts-container"></div>
 	            </div>
             </div>
-			
             <div>
             	<br/>
             </div>	
