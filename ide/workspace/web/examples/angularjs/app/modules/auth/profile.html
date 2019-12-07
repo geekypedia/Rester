@@ -31,15 +31,15 @@
                 <label for="username" class="col-form-label">{{M.FIELD_USERNAME}}:</label>
                 <input id="username" name="username" type="text" class="form-control" ng-model="userData.username" required disabled>
                 <div ng-messages="forms.usersForm.username.$error" ng-show="forms.usersForm.username.$dirty">
-                    <div ng-message="required">{{M.REQUIRED}}</div>
+                    <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="email" class="col-form-label">{{M.FIELD_EMAIL}}:</label>
                 <input id="email" name="email" type="email" class="form-control" ng-model="userData.email" required ng-disabled="locked">
                 <div ng-messages="forms.usersForm.email.$error" ng-show="forms.usersForm.email.$dirty">
-                    <div ng-message="required">{{M.REQUIRED}}</div>
-                    <div ng-message="email">{{M.INVALID_EMAIL}}</div>
+                    <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
+                    <div class="small col-red" ng-message="email">{{M.INVALID_EMAIL}}</div>
                 </div>
             </div>
             <div class="form-group row">
@@ -77,21 +77,21 @@
                 <label for="password" class="col-form-label">{{M.FIELD_PASSWORD}}:</label>
                 <input id="password" name="password" type="password" class="form-control" ng-model="passwordData.password" required ng-disabled="locked">
                 <div ng-messages="forms.passwordForm.password.$error" ng-show="forms.passwordForm.password.$dirty">
-                    <div ng-message="required">{{M.REQUIRED}}</div>
+                    <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="newPassword" class="col-form-label">{{M.FIELD_NEW_PASSWORD}}:</label>
                 <input id="newPassword" name="newPassword" type="password" class="form-control" ng-model="passwordData.newPassword" required ng-disabled="locked">
                 <div ng-messages="forms.passwordForm.newPassword.$error" ng-show="forms.passwordForm.newPassword.$dirty">
-                    <div ng-message="required">{{M.REQUIRED}}</div>
+                    <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="confirmPassword" class="col-form-label">{{M.FIELD_CONFIRM_PASSWORD}}:</label>
                 <input id="confirmPassword" name="confirmPassword" type="password" class="form-control" ng-model="passwordData.confirmPassword" required ng-disabled="locked">
                 <div ng-messages="forms.passwordForm.confirmPassword.$error" ng-show="forms.passwordForm.confirmPassword.$dirty">
-                    <div ng-message="required">{{M.REQUIRED}}</div>
+                    <div class="small col-red" ng-message="required">{{M.REQUIRED}}</div>
                 </div>
             </div>
             <div>
