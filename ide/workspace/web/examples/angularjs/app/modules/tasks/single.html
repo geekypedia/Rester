@@ -7,7 +7,7 @@
 			<input id="task_title" name="task_title" type="text" class="form-control" ng-model="data.single.title" required ng-disabled="locked" autofocus>
 		</div>
 		<div ng-messages="forms.tasksForm.task_title.$error" ng-show="forms.tasksForm.task_title.$dirty">
-			<div ng-message="required">{{M.REQUIRED}}</div>
+			<div ng-message="required" class="small col-red">{{M.REQUIRED}}</div>
 		</div>
 	</div>
 	<div class="form-group row">
