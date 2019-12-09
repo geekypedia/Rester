@@ -25,7 +25,7 @@
 			<div class="col-md-6">
 				<div class="dropdown">
 				  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
-				    {{data.selectedForeignKeys[i].title || data.selectedForeignKeys[i].display_name || data.selectedForeignKeys[i].name || (data.selectedForeignKeys[i].first_name ? data.selectedForeignKeys[i].first_name + ' ' + data.selectedForeignKeys[i].last_name : null) || data.selectedForeignKeys[i].email || data.selectedForeignKeys[i].id || data.single[i] }}
+				    {{data.selectedForeignKeys[i].title || data.selectedForeignKeys[i].display_name || data.selectedForeignKeys[i].name || (data.selectedForeignKeys[i].first_name ? data.selectedForeignKeys[i].first_name + ' ' + data.selectedForeignKeys[i].last_name : null) || data.selectedForeignKeys[i].email || data.selectedForeignKeys[i].id || data.single[i] || 'Choose an option' }}
 				  </button>
 				  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_{{i}}">
 				    <a class="dropdown-item" ng-repeat="r in data.foreignKeys[data.singleKeysInfo[i].title.toLowerCase() + 's']"  href="" ng-click="data.single[i] = r.id;data.selectedForeignKeys[i] = r;">{{ r.title || r.display_name || r.name || (r.first_name ? r.first_name + ' ' + r.last_name : null) || r.email || r.id }}</a>
