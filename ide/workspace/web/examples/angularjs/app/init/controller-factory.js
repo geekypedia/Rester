@@ -762,13 +762,17 @@ function ControllerFactory(resourceName, options, extras) {
 					})(fkeyTable);
 				} else if (k.startsWith("is_") || o.Type == "tinyint(1)") {
 					type = "bool";
+				} else if (o.Type.startsWith("int") || o.Type.startsWith("bigint") || o.Type.startsWith("mediumint") || o.Type.startsWith("smallint") || o.Type.startsWith("float") || o.Type.startsWith("double") || o.Type.startsWith("tinyint")) {
+					type = "number";
+				} else if (o.Type == "date"{
+					type = "date";
+				} else if (o.Type == "datetime"{
+					type = "datetime";
 				} else if (k.endsWith("email")) {
 					type = "email";
 				} else if (k.indexOf("password") > -1) {
 					type = "password";
-				} else if (o.Type.startsWith("int") || o.Type.startsWith("bigint") || o.Type.startsWith("mediumint") || o.Type.startsWith("smallint") || o.Type.startsWith("float") || o.Type.startsWith("double")) {
-					type = "number";
-				} else {
+				}  else {
 					type = "text";
 				}
 				$scope.data.singleKeysInfo[k] = {
