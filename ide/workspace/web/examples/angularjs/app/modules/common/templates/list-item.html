@@ -3,9 +3,9 @@
 
 <!--The following code repeats through all the columns available in a record-->
 <td ng-repeat="key in data.listKeys">
-    <span ng-if="!(['is_active'].indexOf(key) > -1) && !key.endsWith('_id')">{{item[key]}}</span>
-    <span ng-if="key.endsWith('_id')"><a ng-href="{{ '#!' + key.substring(0, key.length - 3) + 's/' + item[key] }}">{{ item[key.substring(0, key.length - 3)].title || item[key.substring(0, key.length - 3)].display_name || item[key.substring(0, key.length - 3)].name || (item[key.substring(0, key.length - 3)].first_name ? item[key.substring(0, key.length - 3)].first_name + ' ' + item[key.substring(0, key.length - 3)].last_name : null) || item[key.substring(0, key.length - 3)].email || item[key.substring(0, key.length - 3)].id || item[key] }}</a></span>
-    <span ng-if="key == 'is_active'">{{item[key] == 1 ? 'Yes' : 'No'}}</span>
+    <span ng-if="!(['bool', 'fkey'].indexOf(data.singleKeysInfo[key].type) > -1)">{{item[key]}}</span>
+    <span ng-if="data.singleKeysInfo[key].type == 'fkey'"><a ng-href="{{ '#!' + key.substring(0, key.length - 3) + 's/' + item[key] }}">{{ item[key.substring(0, key.length - 3)].title || item[key.substring(0, key.length - 3)].display_name || item[key.substring(0, key.length - 3)].name || (item[key.substring(0, key.length - 3)].first_name ? item[key.substring(0, key.length - 3)].first_name + ' ' + item[key.substring(0, key.length - 3)].last_name : null) || item[key.substring(0, key.length - 3)].email || item[key.substring(0, key.length - 3)].id || item[key] }}</a></span>
+    <span ng-if="data.singleKeysInfo[key].type == 'bool'">{{item[key] == 1 ? 'Yes' : 'No'}}</span>
 </td>
 
 <!--The following code creates a link to view detailed record. You can use 'currentRoute' to represent the current base route that matches your API. e.g. 'tasks' in this case.-->
