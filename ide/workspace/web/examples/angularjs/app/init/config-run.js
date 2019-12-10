@@ -247,10 +247,11 @@ app.run(function($rootScope, $location, $cookies, H) {
 	});
 
 	$rootScope.$on("loginRequired", function(event, next, current) {
-		SideNavStatus = false;
-		$('.all-nav').hide(); //CUSTOM
-		$('.menu-static').show();
-        $('.menu-loading').hide();        
+		// GLOBALS.registry.sideNavStatus = false;
+		// $('.all-nav').hide(); //CUSTOM
+		// $('.menu-static').show();
+  //      $('.menu-loading').hide();
+		GLOBALS.methods.logout();
         
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
@@ -264,25 +265,17 @@ app.run(function($rootScope, $location, $cookies, H) {
 	});
 
 	$rootScope.$on("buildMenu", function(event, next, current) {
-		setTimeout(function(){
-			$('.menu-static').hide();
-			$('.menu-loading').show();
-		}, 1000);
-		
-		var timeout = 2500;
-		if (Settings.get().autoMasters) {
-			timeout = 2500;
-			// setTimeout(function(){
-			// 	for(k in GLOBALS.menu.controllers){
-			// 		var c = GLOBALS.menu.controllers[k];
-			// 		RegisterEasyController(c,null,null,true/*, data[easyRoutes[i]].headers*/);	
-			// 	}
-			// }, timeout);
-		}
-
-		setTimeout(function() {
-			BuildSideNav(null, H.S.menu);
-		}, timeout);
+		GLOBALS.methods.sideNavDelayed(H.S.menu);
+		// var timeout = 2500;
+		// if (Settings.get().autoMasters) {
+		// 	timeout = 2500;
+		// 	// setTimeout(function(){
+		// 	// 	for(k in GLOBALS.menu.controllers){
+		// 	// 		var c = GLOBALS.menu.controllers[k];
+		// 	// 		RegisterEasyController(c,null,null,true/*, data[easyRoutes[i]].headers*/);	
+		// 	// 	}
+		// 	// }, timeout);
+		// }
 	});
 
 
