@@ -45,5 +45,6 @@ app.controller('settingsController', function($scope, $rootScope, $http, $cookie
 
 	}
 	
+    GLOBALS.methods.autoFocus();
 
 });
