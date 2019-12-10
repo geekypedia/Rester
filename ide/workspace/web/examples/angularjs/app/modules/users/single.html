@@ -23,7 +23,7 @@
 	<div class="col-md-6">
 		<div class="dropdown">
 		  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
-		    {{data.single.role}}
+		    {{data.single.role || 'Choose an option'}}
 		  </button>
 		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 		    <a class="dropdown-item" ng-repeat="u in data.roles"  href="" ng-click="data.single.role = u.id;">{{u.title}}</a>
