@@ -433,6 +433,9 @@ function ControllerFactory(resourceName, options, extras) {
 		//Toggle lock
 		$scope.toggleLock = function() {
 			$scope.locked = !$scope.locked;
+			if(!$scope.locked){
+				GLOBALS.methods.autoFocus();
+			}            
 		};
 
 		//Update a single record
