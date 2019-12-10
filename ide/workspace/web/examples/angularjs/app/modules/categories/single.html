@@ -24,7 +24,7 @@
 		<div class="col-md-6">
 			<div class="dropdown">
 			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
-			    {{data.single.category.title}}
+			    {{data.single.category.title || 'Choose an option'}}
 			  </button>
 			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 			    <a class="dropdown-item" ng-repeat="c in data.categories track by $index"  href="" ng-click="data.single.category_id = c.id; data.single.category = c">{{c.title}}</a>
