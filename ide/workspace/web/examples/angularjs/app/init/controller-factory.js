@@ -419,6 +419,7 @@ function ControllerFactory(resourceName, options, extras) {
 			$scope.get($routeParams.id, function(r) {
 				if ($scope.onLoad) $scope.onLoad(r);
 				if (callback) callback(r);
+				GLOBALS.methods.autoFocus();
 				//$scope.loading = false;
 			});
 		};
@@ -859,6 +860,9 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.goToNew = function() {
 			$location.path($scope.currentRoute + "/" + "new");
 		};
+		
+		
+		GLOBALS.methods.autoFocus();
 
 	};
 }
