@@ -44,6 +44,8 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 					}
 					
 				}
+
+				GLOBALS.methods.logout();
 				//$scope.loading = false;
 			});
 	};
