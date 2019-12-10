@@ -15,6 +15,10 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
         $scope.setListHeaders(['Username', 'Email', 'Last Lease', 'Role']);
     }
     
+    $scope.onLoad = function(){
+		$scope.roleLocked = $rootScope.currentUser.organization.email == $scope.data.single.email;
+    }
+    
     
     $scope.setPassword = async function(callback, btn, data){
 
@@ -131,6 +135,5 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
     };
     
     $scope.data.roles = [{id: 'user', title: 'User'}, {id: 'admin', title: 'Administrator'}];
-    $scope.roleLocked = $rootScope.currentUser.organization.email == $rootScope.currentUser.email;
 
 });
