@@ -147,6 +147,6 @@ app.controller('groupsControllerExtension', function($scope, $controller, $rootS
         
     };
     
-    
+    GLOBALS.methods.autoFocus();
     
 });
