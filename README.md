@@ -4,7 +4,7 @@
 Introduction
 -----
 
-pRESTige is basically a RAD (Rapid Application Development) toolset that allows application development completely from within your web browser.
+pRESTige is basically a RAD (Rapid Application Development) toolset that allows application development completely from within your web browser. It is an open-source low-code platform.
 
 It mainly comprises of an API engine that projects your MySQL database as a fully working collection of RESTful APIs which are compliant with OpenAPI Specifications (Swagger). You can just plug-in your existing database by providing a connection string, and immediately you will get fully featured RESTful APIs, along with documentation generated in Swagger. It supports OpenAuth and also provides a token based mechanism for securing your APIs. It also provides built-in login APIs to authenticate and generate token. It provides built-in file upload APIs. It provides embedded IDE, DB Management Tool and terminal and you can run all of these from browser. 
 
