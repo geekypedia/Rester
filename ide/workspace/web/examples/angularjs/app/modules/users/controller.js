@@ -131,6 +131,7 @@ app.controller('usersControllerExtension', function($scope, $controller, $rootSc
     };
     
     $scope.data.roles = [{id: 'user', title: 'User'}, {id: 'admin', title: 'Administrator'}];
-    
+
+    GLOBALS.methods.autoFocus();
 
 });
