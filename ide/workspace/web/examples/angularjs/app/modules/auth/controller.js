@@ -18,8 +18,9 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 
 	$scope.login = function(){
 		//$scope.loading = true;
-		$('.menu-loading').show();
-		$('.menu-static').hide();
+		// $('.menu-static').hide();
+		// $('.menu-loading').show();
+		GLOBALS.methods.sideNavLoading();
 		
 		$http.post(H.SETTINGS.baseUrl + '/users/login', {email: $scope.email, password: $scope.password})
 			.then(function(r){
@@ -31,7 +32,7 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				}
 				$rootScope.currentUser = r.data;
 				$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
-				BuildSideNav(null, S.menu);
+				GLOBALS.methods.sideNav(null, S.menu);
 				$location.path('/');	
 
 			}, function(e){
@@ -93,15 +94,18 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 	};
 	
 	$scope.logout = function(){
-		SideNavStatus = false;
-		$('.all-nav').hide(); //CUSTOM
-		$('.menu-static').show();
-		$('.menu-loading').hide();		
+		// GLOBALS.registry.sideNavStatus = false;
+		// $('.all-nav').hide(); //CUSTOM
+		// $('.menu-static').show();
+		// $('.menu-loading').hide();
+		GLOBALS.methods.logout();
 		
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
 		$location.path('/sign-in');
 	};
+	
+	GLOBALS.methods.autoFocus();
 });
 
 
