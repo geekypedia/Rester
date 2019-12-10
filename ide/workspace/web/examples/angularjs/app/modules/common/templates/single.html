@@ -2,10 +2,10 @@
 <!--Example-->
 <form name="forms.{{resourceName}}Form" id="forms.{{resourceName}}Form">
 	<div ng-repeat="i in data.singleKeys">
-     	<div class="form-group row"  ng-if="!(['bool', 'fkey'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id'">
+     	<div class="form-group row"  ng-if="!(['bool', 'fkey', 'date', 'datetime'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id'">
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
-				<input id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" required="data.singleKeysInfo[i].required" ng-disabled="locked" autofocus>
+				<input id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked" autofocus>
 			</div>
 			<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">
 				<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>
@@ -41,6 +41,7 @@
 											name="{{resourceName}}_{{i}}" 
 								        	class="form-control" 
 								        	ng-model="data.single[i]" 
+								        	ng-required="data.singleKeysInfo[i].required"
 								        	>
 								</datepicker>			
 			</div>    
