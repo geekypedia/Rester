@@ -162,7 +162,7 @@ switch (PHP_OS) {
 		$python_arch = "x86_64";
 		$python_os_arch_separator = "_";
 		$python_file_ext = "-portable.tar.bz2";
-		$pypy_ver = $pypy_ver;				
+		$pypy_ver = $pypy_ver . "-beta";				
 		break;
 }
 
