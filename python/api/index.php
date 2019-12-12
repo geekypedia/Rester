@@ -111,7 +111,7 @@ define("PYTHON_PID", "python.pid.config");
 
 $binroot = "bin";
 $bin = "bin";
-$pypy_exe = "pypy3";
+$pypy_exe = "pypy3.6";
 $pip_exe = "pip3";
 
 $python_ver = !empty($_POST["version"]) ? $_POST["version"] : ( !empty($_REQUEST["version"]) ? $_REQUEST["version"] : "3.6" );
@@ -162,7 +162,7 @@ switch (PHP_OS) {
 		$python_arch = "x86_64";
 		$python_os_arch_separator = "_";
 		$python_file_ext = "-portable.tar.bz2";
-		$pypy_ver = $pypy_ver . "-beta";				
+		$pypy_ver = $pypy_ver;				
 		break;
 }
 
