@@ -68,6 +68,9 @@ define('API_EXCEPTIONS_IN_RESPONSE', true);
 //Legacy mode
 define('LEGACY_MODE', empty($config->legacy_mode) ? false : true);
 
+//CORS
+define('ENABLE_CORS', false);
+
 //Disable PHP Errors
 error_reporting(0);
 
