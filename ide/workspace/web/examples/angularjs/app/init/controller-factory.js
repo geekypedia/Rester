@@ -416,6 +416,7 @@ function ControllerFactory(resourceName, options, extras) {
 						});
 						$scope.setListHeaders(headers);
 					}
+					$('.button-default').detach();
                     $("table").tableExport();
 					if ($scope.onLoadAll) $scope.onLoadAll(r);
 				});
