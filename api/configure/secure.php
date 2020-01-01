@@ -194,13 +194,14 @@ if(file_exists($configPath)){
 			 	}
 			 }
 			 
+			 var tourKey = window.location.href.replace("/configure/secure.php", "").replace("https://", "").replace("http://", "").replace(/\//g,"_").replace(/\./g,"_").replace(/:/g, "_");
 
-			 if(localStorage.getItem('tour_api_config_end') == "yes"){
+			 if(localStorage.getItem(tourKey + '_end') == "yes"){
                     $('#relaunch-tour').show();
                 }
 
 			tour_api_config = new Tour({
-				name: "tour_api_config",
+				name: tourKey,
                 steps: [
                 {
                     element: "#mysql-config",
