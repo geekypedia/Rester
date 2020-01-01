@@ -38,6 +38,7 @@ app.service('M', function($http) {
 		"TITLE_MY_PROFILE": "MY PROFILE",
 		"TITLE_BACK": "BACK",
 		"TITLE_LISTING": "LISTING",
+        "TITLE_OPTIONS": "OPTIONS",
 		"BTN_SAVE": "Save",
 		"BTN_UPDATE": "Update",
 		"BTN_EDIT": "Edit",
@@ -51,6 +52,8 @@ app.service('M', function($http) {
 		"BTN_CHANGE_LICENSE": "Change License",
 		"BTN_SET_PASSWORD": "Set Password",
 		"BTN_ACTIVATE": "Activate",
+		"BTN_CLEAR": "Clear",
+		"BTN_APPLY": "Apply",        
 		"HEADING_LOGIN": "Please, sign into your account",
 		"HEADING_FORGOT_PASSWORD": "Forgot your password?",
 		"HEADING_REGISTER": "Register now!",
@@ -83,6 +86,11 @@ app.service('M', function($http) {
 		"FIELD_GENDER": "Gender",
 		"FIELD_ACTIVE": "Active",
 		"FIELD_CATEGORY": "Category",
-		"FIELD_PARENT_CATEGORY": "Parent Category"
+		"FIELD_PARENT_CATEGORY": "Parent Category",
+		"FIELD_SEARCH": "Search",
+		"FIELD_SEARCH_IN": "Search In",
+		"FIELD_FILTER": "Filter",
+		"FIELD_ORDER_BY": "Order By",
+		"FIELD_ORDER_DIR": "Order Direction"        
 	};
 });
