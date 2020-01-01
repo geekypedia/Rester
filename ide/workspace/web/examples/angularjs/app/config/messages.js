@@ -37,6 +37,7 @@ app.service('M', function($http) {
 		"TITLE_ORGANIZATION_SETTINGS": "ORGANIZATION SETTINGS",
 		"TITLE_MY_PROFILE": "MY PROFILE",
 		"TITLE_BACK": "BACK",
+		"TITLE_LISTING": "LISTING",
 		"BTN_SAVE": "Save",
 		"BTN_UPDATE": "Update",
 		"BTN_EDIT": "Edit",
