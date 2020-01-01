@@ -337,6 +337,22 @@ function ControllerFactory(resourceName, options, extras) {
 			return ($rootScope.currentPage == i) ? 'active' : 'waves-effect';
 		};
 
+		$scope.mergeQueryOptions = function(query){
+			if(query && $scope.data.queryOptions){
+				if($scope.data.queryOptions.searchField && $scope.data.queryOptions.search){
+					query[$scope.data.queryOptions.searchField + '[in]'] = $scope.data.queryOptions.search;
+				}
+				if($scope.data.queryOptions.orderBy){
+					query.order = $scope.data.queryOptions.orderBy; 
+				}
+				if($scope.data.queryOptions.orderDirection && $scope.data.queryOptions.orderDirection.key && ['asc', 'desc'].indexOf($scope.data.queryOptions.orderDirection.key) > -1){
+					query.orderType = $scope.data.queryOptions.orderDirection.key; 
+				}
+			}
+			return query;
+			
+		}
+        
 		//Load all entries on initialization
 		$scope.listAll = function(currentPage) {
 			if (!$scope.beforeLoadAll) $scope.beforeLoadAll = function(query) {
@@ -345,6 +361,7 @@ function ControllerFactory(resourceName, options, extras) {
 			var countQueryParam = {
 				count: false
 			};
+            countQueryParam = $scope.mergeQueryOptions(countQueryParam);            
 			var countQuery = $scope.beforeLoadAll(countQueryParam) || countQueryParam;
 
 			//$scope.loading = true;
@@ -370,6 +387,7 @@ function ControllerFactory(resourceName, options, extras) {
 					limit: $scope.data.limit,
 					offset: ($rootScope.currentPage - 1) * $scope.data.limit
 				};
+                dataQueryParam = $scope.mergeQueryOptions(dataQueryParam);                
 				var dataQuery = $scope.beforeLoadAll(dataQueryParam) || dataQueryParam;
 
 				$scope.query(dataQuery, function(r) {
