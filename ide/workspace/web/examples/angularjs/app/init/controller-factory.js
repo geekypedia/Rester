@@ -348,6 +348,9 @@ function ControllerFactory(resourceName, options, extras) {
 				if($scope.data.queryOptions.orderDirection && $scope.data.queryOptions.orderDirection.key && ['asc', 'desc'].indexOf($scope.data.queryOptions.orderDirection.key) > -1){
 					query.orderType = $scope.data.queryOptions.orderDirection.key; 
 				}
+				if($scope.data.queryOptions.limit){
+					$scope.data.limit = $scope.data.queryOptions.limit;
+				}                
 			}
 			return query;
 			
