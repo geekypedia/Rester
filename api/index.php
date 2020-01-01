@@ -29,7 +29,7 @@ require_once(__DIR__.'/include/model/RouteCommand.php');
 //TODO; Make this smarter
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, X-StackMob-Proxy-Plain');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, X-StackMob-Proxy-Plain, Access-Control-Request-Headers, api_key, api-key');
 header('X-XRDS-Location: http://' . $_SERVER['SERVER_NAME'] .'/services.xrds.php');
 
 
