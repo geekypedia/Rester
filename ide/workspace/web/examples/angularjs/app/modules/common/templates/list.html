@@ -21,7 +21,7 @@
     	<div class="card-body">
 			<div ng-include src="getTemplate('list-header')"></div>
 			
-			<div class="options-container form-card card card-body" ng-if="displayFilters">
+			<div class="options-container form-card card card-body" ng-if="data.displayFilters">
 				<form name="forms.{{resourceName}}OptionsForm" id="forms.{{resourceName}}OptionsForm">
 					<div class="form-group row">
 						<div class="col-md-1"></div>
@@ -97,7 +97,7 @@
 			
 			<div class="row">
 				<div class="col-md-1">
-					<div class="btn btn-link" style="margin-top: -8px; margin-left:-10px" ng-click="displayFilters = !displayFilters;">Options</div>
+					<div class="btn btn-link" style="margin-top: -8px; margin-left:-10px" ng-click="data.displayFilters = !data.displayFilters;">Options</div>
 				</div>
 				<div class="col-md-10"></div>
 				<div class="col-md-1">
