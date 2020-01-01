@@ -412,12 +412,15 @@
                 $('.iconpanel').css("margin-left", 0 - (width / 6));
                 $('.iconpanel').css("margin-top", 0 - (height / 3));
 
-                if(localStorage.getItem('tour_end') == "yes"){
+                var tourKey = window.location.href.replace("/launch/", "").replace("https://", "").replace("http://", "").replace(/\//g,"_").replace(/\./g,"_").replace(/:/g, "_");                
+
+                if(localStorage.getItem(tourKey + '_end') == "yes"){
                     $('#relaunch-tour').show();
                 }
 
                 // Instance the tour
                 tour = new Tour({
+                    name: tourKey,
                 steps: [
                 {
                     element: "#db-manager",
