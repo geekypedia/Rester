@@ -395,6 +395,14 @@ function ControllerFactory(resourceName, options, extras) {
 
 				$scope.query(dataQuery, function(r) {
 					$scope.loading = false;
+                    
+					setTimeout(function(){
+						if(!$scope.loadedOnce){
+							$scope.loadedOnce = true;
+							$("table").tableExport();
+						}
+					}, 500);
+                    
 					if (r && r.length > 0) {
 						// var headers = Object.getOwnPropertyNames(r[0]);
 						// $scope.data.listHeadersRaw = headers;
@@ -416,11 +424,14 @@ function ControllerFactory(resourceName, options, extras) {
 						});
 						$scope.setListHeaders(headers);
 						setTimeout(function(){
-							$('.button-default').detach();
-		                    setTimeout(function(){
-		                    	$("table").tableExport();
-		                    }, 500);
-						}, 200);                        
+							try{
+								$('.tableexport-caption').detach();
+								$('table').tableExport();
+							} catch(ex){
+								
+							}
+							
+						}, 1000);                        
 					}
 					if ($scope.onLoadAll) $scope.onLoadAll(r);
 				});
