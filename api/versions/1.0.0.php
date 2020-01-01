@@ -97,6 +97,13 @@ function check_simple_auth($exclude)
 		}
 		//if(!$resterController) $resterController = new ResterController();
 		global $resterController;
+	
+		if(!ENABLE_CORS){
+			if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
+			    $resterController->showResult("");
+			}
+		}
+	
 		$headers = getallheaders();
 		//$allowed_auth_headers = array("api_key", "API_KEY", "Api_Key", "Api_key", "api-key", "API-KEY", "Api-Key", "Api-key");
 		$allowed_auth_headers = array("api_key", "api-key");
