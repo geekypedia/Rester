@@ -415,9 +415,13 @@ function ControllerFactory(resourceName, options, extras) {
 							return $scope.data.singleKeysInfo[p].title;
 						});
 						$scope.setListHeaders(headers);
+						setTimeout(function(){
+							$('.button-default').detach();
+		                    setTimeout(function(){
+		                    	$("table").tableExport();
+		                    }, 500);
+						}, 200);                        
 					}
-					$('.button-default').detach();
-                    $("table").tableExport();
 					if ($scope.onLoadAll) $scope.onLoadAll(r);
 				});
 
