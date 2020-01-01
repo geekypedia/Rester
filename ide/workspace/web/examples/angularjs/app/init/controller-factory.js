@@ -413,6 +413,7 @@ function ControllerFactory(resourceName, options, extras) {
 						});
 						$scope.setListHeaders(headers);
 					}
+                    $("table").tableExport();
 					if ($scope.onLoadAll) $scope.onLoadAll(r);
 				});
 
