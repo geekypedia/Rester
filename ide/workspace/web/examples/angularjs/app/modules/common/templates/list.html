@@ -19,10 +19,92 @@
 		</div>
     	</div>
     	<div class="card-body">
-    		
 			<div ng-include src="getTemplate('list-header')"></div>
-			<div ng-if="data.records" class="float-right small italic bold">{{data.records}} record{{data.records == 1 ? '' : 's'}}</div>
-			<br/>
+			
+			<div class="options-container form-card card card-body" ng-if="displayFilters">
+				<form name="forms.{{resourceName}}OptionsForm" id="forms.{{resourceName}}OptionsForm">
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-6"><h5>{{M.TITLE_OPTIONS}}</h5></div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-2 text-md-left" style="margin-top: 7px">
+							<span  style="margin-top: 7px">{{M.FIELD_SEARCH}} for </span>
+						</div>
+						<div class="col-md-4">
+							<input id="{{resourceName}}_search" name="{{resourceName}}_search" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.queryOptions.search">
+						</div>
+						<div class="col-md-1 text-md-center" style="margin-top: 7px">
+							<span class="justify-content-md-center"> in </span>
+						</div>
+						<div class="col-md-3">
+							<div class="dropdown">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_search_in" name="{{resourceName}}_search_in" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{{ data.singleKeysInfo[data.queryOptions.searchField].title || 'Choose an option' }}
+							  </button>
+							  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_search_in">
+							    <a class="dropdown-item" ng-repeat="r in data.singleKeys"  href="" ng-click="data.queryOptions.searchField = r;">{{ data.singleKeysInfo[r].title }}</a>
+							  </div>
+							</div>			
+						</div>
+					</div>
+			
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-2 text-md-left" style="margin-top: 7px">
+							<span  style="margin-top: 7px"> Order by </span>
+						</div>
+						<div class="col-md-3">
+							<div class="dropdown">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_order_by" name="{{resourceName}}_order_by" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    {{ data.singleKeysInfo[data.queryOptions.orderBy].title || 'Choose an option' }}
+							  </button>
+							  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_order_by">
+							    <a class="dropdown-item" ng-repeat="r in data.singleKeys"  href="" ng-click="data.queryOptions.orderBy = r;">{{ data.singleKeysInfo[r].title }}</a>
+							  </div>
+							</div>			
+						</div>
+						<div class="col-md-1 text-md-center" style="margin-top: 7px">
+							<span class="justify-content-md-center"> in </span>
+						</div>
+						<div class="col-md-2">
+							<div class="dropdown">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_search_in" name="{{resourceName}}_search_in" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{{ data.queryOptions.orderDirection.title || 'Choose an option' }}
+							  </button>
+							  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_search_in">
+							    <a class="dropdown-item" ng-repeat="r in [{title: 'Ascending', key: 'asc'}, {title: 'Descending', key: 'desc'}]"  href="" ng-click="data.queryOptions.orderDirection = r;">{{ r.title }}</a>
+							  </div>
+							</div>			
+						</div>			
+					</div>
+					
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-6">
+							<spinner></spinner>
+							<button type="button" ng-click="refreshData();" class="btn btn-link">
+								{{ M.BTN_APPLY }}
+							</button>
+							<button type="button" ng-click="data.queryOptions = {}" class="btn btn-link">
+								{{ M.BTN_CLEAR }}
+							</button>
+						</div>
+					</div>		
+				</form>
+			</div>			
+			
+			<div class="row">
+				<div class="col-md-1">
+					<div class="btn btn-link" style="margin-top: -8px; margin-left:-10px" ng-click="displayFilters = !displayFilters;">Options</div>
+				</div>
+				<div class="col-md-10"></div>
+				<div class="col-md-1">
+					<div ng-if="data.records" class="float-right small italic bold">{{data.records}} record{{data.records == 1 ? '' : 's'}}</div>		
+				</div>
+			</div>
+
 			<div style="overflow:auto">
 				<table class="table">
 				        <thead class="thead-light">
@@ -65,5 +147,3 @@
 </section>
 </section>
 <div ng-include src="getTemplate('list')"></div>
-
-
