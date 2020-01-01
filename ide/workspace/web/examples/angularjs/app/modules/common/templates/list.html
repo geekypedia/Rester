@@ -79,6 +79,25 @@
 							</div>			
 						</div>			
 					</div>
+
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-2 text-md-left" style="margin-top: 7px">
+							<span  style="margin-top: 7px"> Page Size </span>
+						</div>
+						<div class="col-md-3">
+							<div class="dropdown">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_page_size" name="{{resourceName}}_page_size" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    {{ data.queryOptions.limit || 'Choose an option' }}
+							  </button>
+							  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_page_size">
+							    <a class="dropdown-item" ng-repeat="r in [1, 5, 10, 50, 100, 500, 1000, 5000, 10000, 20000, 25000, 50000, 100000]"  href="" ng-click="data.queryOptions.limit = r;">{{ r }}</a>
+							  </div>
+							</div>			
+						</div>
+					</div>					
+					
+
 					
 					<div class="form-group row">
 						<div class="col-md-1"></div>
