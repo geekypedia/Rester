@@ -128,7 +128,8 @@
 				<table class="table">
 				        <thead class="thead-light">
 				          <tr>
-				              <th ng-repeat="h in data.listHeaders">{{h}}</th>
+				              <!--<th ng-repeat="h in data.listHeaders">{{h}}</th>-->
+						<th ng-repeat="h in data.listHeaders"><span ng-click="applySort(data.listKeys[$index])" class="clickable-table-headers">{{h}} <span ng-if="data.singleKeysInfo[data.queryOptions.orderBy].title == h"><span ng-if="data.sortCache[data.listKeys[$index]]=='asc'"> <i class="material-icons sort-arrows">arrow_drop_up</i></span><span ng-if="data.sortCache[data.listKeys[$index]]=='desc'"> <i class="material-icons sort-arrows">arrow_drop_down</i></span> <spinner></spinner> </span> </span></th>						  
 				              <th ng-if="data.listHeaders.length > 0">Actions</th>
 				          </tr>
 				        </thead>
