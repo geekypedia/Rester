@@ -105,3 +105,11 @@ ol.breadcrumb{
 .inner-container{
 	padding: 20px;
 }
+
+.sort-arrows{
+	vertical-align: bottom;
+}
+
+.clickable-table-headers{
+	cursor: pointer;
+}
