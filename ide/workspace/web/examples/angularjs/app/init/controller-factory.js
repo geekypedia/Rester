@@ -432,10 +432,24 @@ function ControllerFactory(resourceName, options, extras) {
 						// }
 						// $scope.data.listKeys = headers;
 						// headers = headers.map(function(p){ return H.toTitleCase(H.replaceAll(p, '_', ' '))});
-						$scope.data.listKeys = $scope.data.singleKeys;
+
+						$scope.data.listKeys = $scope.data.singleKeys.map(function(p){ return p; });
 						var headers = $scope.data.singleKeys.map(function(p) {
 							return $scope.data.singleKeysInfo[p].title;
 						});
+						
+						if($scope.removeListHeaders){
+							var removeHeaders = $scope.removeListHeaders();
+							for (var i = 0; i < removeHeaders.length; i++) {
+								var h = removeHeaders[i];
+								if(headers.indexOf(h) > -1) {
+									var ind = headers.indexOf(h);
+									headers.splice(ind, 1);
+									$scope.data.listKeys.splice(ind, 1);
+								}
+							}
+						}
+                        
 						$scope.setListHeaders(headers);
 						setTimeout(function(){
 							try{
