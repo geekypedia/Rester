@@ -332,6 +332,20 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.refreshData = function() {
 			$scope.listAll();
 		};
+        
+		$scope.data.sortCache = {};
+		$scope.applySort = function(h){
+			$scope.data.queryOptions = $scope.data.queryOptions || {};
+			$scope.data.queryOptions.orderBy = h;
+			if($scope.data.sortCache[h] && $scope.data.sortCache[h] == "asc"){
+				$scope.data.sortCache[h] = "desc";
+			} else {
+				$scope.data.sortCache[h] = "asc";
+			}
+			var orderDirections = { "asc" : { title: "Ascending", key: "asc"}, "desc": { title: "Descending", key: "desc"}};
+			$scope.data.queryOptions.orderDirection = orderDirections[$scope.data.sortCache[h]];
+			$scope.refreshData();
+		}        
 
 		$scope.setActive = function(i) {
 			return ($rootScope.currentPage == i) ? 'active' : 'waves-effect';
@@ -433,6 +447,9 @@ function ControllerFactory(resourceName, options, extras) {
 							
 						}, 1000);                        
 					}
+                    
+                    if(dataQuery.order && dataQuery.orderType) $scope.data.sortCache[dataQuery.order] = dataQuery.orderType;
+                    
 					if ($scope.onLoadAll) $scope.onLoadAll(r);
 				});
 
