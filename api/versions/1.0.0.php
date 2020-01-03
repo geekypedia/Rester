@@ -688,7 +688,7 @@ $activateFunction = function($params = NULL) {
 				$new_password = substr(uuid(), 0, 8);	
 			}
 			$new_password_md5 = md5($new_password); // md5 of 'admin' is 21232f297a57a5a743894a0e4a801fc3
-			$activation_query = "INSERT INTO `users` (`email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES ('$email',	'$email', '$new_password_md5',	'1',	'0000-00-00 00:00:00',	'admin', '$org_secret', 1)";
+			$activation_query = "INSERT INTO `users` (`email`, `username`, `password`, `token`, `lease`, `role`, `secret`, `is_active`) VALUES ('$email',	'$email', '$new_password_md5',	'1',	'0001-01-01 00:00:00',	'admin', '$org_secret', 1)";
 			$user_id = $api->query($activation_query);
 		}
 		
