@@ -105,7 +105,7 @@ define("BASE_URL", "' . $_SERVER["HTTP_HOST"] . $rel . '");
 // THEME : default, modern or clear (look at /themes)
 define("THEME", "default");
 
-//Parent path of '/ide'
+//Parent path of /ide
 $additional_paths = "," . preg_replace("/\/ide[\/]?$/", "", BASE_PATH);
 //Parent path of /anything
 //$additional_paths = preg_replace("/\/(?:.(?!\/))+$/", "", $additional_paths);
