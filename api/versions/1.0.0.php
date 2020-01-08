@@ -105,10 +105,17 @@ function check_simple_auth($exclude)
 		}
 	
 		$headers = getallheaders();
-		//$allowed_auth_headers = array("api_key", "API_KEY", "Api_Key", "Api_key", "api-key", "API-KEY", "Api-Key", "Api-key");
-		$allowed_auth_headers = array("api_key", "api-key");
+		$allowed_auth_headers = array("api_key", "API_KEY", "Api_Key", "Api_key", "api-key", "API-KEY", "Api-Key", "Api-key");
+		//$allowed_auth_headers = array("api_key", "api-key");
 		$auth_header = $headers['api_key'];
 		if(!$auth_header) $auth_header = $_REQUEST['api_key'];
+		if(!$auth_header) $auth_header = $_REQUEST['api-key'];
+		foreach($allowed_auth_headers as $h){
+			if(!$auth_header && $_REQUEST[$h]) {
+				$auth_header = $_REQUEST[$h];
+				break;
+			}
+		}
 		if(!$auth_header){
 			foreach($headers as $key=>$val){
 				if(in_array(strtolower($key), $allowed_auth_headers)) $auth_header = $val;
