@@ -845,7 +845,9 @@ function ControllerFactory(resourceName, options, extras) {
 					type = "email";
 				} else if (k.indexOf("password") > -1) {
 					type = "password";
-				}  else {
+				} else if (o.Type == "text") {
+					type = "textarea";
+				} else {
 					type = "text";
 				}
 				$scope.data.singleKeysInfo[k] = {
