@@ -1,6 +1,6 @@
 			<ul class="navbar-nav ml-auto all-nav" ng-controller="authController">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="navbar-user-logo circle logo40" ng-src="{{H.getAbsolutePath(currentUser.profile.image) ||  'images/user.png'}}"></a>
+					<a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="navbar-user-logo circle logo40" ng-src="{{H.getAbsolutePath(S.baseUrl + '/' + currentUser.profile.image) ||  'images/user.png'}}"></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a href="#!profile" class="dropdown-item">Profile</a>
 						<a href="" ng-click="logout()" class="dropdown-item"><span class="">Sign out</span></a>
