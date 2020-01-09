@@ -1,5 +1,5 @@
 /*global app, RegisterRoutes*/
-app.service('H', function($location, md5, S, M, R) {
+app.service('H', function($location, md5, S, M, R, upload) {
 	return {
 		S: S,
 		SETTINGS: S,
@@ -29,7 +29,8 @@ app.service('H', function($location, md5, S, M, R) {
 		},
 		toTitleCase: Helper.toTitleCase,
 		replaceAll: Helper.replaceAll,
-		deepCopy: Helper.deepCopy
+		deepCopy: Helper.deepCopy,
+		upload: upload        
 	};
 });
 
