@@ -97,13 +97,26 @@
 						</div>
 					</div>					
 					
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-2 text-md-left" style="margin-top: 7px">
+							<span  style="margin-top: 7px"> RAW Data: </span>
+						</div>
+						<div class="col-md-3">
+							<div class="custom-control custom-switch form-switch">
+								<input class="custom-control-input" type="checkbox" id="{{resourceName}}_enable_row_data" name="{{resourceName}}_enable_row_data" ng-true-value="1"  ng-false-value="0" ng-model="data.viewOptions.rawDataTemp" > 
+								<label class="custom-control-label" for="{{resourceName}}_enable_row_data"></label>
+							</div>
+						</div>
+		
+					</div>							
 
 					
 					<div class="form-group row">
 						<div class="col-md-1"></div>
 						<div class="col-md-6">
 							<spinner></spinner>
-							<button type="submit" name="forms.{{resourceName}}OptionsForm" ng-click="refreshData();" class="btn btn-link">
+							<button type="submit" name="forms.{{resourceName}}OptionsForm" ng-click="applyOptions();" class="btn btn-link">
 								{{ M.BTN_APPLY }}
 							</button>
 							<button type="button" ng-click="data.queryOptions = {}" class="btn btn-link">
