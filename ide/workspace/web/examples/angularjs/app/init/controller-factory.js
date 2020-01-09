@@ -9,6 +9,19 @@ function ControllerFactory(resourceName, options, extras) {
 		$http.get(S.baseUrl + '/metadata/table?id=' + resourceName).then(function(r) {
 			$scope.metadata = r.data;
 			$scope.buildSingleHeaders();
+            
+			setTimeout(function(){
+				$scope.data.onuploadCallbacks = []
+				$scope.data.singleKeys.forEach(function(i){
+					if(i.endsWith('_file')){
+				    	$scope.data.onuploadCallbacks[i] = function(r){
+					    	$scope.data.single[i] = r.data.file;
+						}
+			    	}
+
+				});	
+			}, 300);
+            
 		}, function(e) {});
 
 		//Scope variables
