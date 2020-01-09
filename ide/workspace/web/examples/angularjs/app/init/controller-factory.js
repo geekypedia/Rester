@@ -347,8 +347,11 @@ function ControllerFactory(resourceName, options, extras) {
 		};
         
 		$scope.data.sortCache = {};
+        
 		$scope.applySort = function(h){
 			$scope.data.queryOptions = $scope.data.queryOptions || {};
+			$scope.data.viewOptions = $scope.data.viewOptions || {};
+			$scope.data.viewOptions.rawData = $scope.data.viewOptions.rawDataTemp;
 			$scope.data.queryOptions.orderBy = h;
 			if($scope.data.sortCache[h] && $scope.data.sortCache[h] == "asc"){
 				$scope.data.sortCache[h] = "desc";
@@ -358,8 +361,14 @@ function ControllerFactory(resourceName, options, extras) {
 			var orderDirections = { "asc" : { title: "Ascending", key: "asc"}, "desc": { title: "Descending", key: "desc"}};
 			$scope.data.queryOptions.orderDirection = orderDirections[$scope.data.sortCache[h]];
 			$scope.refreshData();
-		}        
-
+		}
+        
+		$scope.applyOptions = function(){
+			$scope.data.viewOptions = $scope.data.viewOptions || {};
+			$scope.data.viewOptions.rawData = $scope.data.viewOptions.rawDataTemp;
+			$scope.refreshData();
+		}
+        
 		$scope.setActive = function(i) {
 			return ($rootScope.currentPage == i) ? 'active' : 'waves-effect';
 		};
