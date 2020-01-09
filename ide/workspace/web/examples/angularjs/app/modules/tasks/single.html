@@ -60,13 +60,17 @@
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
 				<file-upload ng-if="!locked" callback="data.onuploadCallbacks[i]"></file-upload>
-				<video class="file-field" controls ng-if="['mp4', 'ogg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1">
+				<video class="file-field" controls ng-if="['mp4'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1">
 				  <source ng-src="{{ S.baseUrl + '/' + data.single[i] }}" type="video/{{data.single[i].substr(data.single[i].length - 3)}}">
 				  Your browser does not support the video tag.
 				</video>				
+				<audio class="file-field" controls ng-if="['mp3', 'ogg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1">
+				  <source ng-src="{{ S.baseUrl + '/' + data.single[i] }}" type="audio/{{data.single[i].substr(data.single[i].length - 3)}}">
+				  Your browser does not support the audio tag.
+				</audio>				
 				<img class="file-field" ng-if="['jpg', 'png', 'gif'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1 || ['jpeg'].indexOf(data.single[i].substr(data.single[i].length - 4)) > -1" ng-src="{{ S.baseUrl + '/' + data.single[i] }}">
 				<div class="file-field" >
-					<a ng-if="data.single[i] && !(['mp4', 'ogg', 'jpg', 'png', 'gif', 'peg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1)" ng-href="{{ S.baseUrl + '/' + data.single[i] }}">Download</a>	
+					<a ng-if="data.single[i]" ng-href="{{ S.baseUrl + '/' + data.single[i] }}">{{data.single[i].substr(data.single[i].lastIndexOf('/') + 1)}}</a>	
 				</div>
 				
 			</div>
