@@ -113,3 +113,8 @@ ol.breadcrumb{
 .clickable-table-headers{
 	cursor: pointer;
 }
+
+.file-field{
+	margin: 10px;
+	width: 90%;
+}
