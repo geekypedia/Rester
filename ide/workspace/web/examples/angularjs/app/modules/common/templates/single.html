@@ -56,7 +56,7 @@
 								</datepicker>			
 			</div>    
 		</div>
-     	<div class="form-group row" ng-if="(i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_sound') || i.endsWith('_music') || i.endsWith('_audio') || i.endsWith('_attachment') || i.endsWith('file') || i.endsWith('attachment'))">
+     	<div class="form-group row" ng-if="(i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_sound') || i.endsWith('_music') || i.endsWith('_audio') || i.endsWith('_attachment') || i.endsWith('file') || i.endsWith('attachment') || i.endsWith('image') )">
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
 				<file-upload ng-if="!locked" callback="data.onuploadCallbacks[i]"></file-upload>
