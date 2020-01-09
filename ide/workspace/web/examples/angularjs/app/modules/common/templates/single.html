@@ -2,7 +2,7 @@
 <!--Example-->
 <form name="forms.{{resourceName}}Form" id="forms.{{resourceName}}Form">
 	<div ng-repeat="i in data.singleKeys">
-     	<div class="form-group row"  ng-if="!(['bool', 'fkey', 'date', 'datetime', 'textarea'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id' && !i.endsWith('_file')">
+     	<div class="form-group row"  ng-if="!(['bool', 'fkey', 'date', 'datetime', 'textarea'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id' && !(i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_attachment')) )">
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
 				<input id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked">
@@ -56,23 +56,26 @@
 								</datepicker>			
 			</div>    
 		</div>
-     		<div class="form-group row" ng-if="i.endsWith('_file')">
+     	<div class="form-group row" ng-if="(i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_attachment'))">
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
 			<div class="col-md-6">
 				<file-upload ng-if="!locked" callback="data.onuploadCallbacks[i]"></file-upload>
-				<video controls ng-if="['mp4', 'ogg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1">
+				<video class="file-field" controls ng-if="['mp4', 'ogg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1">
 				  <source ng-src="{{ S.baseUrl + '/' + data.single[i] }}" type="video/{{data.single[i].substr(data.single[i].length - 3)}}">
 				  Your browser does not support the video tag.
 				</video>				
-				<img ng-if="['jpg', 'png', 'gif'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1 || ['jpeg'].indexOf(data.single[i].substr(data.single[i].length - 4)) > -1" ng-src="{{ S.baseUrl + '/' + data.single[i] }}">
-				<a ng-if="data.single[i] && !(['mp4', 'ogg', 'jpg', 'png', 'gif', 'peg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1)" ng-href="{{ S.baseUrl + '/' + data.single[i] }}">Download</a>
+				<img class="file-field" ng-if="['jpg', 'png', 'gif'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1 || ['jpeg'].indexOf(data.single[i].substr(data.single[i].length - 4)) > -1" ng-src="{{ S.baseUrl + '/' + data.single[i] }}">
+				<div class="file-field" >
+					<a ng-if="data.single[i] && !(['mp4', 'ogg', 'jpg', 'png', 'gif', 'peg'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1)" ng-href="{{ S.baseUrl + '/' + data.single[i] }}">Download</a>	
+				</div>
+				
 			</div>
-			<div class="col-md-1">
-				<spinner></spinner>
+			<div class="col-md-1" ng-if="!locked && data.single[i]" >
+				<button type='button' class="btn btn-link" ng-click="data.single[i] = '';">Clear</button>
 			</div>
 			<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">
 				<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>
 			</div>
-     		</div>		
+     	</div>		
 	</div>
 </form>
