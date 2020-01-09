@@ -118,3 +118,7 @@ ol.breadcrumb{
 	margin: 10px;
 	width: 90%;
 }
+
+.file-field-list{
+	max-height: 64px;
+}
