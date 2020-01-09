@@ -3,7 +3,7 @@
 				<li class="profile-nav-item">
 					<div ng-controller="authController">
 						<a href="#!profile" class="bg-{{ currentUser.profile.theme_bg || currentUser.organization.theme_bg || S.theme.background || 'light'}}  col-{{ currentUser.profile.theme_col || currentUser.organization.theme_col || S.theme.color || 'black'}}">
-							<img class="circle logo80" ng-src="{{H.getAbsolutePath(S.baseUrl + '/' + currentUser.profile.image) ||  'images/user.png'}}">
+							<img class="circle logo80" ng-src="{{H.getAbsolutePath(currentUser.profile.image ? ( currentUser.profile.image.startsWith('http') ? currentUser.profile.image : S.baseUrl + '/' +  currentUser.profile.image ) : currentUser.profile.image) ||  'images/user.png'}}">
 							<br/>
 							<span class="" ng-if="currentUser.profile && (currentUser.profile.first_name || currentUser.profile.last_name)">{{currentUser.profile.first_name || '' + ' ' + currentUser.profile.last_name || ''}}</span>
 							<span class="" ng-if="!(currentUser.profile && (currentUser.profile.first_name || currentUser.profile.last_name))">{{currentUser.username}}</span>
