@@ -3,20 +3,23 @@
 
 <!--The following code repeats through all the columns available in a record-->
 <td ng-repeat="key in data.listKeys">
-    <span ng-if="!(['bool', 'fkey'].indexOf(data.singleKeysInfo[key].type) > -1) && !(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_attachment'))">{{item[key]}}</span>
+    <span ng-if="!(['bool', 'fkey'].indexOf(data.singleKeysInfo[key].type) > -1) && !(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_sound') || key.endsWith('_music') || key.endsWith('_audio') || key.endsWith('_attachment') || key.endsWith('file') || key.endsWith('attachment') )">{{item[key]}}</span>
     <span ng-if="data.singleKeysInfo[key].type == 'fkey'"><a ng-href="{{ '#!' + key.substring(0, key.length - 3) + 's/' + item[key] }}">{{ item[key.substring(0, key.length - 3)].title || item[key.substring(0, key.length - 3)].display_name || item[key.substring(0, key.length - 3)].name || (item[key.substring(0, key.length - 3)].first_name ? item[key.substring(0, key.length - 3)].first_name + ' ' + item[key.substring(0, key.length - 3)].last_name : null) || item[key.substring(0, key.length - 3)].email || item[key.substring(0, key.length - 3)].id || item[key] }}</a></span>
     <span ng-if="data.singleKeysInfo[key].type == 'bool'">{{item[key] == 1 ? 'Yes' : 'No'}}</span>
-    <div ng-if="(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_attachment')) && !data.viewOptions.rawData">
+    <div ng-if="(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_sound') || key.endsWith('_music') || key.endsWith('_audio') || key.endsWith('_attachment') || key.endsWith('file') || key.endsWith('attachment') ) && !data.viewOptions.rawData">
     		<a ng-href="{{ S.baseUrl + '/' + item[key] }}"> {{item[key].substr(item[key].lastIndexOf('/') + 1)}}</a>	
     		<div>
-				<video disabled class="file-field-list" ng-if="['mp4', 'ogg'].indexOf(item[key].substr(item[key].length - 3)) > -1">
+				<video controls class="file-field-list" ng-if="['mp4'].indexOf(item[key].substr(item[key].length - 3)) > -1">
 				  <source ng-src="{{ S.baseUrl + '/' + item[key] }}" type="video/{{item[key].substr(item[key].length - 3)}}">
 				</video>				
+				<audio controls class="file-field-list" ng-if="['mp3', 'ogg'].indexOf(item[key].substr(item[key].length - 3)) > -1">
+				  <source ng-src="{{ S.baseUrl + '/' + item[key] }}" type="audio/{{item[key].substr(item[key].length - 3)}}">
+				</audio>				
 				<img class="file-field-list" ng-if="['jpg', 'png', 'gif'].indexOf(item[key].substr(item[key].length - 3)) > -1 || ['jpeg'].indexOf(item[key].substr(item[key].length - 4)) > -1" ng-src="{{ S.baseUrl + '/' + item[key] }}" ng-alt="{{item[key].substr(item[key].lastIndexOf('/') + 1)}}">
 			</div>				
 			<!--<a ng-if="!(['mp4', 'ogg', 'jpg', 'png', 'gif', 'peg'].indexOf(item[key].substr(item[key].length - 3)) > -1)" ng-href="{{ S.baseUrl + '/' + item[key] }}"> {{item[key].substr(item[key].lastIndexOf('/') + 1)}}</a>	-->
     </div>
-    <div ng-if="(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_attachment')) && data.viewOptions.rawData">
+    <div ng-if="(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_sound') || key.endsWith('_music') || key.endsWith('_audio') || key.endsWith('_attachment') || key.endsWith('file') || key.endsWith('attachment') ) && data.viewOptions.rawData">
 			<a ng-if="item[key]" ng-href="{{ H.getAbsolutePath(S.baseUrl + '/' + item[key]) }}">{{ H.getAbsolutePath(S.baseUrl + '/' + item[key]) }}</a>
     </div>
 </td>
