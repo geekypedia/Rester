@@ -13,7 +13,7 @@ function ControllerFactory(resourceName, options, extras) {
 			setTimeout(function(){
 				$scope.data.onuploadCallbacks = []
 				$scope.data.singleKeys.forEach(function(i){
-					if(i.endsWith('_file')){
+					if((i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_attachment'))){
 				    	$scope.data.onuploadCallbacks[i] = function(r){
 					    	$scope.data.single[i] = r.data.file;
 						}
