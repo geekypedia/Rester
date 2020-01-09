@@ -19,7 +19,7 @@
 			</div>				
 			<!--<a ng-if="!(['mp4', 'ogg', 'jpg', 'png', 'gif', 'peg'].indexOf(item[key].substr(item[key].length - 3)) > -1)" ng-href="{{ S.baseUrl + '/' + item[key] }}"> {{item[key].substr(item[key].lastIndexOf('/') + 1)}}</a>	-->
     </div>
-    <div ng-if="(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_sound') || key.endsWith('_music') || key.endsWith('_audio') || key.endsWith('_attachment') || key.endsWith('file') || key.endsWith('attachment') ) && data.viewOptions.rawData">
+    <div ng-if="(key.endsWith('_file') || key.endsWith('_image') || key.endsWith('_photo') || key.endsWith('_video') || key.endsWith('_sound') || key.endsWith('_music') || key.endsWith('_audio') || key.endsWith('_attachment') || key.endsWith('file') || key.endsWith('attachment') || key.endsWith('image') ) && data.viewOptions.rawData">
 			<a ng-if="item[key]" ng-href="{{ H.getAbsolutePath(S.baseUrl + '/' + item[key]) }}">{{ H.getAbsolutePath(S.baseUrl + '/' + item[key]) }}</a>
     </div>
 </td>
