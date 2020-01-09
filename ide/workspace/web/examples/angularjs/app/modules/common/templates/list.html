@@ -122,6 +122,11 @@
 							<button type="button" ng-click="data.queryOptions = {}" class="btn btn-link">
 								{{ M.BTN_CLEAR }}
 							</button>
+							<button type="button" ng-click="data.viewOptions.mediaLabels = !data.viewOptions.mediaLabels" class="btn btn-link">
+								<span ng-if="data.viewOptions.mediaLabels">Hide Media Labels</span>
+								<span ng-if="!data.viewOptions.mediaLabels">Show Media Labels</span>
+							</button>
+							
 						</div>
 					</div>		
 				</form>
