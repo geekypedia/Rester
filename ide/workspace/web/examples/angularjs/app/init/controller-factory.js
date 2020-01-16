@@ -585,7 +585,7 @@ function ControllerFactory(resourceName, options, extras) {
 								});
 								return;
 							} else {
-								if ($scope.onErrorBase) $scope.onErrorBase(r.data.error);
+								if ($scope.onErrorBase) $scope.onErrorBase(r.error);
 								return;
 							}
 						}
