@@ -24,6 +24,17 @@ app.service('R', function($resource, $http, S) {
 						if (cb) cb(e);
 						return e;
             });			
+		},
+		submit: async function(resourceName, payload, cb){
+			await $http.[post(S.baseUrl + '/' + resourceName, payload)
+				.then(function(results) {
+					if (results && results.data)
+						if (cb) cb(results.data);
+						return results.data;
+				}, function(e) {
+						if (cb) cb(e);
+						return e;
+            });			
 		}        
 	};
 });
