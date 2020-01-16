@@ -393,18 +393,18 @@ function ControllerFactory(resourceName, options, extras) {
 		}
         
 		//Load all entries on initialization
-		$scope.listAll = function(currentPage) {
-			if (!$scope.beforeLoadAll) $scope.beforeLoadAll = function(query) {
+		$scope.listAll = async function(currentPage) {
+			if (!$scope.beforeLoadAll) $scope.beforeLoadAll = async function(query) {
 				return query;
 			};
 			var countQueryParam = {
 				count: false
 			};
             countQueryParam = $scope.mergeQueryOptions(countQueryParam);            
-			var countQuery = $scope.beforeLoadAll(countQueryParam) || countQueryParam;
+			var countQuery = await $scope.beforeLoadAll(countQueryParam) || countQueryParam;
 
 			//$scope.loading = true;
-			$scope.count(countQuery, function() {
+			$scope.count(countQuery, async function() {
 				$scope.loading = true;
 				$scope.data.pagesCount = parseInt(($scope.data.records - 1) / $scope.data.limit) + 1;
 				$scope.data.pages = [];
@@ -427,7 +427,7 @@ function ControllerFactory(resourceName, options, extras) {
 					offset: ($rootScope.currentPage - 1) * $scope.data.limit
 				};
                 dataQueryParam = $scope.mergeQueryOptions(dataQueryParam);                
-				var dataQuery = $scope.beforeLoadAll(dataQueryParam) || dataQueryParam;
+				var dataQuery = await $scope.beforeLoadAll(dataQueryParam) || dataQueryParam;
 
 				$scope.query(dataQuery, function(r) {
 					$scope.loading = false;
@@ -505,10 +505,10 @@ function ControllerFactory(resourceName, options, extras) {
 		}
 
 		//Load entry on initialization
-		$scope.loadSingle = function(callback) {
+		$scope.loadSingle = async function(callback) {
 			//$scope.loading = true;
-			$scope.get($routeParams.id, function(r) {
-				if ($scope.onLoad) $scope.onLoad(r);
+			$scope.get($routeParams.id, async function(r) {
+				if ($scope.onLoad) await $scope.onLoad(r);
 				if (callback) callback(r);
 				GLOBALS.methods.autoFocus();
 				//$scope.loading = false;
@@ -602,10 +602,10 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 		};
 		//Initialize a single record
-		$scope.newSingle = function(callback) {
+		$scope.newSingle = async function(callback) {
 			$scope.locked = false;
 			$scope.initSingle();
-			if ($scope.onInit) $scope.onInit($scope.data.single);
+			if ($scope.onInit) await $scope.onInit($scope.data.single);
 			if (callback) callback();
 		};
 
@@ -956,7 +956,19 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.goToNew = function() {
 			$location.path($scope.currentRoute + "/" + "new");
 		};
+
+		$scope.initLaunched = false;
+		$scope.launchInit = async function(){
+			if(!$scope.initLaunched){
+				if($scope.init) await $scope.init();
+				$scope.initLaunched = true;	
+			}
+		}
 		
+		$scope.$watch('init', function(n, o){
+			$scope.launchInit();
+		});
+        
 		
 		GLOBALS.methods.autoFocus();
 
