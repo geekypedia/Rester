@@ -13,6 +13,17 @@ app.service('R', function($resource, $http, S) {
 					if (results && results.data && results.data.length > 0)
 						if (cb) cb(results.data[0].count);
 				}, function(e) {});
-		}
+		},
+		query: async function(resourceName, q, cb){
+			await $http.get(S.baseUrl + '/' + resourceName, q)
+				.then(function(results) {
+					if (results && results.data)
+						if (cb) cb(results.data);
+						return results.data;
+				}, function(e) {
+						if (cb) cb(e);
+						return e;
+            });			
+		}        
 	};
 });
