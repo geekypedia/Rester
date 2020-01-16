@@ -35,6 +35,28 @@ app.service('R', function($resource, $http, S) {
 						if (cb) cb(e);
 						return e;
             });			
-		}        
+		},
+		update: async function(resourceName, payload, cb){
+			await $http.put(S.baseUrl + '/' + resourceName, payload)
+				.then(function(results) {
+					if (results && results.data)
+						if (cb) cb(results.data);
+						return results.data;
+				}, function(e) {
+						if (cb) cb(e);
+						return e;
+            });			
+		},      
+		remove: async function(resourceName, id, cb){
+			await $http.delete(S.baseUrl + '/' + resourceName + '/' + id)
+				.then(function(results) {
+					if (results && results.data)
+						if (cb) cb(results.data);
+						return results.data;
+				}, function(e) {
+						if (cb) cb(e);
+						return e;
+            });			
+		}
 	};
 });
