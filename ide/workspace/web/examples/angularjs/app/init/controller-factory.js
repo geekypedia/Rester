@@ -738,8 +738,11 @@ function ControllerFactory(resourceName, options, extras) {
 				route = $scope.currentRoute;
 			}
 			var plural = route.toUpperCase();
-			if (!singular || singular == '') singular = plural.substring(0, plural.length - 1);
-			var listTemplate = 'app/modules/' + route + '/list.html';
+			
+            //if (!singular || singular == '') singular = plural.substring(0, plural.length - 1);
+			if (!singular || singular == '') singular = H.toSingular(plural).toUpperCase();
+
+            var listTemplate = 'app/modules/' + route + '/list.html';
 			var listItemTemplate = 'app/modules/' + route + '/list-item.html';
 			var listHeaderTemplate = 'app/modules/' + route + '/list-header.html';
 			var listFooterTemplate = 'app/modules/' + route + '/list-footer.html';
@@ -756,7 +759,9 @@ function ControllerFactory(resourceName, options, extras) {
 				route = $scope.currentRoute;
 			}
 			var plural = route.toUpperCase();
-			if (!singular || singular == '') singular = plural.substring(0, plural.length - 1);
+
+            //if (!singular || singular == '') singular = plural.substring(0, plural.length - 1);
+			if (!singular || singular == '') singular = H.toSingular(plural).toUpperCase();;
 
 			var common = "common/templates";
 
@@ -846,7 +851,8 @@ function ControllerFactory(resourceName, options, extras) {
 				if(title.endsWith(' Id')) title = title.substring(0,title.length - 3);
 				if (o.Key == "MUL"){
 					type = "fkey";
-					fkeyTable = title.replace(' ', '_').toLowerCase() + 's';
+					//fkeyTable = title.replace(' ', '_').toLowerCase() + 's';
+					fkeyTable = H.toPlural(title.replace(' ', '_').toLowerCase());					
 					$scope.data.foreignKeysResources[fkeyTable] = R.get(fkeyTable);
 					
 					(function(fkeyTable){
