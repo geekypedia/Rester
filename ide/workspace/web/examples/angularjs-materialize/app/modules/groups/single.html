@@ -1,0 +1,70 @@
+<form name="forms.groupsForm" ng-if="!(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <md-input-container class="md-block">
+    <label for="groupTitle" class="active">{{M.FIELD_GROUPNAME}}:</label>
+    <input id="groupTitle" name="groupTitle" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
+    <div ng-messages="forms.groupsForm.groupTitle.$error" ng-show="forms.groupsForm.groupTitle.$dirty">
+      <div ng-message="required">{{M.REQUIRED}}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label for="isActive" class="active">{{M.FIELD_ACTIVE}}:</label>
+    <br>
+    <md-switch id="isActive" name="isActive" ng-disabled="locked" aria-label="Disabled active switch" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0">
+    </md-switch>
+  </md-input-container>
+</form>
+<section ng-if="data.single.id">
+<form ng-submit="addGroupUser(selectedUser)">
+    <div layout="row" layout-sm="column">
+      <div flex=80>
+        <md-autocomplete class="no-bottom md-no-underline"  
+                          md-no-cache="true" 
+                          md-selected-item="selectedUser" 
+                          md-items="item in getUsers(searchText)" 
+                          md-search-text="searchText" 
+                          md-item-text="item.username"
+                          md-floating-label="People"
+                          md-delay=3
+                          ng-disabled="locked"
+                          >
+          <md-item-template>
+          <span><img src="images/user.png" class="btn-floating btn-small white"> <span md-highlight-text="searchText">{{ item.username }}</span> ({{item.email}}) - {{item.role}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found.
+          </md-not-found>
+        </md-autocomplete>
+      </div>
+      <div flex=20>
+        <a ng-disabled="locked" class="top-margin-20 btn-floating btn-medium waves-effect waves-light blue" ng-click="addGroupUser(selectedUser)"><i class="material-icons">add</i></a>
+      </div>
+    </div>
+</form>
+<!--<div style="overflow:auto">-->
+<!--<table class="striped responsive-table">-->
+<!--        <tbody>-->
+<!--          <tr ng-repeat="item in data.groupUsers">-->
+<!--              <td>{{item.user.username}} ({{item.user.email}}) </td>-->
+<!--              <td><a ng-click="removeGroupUser(item)">Remove</a></td>-->
+<!--          </tr>-->
+<!--        </tbody>-->
+<!--</table>-->
+<!--</div>-->
+<div class="chip" id="peopleChips" ng-repeat="item in data.groupUsers" ng-if="data.groupUsers && data.groupUsers.length > 0">
+    <img src="images/user.png">
+    <span>{{item.user.username}} ({{item.user.email}}) - {{item.user.role}}</span>
+    <i class="close material-icons" ng-click="removeGroupUser(item)" ng-hide="locked">close</i>
+</div>
+</section>
+<div ng-if="(data.single.role == 'superadmin' && currentUser.role !='superadmin')">
+  <div class="middle-center-heading">{{M.UNAUTHORIZED_AREA}}</div>
+  <style type="text/css">
+      .middle-center-heading{
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              margin-left: -300px;
+              font-size: xx-large;
+      }
+  </style>
+</div>

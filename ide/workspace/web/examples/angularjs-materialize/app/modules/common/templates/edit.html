@@ -1,0 +1,24 @@
+<div ng-init="loadSingle()"></div>
+<h6>{{getTitle('list')}}&nbsp;<spinner/></h6>
+<hr/>
+<div ng-include src="getTemplate('single-header')"></div>
+<section class="demo-container md-whiteframe-z1">
+      <md-toolbar class="demo-toolbar md-primary _md _md-toolbar-transitions blue">
+        <div class="md-toolbar-tools">
+          <h3 class="ng-binding ng-isolate-scope"><a class="docs-anchor ng-scope">{{M.TITLE_EDIT_PREFIX}} {{getTitle('single')}}</a></h3>
+          <span flex="" class="flex"></span>
+        </div>
+      </md-toolbar>
+      <md-content layout-padding class="layout-padding _md">
+        <div ng-include src="getTemplate('edit')"></div>
+        <div>
+            <button class="btn" ng-show="!locked" ng-click="updateSingle()">{{M.BTN_UPDATE}}</button>
+            <button class="btn" ng-show="locked" ng-click="toggleLock()">{{M.BTN_EDIT}}</button>
+            &nbsp;<spinner/>
+        </div>
+      </md-content>
+</section>
+<div class="fixed-action-btn ">
+      <a class="btn-floating btn-large yellow darken-4" href="{{currentRouteHref}}"><i class="material-icons">arrow_back</i></a>
+</div>
+<div ng-include src="getTemplate('single-footer')"></div>

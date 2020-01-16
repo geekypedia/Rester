@@ -1,0 +1,17 @@
+<!--This is the template that will be used in new/edit screens. It should be in <form></form> tag. The name of the form should be matching the name of your API route, prefixed with 'froms.' and suffixed by 'Form'. e.g. in this case, it would be 'forms.tasksForm'-->
+<!--Example-->
+<form name="forms.tasksForm">
+    <md-input-container class="md-block">
+      <label for="task_title" class="active">{{M.FIELD_TITLE}}:</label>
+      <input id="task_title" name="task_title" type="text" class="validate" ng-model="data.single.title" required ng-disabled="locked">
+      <div ng-messages="forms.tasksForm.task_title.$error" ng-show="forms.tasksForm.task_title.$dirty">
+        <div ng-message="required">{{M.REQUIRED}}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label for="task_is_active" class="active">{{M.FIELD_ACTIVE}}:</label>
+        <br>
+        <md-switch id="task_is_active" name="task_is_active" ng-disabled="locked" aria-label="Disabled active switch" ng-model="data.single.is_active" ng-true-value="1" ng-false-value="0">
+        </md-switch>
+    </md-input-container>
+</form>
