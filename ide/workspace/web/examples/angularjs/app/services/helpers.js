@@ -41,10 +41,10 @@ app.service('H', function($location, $timeout, $http, md5, S, M, R, upload) {
             };
             $timeout(waitForRender);
         },
-        startsWithAnyOf: startsWithAnyOf,
-        endsWithAnyOf: endsWithAnyOf,
-        toPlural: toPlural,
-        toSingular: toSingular        
+        startsWithAnyOf: Helper.startsWithAnyOf,
+        endsWithAnyOf: Helper.endsWithAnyOf,
+        toPlural: Helper.toPlural,
+        toSingular: Helper.toSingular        
 	};
 });
 
