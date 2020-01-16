@@ -1,4 +1,4 @@
-![pRESTige Framework](http://prestigeframework.com/wp-content/uploads/2018/09/logo.png)
+![pRESTige Framework](https://prestigeframework.com/wp-content/uploads/pRESTige-logo.png)
 =====
 
 Introduction
