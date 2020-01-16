@@ -613,7 +613,7 @@ function ControllerFactory(resourceName, options, extras) {
 		//Save a new single record
 		$scope.saveSingle = function(callback) {
 			//$scope.loading = true;
-
+            $scope.saveClicked = true;
 			if ($scope.beforeSave) {
 				$scope.beforeSave($scope.data.single, function(r) {
 					var save = true;
