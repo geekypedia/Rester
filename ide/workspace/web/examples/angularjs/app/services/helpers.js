@@ -40,7 +40,11 @@ app.service('H', function($location, $timeout, $http, md5, S, M, R, upload) {
                 }
             };
             $timeout(waitForRender);
-        }        
+        },
+        startsWithAnyOf: startsWithAnyOf,
+        endsWithAnyOf: endsWithAnyOf,
+        toPlural: toPlural,
+        toSingular: toSingular        
 	};
 });
 
@@ -182,5 +186,79 @@ class Helper {
 	static deepCopy(input){
 		return JSON.parse(JSON.stringify(input));
 	}
+    
+	static startsWithAnyOf(str, arr){
+		var vals = arr;
+		if(typeof arr == 'string'){
+			vals = arr.split("");
+		}
+		var result = false;
+		for(var k in vals){
+			var i = vals[k];
+			if(str.startsWith(i)) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+	
+	static endsWithAnyOf(str, arr){
+		var vals = arr;
+		if(typeof arr == 'string'){
+			vals = arr.split("");
+		}
+		var result = false;
+		for(var k in vals){
+			var i = vals[k];
+			if(str.endsWith(i)) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+	
+	static toPlural(input){
+		var key = input.toLowerCase();
+		var result = input;
+		var secondLast = key[key.length - 2];
+		var keyStripped = input.substring(0, input.length - 1);
+		var keyStrippedTwo = input.substring(0, input.length - 2);
+		if(Helper.endsWithAnyOf(key, ['s', 'ch', 'sh', 'x', 'z'])  ||  (key.endsWith('o') && !Helper.endsWithAnyOf(secondLast, 'aeiou')) ){
+			result += 'es';	
+		} else if (key.endsWith('y') && !Helper.endsWithAnyOf(secondLast, 'aeiou')){
+			result = keyStripped + 'ies';
+		} else if (key.endsWith('f')){
+			result = keyStripped + 'ves';
+		} else if (key.endsWith('fe')){
+			result = keyStrippedTwo + 'ves';
+		} else {
+			result += 's';
+		}
+		return result;
+	}
+
+	static toSingular(input){
+		var key = input.toLowerCase();
+		var lastTwo = key.substring(key.length - 2, 2);
+		var lastThree = key.substring(key.length - 3, 3);
+		var keyStripped = input.substring(0, input.length - 1);
+		var keyStrippedTwo = input.substring(0, input.length - 2);
+		var keyStrippedThree = input.substring(0, input.length - 3);
+		var result = keyStripped;
+		if(key.endsWith('ves')){
+			result = keyStrippedThree + 'f';
+		} else if(key.endsWith('ies')){
+			result = keyStrippedThree + 'y';
+		} else if(key.endsWith('es')){
+			result = keyStrippedTwo;
+		} else {
+			result = keyStripped;
+		}
+		return result;
+	}
+
+    
 
 }
