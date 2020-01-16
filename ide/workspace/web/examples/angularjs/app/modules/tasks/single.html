@@ -7,18 +7,20 @@
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<input id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked">
-				<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">
-					<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>
-				</div>
+				<!--<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">-->
+				<!--	<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>-->
+				<!--</div>-->
+				<div ng-if="data.singleKeysInfo[i].required && !data.single[i] && saveClicked" class="small col-red">{{M.REQUIRED}}</div>
 			</div>
      	</div>
      	<div class="form-group row"  ng-if="data.singleKeysInfo[i].type == 'textarea'">
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<textarea id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked"></textarea>
-				<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">
-					<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>
-				</div>
+				<!--<div ng-messages="forms[resourceName + 'Form'][resourceName + '_'  + i].$error" ng-show="forms[resourceName + 'Form'][resourceName + '_'  + i].$dirty">-->
+				<!--	<div ng-message="required" ng-if="data.singleKeysInfo[i].required" class="small col-red">{{M.REQUIRED}}</div>-->
+				<!--</div>-->
+				<div ng-if="data.singleKeysInfo[i].required && !data.single[i] && saveClicked" class="small col-red">{{M.REQUIRED}}</div>
 			</div>
      	</div> 
      	<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'bool'">
