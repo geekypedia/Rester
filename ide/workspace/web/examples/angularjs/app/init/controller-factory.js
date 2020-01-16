@@ -622,7 +622,7 @@ function ControllerFactory(resourceName, options, extras) {
 						$scope.save($scope.data.single, function(r) {
 							$scope.locked = true;
 
-							if (r && r.error) {
+							if ((r && r.error) || (r && r.data && r.data.error)) {
 								if ($scope.onError) {
 									$scope.onError(r.error, function(e) {
 										if ($scope.onErrorBase) $scope.onErrorBase(e);
@@ -655,7 +655,7 @@ function ControllerFactory(resourceName, options, extras) {
 					$scope.save($scope.data.single, function(r) {
 						$scope.locked = true;
 
-						if (r && r.error) {
+						if ((r && r.error) || (r && r.data && r.data.error)) {
 							if ($scope.onError) {
 								$scope.onError(r.error, function(e) {
 									if ($scope.onErrorBase) $scope.onErrorBase(e);
@@ -888,7 +888,7 @@ function ControllerFactory(resourceName, options, extras) {
 
 		}
 
-		$scope.showDialog = function(ev, title, content, okText = "OK", cancelText = "Cancel", okHandler, cancelHandler) {
+		$scope.showDialog = function(ev, title, content, okText = "OK", cancelText = "Cancel", okHandler, cancelHandler, closeHandler) {
 			Popup.show({
 					title: title,
 					body: content,
@@ -911,7 +911,7 @@ function ControllerFactory(resourceName, options, extras) {
 					}],
 					scope: $scope,
 					spinner: true,
-					close: function(data) {
+					close: closeHandler || function(data) {
 
 					}
 				})
@@ -934,7 +934,9 @@ function ControllerFactory(resourceName, options, extras) {
 			$scope.showDialog(null, M.ERROR_TITLE, M.SAVED_ERROR, M.SAVED_OK, M.SAVED_CANCEL, function() {
 				$scope.locked = false;
 			}, function() {
-				$location.path($scope.currentRoute)
+				$location.path($scope.currentRoute);
+			}, function(){ 
+				$scope.locked = false; 
 			});
 		};
 
@@ -942,13 +944,13 @@ function ControllerFactory(resourceName, options, extras) {
 			$scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE, M.SAVED_OK, M.SAVED_CANCEL, function() {
 				$scope.newSingle();
 			}, function() {
-				$location.path($scope.currentRoute)
+				$location.path($scope.currentRoute);
 			});
 		};
 
 		$scope.onUpdateBase = function(obj) {
 			$scope.showDialog(null, M.SAVED_TITLE, M.SAVED_MESSAGE, M.SAVED_OK, M.SAVED_CANCEL, function() {}, function() {
-				$location.path($scope.currentRoute)
+				$location.path($scope.currentRoute);
 			});
 		};
 
