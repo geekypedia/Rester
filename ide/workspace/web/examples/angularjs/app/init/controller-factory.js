@@ -102,6 +102,7 @@ function ControllerFactory(resourceName, options, extras) {
 		//Initializa new single objetc
 		$scope.initSingle = function() {
 			$scope.data.single = new Resource();
+            $scope.data.selectedForeignKeys = [];
 			//$scope.buildSingleHeaders();
 		};
 
