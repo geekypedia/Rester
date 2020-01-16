@@ -3,7 +3,7 @@
 <form name="forms.{{resourceName}}Form" id="forms.{{resourceName}}Form">
 	<div ng-repeat="i in data.singleKeys">
      	<div class="form-group row"  ng-if="!(['bool', 'fkey', 'date', 'datetime', 'textarea'].indexOf(data.singleKeysInfo[i].type) > -1) && i != 'id' && !(i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_sound') || i.endsWith('_music') || i.endsWith('_audio') || i.endsWith('_attachment') || i.endsWith('file') || i.endsWith('attachment') || i.endsWith('image')) ">
-			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<input id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked">
 			</div>
@@ -12,7 +12,7 @@
 			</div>
      	</div>
      	<div class="form-group row"  ng-if="data.singleKeysInfo[i].type == 'textarea'">
-			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<textarea id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" type="{{data.singleKeysInfo[i].type}}" class="form-control" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked"></textarea>
 			</div>
@@ -21,7 +21,7 @@
 			</div>
      	</div> 
      	<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'bool'">
-			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 			<div class="custom-control custom-switch form-switch">
 				<input class="custom-control-input" type="checkbox" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" ng-true-value="1"  ng-false-value="0" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" ng-disabled="locked"> 
@@ -30,7 +30,7 @@
 			</div>
      	</div>
 		<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'fkey'">
-			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<div class="dropdown">
 				  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
@@ -43,7 +43,7 @@
 			</div>    
 		</div>
 		<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'date' || data.singleKeysInfo[i].type == 'datetime'">
-			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 					<datepicker date-format="yyyy-MM-dd">
 									 <input type="text" 
@@ -57,7 +57,7 @@
 			</div>    
 		</div>
      	<div class="form-group row" ng-if="(i.endsWith('_file') || i.endsWith('_image') || i.endsWith('_photo') || i.endsWith('_video') || i.endsWith('_sound') || i.endsWith('_music') || i.endsWith('_audio') || i.endsWith('_attachment') || i.endsWith('file') || i.endsWith('attachment') || i.endsWith('image') )">
-			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}:</label>
+			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<file-upload ng-if="!locked" callback="data.onuploadCallbacks[i]"></file-upload>
 				<video class="file-field" controls ng-if="['mp4'].indexOf(data.single[i].substr(data.single[i].length - 3)) > -1">
