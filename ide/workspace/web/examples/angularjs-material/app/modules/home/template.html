@@ -1,7 +1,0 @@
-<div class="jumbotron jumbotron-fluid bg-light">
-	<h6>{{M.TITLE_DASHBOARD}}</h6>
-	<hr/>
-		<div class="row"> 
-			<info-box options='v' ng-if="v.allowedRoles==null || v.allowedRoles.indexOf(currentUser.role) > -1" ng-repeat="(k, v) in data.counters"></info-box>
-		</div>
-</div>
