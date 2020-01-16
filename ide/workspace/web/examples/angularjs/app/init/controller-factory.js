@@ -526,6 +526,7 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.toggleLock = function() {
 			$scope.locked = !$scope.locked;
 			if(!$scope.locked){
+                $scope.mode = $scope.MODES.edit;
 				GLOBALS.methods.autoFocus();
 			}            
 		};
@@ -606,6 +607,7 @@ function ControllerFactory(resourceName, options, extras) {
 		//Initialize a single record
 		$scope.newSingle = async function(callback) {
 			$scope.locked = false;
+            $scope.mode = $scope.MODES.add;
 			$scope.initSingle();
 			if ($scope.onInit) await $scope.onInit($scope.data.single);
 			if (callback) callback();
@@ -946,7 +948,9 @@ function ControllerFactory(resourceName, options, extras) {
 				$scope.newSingle();
 			}, function() {
 				$location.path($scope.currentRoute);
-			});
+			}, function() {
+                $scope.mode = $scope.MODES.view;
+            });
 		};
 
 		$scope.onUpdateBase = function(obj) {
