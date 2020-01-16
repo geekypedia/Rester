@@ -1,5 +1,5 @@
 /*global app, RegisterRoutes*/
-app.service('H', function($location, md5, S, M, R, upload) {
+app.service('H', function($location, $timeout, $http, md5, S, M, R, upload) {
 	return {
 		S: S,
 		SETTINGS: S,
@@ -30,7 +30,17 @@ app.service('H', function($location, md5, S, M, R, upload) {
 		toTitleCase: Helper.toTitleCase,
 		replaceAll: Helper.replaceAll,
 		deepCopy: Helper.deepCopy,
-		upload: upload        
+		upload: upload,
+		goTo : function(newRoute) {                
+            var waitForRender = function () {
+                if ($http.pendingRequests.length > 0) {
+                    $timeout(waitForRender);
+                } else {
+                    $location.path(newRoute);
+                }
+            };
+            $timeout(waitForRender);
+        }        
 	};
 });
 
