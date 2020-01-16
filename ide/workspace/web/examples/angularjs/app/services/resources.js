@@ -26,7 +26,7 @@ app.service('R', function($resource, $http, S) {
             });			
 		},
 		submit: async function(resourceName, payload, cb){
-			await $http.[post(S.baseUrl + '/' + resourceName, payload)
+			await $http.post(S.baseUrl + '/' + resourceName, payload)
 				.then(function(results) {
 					if (results && results.data)
 						if (cb) cb(results.data);
