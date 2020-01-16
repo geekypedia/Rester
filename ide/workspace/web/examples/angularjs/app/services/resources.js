@@ -15,7 +15,7 @@ app.service('R', function($resource, $http, S) {
 				}, function(e) {});
 		},
 		query: async function(resourceName, q, cb){
-			await $http.get(S.baseUrl + '/' + resourceName, q)
+			await $http.get(S.baseUrl + '/' + resourceName,  {params: q})
 				.then(function(results) {
 					if (results && results.data)
 						if (cb) cb(results.data);
