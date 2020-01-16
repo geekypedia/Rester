@@ -39,7 +39,8 @@
 				  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_{{i}}">
 				    <a class="dropdown-item" ng-repeat="r in data.foreignKeys[H.toPlural(data.singleKeysInfo[i].title.replace(' ', '_').toLowerCase())]"  href="" ng-click="data.single[i] = r.id;data.selectedForeignKeys[i] = r;">{{ r.title || r.display_name || r.name || (r.first_name ? r.first_name + ' ' + r.last_name : null) || r.email || r.id }}</a>
 				  </div>
-				</div>			
+				</div>
+				<input type="hidden" class="form-control" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" ng-model="data.single[i]" ng-required="data.singleKeysInfo[i].required" />
 			</div>    
 		</div>
 		<div class="form-group row" ng-if="data.singleKeysInfo[i].type == 'date' || data.singleKeysInfo[i].type == 'datetime'">
