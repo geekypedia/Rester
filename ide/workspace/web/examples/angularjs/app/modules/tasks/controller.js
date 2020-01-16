@@ -5,19 +5,19 @@
 app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, Popup, H, M) {
     
     //This function is called when you need to make changes to the new single object.
-    $scope.onInit = function(obj){
+    $scope.onInit = async function(obj){
         //$scope.data.single is available here. 'obj' refers to the same. It is the new instance of your 'tasks' resource that matches the structure of your 'tasks' API.
         obj.is_active = 1;
     };
     
     //This function is called when you are in edit mode. i.e. after a call has returned from one of your API that returns a single object. e.g http://localhost:8080/api/tasks/1
-    $scope.onLoad = function(obj){
+    $scope.onLoad = async function(obj){
         //$scope.data.single is available here. 'obj' refers to the same. It represents the object you are trying to edit.
         
     };
     
     //This function is called when you are in list mode. i.e. before a call has been placed to one of your API that returns a the paginated list of all objects matching your API.
-    $scope.beforeLoadAll = function(query){
+    $scope.beforeLoadAll = async function(query){
         //This is where you can modify your query parameters.    
         //query.is_active = 1;
         //return query;
