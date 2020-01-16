@@ -533,6 +533,7 @@ function ControllerFactory(resourceName, options, extras) {
 		//Update a single record
 		$scope.updateSingle = function(callback) {
 			//$scope.loading = true;
+            $scope.saveClicked = true;
 			if ($scope.beforeUpdate) {
 				$scope.beforeUpdate($scope.data.single, function(r) {
 					var update = true;
