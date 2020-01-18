@@ -238,6 +238,14 @@ app.run(function($rootScope, $location, $cookies, H) {
 			} else {
 				var cu = JSON.parse(cookie);
 				$rootScope.currentUser = typeof cu === 'string' ? JSON.parse(cu) : cu;
+                
+				$rootScope.currentTheme = {
+					bg : ($rootScope.currentUser.profile.theme_bg || $rootScope.currentUser.organization.theme_bg || H.S.theme.background || 'light'),
+					col : ($rootScope.currentUser.profile.theme_col || $rootScope.currentUser.organization.theme_col || H.S.theme.color || 'black'),
+					alt : ($rootScope.currentUser.profile.theme_alt || $rootScope.currentUser.organization.theme_alt || H.S.theme.alternate || 'light'),
+					cont : ($rootScope.currentUser.profile.theme_cont || $rootScope.currentUser.organization.theme_cont || H.S.theme.contrast || 'grey')
+				}
+                                            
 				if (next && current) {
 					$rootScope.$emit("buildMenu");
 				}
