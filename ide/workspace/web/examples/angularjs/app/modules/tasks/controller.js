@@ -1,7 +1,12 @@
 /*global app*/
 //The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
 //Example: your API is http://localhost:8080/api/tasks then the name of the controller is tasksControllerExtension.
-//To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' array.
+//To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' or 'autoRoutes' array.
+//
+//The main difference in 'easyRoutes' and 'autoRoutes' is that 'autoRoutes' generates complete CRUD pages, where as in 'easyRoutes'
+//you need to provide templates inside 'app/modules/tasks' folder. If you want to keep your templates somewhere else, you can pick
+//'autoRoutes' and then override the templates using setTemplate function.
+//Note that for 'autoRoutes', it is not even required to write Controller Extensions unless you want to modify the behaviour.
 app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, Popup, H, M) {
     
     //This function is called when you need to make changes to the new single object.
@@ -73,5 +78,15 @@ app.controller('tasksControllerExtension', function($scope, $controller, $rootSc
 
     // If you want to refresh the data loaded in grid, you can call the following method
     // $scope.refreshData();
+    
+    // If you are using autoRoutes, and you want to override any templates, you may use the following function
+    // $scope.setTemplate('list-item', 'app/your-path/your-template.html');
+    // $scope.setTemplate('single', 'app/your-path/your-template.html');
+    
+    // list-item.html template uses the 'td' element which will be rendered inside a 'table' & 'tr'. 
+    // If you don't like the layout, and you want to replace it with your own, you can use the following method.
+    // Note that if you override the 'list-items', then you have to use ng-repeat or any other mechanism to iterate over your data that is available in $scope.data.list.
+    // $scope.setTemplate('list-items', 'app/your-path/your-template.html');
+    
 
 });
