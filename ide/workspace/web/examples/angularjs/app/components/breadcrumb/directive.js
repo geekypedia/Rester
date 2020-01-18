@@ -6,7 +6,7 @@ app.directive('breadCrumb', function(){
 	    },
 
 		restrict: 'EA',
-    	templateUrl: 'app/components/breadcrumb/template.html'
+    	templateUrl: 'app/components/bread-crumb/template.html'
 	};
 });
 
