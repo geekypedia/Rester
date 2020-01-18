@@ -152,7 +152,9 @@
 				          </tr>
 				        </thead>
 				        <tbody>
-				          <tr ng-repeat="item in data.list" ng-include src="getTemplate('list-item')">
+				          <tr ng-repeat="item in data.list" ng-include src="getTemplate('list-item')" ng-if="!templates['list-item']">
+				          </tr>
+				          <tr ng-repeat="item in data.list" ng-include="templates['list-item']" ng-if="templates['list-item']">
 				          </tr>
 				        </tbody>
 				</table>
