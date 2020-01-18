@@ -10,11 +10,20 @@ class Settings{
 		"legacyMode": false,
 		"theme": {
 			background: "primary",
-			color: "white"
+			color: "white",
+			alternate: "dodgerblue",
+			contrast: "black"            
 		},
 		"menu": "expand", //expand or overlap,
 		"autoMasters": false,
-		"showMastersMenu": true
+		"showMastersMenu": true,
+		"defaultPermissions": {
+				view: ['user', 'admin'],
+				add: ['admin'],
+				edit: ['admin'],
+				remove: ['admin'],
+				extract: ['admin']				
+		}
 		}
 	}
 }
