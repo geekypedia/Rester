@@ -24,7 +24,8 @@
     	</div>
     	<div class="card-body">
     		<div ng-include src="getTemplate('single-header')"></div>
-    		<div ng-include src="getTemplate('edit')"></div>
+    		<div ng-include src="getTemplate('edit')" ng-if="!templates['single']"></div>
+    		<div ng-include="templates['single']"></div>
             <div class="col-md-6 offset-md-4">
                 <button id="saveButton" name="saveButton" type="submit" class="btn btn-success" ng-if="!locked" ng-click="updateSingle()" form="forms.{{resourceName}}Form">
                     {{M.BTN_UPDATE}}
