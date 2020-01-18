@@ -42,6 +42,7 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.forms = {};
 		$scope.H = H;
 		$scope.M = M;
+        $scope.templates = {};
 
 		//Set currentRoute
 		$scope.currentRoute = (function() {
@@ -820,6 +821,10 @@ function ControllerFactory(resourceName, options, extras) {
 			}
 
 		};
+        
+		$scope.setTemplate = function(key, value){
+			$scope.templates[key] = value;
+		}
 
 		$scope.getTableHeaders = function() {
 			var headers = [];
