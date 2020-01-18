@@ -143,7 +143,7 @@
 			</div>
 
 			<div style="overflow:auto">
-				<table class="table">
+				<table class="table" ng-if="!templates['list-items']">
 				        <thead class="thead-light">
 				          <tr>
 				              <!--<th ng-repeat="h in data.listHeaders">{{h}}</th>-->
@@ -156,6 +156,7 @@
 				          </tr>
 				        </tbody>
 				</table>
+				<div ng-include="templates['list-items']"></div>
 			</div>
 
 
