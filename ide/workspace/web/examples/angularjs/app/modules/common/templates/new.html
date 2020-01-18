@@ -24,7 +24,8 @@
     	</div>
     	<div class="card-body">
     		<div ng-include src="getTemplate('single-header')"></div>
-    		<div ng-include src="getTemplate('new')"></div>
+    		<div ng-include src="getTemplate('new')" ng-if="!templates['single']"></div>
+    		<div ng-include="templates['single']"></div>
             <div class="col-md-6 offset-md-4">
                 <button id="saveButton" name="saveButton" type="submit" class="btn btn-success" ng-if="!data.single.id" ng-click="saveSingle()" form="forms.{{resourceName}}Form">
                     {{M.BTN_SAVE}}
