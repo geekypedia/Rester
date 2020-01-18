@@ -43,6 +43,8 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.H = H;
 		$scope.M = M;
         $scope.templates = {};
+        
+        $scope.data.permissions = H.S.defaultPermissions;
 
 		//Set currentRoute
 		$scope.currentRoute = (function() {
