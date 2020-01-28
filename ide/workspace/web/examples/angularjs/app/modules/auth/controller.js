@@ -33,10 +33,10 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 				$rootScope.currentUser = r.data;
             
 				$rootScope.currentTheme = {
-					bg : ($rootScope.currentUser.profile.theme_bg || $rootScope.currentUser.organization.theme_bg || H.S.theme.background || 'light'),
-					col : ($rootScope.currentUser.profile.theme_col || $rootScope.currentUser.organization.theme_col || H.S.theme.color || 'black'),
-					alt : ($rootScope.currentUser.profile.theme_alt || $rootScope.currentUser.organization.theme_alt || H.S.theme.alternate || 'light'),
-					cont : ($rootScope.currentUser.profile.theme_cont || $rootScope.currentUser.organization.theme_cont || H.S.theme.contrast || 'grey')
+					bg : ( $rootScope.currentUser.profile ? $rootScope.currentUser.profile.theme_bg :  ( $rootScope.currentUser.organization ? $rootScope.currentUser.organization.theme_bg : (H.S.theme ? H.S.theme.background : 'light'))),
+                    col : ( $rootScope.currentUser.profile ? $rootScope.currentUser.profile.theme_col :  ( $rootScope.currentUser.organization ? $rootScope.currentUser.organization.theme_col : (H.S.theme ? H.S.theme.color : 'black'))),
+                    alt : ( $rootScope.currentUser.profile ? $rootScope.currentUser.profile.theme_alt :  ( $rootScope.currentUser.organization ? $rootScope.currentUser.organization.theme_alt : (H.S.theme ? H.S.theme.alternate : 'light'))),
+                    cont : ( $rootScope.currentUser.profile ? $rootScope.currentUser.profile.theme_cont :  ( $rootScope.currentUser.organization ? $rootScope.currentUser.organization.theme_cont : (H.S.theme ? H.S.theme.contrast : 'grey')))
 				}
             
 				$cookies.putObject(H.getCookieKey(), JSON.stringify(r.data));
