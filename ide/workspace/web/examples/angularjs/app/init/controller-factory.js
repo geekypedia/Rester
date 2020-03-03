@@ -851,6 +851,9 @@ function ControllerFactory(resourceName, options, extras) {
 			$scope.data.foreignKeys = {};
 			$scope.data.foreignKeysResources = {};
 			$scope.data.singleKeysInfo = {};
+            
+            var aliases = RegisterRoutes().aliases || {};
+            
 			for (i in $scope.metadata) {
 				var o = JSON.parse(JSON.stringify($scope.metadata[i]));
 				var k = o.Field;
@@ -863,8 +866,9 @@ function ControllerFactory(resourceName, options, extras) {
 				if (o.Key == "MUL"){
 					type = "fkey";
 					//fkeyTable = title.replace(' ', '_').toLowerCase() + 's';
-					fkeyTable = H.toPlural(title.replace(' ', '_').toLowerCase());					
-					$scope.data.foreignKeysResources[fkeyTable] = R.get(fkeyTable);
+					fkeyTable = H.toPlural(title.replace(' ', '_').toLowerCase());
+                    var fKeyTableOrAlias = aliases[fkeyTable] ? aliases[fkeyTable] : fkeyTable; 
+					$scope.data.foreignKeysResources[fkeyTable] = R.get(fKeyTableOrAlias);
 					
 					(function(fkeyTable){
 						$scope.data.foreignKeysResources[fkeyTable].query({}, function(r){
