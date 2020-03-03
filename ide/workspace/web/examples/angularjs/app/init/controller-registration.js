@@ -47,3 +47,16 @@ function RegisterEasyController(route, headers, controller, auto = false) {
 		RegisterEasyController(autoRoutes[i], null, null, true /*, data[easyRoutes[i]].headers*/ );
 	}
 })();
+
+
+//Register Aliases
+(function() {
+    var aliases = RegisterRoutes().aliases || [];
+    //var data = RegisterData();
+    for (var i in aliases) {
+        alias = i;
+        route = aliases[i];
+        console.log('trying to register ' + alias + ' for route ' + route);
+        RegisterEasyController(route, null, null, true, alias /*, data[easyRoutes[i]].headers*/ );
+    }
+})();
