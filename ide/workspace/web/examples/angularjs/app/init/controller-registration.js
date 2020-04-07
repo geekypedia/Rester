@@ -1,14 +1,14 @@
 /*global app, ControllerFactory, RegisterRoutes, RegisterData*/
-function RegisterEasyController(route, headers, controller, auto = false) {
-	app.controller(route + 'ControllerBase', ControllerFactory(route));
+function RegisterEasyController(route, headers, controller, auto = false, alias) {
+	app.controller((alias ? alias : route) + 'ControllerBase', ControllerFactory(route));
 
-	app.controller(route + 'Controller', function($scope, $controller, H) {
+	app.controller((alias ? alias : route) + 'Controller', function($scope, $controller, H) {
 		//Copy all scope variables from Base Controller
-		$controller(route + 'ControllerBase', {
+		$controller((alias ? alias : route) + 'ControllerBase', {
 			$scope: $scope
 		});
 		try {
-			$controller(route + 'ControllerExtension', {
+			$controller((alias ? alias : route) + 'ControllerExtension', {
 				$scope: $scope
 			});
 		} catch (ex) {
