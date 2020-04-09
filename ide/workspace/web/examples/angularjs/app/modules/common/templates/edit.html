@@ -26,7 +26,7 @@
     		<div ng-include src="getTemplate('single-header')"></div>
     		<div ng-include src="getTemplate('edit')" ng-if="!templates['single']"></div>
     		<div ng-include="templates['single']"></div>
-            <div class="col-md-6 offset-md-4">
+            <div class="col-md-6 offset-md-4" ng-if='data.permissions.edit.indexOf(currentUser.role) > -1'>
                 <button id="saveButton" name="saveButton" type="submit" class="btn btn-success" ng-if="!locked" ng-click="updateSingle()" form="forms.{{resourceName}}Form">
                     {{M.BTN_UPDATE}}
                 </button>
