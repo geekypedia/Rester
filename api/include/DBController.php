@@ -452,7 +452,8 @@ class DBController
 				$order['order'] = 'ASC';
 			}
 		
-			$query .= sprintf(' ORDER BY "%s" %s', $order['by'], $order['order']);
+			//$query .= sprintf(' ORDER BY "%s" %s', $order['by'], $order['order']);
+			$query .= sprintf(' ORDER BY `%s`."%s" %s', $route->routeName,$order['by'], $order['order']);
 		}
 		
 		if (isset($filters['limit']) === true)
