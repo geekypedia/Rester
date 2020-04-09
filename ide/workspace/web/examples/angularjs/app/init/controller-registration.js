@@ -56,7 +56,7 @@ function RegisterEasyController(route, headers, controller, auto = false, alias)
     for (var i in aliases) {
         alias = i;
         route = aliases[i];
-        console.log('trying to register ' + alias + ' for route ' + route);
+        //console.log('trying to register ' + alias + ' for route ' + route);
         RegisterEasyController(route, null, null, true, alias /*, data[easyRoutes[i]].headers*/ );
     }
 })();
