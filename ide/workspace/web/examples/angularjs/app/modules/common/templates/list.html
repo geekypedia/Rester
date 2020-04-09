@@ -11,7 +11,7 @@
     <div class="card">
     	<div class="card-header"><span class="large">MANAGE {{getTitle('list')}}</span>
 	    	<div class="float-right">
-            	<a href="{{newRouteHref}}">
+            	<a href="{{newRouteHref}}" ng-if='data.permissions.add.indexOf(currentUser.role) > -1'>
 	                <button type="button" class="btn btn-dark btn-sm">
 	                    {{M.TITLE_ADD_PREFIX}}
 	                </button>
