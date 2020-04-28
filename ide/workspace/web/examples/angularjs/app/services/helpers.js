@@ -14,6 +14,16 @@ app.service('H', function($location, $timeout, $http, md5, S, M, R, upload) {
 		getHash: function(str){
     		return md5.createHash(str);
 		},
+		getAbsoluteUrl: function(str){
+			if(str == null || str == ''){
+				return '';
+			}
+			if (str.startsWith('http:') || str.startsWith('https:')){
+				return Helper.getAbsolutePath(str);
+			} else {
+				return Helper.getAbsolutePath(S.baseUrl + '/' + str);
+			}
+		},
 		getAbsolutePath: Helper.getAbsolutePath,
 		getRandomNumber: Helper.getRandomNumber,
 		getUUID: Helper.getUUID,
