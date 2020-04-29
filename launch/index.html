@@ -17,6 +17,10 @@
             var location = "" + window.location;
             if (location.charAt(location.length - 1) !== '/' && !location.endsWith('.html')) {
                 var newLocation = location + "/";
+                //force redirect to https
+				// if(newLocation.startsWith('http:')){
+				// 	newLocation = newLocation.replace('http:', 'https:')
+				// }                
                 window.location = newLocation;
             }
             //materialBackground.start();
