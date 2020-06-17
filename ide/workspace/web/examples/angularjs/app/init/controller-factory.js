@@ -45,6 +45,10 @@ function ControllerFactory(resourceName, options, extras) {
         $scope.templates = {};
         
         $scope.data.permissions = H.S.defaultPermissions;
+        if(H.S.overridePermissions && H.S.overridePermissions[$scope.resourceName]){
+        	$scope.data.permissions = H.S.overridePermissions[$scope.resourceName];
+        }
+        
 
 		//Set currentRoute
 		$scope.currentRoute = (function() {
