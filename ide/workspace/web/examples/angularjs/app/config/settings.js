@@ -23,7 +23,25 @@ class Settings{
 				edit: ['admin'],
 				remove: ['admin'],
 				extract: ['admin']				
-		}
+		},
+		/*
+		"overridePermissions":{
+			"routeName1": {
+				view: ['user', 'admin'],
+				add: ['admin'],
+				edit: ['admin'],
+				remove: ['admin'],
+				extract: ['admin']
+			},
+			"routeName2": {
+				view: ['user', 'admin'],
+				add: ['admin'],
+				edit: ['admin'],
+				remove: ['admin'],
+				extract: ['admin']
+			}
+		},
+		*/            
 		}
 	}
 }
