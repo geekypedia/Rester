@@ -35,10 +35,10 @@
 			<label for="{{resourceName}}_{{i}}" class="col-md-4 col-form-label text-md-right">{{data.singleKeysInfo[i].title}}: <span ng-if="data.singleKeysInfo[i].required" class="small col-red">*</span></label>
 			<div class="col-md-6">
 				<div class="dropdown">
-				  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_{{i}}" name="{{resourceName}}_{{i}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
+				  <button class="btn btn-default dropdown-toggle" type="button" id="{{resourceName}}_{{i}}_btn" name="{{resourceName}}_{{i}}_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="locked">
 				    {{ data.selectedForeignKeys[i].display_title || data.selectedForeignKeys[i].title || data.selectedForeignKeys[i].display_name || data.selectedForeignKeys[i].name || (data.selectedForeignKeys[i].first_name ? data.selectedForeignKeys[i].first_name + ' ' + data.selectedForeignKeys[i].last_name : null) || data.selectedForeignKeys[i].email || data.selectedForeignKeys[i].id || data.single[i.substring(0, i.length - 3)].display_title || data.single[i.substring(0, i.length - 3)].title || data.single[i.substring(0, i.length - 3)].display_name || data.single[i.substring(0, i.length - 3)].name || (data.single[i.substring(0, i.length - 3)].first_name ? data.single[i.substring(0, i.length - 3)].first_name + ' ' + data.single[i.substring(0, i.length - 3)].last_name : null) || data.single[i.substring(0, i.length - 3)].email || 'Choose an option' }}
 				  </button>
-				  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_{{i}}">
+				  <div class="dropdown-menu" aria-labelledby="{{resourceName}}_{{i}}_btn">
 				    <a class="dropdown-item" ng-repeat="r in data.foreignKeys[H.toPlural(data.singleKeysInfo[i].title.replace(' ', '_').toLowerCase())]"  href="" ng-click="data.single[i] = r.id;data.selectedForeignKeys[i] = r;">{{ r.title || r.display_name || r.name || (r.first_name ? r.first_name + ' ' + r.last_name : null) || r.email || r.id }}</a>
 				  </div>
 				</div>
