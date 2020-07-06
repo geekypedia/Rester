@@ -24,8 +24,15 @@ class Settings{
 				remove: ['admin'],
 				extract: ['admin']				
 		},
-		/*
 		"overridePermissions":{
+			"organizations": {
+				view: ['superadmin'],
+				add: ['superadmin'],
+				edit: ['superadmin'],
+				remove: ['superadmin'],
+				extract: ['superadmin']
+			},        
+    		/*
 			"routeName1": {
 				view: ['user', 'admin'],
 				add: ['admin'],
@@ -40,8 +47,8 @@ class Settings{
 				remove: ['admin'],
 				extract: ['admin']
 			}
+	    	*/            
 		},
-		*/            
 		}
 	}
 }
