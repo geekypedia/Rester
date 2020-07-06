@@ -870,7 +870,7 @@ function ControllerFactory(resourceName, options, extras) {
 				if (o.Key == "MUL"){
 					type = "fkey";
 					//fkeyTable = title.replace(' ', '_').toLowerCase() + 's';
-					fkeyTable = H.toPlural(title.replace(' ', '_').toLowerCase());
+					fkeyTable = H.toPlural(H.replaceAll(title,' ', '_').toLowerCase());
                     var fKeyTableOrAlias = aliases[fkeyTable] ? aliases[fkeyTable] : fkeyTable; 
 					$scope.data.foreignKeysResources[fkeyTable] = R.get(fKeyTableOrAlias);
 					
