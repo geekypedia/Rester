@@ -1710,6 +1710,10 @@ function toDate($datetime){
 	return date("Y-m-d", strtotime($datetime));
 }
 
+function dump($content, $filename = 'dump.txt'){
+	file_put_contents(__DIR__ . '/' . $filename, $content);
+}
+	
 
 } //END
 
