@@ -255,8 +255,9 @@ app.run(function($rootScope, $location, $cookies, H) {
 
 			var cookie = $cookies.get(H.getCookieKey());
 			if (!cookie) {
-
-				if ($rootScope.openRoutes.indexOf($location.path()) > -1) {} else {
+				var locationPath = $location.path();
+				if (locationPath.endsWith('/')) locationPath = locationPath.substring(0, locationPath.length - 1);
+				if ($rootScope.openRoutes.indexOf(locationPath) > -1) {} else {
 					$location.path('/sign-in');
 				}
 			} else {
