@@ -1710,8 +1710,16 @@ function toDate($datetime){
 	return date("Y-m-d", strtotime($datetime));
 }
 
-function dump($content, $filename = 'dump.txt'){
-	file_put_contents(__DIR__ . '/' . $filename, $content);
+function dump($content, $filename = 'dump.txt', $overwrite = false){
+	if($overwrite){
+		file_put_contents(__DIR__ . '/' . $filename, $content);
+	} else {
+		$newContent = "[" . now() . "]:";
+		$newContent .= "\n";
+		$newContent .= $content;
+		$newContent .= "\n--------------------------------------------------------------------------------\n";
+		file_put_contents(__DIR__ . '/' . $filename, $newContent, FILE_APPEND);
+	}	
 }
 	
 
