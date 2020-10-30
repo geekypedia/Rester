@@ -7,7 +7,7 @@ app.component('infoBox', {
 	}
 });
 
-app.controller('infoboxController', function($scope){
+app.controller('infoboxController', function($scope, S){
 	// $scope.options = {
 	// 	title: 'options.title',
 	// 	value: 'options.value',
@@ -21,6 +21,7 @@ app.controller('infoboxController', function($scope){
 	self.$onInit = function(){
 		if(self.options){
 			$scope.options = self.options;
+            $scope.S = S;
 		}
 	};
 	
