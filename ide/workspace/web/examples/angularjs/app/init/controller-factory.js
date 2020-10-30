@@ -41,7 +41,9 @@ function ControllerFactory(resourceName, options, extras) {
 		$scope.locked = true;
 		$scope.forms = {};
 		$scope.H = H;
+		$scope.R = R;        
 		$scope.M = M;
+		$scope.S = S;        
         $scope.templates = {};
         
         $scope.data.permissions = H.S.defaultPermissions;
