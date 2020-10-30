@@ -239,6 +239,21 @@ app.config(async function($routeProvider, $resourceProvider, $httpProvider, $con
 		}
 
 		$httpProvider.interceptors.push('httpRequestInterceptor');
+    
+		//Office 365
+    
+		var S = Settings.get();
+		var office365 = S.office365;
+        if(office365){
+            $locationProvider.hashPrefix('!');
+
+            adalAuthenticationServiceProvider.init(
+                office365,
+                $httpProvider
+            );
+        }
+    
+    
 	});
 
 app.run(function($rootScope, $location, $cookies, H) {
