@@ -1,6 +1,6 @@
 //ControllerFactory helps wrap basic CRUD operations for any API resource
 function ControllerFactory(resourceName, options, extras) {
-	return function($scope, $rootScope, $http, $routeParams, $location, Popup, H, M, S, R) {
+	return function($scope, $rootScope, $http, $routeParams, $location, Popup, H, R, M, S) {
 		//Get resource by name. Usually it would be you API i.e. generated magically from your database table.
 
 		$scope.resourceName = resourceName;
