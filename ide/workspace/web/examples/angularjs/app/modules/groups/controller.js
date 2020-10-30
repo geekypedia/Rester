@@ -1,5 +1,5 @@
 /*global angular, app, $*/
-app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, Popup, H, M) {
+app.controller('groupsControllerExtension', function($scope, $controller, $rootScope, $http, $q, $location, Popup, H, R, M, S) {
     if(!(['admin', 'superadmin'].indexOf($rootScope.currentUser.role) > -1)){
         $location.path('unauthorized');
     }
