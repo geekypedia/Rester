@@ -2,7 +2,7 @@
 //The name of the controller should be plural that matches with your API, ending with ControllerExtension. 
 //Example: your API is http://localhost:8080/api/tasks then the name of the controller is tasksControllerExtension.
 //To register this controller, just go to app/config/routes.js and add 'tasks' in 'easyRoutes' array.
-app.controller('contactsControllerExtension', function($scope, $controller, $rootScope, $http, $location, Popup, H, M) {
+app.controller('contactsControllerExtension', function($scope, $controller, $rootScope, $http, $location, Popup, H, R, M, S) {
     
     //This function is called when you need to make changes to the new single object.
     $scope.onInit = function(obj){
