@@ -7,7 +7,7 @@
 //you need to provide templates inside 'app/modules/tasks' folder. If you want to keep your templates somewhere else, you can pick
 //'autoRoutes' and then override the templates using setTemplate function.
 //Note that for 'autoRoutes', it is not even required to write Controller Extensions unless you want to modify the behaviour.
-app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, Popup, H, M) {
+app.controller('tasksControllerExtension', function($scope, $controller, $rootScope, $http, $location, Popup, H, R, M, S) {
     
     //This function is called when you need to make changes to the new single object.
     $scope.onInit = async function(obj){
