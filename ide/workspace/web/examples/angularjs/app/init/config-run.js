@@ -256,9 +256,12 @@ app.run(function($rootScope, $location, $cookies, H) {
 			var cookie = $cookies.get(H.getCookieKey());
 			if (!cookie) {
 				var locationPath = $location.path();
-				if (locationPath.endsWith('/')) locationPath = locationPath.substring(0, locationPath.length - 1);
+				if(locationPath.endsWith('/')){
+					locationPath = locationPath.substr(0, locationPath.length - 1);
+				}
+
 				if ($rootScope.openRoutes.indexOf(locationPath) > -1) {} else {
-					$location.path('/sign-in');
+						$location.path('/sign-in');	
 				}
 			} else {
 				var cu = JSON.parse(cookie);
@@ -299,6 +302,24 @@ app.run(function($rootScope, $location, $cookies, H) {
 
 	$rootScope.$on("buildMenu", function(event, next, current) {
 		GLOBALS.methods.sideNavDelayed(H.S.menu);
+		// var timeout = 2500;
+		// if (Settings.get().autoMasters) {
+		// 	timeout = 2500;
+		// 	// setTimeout(function(){
+		// 	// 	for(k in GLOBALS.menu.controllers){
+		// 	// 		var c = GLOBALS.menu.controllers[k];
+		// 	// 		RegisterEasyController(c,null,null,true/*, data[easyRoutes[i]].headers*/);	
+		// 	// 	}
+		// 	// }, timeout);
+		// }
+	});
+
+    $rootScope.$on("buildMenuOnce", function(event, next, current) {
+		if(!$rootScope.menuBuiltOnce){
+			$rootScope.menuBuiltOnce = true;
+			GLOBALS.methods.sideNavDelayed(H.S.menu);
+		}
+		
 		// var timeout = 2500;
 		// if (Settings.get().autoMasters) {
 		// 	timeout = 2500;
