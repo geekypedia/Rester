@@ -56,7 +56,7 @@ class Settings{
   //          extraQueryParameter: 'nux=1',
   //          anonymousEndpoints: [ '/']
 		// },
-            
+        hashPrefix: '!',    
 		}
 	}
 }
