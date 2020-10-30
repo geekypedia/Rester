@@ -49,6 +49,14 @@ class Settings{
 			}
 	    	*/            
 		},
+		// "office365": {
+  //          instance: 'https://login.microsoftonline.com/', 
+  //          tenant: '',
+  //          clientId: '',
+  //          extraQueryParameter: 'nux=1',
+  //          anonymousEndpoints: [ '/']
+		// },
+            
 		}
 	}
 }
