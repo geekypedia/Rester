@@ -1,4 +1,4 @@
-<td><a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')" href="#!/{{currentRoute}}/{{item.id}}">{{item.username}}</a><span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.username}}</span></td>
+<td><a ng-if="currentUser.role == 'superadmin' || (currentUser.role != 'superadmin' && item.role !='superadmin')" href="#{{S.hashPrefix}}/{{currentRoute}}/{{item.id}}">{{item.username}}</a><span ng-if="currentUser.role != 'superadmin' && item.role =='superadmin'">{{item.username}}</span></td>
 <td>
     <span>{{item.email}}</span>
 </td>
