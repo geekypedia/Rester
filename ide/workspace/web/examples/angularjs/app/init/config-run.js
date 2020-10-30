@@ -332,5 +332,12 @@ app.run(function($rootScope, $location, $cookies, H) {
 		// }
 	});
 
+    $rootScope.$on('changeLocation', function(event, next, current){
+		event.preventDefault();
+	    $rootScope.$evalAsync(function() {
+	       $location.path(next);
+	    });
+	});
+
 
 });
