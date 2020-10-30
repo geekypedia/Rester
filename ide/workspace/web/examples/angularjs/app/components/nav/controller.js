@@ -14,7 +14,7 @@ app.controller('navController', async function($scope, $http, S, H) {
     	data.push(masterMenu);
     }
     
-    var prefix = '#!';
+    var prefix = '#' + S.hashPrefix;
     
     
     for(var k in data){
