@@ -245,7 +245,7 @@ app.config(async function($routeProvider, $resourceProvider, $httpProvider, $con
 		var S = Settings.get();
 		var office365 = S.office365;
         if(office365){
-            $locationProvider.hashPrefix('!');
+            $locationProvider.hashPrefix(S.hashPrefix);
 
             adalAuthenticationServiceProvider.init(
                 office365,
