@@ -2,7 +2,74 @@
 app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, loginEventService, H, R, M, S) {
 	if($rootScope.currentUser){
 		//$location.path('/');
-	}
+	} else {
+		//Office 365
+		if (S.office365) {
+			if (adalAuthenticationService.userInfo && adalAuthenticationService.userInfo.isAuthenticated) {
+				if (!$rootScope.potentialEmployee) {
+					$scope.authMessage = 'Found existing user session on healthtechindia.com. Validating ...';
+
+					var email = adalAuthenticationService.userInfo.userName;
+					$http.get(H.S.baseUrl + '/sso/validate?ssoid=' + email)
+						.then(function(r) {
+							$scope.authMessage = 'Found existing user session on healthtechindia.com. Logging in ...';
+							var data = r.data;
+							if (data && data.user) {
+								$rootScope.currentUser = data.user;
+								$rootScope.$emit("buildMenuOnce");
+								var locationPath = $rootScope.lastLocation;
+								if (!locationPath || (locationPath && locationPath.startsWith('/sign-in'))) {
+									locationPath = '/';
+								}
+								$location.path(locationPath);
+								//$location.path('/');
+							} else {
+								if (data && data.employee) {
+									$rootScope.potentialEmployee = data;
+								} else {
+									$rootScope.potentialEmployee = {
+										user: {
+											email: adalAuthenticationService.userInfo.userName
+										},
+										employee: {
+											email: adalAuthenticationService.userInfo.userName,
+											username: adalAuthenticationService.userInfo.userName.replace('@healthtechindia.com', ''),
+											fullname: adalAuthenticationService.userInfo.userName.replace('.', ' ').replace('@healthtechindia.com', '')
+										}
+									};
+								}
+								setTimeout(function() {
+									//$location.path('/employee-self-registration');	
+									//$scope.$apply();
+									//$window.location.assign('./#/employee-self-registration');
+									//$window.location.replace('https://ops.healthtechindia.com/portal/#/employee-self-registration');
+									$rootScope.$broadcast('changeLocation', '/employee-self-registration');
+								}, 300);
+
+							}
+						}, function(e) {
+							//$rootScope.potentialEmployee = data;
+							//$location.path('/new-employee');
+						});
+				} else {
+					if ($rootScope.potentialEmployee.employee) {
+
+						$scope.data.username = $rootScope.potentialEmployee.employee.username;
+						$scope.data.email = $rootScope.potentialEmployee.employee.email;
+						$scope.data.employee_name = $rootScope.potentialEmployee.employee.fullname;
+					}
+
+					setTimeout(function() {
+						$rootScope.$broadcast('changeLocation', '/employee-self-registration');
+					}, 300);
+
+
+				}
+
+			}
+		}
+
+    }
 	
 	$scope.forms = {};
 	
