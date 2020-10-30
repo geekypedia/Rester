@@ -44,10 +44,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{M.BTN_LOGIN}}
                                 </button>
-                                <a href="#!forgot-password" class="btn btn-link">
+                                <a href="#{{S.hashPrefix}}forgot-password" class="btn btn-link">
                                     {{M.LNK_FORGOT_PASSWORD}}
                                 </a>
-                                <a href="#!register" class="btn btn-link" ng-if="S.openRegistration">
+                                <a href="#{{S.hashPrefix}}register" class="btn btn-link" ng-if="S.openRegistration">
                                     {{M.LNK_REGISTER}}
                                 </a>
                             </div>
