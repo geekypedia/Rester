@@ -15,5 +15,6 @@ var app = angular.module('app', [
 							'ngMessages',
 							'angular-md5',
 							'zingchart-angularjs',
-							'720kb.datepicker'
+							'720kb.datepicker',
+                            'AdalAngular'
 							]);
