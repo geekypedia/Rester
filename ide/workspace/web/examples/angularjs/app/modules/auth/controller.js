@@ -1,5 +1,5 @@
 /*global app*/
-app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, loginEventService, H, R, M, S) {
+app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, loginEventService, H, R, M, S, adalAuthenticationService, $window) {
 	if($rootScope.currentUser){
 		//$location.path('/');
 	} else {
@@ -179,8 +179,28 @@ app.controller('authController', function($scope, $rootScope, $http, $location, 
 		
 		$cookies.remove(H.getCookieKey());
 		delete $rootScope.currentUser;
+
+        if (S.office365) {
+			$scope.adLogout();
+		}
+        
 		$location.path('/sign-in');
 	};
+    
+	$scope.adLogin = function() {
+		adalAuthenticationService.login();
+	}
+
+	$scope.adLogout = function() {
+		adalAuthenticationService.logOut();
+	}
+
+	$scope.createProfile = function() {
+		R.submit('sso/register', $scope.data, function(r) {
+			$location.path('/');
+		});
+	}
+    
 	
 	GLOBALS.methods.autoFocus();
 });
