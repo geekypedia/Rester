@@ -60,9 +60,9 @@ function ControllerFactory(resourceName, options, extras) {
 			return route;
 		})();
 
-		$scope.currentRouteHref = "#!" + $scope.currentRoute;
-		$scope.newRouteHref = "#!" + $scope.currentRoute + "/new";
-		$scope.editRouteHref = "#!" + $scope.currentRoute + "/:id";
+		$scope.currentRouteHref = "#" + S.hashPrefix + $scope.currentRoute;
+		$scope.newRouteHref = "#" + S.hashPrefix + $scope.currentRoute + "/new";
+		$scope.editRouteHref = "#" + S.hashPrefix + $scope.currentRoute + "/:id";
 
 		//Default error handler
 		var errorHandler = function(error) {
