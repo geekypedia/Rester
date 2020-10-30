@@ -66,7 +66,7 @@ app.provider('customRoutes', function() {
 });
 
 
-app.config(async function($routeProvider, $resourceProvider, $httpProvider, $controllerProvider, customRoutesProvider) {
+app.config(async function($routeProvider, $resourceProvider, $httpProvider, $controllerProvider, customRoutesProvider, adalAuthenticationServiceProvider, $locationProvider) {
 		var routes = customRoutesProvider.routes.customRoutes;
 		var existingRoutes = routes.map(function(p) {
 			return p.route;
@@ -276,6 +276,7 @@ app.run(function($rootScope, $location, $cookies, H) {
 				}
 
 				if ($rootScope.openRoutes.indexOf(locationPath) > -1) {} else {
+						$rootScope.lastLocation = locationPath;                    
 						$location.path('/sign-in');	
 				}
 			} else {
