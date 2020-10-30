@@ -51,6 +51,10 @@
                                     {{M.LNK_REGISTER}}
                                 </a>
                             </div>
+					<div class="col-md-6 offset-md-4" ng-show="S.office365">
+				            	<a href="" name='btn_login_ad' ng-click="adLogin()">Login using your Microsoft 365 account</a>
+            				</div>
+
 				            <div class='col-md-6 offset-md-4'>
 				              <p class="small col-red" ng-if="error">{{error}}</p>
 				            </div>
@@ -64,3 +68,9 @@
 
 </main>
 </div>
+
+<!-- Auth Message for Microsoft 365 -->
+<div ng-if="authMessage" style="position:fixed; font-size:xx-large; color: white; background: grey; top: 45%; left:20%" >
+	{{authMessage}}
+</div>
+
