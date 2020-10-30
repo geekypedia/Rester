@@ -1,5 +1,5 @@
 /*global app*/
-app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, loginEventService, H, M, S) {
+app.controller('authController', function($scope, $rootScope, $http, $location, $cookies, loginEventService, H, R, M, S) {
 	if($rootScope.currentUser){
 		//$location.path('/');
 	}
